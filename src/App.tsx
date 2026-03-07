@@ -1,18 +1,10 @@
-import { css } from '@linaria/core'
+import { Route, Switch } from "wouter";
+import CardsPage from "./pages/Cards";
 
-const container = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-`
-
-function App() {
+export default function App() {
   return (
-    <div className={container}>
-      <h1>Word Leren</h1>
-    </div>
-  )
+    <Switch>
+      <Route path="/" component={CardsPage} />
+    </Switch>
+  );
 }
-
-export default App

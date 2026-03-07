@@ -4,6 +4,13 @@ import { i } from "@instantdb/react";
 
 const _schema = i.schema({
   entities: {
+    cards: i.entity({
+      aLang: i.string(),
+      bLang: i.string(),
+      aCard: i.string(),
+      bCard: i.string(),
+      note: i.string().optional(),
+    }),
     $files: i.entity({
       path: i.string().unique().indexed(),
       url: i.string(),
