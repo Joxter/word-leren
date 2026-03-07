@@ -28,6 +28,19 @@ const _schema = i.schema({
     }),
   },
   links: {
+    cardImage: {
+      forward: {
+        on: "cards",
+        has: "one",
+        label: "image",
+      },
+      reverse: {
+        on: "$files",
+        has: "one",
+        label: "card",
+        onDelete: "cascade",
+      },
+    },
     $streams$files: {
       forward: {
         on: "$streams",

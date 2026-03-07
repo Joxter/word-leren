@@ -16,6 +16,7 @@ export interface CardData {
 
 export interface Card extends CardData {
   id: string;
+  image?: { id: string; url: string; path: string };
 }
 
 interface TabDef {
@@ -100,17 +101,30 @@ const list = css`
 
 const cardRow = css`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr auto;
   gap: 1rem;
   padding: 0.75rem 1rem;
   background: #fff;
   border: 1px solid #e5e5e5;
   border-radius: 8px;
   cursor: pointer;
+  align-items: center;
 
   &:hover {
     border-color: #aaa;
   }
+`;
+
+const rowThumb = css`
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+`;
+
+const rowThumbPlaceholder = css`
+  width: 40px;
 `;
 
 const cardSide = css`
@@ -151,6 +165,7 @@ export default function Cards() {
 
   const { data, isLoading } = db.useQuery({
     cards: {
+      image: {},
       $: {
         limit: 500,
         order: { serverCreatedAt: "desc" },
@@ -164,12 +179,32 @@ export default function Cards() {
     (c) => c.aLang === activeTab.aLang && c.bLang === activeTab.bLang,
   );
 
-  function handleSave(formData: CardData) {
-    if (modalCard === "new") {
-      db.transact(db.tx.cards[id()].update(formData));
-    } else if (modalCard) {
-      db.transact(db.tx.cards[modalCard.id].update(formData));
+  async function handleSave(
+    formData: CardData,
+    imageFile: File | null,
+    removeImageId: string | null,
+  ): Promise<void> {
+    const isNew = modalCard === "new";
+    const cardId = isNew ? id() : (modalCard as Card).id;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const ops: any[] = [db.tx.cards[cardId].update(formData)];
+
+    if (removeImageId) {
+      ops.push(db.tx.cards[cardId].unlink({ image: removeImageId }));
+      ops.push(db.tx.$files[removeImageId].delete());
     }
+
+    if (imageFile) {
+      const { data: fileData } = await db.storage.uploadFile(
+        `cards/${cardId}-${Date.now()}`,
+        imageFile,
+      );
+      if (fileData) {
+        ops.push(db.tx.cards[cardId].link({ image: fileData.id }));
+      }
+    }
+
+    await db.transact(ops);
     setModalCard(null);
   }
 
@@ -219,6 +254,11 @@ export default function Cards() {
                 <span className={langTag}>{card.bLang}</span>
                 <span className={cardText}>{card.bCard}</span>
               </div>
+              {card.image ? (
+                <img src={card.image.url} className={rowThumb} alt="" />
+              ) : (
+                <div className={rowThumbPlaceholder} />
+              )}
             </div>
           ))}
         </div>

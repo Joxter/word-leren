@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { css } from "@linaria/core";
 import type { Card, CardData } from "../pages/Cards";
 
@@ -65,6 +65,8 @@ const closeBtn = css`
 
 const formBody = css`
   padding: 1.25rem 1.5rem;
+  max-height: 70vh;
+  overflow-y: auto;
 `;
 
 const sides = css`
@@ -125,6 +127,52 @@ const textarea = css`
   }
 `;
 
+const imageRow = css`
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+`;
+
+const previewImg = css`
+  width: 100px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  flex-shrink: 0;
+`;
+
+const removeImgBtn = css`
+  background: none;
+  border: none;
+  color: #dc2626;
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 0.25rem;
+
+  &:hover {
+    color: #b91c1c;
+  }
+`;
+
+const addImgLabel = css`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px dashed #ccc;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  color: #666;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #999;
+    color: #333;
+  }
+`;
+
 const footer = css`
   display: flex;
   align-items: center;
@@ -166,6 +214,11 @@ const saveBtn = css`
   &:hover {
     background: #333;
   }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `;
 
 const deleteBtn = css`
@@ -184,7 +237,11 @@ const deleteBtn = css`
 interface Props {
   card?: Card;
   defaultLangs?: { aLang: string; bLang: string };
-  onSave: (data: CardData) => void;
+  onSave: (
+    formData: CardData,
+    imageFile: File | null,
+    removeImageId: string | null,
+  ) => Promise<void>;
   onDelete: (id: string) => void;
   onClose: () => void;
 }
@@ -207,14 +264,44 @@ export default function CardModal({
         }
       : { ...DEFAULT_FORM, ...defaultLangs },
   );
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageRemoved, setImageRemoved] = useState(false);
+  const [localPreview, setLocalPreview] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (!imageFile) {
+      setLocalPreview(null);
+      return;
+    }
+    const url = URL.createObjectURL(imageFile);
+    setLocalPreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [imageFile]);
+
+  const previewUrl =
+    localPreview ?? (!imageRemoved ? (card?.image?.url ?? null) : null);
 
   function set(field: keyof CardData, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleRemoveImage() {
+    setImageFile(null);
+    setImageRemoved(true);
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    onSave(form);
+    setSaving(true);
+    // if a new file is selected and card already has an image, remove the old one
+    const removeImageId =
+      (imageRemoved || imageFile !== null) ? (card?.image?.id ?? null) : null;
+    try {
+      await onSave(form, imageFile, removeImageId);
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
@@ -286,6 +373,40 @@ export default function CardModal({
                 rows={2}
               />
             </div>
+
+            <div className={fieldGroup}>
+              <span className={label}>Image</span>
+              {previewUrl ? (
+                <div className={imageRow}>
+                  <img src={previewUrl} className={previewImg} alt="" />
+                  <div>
+                    <button
+                      type="button"
+                      className={removeImgBtn}
+                      onClick={handleRemoveImage}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <label className={addImgLabel}>
+                  + Add image
+                  <input
+                    type="file"
+                    accept="image/*"
+                    hidden
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        setImageFile(file);
+                        setImageRemoved(false);
+                      }
+                    }}
+                  />
+                </label>
+              )}
+            </div>
           </div>
 
           <div className={footer}>
@@ -302,8 +423,8 @@ export default function CardModal({
               <button type="button" className={cancelBtn} onClick={onClose}>
                 Cancel
               </button>
-              <button type="submit" className={saveBtn}>
-                Save
+              <button type="submit" className={saveBtn} disabled={saving}>
+                {saving ? "Saving…" : "Save"}
               </button>
             </div>
           </div>
