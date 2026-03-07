@@ -1,10 +1,12 @@
-import { Route, Switch } from "wouter";
+import { Router, Route, Switch } from "wouter";
 import CardsPage from "./pages/Cards";
 
 export default function App() {
   return (
-    <Switch>
-      <Route path="/" component={CardsPage} />
-    </Switch>
+    <Router base={import.meta.env.BASE_URL}>
+      <Switch>
+        <Route path="/" component={CardsPage} />
+      </Switch>
+    </Router>
   );
 }

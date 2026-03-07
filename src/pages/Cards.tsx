@@ -181,7 +181,7 @@ export default function Cards() {
   return (
     <div className={page}>
       <div className={header}>
-        <h1>Cards</h1>
+        <h1>Cards test GH</h1>
         <button className={newBtn} onClick={() => setModalCard("new")}>
           New card
         </button>
