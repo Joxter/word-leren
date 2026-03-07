@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import wyw from '@wyw-in-js/vite'
 
 export default defineConfig({
+  base: "/word-leren/",
   plugins: [
     wyw({
       include: ['**/*.{ts,tsx}'],
