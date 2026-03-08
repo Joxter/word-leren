@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { css } from "@linaria/core";
+import MarkdocField from "./MarkdocField";
 
 export interface LightCardData {
   text: string;
@@ -91,23 +92,6 @@ const fieldLabel = css`
   color: #555;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-`;
-
-const textarea = css`
-  width: 100%;
-  padding: 0.5rem 0.6rem;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  font-family: inherit;
-  resize: vertical;
-  line-height: 1.4;
-  box-sizing: border-box;
-
-  &:focus {
-    outline: none;
-    border-color: #999;
-  }
 `;
 
 const imageRow = css`
@@ -228,11 +212,6 @@ export default function LightCardModal({
   const [imageRemoved, setImageRemoved] = useState(false);
   const [localPreview, setLocalPreview] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
-  const firstRef = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    firstRef.current?.focus();
-  }, []);
 
   useEffect(() => {
     if (!imageFile) {
@@ -244,7 +223,7 @@ export default function LightCardModal({
     return () => URL.revokeObjectURL(url);
   }, [imageFile]);
 
-  const previewUrl =
+  const imagePreviewUrl =
     localPreview ?? (!imageRemoved ? (card?.image?.url ?? null) : null);
 
   function handleRemoveImage() {
@@ -277,24 +256,21 @@ export default function LightCardModal({
 
         <form onSubmit={handleSubmit}>
           <div className={formBody}>
-            <div className={fieldGroup}>
-              <span className={fieldLabel}>Text</span>
-              <textarea
-                ref={firstRef}
-                className={textarea}
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                rows={4}
-                placeholder="Grammar rule or example..."
-                required
-              />
-            </div>
+            <MarkdocField
+              label="Text"
+              value={text}
+              onChange={setText}
+              placeholder="Grammar rule or example..."
+              rows={5}
+              autoFocus
+              required
+            />
 
             <div className={fieldGroup}>
               <span className={fieldLabel}>Image</span>
-              {previewUrl ? (
+              {imagePreviewUrl ? (
                 <div className={imageRow}>
-                  <img src={previewUrl} className={previewImg} alt="" />
+                  <img src={imagePreviewUrl} className={previewImg} alt="" />
                   <div>
                     <button
                       type="button"

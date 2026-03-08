@@ -2,6 +2,7 @@ import { useState } from "react";
 import { css } from "@linaria/core";
 import { id } from "@instantdb/react";
 import { db } from "../db";
+import MarkdocContent from "../components/MarkdocContent";
 import LightCardModal, {
   type LightCard,
   type LightCardData,
@@ -75,11 +76,6 @@ const cardImgPlaceholder = css`
 
 const cardBody = css`
   padding: 0.75rem;
-  font-size: 0.875rem;
-  line-height: 1.4;
-  color: #222;
-  white-space: pre-wrap;
-  word-break: break-word;
 `;
 
 const empty = css`
@@ -160,7 +156,9 @@ export default function Grammar() {
               ) : (
                 <div className={cardImgPlaceholder} />
               )}
-              <div className={cardBody}>{c.text}</div>
+              <div className={cardBody}>
+                <MarkdocContent content={c.text} />
+              </div>
             </div>
           ))}
         </div>

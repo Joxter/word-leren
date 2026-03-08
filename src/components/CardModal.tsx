@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { css } from "@linaria/core";
 import type { Card, CardData } from "../pages/Cards";
+import MarkdocField from "./MarkdocField";
 
 const LANGS = ["EN", "RU", "NL"] as const;
 
@@ -330,11 +331,10 @@ export default function CardModal({
                     </option>
                   ))}
                 </select>
-                <span className={label}>Word / Phrase</span>
-                <textarea
-                  className={textarea}
+                <MarkdocField
+                  label="Word / Phrase"
                   value={form.aCard}
-                  onChange={(e) => set("aCard", e.target.value)}
+                  onChange={(v) => set("aCard", v)}
                   rows={3}
                   required
                 />
@@ -353,26 +353,22 @@ export default function CardModal({
                     </option>
                   ))}
                 </select>
-                <span className={label}>Translation</span>
-                <textarea
-                  className={textarea}
+                <MarkdocField
+                  label="Translation"
                   value={form.bCard}
-                  onChange={(e) => set("bCard", e.target.value)}
+                  onChange={(v) => set("bCard", v)}
                   rows={3}
                   required
                 />
               </div>
             </div>
 
-            <div className={fieldGroup}>
-              <span className={label}>Note</span>
-              <textarea
-                className={textarea}
-                value={form.note}
-                onChange={(e) => set("note", e.target.value)}
-                rows={2}
-              />
-            </div>
+            <MarkdocField
+              label="Note"
+              value={form.note}
+              onChange={(v) => set("note", v)}
+              rows={2}
+            />
 
             <div className={fieldGroup}>
               <span className={label}>Image</span>
