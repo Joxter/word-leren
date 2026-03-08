@@ -11,6 +11,9 @@ const _schema = i.schema({
       bCard: i.string(),
       note: i.string().optional(),
     }),
+    lightCards: i.entity({
+      text: i.string(),
+    }),
     $files: i.entity({
       path: i.string().unique().indexed(),
       url: i.string(),
@@ -38,6 +41,19 @@ const _schema = i.schema({
         on: "$files",
         has: "one",
         label: "card",
+        onDelete: "cascade",
+      },
+    },
+    lightCardImage: {
+      forward: {
+        on: "lightCards",
+        has: "one",
+        label: "image",
+      },
+      reverse: {
+        on: "$files",
+        has: "one",
+        label: "lightCard",
         onDelete: "cascade",
       },
     },
