@@ -13,3 +13,6 @@ vite.config.d.ts
 
 # misc
 .DS_Store
+
+# backups
+backup-*/
