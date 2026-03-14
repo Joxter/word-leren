@@ -3,7 +3,7 @@ import React from "react";
 import { css } from "@linaria/core";
 
 const prose = css`
-  font-size: 0.9rem;
+  font-size: 14px;
   line-height: 1.6;
   color: #222;
 
@@ -15,33 +15,42 @@ const prose = css`
   }
 
   p {
-    margin: 0.4em 0;
+    margin: 0;
   }
 
   h1,
   h2,
   h3,
   h4 {
-    margin: 0.6em 0 0.3em;
     font-weight: 600;
   }
   h1 {
-    font-size: 1.2em;
+    font-size: 24px;
+    //margin: 24px 0 0;
+    margin-top: 0;
   }
   h2 {
-    font-size: 1.1em;
+    font-size: 20px;
+    margin: 20px 0 0;
   }
   h3 {
-    font-size: 1em;
+    font-size: 16px;
+    margin: 8px 0 0;
+  }
+  h4 {
+    font-size: 16px;
+    margin: 0;
   }
 
   ul,
   ol {
-    margin: 0.3em 0;
-    padding-left: 1.4em;
+    //margin: 4px 0;
+    margin: 0;
+    padding-left: 20px;
   }
   li {
-    margin: 0.15em 0;
+    //margin: 2px 0;
+    margin: 0;
   }
 
   strong {
@@ -54,17 +63,17 @@ const prose = css`
   code {
     font-family: monospace;
     background: #f0f0f0;
-    padding: 0.1em 0.3em;
+    padding: 1px 4px;
     border-radius: 3px;
-    font-size: 0.88em;
+    font-size: 13px;
   }
 
   pre {
     background: #f5f5f5;
-    padding: 0.75em;
+    padding: 12px;
     border-radius: 6px;
     overflow-x: auto;
-    margin: 0.5em 0;
+    margin: 8px 0;
   }
   pre code {
     background: none;
@@ -73,8 +82,8 @@ const prose = css`
 
   blockquote {
     border-left: 3px solid #ddd;
-    margin: 0.4em 0;
-    padding-left: 0.75em;
+    margin: 6px 0;
+    padding-left: 12px;
     color: #666;
   }
 
@@ -89,7 +98,7 @@ const prose = css`
   hr {
     border: none;
     border-top: 1px solid #e0e0e0;
-    margin: 0.75em 0;
+    margin: 12px 0;
   }
 `;
 
