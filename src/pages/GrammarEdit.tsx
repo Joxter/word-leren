@@ -104,10 +104,11 @@ const textarea = css`
   border-radius: 6px;
   font-size: 0.875rem;
   font-family: inherit;
-  resize: vertical;
+  resize: none;
   line-height: 1.5;
   box-sizing: border-box;
   min-height: 260px;
+  overflow-y: hidden;
 
   &:focus {
     outline: none;
@@ -208,6 +209,12 @@ export default function GrammarEdit() {
   const { id: cardId } = useParams<{ id?: string }>();
   const isNew = !cardId;
   const stableId = useRef(genId());
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  function autoResize(el: HTMLTextAreaElement) {
+    el.style.height = "auto";
+    el.style.height = el.scrollHeight + "px";
+  }
   const [, navigate] = useLocation();
 
   const [text, setText] = useState("");
@@ -236,6 +243,10 @@ export default function GrammarEdit() {
       setLoaded(true);
     }
   }, [card, loaded]);
+
+  useEffect(() => {
+    if (textareaRef.current) autoResize(textareaRef.current);
+  }, [text]);
 
   useEffect(() => {
     if (!imageFile) {
@@ -323,9 +334,13 @@ export default function GrammarEdit() {
             <div>
               <label className={fieldLabel}>Text</label>
               <textarea
+                ref={textareaRef}
                 className={textarea}
                 value={text}
-                onChange={(e) => setText(e.target.value)}
+                onChange={(e) => {
+                  setText(e.target.value);
+                  autoResize(e.target);
+                }}
                 placeholder="Grammar rule or example…"
                 autoFocus
                 required
