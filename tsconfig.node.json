@@ -8,7 +8,8 @@
     "isolatedModules": true,
     "moduleDetection": "force",
     "composite": true,
+    "allowJs": true,
     "strict": true
   },
-  "include": ["vite.config.ts"]
+  "include": ["vite.config.js"]
 }
