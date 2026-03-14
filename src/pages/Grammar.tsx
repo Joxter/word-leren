@@ -1,12 +1,8 @@
-import { useState } from "react";
 import { css } from "@linaria/core";
-import { id } from "@instantdb/react";
+import { Link } from "wouter";
 import { db } from "../db";
 import MarkdocContent from "../components/MarkdocContent";
-import LightCardModal, {
-  type LightCard,
-  type LightCardData,
-} from "../components/LightCardModal";
+import type { LightCard } from "../components/LightCardModal";
 
 const page = css`
   max-width: 840px;
@@ -35,6 +31,8 @@ const newBtn = css`
   border-radius: 6px;
   font-size: 0.875rem;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
 
   &:hover {
     background: #333;
@@ -43,7 +41,7 @@ const newBtn = css`
 
 const grid = css`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 0.875rem;
 `;
 
@@ -52,9 +50,10 @@ const card = css`
   border: 1px solid #e5e5e5;
   border-radius: 10px;
   overflow: hidden;
-  cursor: pointer;
   display: flex;
   flex-direction: column;
+  text-decoration: none;
+  color: inherit;
 
   &:hover {
     border-color: #aaa;
@@ -76,6 +75,8 @@ const cardImgPlaceholder = css`
 
 const cardBody = css`
   padding: 0.75rem;
+  max-height: 220px;
+  overflow: hidden;
 `;
 
 const empty = css`
@@ -86,8 +87,6 @@ const empty = css`
 `;
 
 export default function Grammar() {
-  const [modalCard, setModalCard] = useState<LightCard | "new" | null>(null);
-
   const { data, isLoading } = db.useQuery({
     lightCards: {
       image: {},
@@ -100,47 +99,13 @@ export default function Grammar() {
 
   const cards = (data?.lightCards ?? []) as LightCard[];
 
-  async function handleSave(
-    formData: LightCardData,
-    imageFile: File | null,
-    removeImageId: string | null,
-  ): Promise<void> {
-    const isNew = modalCard === "new";
-    const cardId = isNew ? id() : (modalCard as LightCard).id;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const ops: any[] = [db.tx.lightCards[cardId].update(formData)];
-
-    if (removeImageId) {
-      ops.push(db.tx.lightCards[cardId].unlink({ image: removeImageId }));
-      ops.push(db.tx.$files[removeImageId].delete());
-    }
-
-    if (imageFile) {
-      const { data: fileData } = await db.storage.uploadFile(
-        `lightCards/${cardId}-${Date.now()}`,
-        imageFile,
-      );
-      if (fileData) {
-        ops.push(db.tx.lightCards[cardId].link({ image: fileData.id }));
-      }
-    }
-
-    await db.transact(ops);
-    setModalCard(null);
-  }
-
-  function handleDelete(cardId: string) {
-    db.transact(db.tx.lightCards[cardId].delete());
-    setModalCard(null);
-  }
-
   return (
     <div className={page}>
       <div className={header}>
         <h1>Grammar</h1>
-        <button className={newBtn} onClick={() => setModalCard("new")}>
+        <Link href="/grammar/new" className={newBtn}>
           New card
-        </button>
+        </Link>
       </div>
 
       {!isLoading && cards.length === 0 && (
@@ -150,7 +115,7 @@ export default function Grammar() {
       {cards.length > 0 && (
         <div className={grid}>
           {cards.map((c) => (
-            <div key={c.id} className={card} onClick={() => setModalCard(c)}>
+            <Link key={c.id} href={`/grammar/${c.id}`} className={card}>
               {c.image ? (
                 <img src={c.image.url} className={cardImg} alt="" />
               ) : (
@@ -159,18 +124,9 @@ export default function Grammar() {
               <div className={cardBody}>
                 <MarkdocContent content={c.text} />
               </div>
-            </div>
+            </Link>
           ))}
         </div>
-      )}
-
-      {modalCard !== null && (
-        <LightCardModal
-          card={modalCard === "new" ? undefined : modalCard}
-          onSave={handleSave}
-          onDelete={handleDelete}
-          onClose={() => setModalCard(null)}
-        />
       )}
     </div>
   );

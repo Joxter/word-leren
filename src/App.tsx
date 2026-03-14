@@ -2,6 +2,8 @@ import { Router, Route, Switch, Link, useRoute } from "wouter";
 import { css } from "@linaria/core";
 import CardsPage from "./pages/Cards";
 import GrammarPage from "./pages/Grammar";
+import GrammarDetailPage from "./pages/GrammarDetail";
+import GrammarEditPage from "./pages/GrammarEdit";
 
 const nav = css`
   background: #fff;
@@ -50,6 +52,9 @@ function Layout() {
       <Switch>
         <Route path="/" component={CardsPage} />
         <Route path="/grammar" component={GrammarPage} />
+        <Route path="/grammar/new" component={GrammarEditPage} />
+        <Route path="/grammar/:id/edit" component={GrammarEditPage} />
+        <Route path="/grammar/:id" component={GrammarDetailPage} />
       </Switch>
     </>
   );
