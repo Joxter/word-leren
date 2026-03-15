@@ -100,6 +100,21 @@ const prose = css`
     border-top: 1px solid #e0e0e0;
     margin: 12px 0;
   }
+
+  table {
+    border-collapse: collapse;
+    margin: 8px 0;
+  }
+  th,
+  td {
+    padding: 0 20px 0 0;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    font-weight: 600;
+    color: #444;
+  }
 `;
 
 export default function MarkdocContent({ content }: { content: string }) {
