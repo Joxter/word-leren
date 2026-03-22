@@ -72,7 +72,7 @@ const formBody = css`
 
 const sides = css`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 1rem;
   margin-bottom: 1rem;
 `;
@@ -98,18 +98,56 @@ const label = css`
   letter-spacing: 0.04em;
 `;
 
-const select = css`
-  width: 100%;
-  padding: 0.4rem 0.6rem;
+const segmented = css`
+  display: inline-flex;
   border: 1px solid #e0e0e0;
   border-radius: 6px;
-  font-size: 0.875rem;
-  background: #fff;
-  cursor: pointer;
+  overflow: hidden;
+  width: 100%;
+`;
 
-  &:focus {
-    outline: none;
-    border-color: #999;
+const segmentedItem = css`
+  flex: 1;
+  position: relative;
+
+  input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  label {
+    display: block;
+    text-align: center;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    background: #fff;
+    color: #666;
+    border-right: 1px solid #e0e0e0;
+    transition:
+      background 0.1s,
+      color 0.1s;
+    user-select: none;
+  }
+
+  &:last-child label {
+    border-right: none;
+  }
+
+  input[type="radio"]:checked + label {
+    background: #1a1a1a;
+    color: #fff;
+  }
+
+  &:hover label {
+    background: #f5f5f5;
+  }
+
+  input[type="radio"]:checked + label:hover {
+    background: #1a1a1a;
   }
 `;
 
@@ -297,7 +335,7 @@ export default function CardModal({
     setSaving(true);
     // if a new file is selected and card already has an image, remove the old one
     const removeImageId =
-      (imageRemoved || imageFile !== null) ? (card?.image?.id ?? null) : null;
+      imageRemoved || imageFile !== null ? (card?.image?.id ?? null) : null;
     try {
       await onSave(form, imageFile, removeImageId);
     } finally {
@@ -320,17 +358,21 @@ export default function CardModal({
             <div className={sides}>
               <div className={side}>
                 <span className={label}>Language A</span>
-                <select
-                  className={select}
-                  value={form.aLang}
-                  onChange={(e) => set("aLang", e.target.value)}
-                >
+                <div className={segmented}>
                   {LANGS.map((l) => (
-                    <option key={l} value={l}>
-                      {l}
-                    </option>
+                    <div key={l} className={segmentedItem}>
+                      <input
+                        type="radio"
+                        id={`aLang-${l}`}
+                        name="aLang"
+                        value={l}
+                        checked={form.aLang === l}
+                        onChange={() => set("aLang", l)}
+                      />
+                      <label htmlFor={`aLang-${l}`}>{l}</label>
+                    </div>
                   ))}
-                </select>
+                </div>
                 <MarkdocField
                   label="Word / Phrase"
                   value={form.aCard}
@@ -342,17 +384,21 @@ export default function CardModal({
 
               <div className={side}>
                 <span className={label}>Language B</span>
-                <select
-                  className={select}
-                  value={form.bLang}
-                  onChange={(e) => set("bLang", e.target.value)}
-                >
+                <div className={segmented}>
                   {LANGS.map((l) => (
-                    <option key={l} value={l}>
-                      {l}
-                    </option>
+                    <div key={l} className={segmentedItem}>
+                      <input
+                        type="radio"
+                        id={`bLang-${l}`}
+                        name="bLang"
+                        value={l}
+                        checked={form.bLang === l}
+                        onChange={() => set("bLang", l)}
+                      />
+                      <label htmlFor={`bLang-${l}`}>{l}</label>
+                    </div>
                   ))}
-                </select>
+                </div>
                 <MarkdocField
                   label="Translation"
                   value={form.bCard}
