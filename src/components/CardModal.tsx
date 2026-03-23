@@ -5,13 +5,6 @@ import MarkdocField from "./MarkdocField";
 
 const LANGS = ["EN", "RU", "NL"] as const;
 
-const DEFAULT_FORM: CardData = {
-  aLang: "EN",
-  bLang: "NL",
-  aCard: "",
-  bCard: "",
-  note: "",
-};
 
 const backdrop = css`
   position: fixed;
@@ -274,8 +267,7 @@ const deleteBtn = css`
 `;
 
 interface Props {
-  card?: Card;
-  defaultLangs?: { aLang: string; bLang: string };
+  card: Card;
   onSave: (
     formData: CardData,
     imageFile: File | null,
@@ -285,24 +277,14 @@ interface Props {
   onClose: () => void;
 }
 
-export default function CardModal({
-  card,
-  defaultLangs,
-  onSave,
-  onDelete,
-  onClose,
-}: Props) {
-  const [form, setForm] = useState<CardData>(
-    card
-      ? {
-          aLang: card.aLang,
-          bLang: card.bLang,
-          aCard: card.aCard,
-          bCard: card.bCard,
-          note: card.note ?? "",
-        }
-      : { ...DEFAULT_FORM, ...defaultLangs },
-  );
+export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
+  const [form, setForm] = useState<CardData>({
+    aLang: card.aLang,
+    bLang: card.bLang,
+    aCard: card.aCard,
+    bCard: card.bCard,
+    note: card.note ?? "",
+  });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageRemoved, setImageRemoved] = useState(false);
   const [localPreview, setLocalPreview] = useState<string | null>(null);
@@ -347,7 +329,7 @@ export default function CardModal({
     <div className={backdrop} onClick={onClose}>
       <div className={modal} onClick={(e) => e.stopPropagation()}>
         <div className={modalHeader}>
-          <h2>{card ? "Edit card" : "New card"}</h2>
+          <h2>Edit card</h2>
           <button className={closeBtn} onClick={onClose}>
             ✕
           </button>
@@ -452,15 +434,13 @@ export default function CardModal({
           </div>
 
           <div className={footer}>
-            {card && (
-              <button
-                type="button"
-                className={deleteBtn}
-                onClick={() => onDelete(card.id)}
-              >
-                Delete
-              </button>
-            )}
+            <button
+              type="button"
+              className={deleteBtn}
+              onClick={() => onDelete(card.id)}
+            >
+              Delete
+            </button>
             <div className={actions}>
               <button type="button" className={cancelBtn} onClick={onClose}>
                 Cancel
