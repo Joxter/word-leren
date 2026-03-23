@@ -28,6 +28,7 @@ interface TabDef {
 
 const TABS: TabDef[] = [
   { label: "NL → EN", aLang: "NL", bLang: "EN" },
+  { label: "NL → RU", aLang: "NL", bLang: "RU" },
   { label: "EN → RU", aLang: "EN", bLang: "RU" },
 ];
 
@@ -95,6 +96,10 @@ const formSides = css`
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
   margin-bottom: 0;
+
+  @media (max-width: 540px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const formSide = css`
