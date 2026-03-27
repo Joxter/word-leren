@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useImagePaste } from "../hooks/useImagePaste";
 import { css } from "@linaria/core";
 import type { Card, CardData } from "../pages/Cards";
 import MarkdocField from "./MarkdocField";
@@ -299,6 +300,8 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
     setLocalPreview(url);
     return () => URL.revokeObjectURL(url);
   }, [imageFile]);
+
+  useImagePaste((file) => { setImageFile(file); setImageRemoved(false); });
 
   const previewUrl =
     localPreview ?? (!imageRemoved ? (card?.image?.url ?? null) : null);

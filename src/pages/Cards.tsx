@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useImagePaste } from "../hooks/useImagePaste";
 import { css } from "@linaria/core";
 import { id } from "@instantdb/react";
 import { db } from "../db";
@@ -334,6 +335,8 @@ export default function Cards() {
     setNewImagePreview(url);
     return () => URL.revokeObjectURL(url);
   }, [newImageFile]);
+
+  useImagePaste((file) => setNewImageFile(file));
 
   function switchTab(i: number) {
     setActiveTabIdx(i);

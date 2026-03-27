@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useImagePaste } from "../hooks/useImagePaste";
 import { css } from "@linaria/core";
 import { id as genId } from "@instantdb/react";
 import { Link, useLocation, useParams } from "wouter";
@@ -257,6 +258,8 @@ export default function GrammarEdit() {
     setLocalPreview(url);
     return () => URL.revokeObjectURL(url);
   }, [imageFile]);
+
+  useImagePaste((file) => { setImageFile(file); setImageRemoved(false); });
 
   const imagePreviewUrl =
     localPreview ?? (!imageRemoved ? (card?.image?.url ?? null) : null);

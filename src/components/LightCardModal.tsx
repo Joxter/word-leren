@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useImagePaste } from "../hooks/useImagePaste";
 import { css } from "@linaria/core";
 import MarkdocField from "./MarkdocField";
 
@@ -222,6 +223,8 @@ export default function LightCardModal({
     setLocalPreview(url);
     return () => URL.revokeObjectURL(url);
   }, [imageFile]);
+
+  useImagePaste((file) => { setImageFile(file); setImageRemoved(false); });
 
   const imagePreviewUrl =
     localPreview ?? (!imageRemoved ? (card?.image?.url ?? null) : null);
