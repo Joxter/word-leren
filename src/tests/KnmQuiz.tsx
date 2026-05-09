@@ -67,9 +67,9 @@ export function KnmQuiz() {
   }).length;
 
   return (
-    <div style={{ maxWidth: 680, margin: "0 auto", padding: "24px 16px", fontFamily: "Inter, sans-serif" }}>
+    <div style={{ maxWidth: 680, margin: "0 auto", padding: "0 16px 40px", fontFamily: "Inter, sans-serif" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
-        <h1 style={{ margin: 0, fontSize: 22 }}>KNM Oefenvragen</h1>
+        <span />
         {answeredTotal > 0 && (
           <span style={{ fontSize: 13, color: "#555" }}>
             {correctTotal}/{answeredTotal} correct overall

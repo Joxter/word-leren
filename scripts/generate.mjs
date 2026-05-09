@@ -3,16 +3,22 @@ import { join, basename, extname } from "node:path";
 
 const ROOT = new URL("..", import.meta.url).pathname;
 
-function stripHtml(html) {
-  // Detach punctuation spans (class="-ml-0.5") from surrounding whitespace
-  let text = html.replace(
-    /\s*<span class="-ml-0\.5">([^<]*)<\/span>/g,
-    "$1",
-  );
-  text = text.replace(/<[^>]+>/g, " ");
-  text = text.replace(/\s+([.,!?:;)])/g, "$1");
-  text = text.replace(/\s+/g, " ").trim();
-  return text;
+// Strip only <span> noise; preserve structural tags (h2, h3, p, ul, ol, li,
+// table, strong, em, hr, br). Output is clean HTML for reading/knm,
+// plain text for listening (which has no HTML at all).
+const BLOCK_RE =
+  /[ \t]*(<\/?(p|h[2-6]|li|td|th|tr|thead|tbody|table|ul|ol|hr|br|strong|em)[^>]*)>[ \t]*/g;
+
+function cleanTranscript(html) {
+  // Replace all span tags (open + close) with a space to preserve word gaps
+  let text = html.replace(/<\/?span[^>]*>/g, " ");
+  // Remove space before punctuation
+  text = text.replace(/\s+([.,!?:;)»])/g, "$1");
+  // Trim whitespace immediately inside/outside structural tags
+  text = text.replace(BLOCK_RE, "$1>");
+  // Collapse multiple spaces on a single line to one
+  text = text.replace(/[ \t]{2,}/g, " ");
+  return text.trim();
 }
 
 function cleanAnswer(answer) {
@@ -44,7 +50,7 @@ async function processDir(dir, type) {
       item = {
         id,
         title: raw.title,
-        question: stripHtml(raw.transcript),
+        question: cleanTranscript(raw.transcript),
         options: q.options,
         correctAnswer: cleanAnswer(q.correctAnswer),
       };
@@ -52,7 +58,7 @@ async function processDir(dir, type) {
       item = {
         id,
         title: raw.title,
-        transcript: stripHtml(raw.transcript),
+        transcript: cleanTranscript(raw.transcript),
         questions: processQuestions(raw.questions),
       };
       if (type === "listening") {
