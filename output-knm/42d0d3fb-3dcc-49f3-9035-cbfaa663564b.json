@@ -1,0 +1,17 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/knm/practices/42d0d3fb-3dcc-49f3-9035-cbfaa663564b",
+  "title": "De Marshallhulp",
+  "transcript": "<span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_0_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">Wat</span></span><span class=\"inline-block\"><span class=\"px-0.5\">was</span></span><span class=\"inline-block\"><span class=\"px-0.5\">de</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_2_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">Marshallhulp</span><span class=\"-ml-0.5\">?</span></span>",
+  "questions": [
+    {
+      "label": "",
+      "question": "",
+      "options": [
+        "Hulp van Amerika om Nederland te helpen na de oorlog.",
+        "Een wet van de Nederlandse regering.",
+        "Een groep Nederlandse soldaten."
+      ],
+      "correctAnswer": "Correct answer: Hulp van Amerika om Nederland te helpen na de oorlog."
+    }
+  ]
+}

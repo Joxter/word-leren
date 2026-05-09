@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/fcd89a3e-3452-4d2b-82c6-3de20151aad1",
+  "title": "Advies vragen over gezonde voeding",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/bc950169-3904-406e-b425-24f98bd3eedd/fcd89a3e-3452-4d2b-82c6-3de20151aad1/36991036-f81b-4ff1-9304-0e368fcd11ac.mp3",
+  "audioFile": "audio/fcd89a3e-3452-4d2b-82c6-3de20151aad1.mp3",
+  "transcript": "Hallo! Ik ben Lisa, een voedingsdeskundige. Ik krijg veel vragen over gezonde voeding. Wat is gezond eten? Eigenlijk is dat heel eenvoudig. Het gaat om een balans. Eet gevarieerd met veel groenten en fruit. Probeer ook volkoren producten zoals brood en pasta. Deze hebben meer vezels en zijn beter voor uw spijsvertering. En hoe zit het met vlees? Minder vlees eten is gezond. Kies voor vis, peulvruchten, noten of eieren. Deze bevatten ook eiwitten. Eet niet elke dag vlees, maar misschien twee of drie keer per week. Vergeet niet om genoeg water te drinken. Minstens anderhalve liter per dag. Dat houdt uw lichaam gezond en helpt bij het verwijderen van afvalstoffen. Beweging is ook belangrijk voor een gezonde levensstijl. Probeer elke dag minstens 30 minuten te bewegen. Wandelen, fietsen of zwemmen zijn goede opties. Gezond eten en bewegen betekent niet dat je nooit meer iets lekkers mag eten. Het gaat om balans en genieten. Eet je een keer een stukje taart? Dat is geen probleem. Geniet ervan, maar eet niet elke dag taart. Heeft u nog vragen over gezonde voeding? Ik help u graag!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wie is Lisa?",
+      "options": [
+        "Ze is een kok.",
+        "Ze is een voedingsdeskundige.",
+        "Ze is een leraar.",
+        "Ze is een dokter."
+      ],
+      "correctAnswer": "Correct answer: Ze is een voedingsdeskundige."
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat is belangrijk om te eten volgens Lisa?",
+      "options": [
+        "Alleen vlees.",
+        "Alleen groenten en fruit.",
+        "Een evenwichtige voeding.",
+        "Alleen taart."
+      ],
+      "correctAnswer": "Correct answer: Een evenwichtige voeding."
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Hoe vaak moet je volgens Lisa vlees eten in een week?",
+      "options": [
+        "Elke dag.",
+        "Eén keer.",
+        "Twee of drie keer.",
+        "Nooit."
+      ],
+      "correctAnswer": "Correct answer: Twee of drie keer."
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat is een goede hoeveelheid water om dagelijks te drinken volgens Lisa?",
+      "options": [
+        "Een liter.",
+        "Twee liter.",
+        "Halve liter.",
+        "Minstens anderhalve liter."
+      ],
+      "correctAnswer": "Correct answer: Minstens anderhalve liter."
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat is een goede manier om te bewegen volgens Lisa?",
+      "options": [
+        "Wandelen, fietsen of zwemmen.",
+        "Alleen hardlopen.",
+        "Alleen zwemmen.",
+        "Alleen fietsen."
+      ],
+      "correctAnswer": "Correct answer: Wandelen, fietsen of zwemmen."
+    }
+  ]
+}

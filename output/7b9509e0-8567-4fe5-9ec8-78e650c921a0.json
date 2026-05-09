@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/7b9509e0-8567-4fe5-9ec8-78e650c921a0",
+  "title": "Nieuwsbericht lezen over een incident in de stad",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/7b9509e0-8567-4fe5-9ec8-78e650c921a0/522f31c7-da78-4368-a7b7-e19747dc2e77.mp3",
+  "audioFile": "audio/7b9509e0-8567-4fe5-9ec8-78e650c921a0.mp3",
+  "transcript": "Goedemorgen allemaal. Er is een belangrijk nieuwsbericht over een incident in onze stad. Gisteren is er een brand uitgebroken in het winkelcentrum in het centrum van de stad. Gelukkig zijn er geen gewonden, maar de winkels zijn zwaar beschadigd. De brandweer was snel ter plaatse en heeft de brand onder controle. De oorzaak van de brand is nog onbekend. De politie doet onderzoek. Het winkelcentrum blijft vandaag gesloten voor het publiek. De winkeliers zijn erg geschrokken, maar blij dat er niemand gewond is geraakt. De burgemeester heeft ook zijn steun betuigd aan de getroffen winkeliers. Hij beloofde dat de stad zal helpen bij het herstel. Als je vandaag van plan was om naar het winkelcentrum te gaan, moet je een ander plan maken. Zodra er meer informatie beschikbaar is, zullen we het laten weten. Dank je wel voor je aandacht.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat is er gisteren gebeurd in het winkelcentrum?",
+      "options": [
+        "Er was een overstroming",
+        "Er was een aardbeving",
+        "Er was een brand",
+        "Er was een inbraak"
+      ],
+      "correctAnswer": "Correct answer: Er was een brand"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat is de status van het winkelcentrum vandaag?",
+      "options": [
+        "Het winkelcentrum is open voor publiek",
+        "Het winkelcentrum is gesloten voor publiek",
+        "Het winkelcentrum is gedeeltelijk open",
+        "Het winkelcentrum is alleen open voor winkeliers"
+      ],
+      "correctAnswer": "Correct answer: Het winkelcentrum is gesloten voor publiek"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Hoe reageerde de burgemeester op het incident?",
+      "options": [
+        "De burgemeester heeft kritiek geuit op de brandweer",
+        "De burgemeester heeft zijn steun betuigd aan de getroffen winkeliers",
+        "De burgemeester heeft de winkeliers de schuld gegeven",
+        "De burgemeester heeft geen reactie gegeven"
+      ],
+      "correctAnswer": "Correct answer: De burgemeester heeft zijn steun betuigd aan de getroffen winkeliers"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat is de oorzaak van de brand?",
+      "options": [
+        "De oorzaak is bekend",
+        "De oorzaak is onbekend",
+        "De brand is aangestoken",
+        "De brand is ontstaan door een technische fout"
+      ],
+      "correctAnswer": "Correct answer: De oorzaak is onbekend"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Hoe reageerden de winkeliers op het incident?",
+      "options": [
+        "De winkeliers zijn boos",
+        "De winkeliers zijn niet geschrokken",
+        "De winkeliers zijn erg geschrokken",
+        "De winkeliers zijn blij"
+      ],
+      "correctAnswer": "Correct answer: De winkeliers zijn erg geschrokken"
+    }
+  ]
+}

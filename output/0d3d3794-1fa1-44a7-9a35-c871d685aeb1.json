@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/0d3d3794-1fa1-44a7-9a35-c871d685aeb1",
+  "title": "Informatie zoeken over werkzaamheden aan de weg in de buurt",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/0d3d3794-1fa1-44a7-9a35-c871d685aeb1/aaaf1240-dc34-4194-9219-fed54bfeb0a4.mp3",
+  "audioFile": "audio/0d3d3794-1fa1-44a7-9a35-c871d685aeb1.mp3",
+  "transcript": "Hallo allemaal, ik wil iets met jullie delen. In onze buurt gaan ze volgende week beginnen met wegwerkzaamheden. Ze gaan de straat opnieuw bestraten en de stoepen verbeteren. Dit betekent dat er wat overlast kan zijn. De werkzaamheden beginnen om 7.00 uur 's ochtends en eindigen om 16.00 uur 's middags. Dit gaat zo door van maandag tot en met vrijdag. Let op, tijdens deze werkzaamheden is de straat afgesloten voor verkeer. Dat betekent dat je je auto ergens anders moet parkeren. Er wordt een tijdelijke parkeerplaats ingericht bij het park aan het einde van de straat. Dit is ongeveer vijf minuten lopen. Ook wordt de bushalte tijdelijk verplaatst naar de hoofdstraat. Dat is ongeveer tien minuten lopen vanaf hier. De werkzaamheden duren naar verwachting vier weken. Als er geen onverwachte problemen zijn, is alles voor de zomervakantie klaar. Als je vragen hebt, kun je contact opnemen met de gemeente. Het telefoonnummer van de gemeente staat op de brief die we allemaal hebben ontvangen.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat gaan ze volgende week in onze buurt doen?",
+      "options": [
+        "Ze gaan een nieuw park bouwen",
+        "Ze gaan de straat opnieuw bestraten en de stoepen verbeteren",
+        "Ze gaan een nieuw winkelcentrum bouwen",
+        "Ze gaan een feest organiseren"
+      ],
+      "correctAnswer": "Correct answer: Ze gaan de straat opnieuw bestraten en de stoepen verbeteren"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Hoe laat beginnen de werkzaamheden 's ochtends?",
+      "options": [
+        "Om 6.00 uur",
+        "Om 7.00 uur",
+        "Om 8.00 uur",
+        "Om 9.00 uur"
+      ],
+      "correctAnswer": "Correct answer: Om 7.00 uur"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Waar moet je je auto parkeren tijdens de werkzaamheden?",
+      "options": [
+        "Je kunt je auto parkeren in de straat",
+        "Je moet je auto parkeren bij het park aan het einde van de straat",
+        "Je kunt je auto parkeren bij het winkelcentrum",
+        "Je kunt je auto parkeren in de garage"
+      ],
+      "correctAnswer": "Correct answer: Je moet je auto parkeren bij het park aan het einde van de straat"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Waar wordt de bushalte tijdelijk naar verplaatst?",
+      "options": [
+        "Naar het park aan het einde van de straat",
+        "Naar de garage",
+        "Naar de hoofdstraat",
+        "Naar het winkelcentrum"
+      ],
+      "correctAnswer": "Correct answer: Naar de hoofdstraat"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Hoe lang duren de werkzaamheden naar verwachting?",
+      "options": [
+        "Een week",
+        "Twee weken",
+        "Drie weken",
+        "Vier weken"
+      ],
+      "correctAnswer": "Correct answer: Vier weken"
+    }
+  ]
+}

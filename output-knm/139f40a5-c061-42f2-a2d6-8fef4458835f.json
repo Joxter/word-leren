@@ -1,0 +1,17 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/knm/practices/139f40a5-c061-42f2-a2d6-8fef4458835f",
+  "title": "Katholieken en protestanten in Nederland",
+  "transcript": "<span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_0_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">Wat</span></span><span class=\"inline-block\"><span class=\"px-0.5\">is</span></span><span class=\"inline-block\"><span class=\"px-0.5\">een</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_2_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">verschil</span></span><span class=\"inline-block\"><span class=\"px-0.5\">tussen</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_4_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">katholieken</span></span><span class=\"inline-block\"><span class=\"px-0.5\">en</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_6_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">protestanten</span><span class=\"-ml-0.5\">?</span></span>",
+  "questions": [
+    {
+      "label": "",
+      "question": "",
+      "options": [
+        "Ze gebruiken verschillende boeken.",
+        "Ze hebben andere gewoonten en kerken.",
+        "Ze spreken andere talen."
+      ],
+      "correctAnswer": "Correct answer: Ze hebben andere gewoonten en kerken."
+    }
+  ]
+}

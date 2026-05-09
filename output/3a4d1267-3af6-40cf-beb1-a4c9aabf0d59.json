@@ -1,0 +1,53 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/3a4d1267-3af6-40cf-beb1-a4c9aabf0d59",
+  "title": "Lezen over de regels voor verhuizing en adreswijziging",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/3a4d1267-3af6-40cf-beb1-a4c9aabf0d59/70d5bc23-9360-42d9-aac0-15f9ea471c2a.mp3",
+  "audioFile": "audio/3a4d1267-3af6-40cf-beb1-a4c9aabf0d59.mp3",
+  "transcript": "Hallo, allemaal! Vandaag gaan we het hebben over een belangrijk onderwerp: verhuizen en adreswijziging. Als je in Nederland woont en je verhuist naar een ander huis, dan moet je dit binnen vijf dagen melden bij de gemeente waarin je nieuwe woning staat. Dit kan meestal online, maar je kunt ook naar het gemeentehuis gaan. Als je te laat bent met het doorgeven van je nieuwe adres, kun je een boete krijgen. Ook als je naar het buitenland verhuist, is het belangrijk dat je dit meldt bij de gemeente. Je doet dit minimaal vijf dagen voordat je vertrekt. Vergeet niet om ook je nieuwe adres door te geven aan je werk, school en andere belangrijke instanties. Zo blijf je altijd bereikbaar. Dat was het voor vandaag. We gaan nu verder met de volgende opdracht.",
+  "questions": [
+    {
+      "label": "Question 1 of 4",
+      "question": "Wat moet je doen als je in Nederland naar een ander huis verhuist?",
+      "options": [
+        "Je moet dit melden bij je werk en school.",
+        "Je moet dit melden bij de gemeente waarin je nieuwe woning staat.",
+        "Je moet dit melden bij de vorige eigenaar van het huis.",
+        "Je moet dit melden bij je verhuurbedrijf."
+      ],
+      "correctAnswer": "Correct answer: Je moet dit melden bij de gemeente waarin je nieuwe woning staat."
+    },
+    {
+      "label": "Question 2 of 4",
+      "question": "Wat gebeurt er als je te laat bent met het doorgeven van je nieuwe adres?",
+      "options": [
+        "Je kunt een beloning krijgen.",
+        "Je kunt een boete krijgen.",
+        "Je kunt een waarschuwing krijgen.",
+        "Er gebeurt niets."
+      ],
+      "correctAnswer": "Correct answer: Je kunt een boete krijgen."
+    },
+    {
+      "label": "Question 3 of 4",
+      "question": "Aan wie moet je ook je nieuwe adres doorgeven?",
+      "options": [
+        "Aan de vorige eigenaar van het huis.",
+        "Aan je verhuurbedrijf.",
+        "Aan je werk, school en andere belangrijke instanties.",
+        "Aan je vrienden en familie."
+      ],
+      "correctAnswer": "Correct answer: Aan je werk, school en andere belangrijke instanties."
+    },
+    {
+      "label": "Question 4 of 4",
+      "question": "Wanneer moet je je verhuizing naar het buitenland melden bij de gemeente?",
+      "options": [
+        "Na je verhuizing.",
+        "Op de dag van je verhuizing.",
+        "Minimaal vijf dagen voordat je vertrekt.",
+        "Een maand voordat je vertrekt."
+      ],
+      "correctAnswer": "Correct answer: Minimaal vijf dagen voordat je vertrekt."
+    }
+  ]
+}

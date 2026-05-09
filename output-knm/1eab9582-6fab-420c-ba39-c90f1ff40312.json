@@ -1,0 +1,17 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/knm/practices/1eab9582-6fab-420c-ba39-c90f1ff40312",
+  "title": "De rol van de VOC",
+  "transcript": "<span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_0_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">Wat</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_2_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">deed</span></span><span class=\"inline-block\"><span class=\"px-0.5\">de</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_4_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">VOC</span><span class=\"-ml-0.5\">?</span></span>",
+  "questions": [
+    {
+      "label": "",
+      "question": "",
+      "options": [
+        "Het regelde de zorg in Nederland.",
+        "Het handelde met andere landen.",
+        "Het gaf mensen les op school."
+      ],
+      "correctAnswer": "Correct answer: Het handelde met andere landen."
+    }
+  ]
+}

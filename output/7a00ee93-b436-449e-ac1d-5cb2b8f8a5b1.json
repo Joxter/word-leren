@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/7a00ee93-b436-449e-ac1d-5cb2b8f8a5b1",
+  "title": "Instructies lezen over wat te doen bij een noodsituatie in de wijk",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/7a00ee93-b436-449e-ac1d-5cb2b8f8a5b1/05c65e67-a72b-4b2b-be3b-69eb829445e5.mp3",
+  "audioFile": "audio/7a00ee93-b436-449e-ac1d-5cb2b8f8a5b1.mp3",
+  "transcript": "Hallo allemaal, vandaag wil ik het hebben over een belangrijk onderwerp: wat te doen bij een noodsituatie in onze wijk. Als er een noodsituatie is, moeten we kalm blijven en snel handelen. Hier zijn enkele stappen die je moet volgen. Eerst, bel het noodnummer 112. Vertel de operator wat er aan de hand is en waar je precies bent. Geef zoveel mogelijk details. Ten tweede, blijf veilig. Als het een brand is, ga dan onmiddellijk het huis uit. Als het een overstroming is, ga dan naar de hoogste verdieping van je huis. Daarna, help je buren als het veilig is. Sommige mensen hebben misschien extra hulp nodig, zoals ouderen of mensen met een handicap. Ten slotte, volg de aanwijzingen van de hulpdiensten. Zij weten wat het beste is om te doen in elke situatie. Onthoud, we zijn allemaal onderdeel van deze gemeenschap. In een noodsituatie moeten we elkaar helpen. Dank je wel voor je aandacht. Laten we hopen dat we deze instructies nooit hoeven te gebruiken. Maar het is goed om voorbereid te zijn.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat moet je als eerste doen bij een noodsituatie?",
+      "options": [
+        "Help je buren",
+        "Bel het noodnummer 112",
+        "Ga naar de hoogste verdieping van je huis",
+        "Verlaat het huis onmiddellijk"
+      ],
+      "correctAnswer": "Correct answer: Bel het noodnummer 112"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat moet je doen als er een overstroming is?",
+      "options": [
+        "Ga naar de hoogste verdieping van je huis",
+        "Bel het noodnummer 112",
+        "Help je buren",
+        "Verlaat het huis onmiddellijk"
+      ],
+      "correctAnswer": "Correct answer: Ga naar de hoogste verdieping van je huis"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wie moet je helpen als het veilig is?",
+      "options": [
+        "Je buren",
+        "De hulpdiensten",
+        "De politie",
+        "Niemand"
+      ],
+      "correctAnswer": "Correct answer: Je buren"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wie weet het beste wat te doen bij een noodsituatie?",
+      "options": [
+        "Je buren",
+        "Jijzelf",
+        "De hulpdiensten",
+        "Je familie"
+      ],
+      "correctAnswer": "Correct answer: De hulpdiensten"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Waarom is het belangrijk om deze instructies te kennen?",
+      "options": [
+        "Om voorbereid te zijn in geval van nood",
+        "Om je buren te helpen",
+        "Om het noodnummer 112 te bellen",
+        "Om te weten waar je heen moet in geval van overstroming"
+      ],
+      "correctAnswer": "Correct answer: Om voorbereid te zijn in geval van nood"
+    }
+  ]
+}

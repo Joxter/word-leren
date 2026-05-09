@@ -1,0 +1,17 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/knm/practices/f1495cff-2532-42d0-aa61-7fa63cd1f15c",
+  "title": "Fysiotherapie na een blessure",
+  "transcript": "<span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_0_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">Waarvoor</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_2_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">ga</span></span><span class=\"inline-block\"><span class=\"px-0.5\">je</span></span><span class=\"inline-block\"><span class=\"px-0.5\">naar</span></span><span class=\"inline-block\"><span class=\"px-0.5\">de</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_4_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">fysiotherapeut</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_6_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">na</span></span><span class=\"inline-block\"><span class=\"px-0.5\">een</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_8_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">blessure</span><span class=\"-ml-0.5\">?</span></span>",
+  "questions": [
+    {
+      "label": "",
+      "question": "",
+      "options": [
+        "Voor hulp met herstellen en oefeningen.",
+        "Voor advies over eten.",
+        "Voor hulp met administratie."
+      ],
+      "correctAnswer": "Correct answer: Voor hulp met herstellen en oefeningen."
+    }
+  ]
+}

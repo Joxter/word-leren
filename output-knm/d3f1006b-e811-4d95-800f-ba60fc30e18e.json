@@ -1,0 +1,17 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/knm/practices/d3f1006b-e811-4d95-800f-ba60fc30e18e",
+  "title": "Koning Willem-Alexander",
+  "transcript": "<span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_0_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">Wie</span></span><span class=\"inline-block\"><span class=\"px-0.5\">is</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_2_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">Koning</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_4_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">Willem-Alexander</span><span class=\"-ml-0.5\">?</span></span>",
+  "questions": [
+    {
+      "label": "",
+      "question": "",
+      "options": [
+        "De eerste koning van Nederland.",
+        "De huidige koning van Nederland.",
+        "Een beroemde sporter."
+      ],
+      "correctAnswer": "Correct answer: De huidige koning van Nederland."
+    }
+  ]
+}

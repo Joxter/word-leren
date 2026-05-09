@@ -1,0 +1,17 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/knm/practices/efd4379b-93a4-48d5-bb1a-896852530eae",
+  "title": "Het belang van goede hygiëne",
+  "transcript": "<span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_0_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">Waarom</span></span><span class=\"inline-block\"><span class=\"px-0.5\">is</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_2_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">goede</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_4_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">hygiëne</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_6_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">belangrijk</span><span class=\"-ml-0.5\">?</span></span>",
+  "questions": [
+    {
+      "label": "",
+      "question": "",
+      "options": [
+        "Om ziekten te voorkomen.",
+        "Om sneller te kunnen fietsen.",
+        "Om beter te kunnen slapen."
+      ],
+      "correctAnswer": "Correct answer: Om ziekten te voorkomen."
+    }
+  ]
+}

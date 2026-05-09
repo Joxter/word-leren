@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/123fbc74-801f-41e8-9336-2b6ce4c050b2",
+  "title": "Informatie zoeken over fietsstallingen in de stad",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/123fbc74-801f-41e8-9336-2b6ce4c050b2/b3fb4208-70a5-4660-8241-389c55701c7f.mp3",
+  "audioFile": "audio/123fbc74-801f-41e8-9336-2b6ce4c050b2.mp3",
+  "transcript": "Hallo, ik ben Jeroen en ik woon in Utrecht. In onze stad zijn er veel fietsen en daarom zijn er ook veel fietsstallingen. Maar soms is het moeilijk om een plek te vinden om je fiets te parkeren. Ik gebruik een app op mijn telefoon om de dichtstbijzijnde fietsstalling te vinden. Het is heel handig. De app toont alle fietsstallingen in de stad en hoeveel plekken er nog vrij zijn. Sommige fietsstallingen zijn gratis en sommige niet. De app toont ook de prijzen. Als ik geen plek kan vinden in de fietsstallingen, dan zet ik mijn fiets bij een fietsrek. Maar ik moet oppassen, want soms worden fietsen gestolen. Daarom gebruik ik altijd een goed slot. Het is belangrijk om je fiets goed te beveiligen. Als je in Utrecht woont, heb je echt een fiets nodig. Het is de beste manier om rond te reizen in de stad.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Waar woont Jeroen?",
+      "options": [
+        "In Amsterdam",
+        "In Rotterdam",
+        "In Utrecht",
+        "In Den Haag"
+      ],
+      "correctAnswer": "Correct answer: In Utrecht"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat gebruikt Jeroen om een fietsstalling te vinden?",
+      "options": [
+        "Een kaart",
+        "Een app op zijn telefoon",
+        "Hij vraagt het aan mensen",
+        "Hij zoekt het op internet"
+      ],
+      "correctAnswer": "Correct answer: Een app op zijn telefoon"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat doet Jeroen als hij geen plek kan vinden in de fietsstallingen?",
+      "options": [
+        "Hij laat zijn fiets thuis",
+        "Hij neemt de bus",
+        "Hij zet zijn fiets bij een fietsrek",
+        "Hij loopt te voet"
+      ],
+      "correctAnswer": "Correct answer: Hij zet zijn fiets bij een fietsrek"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Waarom moet Jeroen oppassen met zijn fiets?",
+      "options": [
+        "Omdat de fiets oud is",
+        "Omdat de fiets vaak kapot gaat",
+        "Omdat soms fietsen gestolen worden",
+        "Omdat hij de fiets vaak vergeet"
+      ],
+      "correctAnswer": "Correct answer: Omdat soms fietsen gestolen worden"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat is volgens Jeroen de beste manier om rond te reizen in Utrecht?",
+      "options": [
+        "Met de auto",
+        "Met het openbaar vervoer",
+        "Met de fiets",
+        "Te voet"
+      ],
+      "correctAnswer": "Correct answer: Met de fiets"
+    }
+  ]
+}

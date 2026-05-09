@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/e1004756-1428-4bc0-8d71-c81d6558bc9c",
+  "title": "Informatie zoeken over een buurtbibliotheek",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/e1004756-1428-4bc0-8d71-c81d6558bc9c/939d4d66-07eb-4483-978d-cc80c5e2a6f3.mp3",
+  "audioFile": "audio/e1004756-1428-4bc0-8d71-c81d6558bc9c.mp3",
+  "transcript": "Hallo, ik ben Peter en ik woon net in deze buurt. Ik hou van lezen en ik wil graag weten of er een bibliotheek in de buurt is. Ah, daar is iemand. Goedemiddag, ik ben nieuw hier. Is er een bibliotheek dichtbij? Ja? Geweldig! Kunt u mij vertellen waar het is? En wat zijn de openingstijden? Ah, van maandag tot vrijdag van 10 tot 17 uur. En op zaterdag? Gesloten, oké. En hoe zit het met zondag? Open van 12 tot 16 uur, perfect. En kan ik ook boeken reserveren? Ja, online, dat is handig. Dank u wel voor uw hulp. Ik ga nu naar de bibliotheek om wat boeken te lenen. Tot ziens!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Waar woont Peter?",
+      "options": [
+        "In een oude buurt",
+        "In een nieuwe buurt",
+        "In het stadscentrum",
+        "In een buitenwijk"
+      ],
+      "correctAnswer": "Correct answer: In een nieuwe buurt"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wanneer is de bibliotheek gesloten?",
+      "options": [
+        "Op zondag",
+        "Op zaterdag",
+        "Op vrijdag",
+        "Op maandag"
+      ],
+      "correctAnswer": "Correct answer: Op zaterdag"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Hoe laat is de bibliotheek op zondag open?",
+      "options": [
+        "Van 10 tot 17 uur",
+        "Van 12 tot 16 uur",
+        "Van 9 tot 15 uur",
+        "Van 8 tot 20 uur"
+      ],
+      "correctAnswer": "Correct answer: Van 12 tot 16 uur"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Hoe kan Peter boeken reserveren in de bibliotheek?",
+      "options": [
+        "Via e-mail",
+        "Via telefoon",
+        "Online",
+        "Per post"
+      ],
+      "correctAnswer": "Correct answer: Online"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat gaat Peter nu doen?",
+      "options": [
+        "Peter gaat naar huis",
+        "Peter gaat naar de supermarkt",
+        "Peter gaat naar de bibliotheek",
+        "Peter gaat naar het park"
+      ],
+      "correctAnswer": "Correct answer: Peter gaat naar de bibliotheek"
+    }
+  ]
+}

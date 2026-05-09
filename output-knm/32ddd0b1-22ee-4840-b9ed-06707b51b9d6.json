@@ -1,0 +1,17 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/knm/practices/32ddd0b1-22ee-4840-b9ed-06707b51b9d6",
+  "title": "De Tachtigjarige Oorlog",
+  "transcript": "<span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_0_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">Wat</span></span><span class=\"inline-block\"><span class=\"px-0.5\">was</span></span><span class=\"inline-block\"><span class=\"px-0.5\">de</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_2_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">Tachtigjarige</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_4_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">Oorlog</span><span class=\"-ml-0.5\">?</span></span>",
+  "questions": [
+    {
+      "label": "",
+      "question": "",
+      "options": [
+        "Een oorlog tussen Nederland en België.",
+        "Een oorlog om onafhankelijkheid van Spanje.",
+        "Een oorlog tegen Duitsland."
+      ],
+      "correctAnswer": "Correct answer: Een oorlog om onafhankelijkheid van Spanje."
+    }
+  ]
+}

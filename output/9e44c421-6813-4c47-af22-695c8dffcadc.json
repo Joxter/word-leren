@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/9e44c421-6813-4c47-af22-695c8dffcadc",
+  "title": "Informatie zoeken over subsidie voor woningisolatie",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/9e44c421-6813-4c47-af22-695c8dffcadc/1a3cc92b-99a7-4880-9700-432a219bb577.mp3",
+  "audioFile": "audio/9e44c421-6813-4c47-af22-695c8dffcadc.mp3",
+  "transcript": "Hallo, ik ben Jan en ik woon al vijf jaar in mijn huis. Ik wil mijn huis beter isoleren, maar dat kan best duur zijn. Daarom ben ik op zoek naar informatie over subsidies voor woningisolatie. Ik heb gehoord dat de gemeente soms helpt met de kosten. Dat zou echt geweldig zijn. Zou iemand mij kunnen vertellen waar ik deze informatie kan vinden? Ik heb al gezocht op de website van de gemeente, maar ik heb niets gevonden. Misschien keek ik op de verkeerde plek. Ik zou ook graag willen weten wat voor soort isolatie het beste is voor mijn huis. Ik denk aan dakisolatie, vloerisolatie of misschien muurisolatie. Als iemand ervaring heeft met het aanvragen van subsidies voor woningisolatie, zou ik dat graag horen. Dank je wel.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Waar woont Jan al vijf jaar?",
+      "options": [
+        "In een appartement",
+        "In een hotel",
+        "In zijn huis",
+        "Bij zijn ouders"
+      ],
+      "correctAnswer": "Correct answer: In zijn huis"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat wil Jan verbeteren in zijn huis?",
+      "options": [
+        "De tuin",
+        "De isolatie",
+        "De keuken",
+        "De badkamer"
+      ],
+      "correctAnswer": "Correct answer: De isolatie"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Waar heeft Jan gezocht naar informatie over subsidies voor woningisolatie?",
+      "options": [
+        "In de bibliotheek",
+        "Op de website van de gemeente",
+        "In de krant",
+        "Op de radio"
+      ],
+      "correctAnswer": "Correct answer: Op de website van de gemeente"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Welke soort isolatie overweegt Jan voor zijn huis?",
+      "options": [
+        "Dakisolatie, vloerisolatie en muurisolatie",
+        "Alleen dakisolatie",
+        "Alleen vloerisolatie",
+        "Alleen muurisolatie"
+      ],
+      "correctAnswer": "Correct answer: Dakisolatie, vloerisolatie en muurisolatie"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wie zou Jan kunnen helpen met de kosten van de isolatie?",
+      "options": [
+        "Zijn vrienden",
+        "Zijn familie",
+        "De gemeente",
+        "Zijn buren"
+      ],
+      "correctAnswer": "Correct answer: De gemeente"
+    }
+  ]
+}

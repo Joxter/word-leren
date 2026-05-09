@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/820f6a4a-5a33-4a2f-8b01-718d80d3bdd9",
+  "title": "Afspraak maken voor het ophalen van grofvuil bij de gemeente",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/820f6a4a-5a33-4a2f-8b01-718d80d3bdd9/1d39a8aa-c8ea-4b0d-a270-3b54b43d1300.mp3",
+  "audioFile": "audio/820f6a4a-5a33-4a2f-8b01-718d80d3bdd9.mp3",
+  "transcript": "Hallo, ik heb wat hulp nodig bij het ophalen van grofvuil. Ik heb wat oude meubels en kapotte apparaten die ik niet meer nodig heb. Ik weet dat ik een afspraak moet maken bij de gemeente, maar ik weet niet precies hoe. Kun je me vertellen hoe ik dit moet doen? Is er een specifieke dag in de week waarop het grofvuil wordt opgehaald? Of kan ik een specifieke dag en tijd kiezen? Moet ik ook betalen voor deze dienst of is het gratis? En als ik moet betalen, hoeveel kost het dan? Ik woon op de Prinsengracht. Is er iets dat ik moet weten over het ophalen van grofvuil in dit gebied? Ik wil ervoor zorgen dat ik alles goed doe en geen regels overtreed. Alvast bedankt voor je hulp.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat wil de spreker laten ophalen?",
+      "options": [
+        "Zijn post",
+        "Zijn grofvuil",
+        "Zijn pakketjes",
+        "Zijn wasgoed"
+      ],
+      "correctAnswer": "Correct answer: Zijn grofvuil"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Waar woont de spreker?",
+      "options": [
+        "Op de Keizersgracht",
+        "Op de Prinsengracht",
+        "Op de Herengracht",
+        "Op de Singel"
+      ],
+      "correctAnswer": "Correct answer: Op de Prinsengracht"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat moet de spreker doen om zijn grofvuil te laten ophalen?",
+      "options": [
+        "Hij moet een afspraak maken bij de gemeente",
+        "Hij moet het grofvuil zelf wegbrengen",
+        "Hij moet het grofvuil in de vuilnisbak doen",
+        "Hij moet het grofvuil op straat zetten"
+      ],
+      "correctAnswer": "Correct answer: Hij moet een afspraak maken bij de gemeente"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat wil de spreker weten over het ophalen van grofvuil?",
+      "options": [
+        "De kleur van de vuilniswagen",
+        "De naam van de vuilnisman",
+        "De regels voor het ophalen van grofvuil",
+        "Het merk van de vuilniswagen"
+      ],
+      "correctAnswer": "Correct answer: De regels voor het ophalen van grofvuil"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Moet de spreker betalen voor het ophalen van grofvuil?",
+      "options": [
+        "Ja, altijd",
+        "Nee, nooit",
+        "De spreker weet het niet",
+        "Alleen op zondagen"
+      ],
+      "correctAnswer": "Correct answer: De spreker weet het niet"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/e450437a-ecaf-45fb-8b09-b7fb554f2007",
+  "title": "Informatie vinden over afval scheiden",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/e450437a-ecaf-45fb-8b09-b7fb554f2007/11ccfb56-5372-4873-ba7f-01069c88b026.mp3",
+  "audioFile": "audio/e450437a-ecaf-45fb-8b09-b7fb554f2007.mp3",
+  "transcript": "Hallo allemaal, vandaag gaan we het hebben over afval scheiden. Het is belangrijk voor het milieu om ons afval goed te scheiden. We hebben vier verschillende bakken: groen, blauw, grijs en oranje. In de groene bak doen we groente-, fruit- en tuinafval. Dit wordt ook wel gft-afval genoemd. In de blauwe bak doen we papier en karton. De grijze bak is voor restafval. Dit is het afval dat overblijft na het scheiden. En in de oranje bak doen we plastic, blik en drinkpakken. Deze bak wordt ook wel de pmd-bak genoemd. Let op: glas en elektrische apparaten mogen niet in deze bakken. Voor glas zijn er speciale glasbakken in de stad. Elektrische apparaten kunt u inleveren bij een elektronicawinkel of bij het afvalbrengstation. Wilt u meer weten over afval scheiden? Kijk dan op de website van de gemeente. Daar staat alle informatie.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat doen we in de groene bak?",
+      "options": [
+        "Papier en karton",
+        "Plastic, blik en drinkpakken",
+        "Groente-, fruit- en tuinafval",
+        "Restafval"
+      ],
+      "correctAnswer": "Correct answer: Groente-, fruit- en tuinafval"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Waar kunt u glas inleveren?",
+      "options": [
+        "In de blauwe bak",
+        "Bij een elektronicawinkel",
+        "In speciale glasbakken in de stad",
+        "Bij het afvalbrengstation"
+      ],
+      "correctAnswer": "Correct answer: In speciale glasbakken in de stad"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Welk type afval wordt genoemd als restafval?",
+      "options": [
+        "Het afval dat overblijft na het scheiden",
+        "Groente-, fruit- en tuinafval",
+        "Papier en karton",
+        "Plastic, blik en drinkpakken"
+      ],
+      "correctAnswer": "Correct answer: Het afval dat overblijft na het scheiden"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Waar kunt u meer informatie vinden over afval scheiden?",
+      "options": [
+        "In de krant",
+        "Op de website van de gemeente",
+        "Bij het afvalbrengstation",
+        "In een boek"
+      ],
+      "correctAnswer": "Correct answer: Op de website van de gemeente"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat is een andere naam voor de oranje bak?",
+      "options": [
+        "De kartonbak",
+        "De gft-bak",
+        "De pmd-bak",
+        "De restafvalbak"
+      ],
+      "correctAnswer": "Correct answer: De pmd-bak"
+    }
+  ]
+}

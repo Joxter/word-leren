@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/19cc180e-04c4-45bc-baee-476c17bf8ddb",
+  "title": "Een spoedgeval melden bij de huisartsenpost",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/bc950169-3904-406e-b425-24f98bd3eedd/19cc180e-04c4-45bc-baee-476c17bf8ddb/bd76b709-5f8e-4439-a8f6-48ba332fb3bf.mp3",
+  "audioFile": "audio/19cc180e-04c4-45bc-baee-476c17bf8ddb.mp3",
+  "transcript": "Hallo, dit is de huisartsenpost. Hoe kan ik u helpen? Oh, uw dochter heeft hoge koorts en ze voelt zich heel ziek? Het is belangrijk dat u haar temperatuur meet met een thermometer. Als de temperatuur boven de 38 graden is, heeft ze inderdaad koorts. Heeft ze ook andere symptomen zoals hoesten of overgeven? Oké, ik noteer dat. Heeft ze pijn? Waar voelt ze de pijn? En heeft ze medicijnen genomen? Goed dat u belt. Het is belangrijk om ernstige symptomen te melden. Blijf rustig, ik stuur een arts naar uw huis. Hij is er over ongeveer een half uur. Probeer ondertussen uw dochter comfortabel te maken en geef haar veel water te drinken. Als haar toestand verandert voor de arts arriveert, bel ons dan onmiddellijk terug. Dank u wel voor uw telefoontje. Sterkte en tot ziens.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat moet je doen als de temperatuur van je dochter boven de 38 graden is?",
+      "options": [
+        "Bel de politie",
+        "Breng haar naar school",
+        "Zeg dat ze koorts heeft",
+        "Geef haar ijs"
+      ],
+      "correctAnswer": "Correct answer: Zeg dat ze koorts heeft"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat moet u doen als de toestand van uw dochter verandert voordat de arts arriveert?",
+      "options": [
+        "Bel de huisartsenpost onmiddellijk terug",
+        "Ga met haar naar het ziekenhuis",
+        "Wacht tot de arts komt",
+        "Geef haar medicijnen"
+      ],
+      "correctAnswer": "Correct answer: Bel de huisartsenpost onmiddellijk terug"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat moet u uw dochter geven terwijl u op de arts wacht?",
+      "options": [
+        "Koffie",
+        "Veel water",
+        "Een boek",
+        "Snoep"
+      ],
+      "correctAnswer": "Correct answer: Veel water"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Hoe lang duurt het voordat de arts bij uw huis aankomt?",
+      "options": [
+        "Een uur",
+        "Een half uur",
+        "Twee uur",
+        "Vijftien minuten"
+      ],
+      "correctAnswer": "Correct answer: Een half uur"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Waarom belt de persoon de huisartsenpost?",
+      "options": [
+        "Omdat haar dochter hoge koorts heeft",
+        "Omdat ze een afspraak willen maken",
+        "Omdat ze medicijnen willen kopen",
+        "Omdat ze de weg kwijt zijn"
+      ],
+      "correctAnswer": "Correct answer: Omdat haar dochter hoge koorts heeft"
+    }
+  ]
+}

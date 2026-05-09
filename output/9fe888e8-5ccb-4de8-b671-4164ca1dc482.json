@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/9fe888e8-5ccb-4de8-b671-4164ca1dc482",
+  "title": "Klachten uitleggen aan een arts",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/bc950169-3904-406e-b425-24f98bd3eedd/9fe888e8-5ccb-4de8-b671-4164ca1dc482/137fa50d-dd67-4edc-92a7-da56c6c9e235.mp3",
+  "audioFile": "audio/9fe888e8-5ccb-4de8-b671-4164ca1dc482.mp3",
+  "transcript": "Hallo iedereen! Vandaag zullen we het hebben over hoe je je symptomen aan een arts kunt uitleggen. Stel je voor, je voelt je niet zo goed. Je hebt hoofdpijn, je voelt je moe en je hebt geen eetlust. Hoe zou je dat aan een arts uitleggen? Je zou kunnen zeggen: \"Dokter, ik voel me niet goed. Ik heb hoofdpijn, ik ben moe en ik heb geen trek in eten.\" Het is belangrijk om de dokter zo duidelijk mogelijk te vertellen wat je voelt. Denk aan waar de pijn zit, hoe lang je je al zo voelt en of je nog andere symptomen hebt. Bijvoorbeeld, \"De pijn zit vooral in mijn voorhoofd. Ik voel me al een week zo. Ik heb ook last van duizeligheid.\" De dokter kan je dan beter helpen. Laten we nu een paar oefeningen doen. Ik zal een symptoom beschrijven en jullie moeten dat dan in je eigen woorden aan de dokter uitleggen. Klaar? Laten we beginnen.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat zou je tegen de dokter zeggen als je je niet goed voelt?",
+      "options": [
+        "Dokter, ik voel me goed.",
+        "Dokter, ik voel me niet goed. Ik heb hoofdpijn, ik ben moe en ik heb geen trek in eten.",
+        "Dokter, ik voel me gelukkig.",
+        "Dokter, ik voel me verdrietig."
+      ],
+      "correctAnswer": "Correct answer: Dokter, ik voel me niet goed. Ik heb hoofdpijn, ik ben moe en ik heb geen trek in eten."
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Hoe lang voel je je al zo?",
+      "options": [
+        "Ik voel me al een week zo.",
+        "Ik voel me al een dag zo.",
+        "Ik voel me al een uur zo.",
+        "Ik voel me al een maand zo."
+      ],
+      "correctAnswer": "Correct answer: Ik voel me al een week zo."
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat is een ander symptoom dat je zou kunnen hebben?",
+      "options": [
+        "Ik heb last van duizeligheid.",
+        "Ik heb last van koorts.",
+        "Ik heb last van een loopneus.",
+        "Ik heb last van hoesten."
+      ],
+      "correctAnswer": "Correct answer: Ik heb last van duizeligheid."
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Waar zit de pijn vooral?",
+      "options": [
+        "De pijn zit vooral in mijn arm.",
+        "De pijn zit vooral in mijn been.",
+        "De pijn zit vooral in mijn buik.",
+        "De pijn zit vooral in mijn voorhoofd."
+      ],
+      "correctAnswer": "Correct answer: De pijn zit vooral in mijn voorhoofd."
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat moet je zo duidelijk mogelijk aan de dokter vertellen?",
+      "options": [
+        "Je moet je naam duidelijk aan de dokter vertellen.",
+        "Je moet je adres duidelijk aan de dokter vertellen.",
+        "Je moet je symptomen duidelijk aan de dokter vertellen.",
+        "Je moet je werk duidelijk aan de dokter vertellen."
+      ],
+      "correctAnswer": "Correct answer: Je moet je symptomen duidelijk aan de dokter vertellen."
+    }
+  ]
+}

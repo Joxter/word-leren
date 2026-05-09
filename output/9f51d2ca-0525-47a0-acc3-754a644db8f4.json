@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/9f51d2ca-0525-47a0-acc3-754a644db8f4",
+  "title": "Begrijpen van een bericht over ziekenhuisafspraak",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/bc950169-3904-406e-b425-24f98bd3eedd/9f51d2ca-0525-47a0-acc3-754a644db8f4/9153b94a-923c-4eb0-863e-e970acaf65bd.mp3",
+  "audioFile": "audio/9f51d2ca-0525-47a0-acc3-754a644db8f4.mp3",
+  "transcript": "Hallo! Dit bericht is voor mevrouw Jansen. U heeft een afspraak in het ziekenhuis op maandag 15 maart. Uw afspraak is om 10 uur in de ochtend. U moet naar de afdeling cardiologie. Dit is op de tweede verdieping van het ziekenhuis. Neem de lift bij de hoofdingang. U heeft een afspraak met dokter van Dijk. Hij is een specialist in hartziekten. Vergeet niet uw zorgpas en identiteitsbewijs mee te nemen. Het is ook goed om een lijst met uw huidige medicijnen mee te nemen. Als u deze afspraak wilt verzetten, bel dan naar de afdeling. Het nummer is 020-1234567. Als u vragen heeft, kunt u ook dit nummer bellen. Dank u wel, en we zien u graag op 15 maart.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wanneer heeft mevrouw Jansen een afspraak?",
+      "options": [
+        "Op vrijdag 15 maart",
+        "Op maandag 25 maart",
+        "Op maandag 15 maart",
+        "Op zondag 15 maart"
+      ],
+      "correctAnswer": "Correct answer: Op maandag 15 maart"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Met wie heeft mevrouw Jansen een afspraak?",
+      "options": [
+        "Met dokter van Dijk",
+        "Met mevrouw Jansen",
+        "Met de cardioloog",
+        "Met de hoofdarts"
+      ],
+      "correctAnswer": "Correct answer: Met dokter van Dijk"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat moet mevrouw Jansen meenemen naar haar afspraak?",
+      "options": [
+        "Haar boodschappenlijst",
+        "Haar zorgpas en identiteitsbewijs",
+        "Een cadeau voor de dokter",
+        "Haar paspoort"
+      ],
+      "correctAnswer": "Correct answer: Haar zorgpas en identiteitsbewijs"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Waar is de afdeling cardiologie in het ziekenhuis?",
+      "options": [
+        "Op de eerste verdieping",
+        "Op de tweede verdieping",
+        "Op de derde verdieping",
+        "In de kelder"
+      ],
+      "correctAnswer": "Correct answer: Op de tweede verdieping"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Hoe kan mevrouw Jansen haar afspraak verzetten?",
+      "options": [
+        "Door een e-mail te sturen",
+        "Door te bellen naar de afdeling",
+        "Door naar het ziekenhuis te gaan",
+        "Door een brief te schrijven"
+      ],
+      "correctAnswer": "Correct answer: Door te bellen naar de afdeling"
+    }
+  ]
+}

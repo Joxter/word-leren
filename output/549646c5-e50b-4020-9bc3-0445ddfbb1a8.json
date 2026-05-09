@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/549646c5-e50b-4020-9bc3-0445ddfbb1a8",
+  "title": "Een melding doen van overlast in de buurt",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/549646c5-e50b-4020-9bc3-0445ddfbb1a8/9e26d04d-5d2d-4807-a470-013190741fc4.mp3",
+  "audioFile": "audio/549646c5-e50b-4020-9bc3-0445ddfbb1a8.mp3",
+  "transcript": "Hallo, ik ben Jan. Ik woon in de Meidoornstraat, nummer 32, in Rotterdam. Ik wil graag een klacht indienen over lawaai in mijn buurt. Elke avond, vooral in het weekend, is er veel herrie van een bar aan het einde van de straat. Het lawaai gaat vaak door tot diep in de nacht. Mensen praten hard, lachen en soms is er zelfs luide muziek. Dit stoort ons heel erg, vooral omdat mijn kinderen niet kunnen slapen door het lawaai. Ik heb geprobeerd om met de eigenaar van de bar te praten, maar hij zegt dat hij niets kan doen. Ik heb ook met mijn buren gesproken en zij hebben hetzelfde probleem. Wij vragen ons af of hier iets aan gedaan kan worden. Ik hoop dat de gemeente ons kan helpen. Misschien kunnen ze met de eigenaar van de bar praten of een regel instellen dat het na een bepaalde tijd stil moet zijn. Ik kijk uit naar uw antwoord. Alvast bedankt voor uw hulp.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Waar woont Jan?",
+      "options": [
+        "In Amsterdam",
+        "In de Meidoornstraat, nummer 32, in Rotterdam",
+        "In Utrecht",
+        "In de Meidoornstraat, nummer 30, in Rotterdam"
+      ],
+      "correctAnswer": "Correct answer: In de Meidoornstraat, nummer 32, in Rotterdam"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat is het probleem van Jan?",
+      "options": [
+        "Er is een probleem met zijn auto",
+        "Hij heeft problemen op zijn werk",
+        "Er is lawaai in zijn buurt",
+        "Hij heeft problemen met zijn huis"
+      ],
+      "correctAnswer": "Correct answer: Er is lawaai in zijn buurt"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat is de reactie van de eigenaar van de bar op de klacht van Jan?",
+      "options": [
+        "Hij zegt dat hij het lawaai zal stoppen",
+        "Hij zegt dat hij niets kan doen",
+        "Hij zegt dat Jan moet verhuizen",
+        "Hij negeert de klacht van Jan"
+      ],
+      "correctAnswer": "Correct answer: Hij zegt dat hij niets kan doen"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat hoopt Jan dat de gemeente zal doen?",
+      "options": [
+        "Dat ze een nieuwe bar zullen openen",
+        "Dat ze met de eigenaar van de bar zullen praten of een regel instellen dat het na een bepaalde tijd stil moet zijn",
+        "Dat ze het lawaai zullen stoppen",
+        "Dat ze de bar zullen sluiten"
+      ],
+      "correctAnswer": "Correct answer: Dat ze met de eigenaar van de bar zullen praten of een regel instellen dat het na een bepaalde tijd stil moet zijn"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Hebben de buren van Jan hetzelfde probleem?",
+      "options": [
+        "Ja, ze hebben hetzelfde probleem",
+        "Nee, ze hebben geen probleem",
+        "Het is niet duidelijk",
+        "Ja, maar ze vinden het lawaai niet erg"
+      ],
+      "correctAnswer": "Correct answer: Ja, ze hebben hetzelfde probleem"
+    }
+  ]
+}

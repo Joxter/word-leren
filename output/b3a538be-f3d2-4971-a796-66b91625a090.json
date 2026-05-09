@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/b3a538be-f3d2-4971-a796-66b91625a090",
+  "title": "Lezen hoe je hulp krijgt bij invullen van formulieren",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/b3a538be-f3d2-4971-a796-66b91625a090/50e293c9-60de-40a6-9776-387fd94688b1.mp3",
+  "audioFile": "audio/b3a538be-f3d2-4971-a796-66b91625a090.mp3",
+  "transcript": "Hallo allemaal, goedemiddag! Vandaag gaan we het hebben over het invullen van formulieren. Weet je niet hoe je een formulier moet invullen? Geen zorgen, er is hulp beschikbaar. De gemeente biedt gratis hulp bij het invullen van formulieren. Je kunt naar het gemeentehuis gaan en vragen om hulp. Ze hebben speciale medewerkers die je kunnen helpen. Ze kunnen je bijvoorbeeld helpen met het invullen van belastingformulieren, aanvraagformulieren voor een uitkering of een formulier voor het verlengen van je paspoort. Maar let op, je moet wel een afspraak maken. Je kunt bellen naar de gemeente om een afspraak te maken, of je kunt het online doen op de website van de gemeente. Vergeet niet alle nodige documenten mee te nemen naar je afspraak. Tot de volgende keer en succes met het invullen van je formulieren!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat is het onderwerp van de discussie vandaag?",
+      "options": [
+        "Hoe je een afspraak maakt bij de gemeente",
+        "Hoe je belastingformulieren invult",
+        "Hoe je formulieren invult",
+        "Hoe je je paspoort verlengt"
+      ],
+      "correctAnswer": "Correct answer: Hoe je formulieren invult"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wie biedt hulp bij het invullen van formulieren?",
+      "options": [
+        "De school",
+        "De gemeente",
+        "De belastingdienst",
+        "De bibliotheek"
+      ],
+      "correctAnswer": "Correct answer: De gemeente"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat moet je doen voordat je hulp kunt krijgen bij het invullen van formulieren?",
+      "options": [
+        "Een formulier invullen",
+        "Een afspraak maken",
+        "Je paspoort verlengen",
+        "Belasting betalen"
+      ],
+      "correctAnswer": "Correct answer: Een afspraak maken"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Hoe kun je een afspraak maken om hulp te krijgen bij het invullen van formulieren?",
+      "options": [
+        "Je kunt een e-mail sturen",
+        "Je kunt bellen of het online doen op de website van de gemeente",
+        "Je kunt een brief schrijven",
+        "Je kunt persoonlijk naar de gemeente gaan"
+      ],
+      "correctAnswer": "Correct answer: Je kunt bellen of het online doen op de website van de gemeente"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat moet je niet vergeten mee te nemen naar je afspraak?",
+      "options": [
+        "Je paspoort",
+        "Je belastingformulieren",
+        "Alle nodige documenten",
+        "Je uitkeringsaanvraag"
+      ],
+      "correctAnswer": "Correct answer: Alle nodige documenten"
+    }
+  ]
+}

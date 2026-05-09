@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/419dc0cd-678f-4bdb-b0e3-f4dabf91631d",
+  "title": "Informatie zoeken over parkeerregels in de straat",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/419dc0cd-678f-4bdb-b0e3-f4dabf91631d/7f331c99-fc2b-46d0-b110-d64ced240d53.mp3",
+  "audioFile": "audio/419dc0cd-678f-4bdb-b0e3-f4dabf91631d.mp3",
+  "transcript": "Hallo allemaal! Ik ben nieuw in deze buurt en ik heb een vraag over de parkeerregels hier. Ik heb gehoord dat hier verschillende parkeerzones zijn. Kunt u mij vertellen hoe dit werkt? Ik heb een auto en ik wil weten waar ik kan parkeren. Ik wil geen parkeerboete krijgen. En hoe zit het met bezoekers? Hebben zij ook een parkeervergunning nodig of is er een speciale regeling voor hen? Ik heb ook gehoord dat er op sommige dagen van de week een schoonmaakdag is en dat we dan niet op straat mogen parkeren. Klopt dat? En als het zo is, op welke dagen is het dan? Ik wil graag goed op de hoogte zijn van de regels om problemen te voorkomen. Alvast bedankt voor uw hulp!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat wil de spreker weten over het parkeren?",
+      "options": [
+        "Hij wil weten hoeveel het kost om te parkeren.",
+        "Hij wil weten waar hij kan parkeren en de parkeerregels.",
+        "Hij wil weten hoe hij een parkeervergunning kan krijgen.",
+        "Hij wil weten hoe laat hij kan parkeren."
+      ],
+      "correctAnswer": "Correct answer: Hij wil weten waar hij kan parkeren en de parkeerregels."
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat wil de spreker voorkomen?",
+      "options": [
+        "Hij wil voorkomen dat hij een parkeerboete krijgt.",
+        "Hij wil voorkomen dat hij zijn auto verliest.",
+        "Hij wil voorkomen dat hij de verkeerde weg neemt.",
+        "Hij wil voorkomen dat hij te laat komt."
+      ],
+      "correctAnswer": "Correct answer: Hij wil voorkomen dat hij een parkeerboete krijgt."
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat heeft de spreker gehoord over de parkeerregels?",
+      "options": [
+        "Hij heeft gehoord dat er verschillende parkeerzones zijn.",
+        "Hij heeft gehoord dat parkeren altijd gratis is.",
+        "Hij heeft gehoord dat je altijd en overal kunt parkeren.",
+        "Hij heeft gehoord dat er geen speciale regeling voor bezoekers is."
+      ],
+      "correctAnswer": "Correct answer: Hij heeft gehoord dat er verschillende parkeerzones zijn."
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat wil de spreker weten over bezoekers en parkeren?",
+      "options": [
+        "Hij wil weten of bezoekers mogen parkeren.",
+        "Hij wil weten of bezoekers een parkeervergunning nodig hebben.",
+        "Hij wil weten of bezoekers op elk moment kunnen parkeren.",
+        "Hij wil weten of bezoekers in zijn auto kunnen parkeren."
+      ],
+      "correctAnswer": "Correct answer: Hij wil weten of bezoekers een parkeervergunning nodig hebben."
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat heeft de spreker gehoord over schoonmaakdag?",
+      "options": [
+        "Hij heeft gehoord dat er op sommige dagen van de week een schoonmaakdag is.",
+        "Hij heeft gehoord dat er elke dag een schoonmaakdag is.",
+        "Hij heeft gehoord dat er geen schoonmaakdag is.",
+        "Hij heeft gehoord dat de schoonmaakdag alleen op zondag is."
+      ],
+      "correctAnswer": "Correct answer: Hij heeft gehoord dat er op sommige dagen van de week een schoonmaakdag is."
+    }
+  ]
+}

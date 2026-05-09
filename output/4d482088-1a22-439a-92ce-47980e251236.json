@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/4d482088-1a22-439a-92ce-47980e251236",
+  "title": "Een brief lezen over een bewonersvergadering",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/4d482088-1a22-439a-92ce-47980e251236/791a45f4-20ad-4092-9dad-93c932774d93.mp3",
+  "audioFile": "audio/4d482088-1a22-439a-92ce-47980e251236.mp3",
+  "transcript": "Hallo allemaal, ik wil jullie even informeren over de bewonersvergadering die volgende week dinsdag plaatsvindt. We houden de vergadering in het buurthuis, en we beginnen om 19.00 uur. We gaan het hebben over een aantal belangrijke zaken. Ten eerste, de renovatie van het speeltuintje. De gemeente heeft geld beschikbaar gesteld en we mogen zelf beslissen hoe we het gaan inrichten. Ook gaan we praten over het onderhoud van de gemeenschappelijke tuin. We zoeken vrijwilligers die willen helpen met het tuinonderhoud. Tot slot willen we het hebben over de veiligheid in de buurt. Er zijn de laatste tijd enkele inbraken geweest. We willen samen bekijken hoe we de veiligheid kunnen verbeteren. Heb je ideeën of suggesties? Kom dan naar de vergadering. We hopen jullie allemaal te zien.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Waar vindt de bewonersvergadering plaats?",
+      "options": [
+        "In het speeltuintje",
+        "In het gemeentehuis",
+        "In het buurthuis",
+        "In de gemeenschappelijke tuin"
+      ],
+      "correctAnswer": "Correct answer: In het buurthuis"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Welke onderwerpen zullen tijdens de vergadering worden besproken?",
+      "options": [
+        "De renovatie van het speeltuintje, het onderhoud van de gemeenschappelijke tuin en de veiligheid in de buurt",
+        "De openingstijden van het buurthuis en de veiligheid in het speeltuintje",
+        "Het schoonmaken van de straten en het onderhoud van het speeltuintje",
+        "De openingstijden van de speeltuin en het onderhoud van de gemeenschappelijke tuin"
+      ],
+      "correctAnswer": "Correct answer: De renovatie van het speeltuintje, het onderhoud van de gemeenschappelijke tuin en de veiligheid in de buurt"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Waarom worden vrijwilligers gezocht?",
+      "options": [
+        "Om het buurthuis te onderhouden",
+        "Om het speeltuintje te renoveren",
+        "Om te helpen met het tuinonderhoud",
+        "Om de veiligheid in de buurt te verbeteren"
+      ],
+      "correctAnswer": "Correct answer: Om te helpen met het tuinonderhoud"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat is het probleem met de veiligheid in de buurt?",
+      "options": [
+        "Er zijn te veel auto's",
+        "Er is te veel lawaai",
+        "Er zijn de laatste tijd enkele inbraken geweest",
+        "Er zijn te veel mensen"
+      ],
+      "correctAnswer": "Correct answer: Er zijn de laatste tijd enkele inbraken geweest"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat gaat er gebeuren met het speeltuintje?",
+      "options": [
+        "Het wordt gesloten",
+        "Het wordt gerenoveerd",
+        "Het wordt verkocht",
+        "Het wordt verplaatst"
+      ],
+      "correctAnswer": "Correct answer: Het wordt gerenoveerd"
+    }
+  ]
+}

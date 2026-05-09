@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/ce0b8bdc-4b21-4ad6-8a23-8f2a01fa065a",
+  "title": "Lezen over regels voor hondenbezitters in de wijk",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/ce0b8bdc-4b21-4ad6-8a23-8f2a01fa065a/b6f05722-3eaa-4ca4-8e05-8a83ba505ec5.mp3",
+  "audioFile": "audio/ce0b8bdc-4b21-4ad6-8a23-8f2a01fa065a.mp3",
+  "transcript": "Hallo allemaal, vandaag wil ik het met jullie hebben over de regels voor hondenbezitters in onze wijk. Iedereen houdt van zijn hond, maar het is belangrijk om de regels te volgen om de wijk schoon en veilig te houden. Ten eerste, honden moeten altijd aan de lijn zijn, tenzij ze in een aangewezen hondenuitlaatplaats zijn. Daar kunnen ze vrij rondlopen. Ten tweede, hondenbezitters moeten altijd de uitwerpselen van hun hond opruimen. Er zijn speciale afvalbakken voor hondenpoep in de wijk, dus zorg ervoor dat je ze gebruikt. Ten derde, honden zijn niet toegestaan in speeltuinen, sportvelden en zandbakken, om te zorgen dat deze plekken schoon blijven voor onze kinderen. Als we allemaal deze regels volgen, kunnen we ervoor zorgen dat onze wijk een prettige plek blijft voor iedereen. Bedankt voor jullie aandacht.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat moeten hondenbezitters doen met de uitwerpselen van hun hond?",
+      "options": [
+        "Ze moeten het laten liggen",
+        "Ze moeten het opruimen",
+        "Ze moeten het aan de gemeente melden",
+        "Ze moeten het in hun tuin begraven"
+      ],
+      "correctAnswer": "Correct answer: Ze moeten het opruimen"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Waar mogen honden vrij rondlopen?",
+      "options": [
+        "In speeltuinen",
+        "Op sportvelden",
+        "In aangewezen hondenuitlaatplaatsen",
+        "Op de weg"
+      ],
+      "correctAnswer": "Correct answer: In aangewezen hondenuitlaatplaatsen"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Waar zijn honden niet toegestaan?",
+      "options": [
+        "In speeltuinen, sportvelden en zandbakken",
+        "In winkels",
+        "In restaurants",
+        "In parken"
+      ],
+      "correctAnswer": "Correct answer: In speeltuinen, sportvelden en zandbakken"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Waarom moeten deze regels worden gevolgd?",
+      "options": [
+        "Om de wijk schoon en veilig te houden",
+        "Om honden te trainen",
+        "Om minder honden in de wijk te hebben",
+        "Om de hondenbezitters te straffen"
+      ],
+      "correctAnswer": "Correct answer: Om de wijk schoon en veilig te houden"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat moet je doen met de hondenpoep?",
+      "options": [
+        "Gooi het in de speciale afvalbakken voor hondenpoep",
+        "Laat het op de grond liggen",
+        "Gooi het in elke afvalbak",
+        "Neem het mee naar huis"
+      ],
+      "correctAnswer": "Correct answer: Gooi het in de speciale afvalbakken voor hondenpoep"
+    }
+  ]
+}

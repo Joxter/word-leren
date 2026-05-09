@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/329b4c34-afff-4d59-8c8f-a52b0b8f7e25",
+  "title": "Informatie zoeken over veilig oversteken bij een school",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/329b4c34-afff-4d59-8c8f-a52b0b8f7e25/5e97acdd-adc0-4c3a-a669-a1aa11c24ade.mp3",
+  "audioFile": "audio/329b4c34-afff-4d59-8c8f-a52b0b8f7e25.mp3",
+  "transcript": "Hallo allemaal! Vandaag wil ik het hebben over een belangrijk onderwerp: veilig oversteken bij een school. Veiligheid is erg belangrijk, vooral rond scholen waar veel kinderen lopen. Er zijn verschillende dingen die je kunt doen om veilig over te steken. Eerst, kijk altijd naar links en rechts voordat je de straat oversteekt. Ten tweede, gebruik altijd het zebrapad. Het zebrapad is er om ons te helpen veilig over te steken. Ten derde, als er een verkeerslicht is, wacht dan tot het groen is voordat je oversteekt. Het is belangrijk om deze regels te volgen, niet alleen voor je eigen veiligheid, maar ook voor de veiligheid van anderen. Vergeet niet dat we allemaal een rol spelen in het houden van onze straten veilig. Dus, de volgende keer dat je bij een school bent, vergeet dan niet deze regels te volgen. Denk eraan, veiligheid gaat voor alles. Dank jullie wel.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Waarover wil de spreker het hebben?",
+      "options": [
+        "Over het belang van het zebrapad",
+        "Over veilig oversteken bij een school",
+        "Over de werking van verkeerslichten",
+        "Over het belang van veiligheid bij het bouwen van scholen"
+      ],
+      "correctAnswer": "Correct answer: Over veilig oversteken bij een school"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat is een ding dat je kunt doen om veilig over te steken?",
+      "options": [
+        "Altijd naar links en rechts kijken",
+        "Zomaar de straat oversteken",
+        "Het zebrapad vermijden",
+        "Oversteken als het verkeerslicht rood is"
+      ],
+      "correctAnswer": "Correct answer: Altijd naar links en rechts kijken"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Waarom is het belangrijk om de regels te volgen?",
+      "options": [
+        "Alleen voor je eigen veiligheid",
+        "Alleen voor de veiligheid van anderen",
+        "Voor zowel je eigen veiligheid als de veiligheid van anderen",
+        "Omdat de regels er zijn"
+      ],
+      "correctAnswer": "Correct answer: Voor zowel je eigen veiligheid als de veiligheid van anderen"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat moet je doen als er een verkeerslicht is?",
+      "options": [
+        "Oversteken wanneer het verkeerslicht rood is",
+        "Wachten tot het verkeerslicht groen is",
+        "Oversteken zonder naar het verkeerslicht te kijken",
+        "Het verkeerslicht negeren"
+      ],
+      "correctAnswer": "Correct answer: Wachten tot het verkeerslicht groen is"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Waarvoor is het zebrapad?",
+      "options": [
+        "Om het verkeer te reguleren",
+        "Om ons te helpen veilig over te steken",
+        "Om de straat mooi te maken",
+        "Om auto's te laten stoppen"
+      ],
+      "correctAnswer": "Correct answer: Om ons te helpen veilig over te steken"
+    }
+  ]
+}

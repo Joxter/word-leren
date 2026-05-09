@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/e83d2bfa-a091-4d3d-a1c0-1ca58385dd67",
+  "title": "Contact opnemen met de woningcorporatie over een reparatie",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/e83d2bfa-a091-4d3d-a1c0-1ca58385dd67/6fb52969-f0e5-4801-ae54-38a8daa39dd3.mp3",
+  "audioFile": "audio/e83d2bfa-a091-4d3d-a1c0-1ca58385dd67.mp3",
+  "transcript": "Hallo, ik ben Martijn en ik woon in een flatgebouw in Utrecht. Ik heb een probleem met de verwarming in mijn appartement. Het werkt niet goed. Het is erg koud en ik kan het niet warmer maken. Ik heb besloten om de woningcorporatie te bellen voor hulp. Ik heb het nummer van de woningcorporatie in mijn telefoon. Ik bel ze en wacht tot iemand opneemt. \"Hallo, dit is Martijn. Ik woon in uw flatgebouw op de Hoogstraat. Mijn verwarming werkt niet goed. Het is erg koud in mijn appartement. Kunt u iemand sturen om het te repareren?\" Ze vragen me om mijn adres en telefoonnummer, zodat de reparateur me kan bellen als hij klaar is om te komen. Ze zeggen dat de reparateur morgenochtend komt. Ik bedank ze voor hun hulp en hang op. Morgen zal het hopelijk warmer zijn in mijn appartement.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Waar woont Martijn?",
+      "options": [
+        "In een huis in Utrecht",
+        "In een flatgebouw in Amsterdam",
+        "In een flatgebouw in Utrecht",
+        "In een huis in Amsterdam"
+      ],
+      "correctAnswer": "Correct answer: In een flatgebouw in Utrecht"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat is het probleem van Martijn?",
+      "options": [
+        "Zijn televisie werkt niet",
+        "Zijn verwarming werkt niet goed",
+        "Zijn koelkast werkt niet",
+        "Zijn wasmachine werkt niet goed"
+      ],
+      "correctAnswer": "Correct answer: Zijn verwarming werkt niet goed"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wie belt Martijn voor hulp?",
+      "options": [
+        "De politie",
+        "De brandweer",
+        "De woningcorporatie",
+        "Zijn vrienden"
+      ],
+      "correctAnswer": "Correct answer: De woningcorporatie"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wanneer komt de reparateur?",
+      "options": [
+        "Vanmiddag",
+        "Morgenmiddag",
+        "Morgenochtend",
+        "Volgende week"
+      ],
+      "correctAnswer": "Correct answer: Morgenochtend"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat is het adres van Martijn?",
+      "options": [
+        "Hoogstraat",
+        "Laagstraat",
+        "Middenstraat",
+        "Breedstraat"
+      ],
+      "correctAnswer": "Correct answer: Hoogstraat"
+    }
+  ]
+}

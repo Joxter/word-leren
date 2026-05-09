@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/b2d5dbb7-1622-4c6f-9dfe-98c0f39b1334",
+  "title": "Een brief lezen van de gemeente over onderhoudswerk",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/b2d5dbb7-1622-4c6f-9dfe-98c0f39b1334/987c9d34-2b2f-4430-a047-f5ffa54410a0.mp3",
+  "audioFile": "audio/b2d5dbb7-1622-4c6f-9dfe-98c0f39b1334.mp3",
+  "transcript": "Hallo allemaal! Ik heb een brief van de gemeente ontvangen over onderhoudswerkzaamheden in onze straat. De brief zegt dat het werk volgende week maandag begint en ongeveer twee weken zal duren. Ze gaan de straat opnieuw bestraten en nieuwe straatverlichting installeren. Dat betekent dat we tijdens deze periode geen auto's in de straat kunnen parkeren. De gemeente raadt ons aan om onze auto's in de nabijgelegen parkeergarage te parkeren. Ze zeggen dat het werk elke dag om acht uur 's ochtends begint en om vier uur 's middags eindigt. De gemeente heeft ook gezegd dat ze hun best zullen doen om het lawaai tot een minimum te beperken, maar ze verontschuldigen zich alvast voor eventuele overlast. Als je vragen hebt over het onderhoudswerk, kun je de gemeente bellen op hun speciale informatienummer.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat gaat de gemeente doen?",
+      "options": [
+        "Ze gaan een nieuw park bouwen",
+        "Ze gaan de straat opnieuw bestraten en nieuwe straatverlichting installeren",
+        "Ze gaan het stadhuis renoveren",
+        "Ze gaan een nieuwe bibliotheek openen"
+      ],
+      "correctAnswer": "Correct answer: Ze gaan de straat opnieuw bestraten en nieuwe straatverlichting installeren"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wanneer begint het werk?",
+      "options": [
+        "Volgende week dinsdag",
+        "Volgende week zaterdag",
+        "Volgende week maandag",
+        "Volgende week donderdag"
+      ],
+      "correctAnswer": "Correct answer: Volgende week maandag"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Waar raadt de gemeente aan om auto's te parkeren tijdens de werkzaamheden?",
+      "options": [
+        "Op de stoep",
+        "In de nabijgelegen parkeergarage",
+        "In de achtertuin",
+        "Bij het stadhuis"
+      ],
+      "correctAnswer": "Correct answer: In de nabijgelegen parkeergarage"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wanneer eindigt het werk elke dag?",
+      "options": [
+        "Om vijf uur 's middags",
+        "Om zes uur 's middags",
+        "Om vier uur 's middags",
+        "Om drie uur 's middags"
+      ],
+      "correctAnswer": "Correct answer: Om vier uur 's middags"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat belooft de gemeente te doen betreft het lawaai?",
+      "options": [
+        "Ze zullen het lawaai helemaal stoppen",
+        "Ze zullen het lawaai verhogen",
+        "Ze zullen hun best doen om het lawaai tot een minimum te beperken",
+        "Ze zullen het lawaai negeren"
+      ],
+      "correctAnswer": "Correct answer: Ze zullen hun best doen om het lawaai tot een minimum te beperken"
+    }
+  ]
+}

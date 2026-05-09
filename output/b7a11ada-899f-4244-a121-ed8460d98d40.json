@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/b7a11ada-899f-4244-a121-ed8460d98d40",
+  "title": "Een klacht indienen over vuil op straat",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/b7a11ada-899f-4244-a121-ed8460d98d40/a953eebc-6db2-491f-a351-174f3e4a90a7.mp3",
+  "audioFile": "audio/b7a11ada-899f-4244-a121-ed8460d98d40.mp3",
+  "transcript": "Hallo, mijn naam is Jan en ik woon in de Kerkstraat. Ik wil een klacht indienen over het vuil op onze straat. Het lijkt alsof mensen hun afval gewoon op de grond gooien. Er liggen lege flessen, papier, en zelfs oude meubels. Het is een echt probleem en het maakt onze straat erg vies. We hebben een afvalcontainer, maar blijkbaar gebruiken niet alle mensen die. Ik heb ook ratten en andere ongedierte gezien, wat echt niet veilig is, vooral voor de kinderen die in onze straat spelen. Ik vraag me af of de gemeente iets kan doen om dit probleem op te lossen. Misschien kunnen er meer afvalbakken geplaatst worden of kunnen er boetes gegeven worden aan de mensen die hun afval op de straat gooien. Ik hoop dat er snel iets aan gedaan wordt. Dank je wel voor je aandacht.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Waar woont Jan?",
+      "options": [
+        "In de Kerkstraat",
+        "In de Schoolstraat",
+        "In de Havenstraat",
+        "In de Zandstraat"
+      ],
+      "correctAnswer": "Correct answer: In de Kerkstraat"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Waarover wil Jan een klacht indienen?",
+      "options": [
+        "Over het lawaai in zijn straat",
+        "Over het vuil op zijn straat",
+        "Over de honden in zijn straat",
+        "Over de verlichting in zijn straat"
+      ],
+      "correctAnswer": "Correct answer: Over het vuil op zijn straat"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat voor soort afval ziet Jan op zijn straat?",
+      "options": [
+        "Lege flessen, papier en oude meubels",
+        "Voedselresten en plastic zakken",
+        "Autobanden en elektronisch afval",
+        "Bouwafval en glas"
+      ],
+      "correctAnswer": "Correct answer: Lege flessen, papier en oude meubels"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat stelt Jan voor als mogelijke oplossingen?",
+      "options": [
+        "Meer afvalbakken plaatsen en boetes geven",
+        "Een schoonmaakbedrijf inhuren",
+        "Een buurtfeest organiseren om het vuil op te ruimen",
+        "Meer vuilniswagens sturen"
+      ],
+      "correctAnswer": "Correct answer: Meer afvalbakken plaatsen en boetes geven"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat heeft Jan naast afval nog meer op zijn straat gezien?",
+      "options": [
+        "Honden",
+        "Katten",
+        "Ratten en ander ongedierte",
+        "Vogels"
+      ],
+      "correctAnswer": "Correct answer: Ratten en ander ongedierte"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/211bac3e-b648-49f5-9bf7-103fe37564a8",
+  "title": "Informatie zoeken over hulp bij geldzaken in de gemeente",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/211bac3e-b648-49f5-9bf7-103fe37564a8/7adad139-804f-4d3d-97ed-1964226b7eab.mp3",
+  "audioFile": "audio/211bac3e-b648-49f5-9bf7-103fe37564a8.mp3",
+  "transcript": "Heb je problemen met je financiën? Heb je hulp nodig bij het beheren van je geld? Onze gemeente heeft een dienst die je kan helpen. Deze dienst heet de \"Geldzorgdienst\". Ze kunnen je helpen met dingen zoals het betalen van rekeningen, het besparen van geld en het maken van een begroting. Je kunt hen bereiken door te bellen naar het gemeentehuis. Het telefoonnummer is 183654482. Je kunt ook naar het gemeentehuis komen. Het adres is Pleinstraat 1. Het gemeentehuis is open van maandag tot vrijdag, van 09:00 uur tot 17:00 uur. Maar let op, op woensdag is het gemeentehuis 's middags gesloten. Dus als je op woensdag wilt komen, kom dan in de ochtend. Ze zullen blij zijn om je te helpen. Vergeet niet, je bent niet alleen. Er is hulp beschikbaar.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat is de dienst die de gemeente aanbiedt voor mensen die hulp nodig hebben met financiën?",
+      "options": [
+        "Belastingdienst",
+        "Geldzorgdienst",
+        "Financiële assistentie",
+        "Gemeentehuisdienst"
+      ],
+      "correctAnswer": "Correct answer: Geldzorgdienst"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wanneer is het gemeentehuis 's middags gesloten?",
+      "options": [
+        "Op maandag",
+        "Op dinsdag",
+        "Op woensdag",
+        "Op vrijdag"
+      ],
+      "correctAnswer": "Correct answer: Op woensdag"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Hoe kun je de Geldzorgdienst bereiken?",
+      "options": [
+        "Door te mailen naar het gemeentehuis",
+        "Door te bellen naar het gemeentehuis",
+        "Door het invullen van een online formulier",
+        "Door een brief te sturen naar het gemeentehuis"
+      ],
+      "correctAnswer": "Correct answer: Door te bellen naar het gemeentehuis"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat is het adres van het gemeentehuis?",
+      "options": [
+        "Pleinstraat 1",
+        "Pleinstraat 2",
+        "Gemeenteplein 1",
+        "Gemeenteplein 2"
+      ],
+      "correctAnswer": "Correct answer: Pleinstraat 1"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Hoe kan de Geldzorgdienst je helpen?",
+      "options": [
+        "Met het vinden van een baan",
+        "Met het betalen van rekeningen, het besparen van geld en het maken van een begroting",
+        "Met het aanvragen van een lening",
+        "Met het kopen van een huis"
+      ],
+      "correctAnswer": "Correct answer: Met het betalen van rekeningen, het besparen van geld en het maken van een begroting"
+    }
+  ]
+}

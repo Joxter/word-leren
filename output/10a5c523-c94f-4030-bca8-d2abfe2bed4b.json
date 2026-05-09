@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/10a5c523-c94f-4030-bca8-d2abfe2bed4b",
+  "title": "Uitleg krijgen over een verwijzing naar een specialist",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/bc950169-3904-406e-b425-24f98bd3eedd/10a5c523-c94f-4030-bca8-d2abfe2bed4b/78c7e550-8f83-48a8-a060-c23efe89ff99.mp3",
+  "audioFile": "audio/10a5c523-c94f-4030-bca8-d2abfe2bed4b.mp3",
+  "transcript": "Goedemiddag! Tijdens ons gesprek vandaag, wil ik jullie uitleggen over hoe een verwijzing naar een specialist werkt. Stel je voor, je voelt je niet goed en gaat naar de huisarts. De huisarts onderzoekt je en besluit dat je een specialist nodig hebt. Deze specialist kan bijvoorbeeld een oogarts, een dermatoloog of een orthopedisch chirurg zijn. De huisarts schrijft dan een verwijzing. Met deze verwijzing ga je naar het ziekenhuis of de kliniek waar de specialist werkt. Daar maak je een afspraak voor een consult. Tijdens dit consult onderzoekt de specialist je verder. Het kan zijn dat je daarna nog meer onderzoeken nodig hebt, of dat je een behandeling krijgt. Het is belangrijk dat je de verwijzing van je huisarts meeneemt naar de afspraak met de specialist. Zonder deze verwijzing, kan het zijn dat de afspraak niet doorgaat of dat je de kosten zelf moet betalen. Vergeet dus niet je verwijzing mee te nemen!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat doet de huisarts als hij denkt dat je een specialist nodig hebt?",
+      "options": [
+        "De huisarts geeft je medicijnen",
+        "De huisarts schrijft een verwijzing",
+        "De huisarts maakt een afspraak met de specialist",
+        "De huisarts doet niets"
+      ],
+      "correctAnswer": "Correct answer: De huisarts schrijft een verwijzing"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat gebeurt er als je je verwijzing vergeet mee te nemen naar de afspraak met de specialist?",
+      "options": [
+        "De afspraak gaat gewoon door",
+        "Je moet de kosten zelf betalen",
+        "Je krijgt een boete",
+        "Niets bijzonders"
+      ],
+      "correctAnswer": "Correct answer: Je moet de kosten zelf betalen"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Waar ga je naartoe met de verwijzing van de huisarts?",
+      "options": [
+        "Naar de apotheek",
+        "Naar het ziekenhuis of de kliniek",
+        "Naar het gemeentehuis",
+        "Naar een vriend"
+      ],
+      "correctAnswer": "Correct answer: Naar het ziekenhuis of de kliniek"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wie onderzoekt je verder tijdens het consult?",
+      "options": [
+        "De huisarts",
+        "Een vriend",
+        "De specialist",
+        "Niemand"
+      ],
+      "correctAnswer": "Correct answer: De specialist"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat moet je doen met de verwijzing van de huisarts?",
+      "options": [
+        "Thuis laten",
+        "Weggooien",
+        "Meenemen naar de afspraak met de specialist",
+        "Verkopen"
+      ],
+      "correctAnswer": "Correct answer: Meenemen naar de afspraak met de specialist"
+    }
+  ]
+}

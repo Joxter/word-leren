@@ -1,0 +1,53 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/e7dfcca9-d369-44d6-be21-ad50fd70b5c0",
+  "title": "Een cursus of training volgen op het werk",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/aeb14462-d4d4-4a4d-ad29-abf9bfa91d3f/e7dfcca9-d369-44d6-be21-ad50fd70b5c0/32c764f0-e311-464a-9312-7c95a888dcdd.mp3",
+  "audioFile": "audio/e7dfcca9-d369-44d6-be21-ad50fd70b5c0.mp3",
+  "transcript": "Hallo allemaal! Welkom bij de training voor nieuwe medewerkers. Deze training is bedoeld om jullie meer te leren over ons bedrijf en om jullie voor te bereiden op jullie nieuwe baan. We zullen beginnen met een rondleiding door het kantoor. Daarna volgen er presentaties over de geschiedenis van ons bedrijf en over de verschillende afdelingen. Tijdens de lunch zullen jullie de kans krijgen om elkaar beter te leren kennen. Na de lunch gaan we verder met een workshop over effectieve communicatie op de werkvloer. We zullen de dag afsluiten met een vraag-en-antwoord sessie. Daar kunnen jullie alles vragen wat jullie willen weten. De training begint om 9 uur 's ochtends en eindigt om 5 uur 's middags. Vergeet niet om een notitieboek en pen mee te nemen voor aantekeningen. We kijken ernaar uit om jullie morgen te zien. Tot dan!",
+  "questions": [
+    {
+      "label": "Question 1 of 4",
+      "question": "Wat is het doel van de training voor nieuwe medewerkers?",
+      "options": [
+        "Om te leren over de geschiedenis van het bedrijf",
+        "Om elkaar beter te leren kennen",
+        "Om te leren over effectieve communicatie",
+        "Om meer te leren over het bedrijf en voor te bereiden op de nieuwe baan"
+      ],
+      "correctAnswer": "Correct answer: Om meer te leren over het bedrijf en voor te bereiden op de nieuwe baan"
+    },
+    {
+      "label": "Question 2 of 4",
+      "question": "Wat gebeurt er na de lunch tijdens de training?",
+      "options": [
+        "Er zal een vraag-en-antwoord sessie zijn",
+        "Er zal een rondleiding door het kantoor zijn",
+        "Er zal een workshop over effectieve communicatie op de werkvloer zijn",
+        "Er zal een presentatie over de geschiedenis van het bedrijf zijn"
+      ],
+      "correctAnswer": "Correct answer: Er zal een workshop over effectieve communicatie op de werkvloer zijn"
+    },
+    {
+      "label": "Question 3 of 4",
+      "question": "Hoe laat begint en eindigt de training?",
+      "options": [
+        "Begint om 8 uur 's ochtends en eindigt om 4 uur 's middags",
+        "Begint om 9 uur 's ochtends en eindigt om 5 uur 's middags",
+        "Begint om 10 uur 's ochtends en eindigt om 6 uur 's middags",
+        "Begint om 11 uur 's ochtends en eindigt om 7 uur 's middags"
+      ],
+      "correctAnswer": "Correct answer: Begint om 9 uur 's ochtends en eindigt om 5 uur 's middags"
+    },
+    {
+      "label": "Question 4 of 4",
+      "question": "Wat moeten de nieuwe medewerkers meenemen naar de training?",
+      "options": [
+        "Een laptop",
+        "Een notitieboek en pen",
+        "Hun lunch",
+        "Hun identificatie"
+      ],
+      "correctAnswer": "Correct answer: Een notitieboek en pen"
+    }
+  ]
+}

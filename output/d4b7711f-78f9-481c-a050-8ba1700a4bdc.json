@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/d4b7711f-78f9-481c-a050-8ba1700a4bdc",
+  "title": "Informatie lezen over een openbare wifi-plek in de stad",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/d4b7711f-78f9-481c-a050-8ba1700a4bdc/09664fab-619e-498e-a0fc-7108f832f82a.mp3",
+  "audioFile": "audio/d4b7711f-78f9-481c-a050-8ba1700a4bdc.mp3",
+  "transcript": "Hallo daar! Vandaag wil ik je iets vertellen over openbare wifi-plekken in onze stad. Weet je wat een wifi-plek is? Het is een plaats waar je gratis internet kunt gebruiken. Handig, toch? In onze stad zijn er veel openbare wifi-plekken. Je kunt ze vinden in parken, bibliotheken, cafés en zelfs op sommige pleinen. Maar wees voorzichtig, want niet alle wifi-plekken zijn veilig. Gebruik geen openbare wifi voor het delen van persoonlijke informatie, zoals wachtwoorden of bankgegevens. Als je wilt weten waar de dichtstbijzijnde wifi-plek is, kun je dat op de website van de gemeente vinden. Daar vind je een kaart met alle wifi-plekken in de stad. Je kunt ook de app van de gemeente downloaden op je telefoon. Met deze app kun je altijd zien waar de dichtstbijzijnde wifi-plek is. Onthoud, veiligheid eerst!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat is een wifi-plek?",
+      "options": [
+        "Een plek waar je kunt zwemmen",
+        "Een plek waar je gratis internet kunt gebruiken",
+        "Een plek waar je kunt eten",
+        "Een plek waar je kunt slapen"
+      ],
+      "correctAnswer": "Correct answer: Een plek waar je gratis internet kunt gebruiken"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Waar kun je openbare wifi-plekken vinden?",
+      "options": [
+        "In parken, bibliotheken, cafés en sommige pleinen",
+        "Alleen in bibliotheken",
+        "Alleen in cafés",
+        "Alleen op pleinen"
+      ],
+      "correctAnswer": "Correct answer: In parken, bibliotheken, cafés en sommige pleinen"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat moet je niet doen op een openbare wifi-plek?",
+      "options": [
+        "Je moet niet slapen",
+        "Je moet niet eten",
+        "Je moet geen persoonlijke informatie delen, zoals wachtwoorden of bankgegevens",
+        "Je moet niet lezen"
+      ],
+      "correctAnswer": "Correct answer: Je moet geen persoonlijke informatie delen, zoals wachtwoorden of bankgegevens"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Waar kun je informatie vinden over de dichtstbijzijnde wifi-plek?",
+      "options": [
+        "Op de website van de gemeente",
+        "In de krant",
+        "Op de radio",
+        "Op televisie"
+      ],
+      "correctAnswer": "Correct answer: Op de website van de gemeente"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat kun je doen met de app van de gemeente?",
+      "options": [
+        "Je kunt eten bestellen",
+        "Je kunt een fiets huren",
+        "Je kunt altijd zien waar de dichtstbijzijnde wifi-plek is",
+        "Je kunt een taxi bellen"
+      ],
+      "correctAnswer": "Correct answer: Je kunt altijd zien waar de dichtstbijzijnde wifi-plek is"
+    }
+  ]
+}

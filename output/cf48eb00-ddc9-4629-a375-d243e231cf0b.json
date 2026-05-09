@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/cf48eb00-ddc9-4629-a375-d243e231cf0b",
+  "title": "Overleggen met collega’s over een taak",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/aeb14462-d4d4-4a4d-ad29-abf9bfa91d3f/cf48eb00-ddc9-4629-a375-d243e231cf0b/47fa3aed-fc88-40d4-9d92-32cb71b20b6f.mp3",
+  "audioFile": "audio/cf48eb00-ddc9-4629-a375-d243e231cf0b.mp3",
+  "transcript": "Hallo allemaal, dank je wel voor het komen. Vandaag hebben we een belangrijk overleg over een nieuwe taak. We moeten samen een projectplan maken voor onze klant. Het is een groot project, dus we moeten goed samenwerken. Eerst moeten we de taken verdelen. Pieter, jij bent goed in het maken van planningen. Kun jij dat voor dit project ook doen? En Eva, jij bent goed in het schrijven van teksten. Kun jij de inleiding en de conclusie schrijven? Ik zal het onderzoek doen en de resultaten in het plan zetten. Daarna moeten we allemaal ons deel van het plan controleren. We moeten zeker weten dat er geen fouten in zitten. Daarom wil ik dat we volgende week dinsdag weer bij elkaar komen om het plan te bespreken. Is iedereen het daarmee eens? Zijn er nog vragen? Nee? Goed, laten we dan beginnen. Dank je wel voor jullie tijd en inzet. Veel succes iedereen!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat is het doel van de bijeenkomst?",
+      "options": [
+        "Om een vakantie te plannen",
+        "Om een projectplan te maken",
+        "Om een feest te organiseren",
+        "Om een vergadering te plannen"
+      ],
+      "correctAnswer": "Correct answer: Om een projectplan te maken"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat is de taak van Pieter?",
+      "options": [
+        "Het onderzoek doen",
+        "Het plan controleren",
+        "De inleiding en conclusie schrijven",
+        "De planning maken"
+      ],
+      "correctAnswer": "Correct answer: De planning maken"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat is de taak van Eva?",
+      "options": [
+        "Het onderzoek doen",
+        "De inleiding en conclusie schrijven",
+        "Het plan controleren",
+        "De planning maken"
+      ],
+      "correctAnswer": "Correct answer: De inleiding en conclusie schrijven"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wanneer zullen ze weer bij elkaar komen om het plan te bespreken?",
+      "options": [
+        "Volgende week maandag",
+        "Volgende week dinsdag",
+        "Volgende week woensdag",
+        "Volgende week donderdag"
+      ],
+      "correctAnswer": "Correct answer: Volgende week dinsdag"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat moeten ze allemaal doen met hun deel van het plan?",
+      "options": [
+        "Ze moeten het printen",
+        "Ze moeten het inleveren",
+        "Ze moeten het controleren",
+        "Ze moeten het presenteren"
+      ],
+      "correctAnswer": "Correct answer: Ze moeten het controleren"
+    }
+  ]
+}

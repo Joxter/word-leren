@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/ceab47bb-97fd-4a9f-a4c5-c7ec58e73569",
+  "title": "Informatie lezen over speelregels in een speeltuin",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/ceab47bb-97fd-4a9f-a4c5-c7ec58e73569/fd081de5-5f63-4cac-b50f-fa8da7519e81.mp3",
+  "audioFile": "audio/ceab47bb-97fd-4a9f-a4c5-c7ec58e73569.mp3",
+  "transcript": "Hallo allemaal, welkom in onze mooie speeltuin! Hier kunnen kinderen veilig spelen. Maar er zijn wel een paar regels. Eerst, de speeltuin is open van zonsopgang tot zonsondergang. Spelen in de nacht is niet toegestaan. Dan, volwassenen mogen alleen binnenkomen als ze een kind bij zich hebben. Ook, gooi je afval in de prullenbak. We willen de speeltuin schoon houden. En natuurlijk, wees altijd aardig voor andere kinderen. Geen vechten of schreeuwen. En het allerbelangrijkste, heb plezier! Kinderen kunnen van de glijbaan glijden, schommelen op de schommels, en klimmen op de klimrekken. Maar wees altijd voorzichtig. Als er een probleem is, vraag dan een volwassene om hulp. Geniet van je tijd in de speeltuin!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wanneer is de speeltuin open?",
+      "options": [
+        "Van zonsondergang tot zonsopgang",
+        "24 uur per dag",
+        "Van zonsopgang tot zonsondergang",
+        "Alleen in de middag"
+      ],
+      "correctAnswer": "Correct answer: Van zonsopgang tot zonsondergang"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wie mogen de speeltuin betreden?",
+      "options": [
+        "Alleen kinderen",
+        "Alleen volwassenen",
+        "Volwassenen als ze een kind bij zich hebben",
+        "Iedereen"
+      ],
+      "correctAnswer": "Correct answer: Volwassenen als ze een kind bij zich hebben"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat moeten kinderen doen met hun afval?",
+      "options": [
+        "Laat het op de grond vallen",
+        "Neem het mee naar huis",
+        "Gooi het in de prullenbak",
+        "Geef het aan een volwassene"
+      ],
+      "correctAnswer": "Correct answer: Gooi het in de prullenbak"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat is het belangrijkste in de speeltuin?",
+      "options": [
+        "Om te schreeuwen",
+        "Om te vechten",
+        "Om plezier te hebben",
+        "Om afval te gooien"
+      ],
+      "correctAnswer": "Correct answer: Om plezier te hebben"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat moeten kinderen doen als er een probleem is?",
+      "options": [
+        "Ze moeten het zelf oplossen",
+        "Ze moeten een volwassene om hulp vragen",
+        "Ze moeten naar huis gaan",
+        "Ze moeten blijven spelen"
+      ],
+      "correctAnswer": "Correct answer: Ze moeten een volwassene om hulp vragen"
+    }
+  ]
+}

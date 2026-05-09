@@ -1,0 +1,53 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/c5fefc3b-85f4-49bb-b057-8b726910856f",
+  "title": "Medicatie ophalen bij de apotheek",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/bc950169-3904-406e-b425-24f98bd3eedd/c5fefc3b-85f4-49bb-b057-8b726910856f/982e333a-2aad-4cab-8df5-a87bf8460021.mp3",
+  "audioFile": "audio/c5fefc3b-85f4-49bb-b057-8b726910856f.mp3",
+  "transcript": "Hallo, ik ben Martijn en ik ga je iets vertellen over het ophalen van medicijnen bij de apotheek. Het is belangrijk om te weten dat je niet zomaar medicijnen kunt kopen zoals je boodschappen doet. Je hebt een recept nodig van je dokter. Met dit recept ga je naar de apotheek. Je geeft het recept aan de apotheker en zij gaan voor je aan de slag. Soms moet je even wachten, maar vaak kun je de medicijnen meteen meenemen. Vergeet niet om je identiteitsbewijs en zorgverzekeringspas mee te nemen, want de apotheek heeft die nodig. Ook is het belangrijk om te vragen hoe je de medicijnen moet gebruiken. De apotheker kan je ook advies geven over de bijwerkingen. Als je alle informatie hebt, kun je de medicijnen ophalen en betalen. Het is heel makkelijk, maar je moet wel goed opletten.",
+  "questions": [
+    {
+      "label": "Question 1 of 4",
+      "question": "Wie is Martijn?",
+      "options": [
+        "Een apotheker",
+        "Een dokter",
+        "Een persoon die uitlegt over het ophalen van medicijnen",
+        "Een patiënt bij de apotheek"
+      ],
+      "correctAnswer": "Correct answer: Een persoon die uitlegt over het ophalen van medicijnen"
+    },
+    {
+      "label": "Question 2 of 4",
+      "question": "Wat moet je naar de apotheek brengen?",
+      "options": [
+        "Alleen je identiteitsbewijs",
+        "Alleen je zorgverzekeringspas",
+        "Je recept, identiteitsbewijs en zorgverzekeringspas",
+        "Alleen je recept"
+      ],
+      "correctAnswer": "Correct answer: Je recept, identiteitsbewijs en zorgverzekeringspas"
+    },
+    {
+      "label": "Question 3 of 4",
+      "question": "Wat doet de apotheker voor je?",
+      "options": [
+        "De apotheker koopt de medicijnen voor je",
+        "De apotheker geeft je advies over de bijwerkingen",
+        "De apotheker neemt je bloeddruk op",
+        "De apotheker maakt je recept klaar"
+      ],
+      "correctAnswer": "Correct answer: De apotheker geeft je advies over de bijwerkingen"
+    },
+    {
+      "label": "Question 4 of 4",
+      "question": "Wat moet je doen nadat je alle informatie hebt?",
+      "options": [
+        "Je moet wachten",
+        "Je moet de medicijnen ophalen en betalen",
+        "Je moet naar huis gaan",
+        "Je moet een afspraak maken met de dokter"
+      ],
+      "correctAnswer": "Correct answer: Je moet de medicijnen ophalen en betalen"
+    }
+  ]
+}

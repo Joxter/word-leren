@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/6199770d-73f7-4247-b8c5-7b11939e08de",
+  "title": "Informatie zoeken over sociale hulp in de wijk",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/6199770d-73f7-4247-b8c5-7b11939e08de/0d617bd7-b75d-4e7d-b777-1e1adf083df6.mp3",
+  "audioFile": "audio/6199770d-73f7-4247-b8c5-7b11939e08de.mp3",
+  "transcript": "Hallo, ik ben Lisa. Ik woon sinds kort in deze buurt en ik zoek wat informatie. Misschien kunnen jullie me helpen. Ik zoek naar sociale hulp in de wijk. Weet iemand waar ik dit kan vinden? In mijn oude buurt hadden we een wijkcentrum. Daar kon je terecht voor allerlei vragen. Bijvoorbeeld over werk, gezondheid, of als je je eenzaam voelde. Er was ook een voedselbank voor mensen die het financieel moeilijk hebben. Is er hier ook zoiets? En waar zit dat dan? Ook zoek ik naar activiteiten in de buurt. Ik wil graag nieuwe mensen leren kennen. Zijn er bijvoorbeeld clubs of verenigingen waar ik me bij kan aansluiten? En waar kan ik informatie vinden over deze dingen? Misschien is er wel een website? Ik hoor graag van jullie. Bedankt alvast voor jullie hulp.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat is de naam van de vrouw die spreekt?",
+      "options": [
+        "Sara",
+        "Lisa",
+        "Anna",
+        "Laura"
+      ],
+      "correctAnswer": "Correct answer: Lisa"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat is Lisa op zoek naar in haar nieuwe buurt?",
+      "options": [
+        "Nieuwe vrienden",
+        "Een nieuwe baan",
+        "Sociale hulp en activiteiten",
+        "Een nieuwe woning"
+      ],
+      "correctAnswer": "Correct answer: Sociale hulp en activiteiten"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat kon Lisa doen in het wijkcentrum van haar oude buurt?",
+      "options": [
+        "Vragen stellen over werk, gezondheid en eenzaamheid",
+        "Boodschappen doen",
+        "Sporten",
+        "Studeren"
+      ],
+      "correctAnswer": "Correct answer: Vragen stellen over werk, gezondheid en eenzaamheid"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat wil Lisa in haar nieuwe buurt doen?",
+      "options": [
+        "Een nieuwe baan vinden",
+        "Nieuwe mensen leren kennen",
+        "Een huis kopen",
+        "Een taalcursus volgen"
+      ],
+      "correctAnswer": "Correct answer: Nieuwe mensen leren kennen"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Waar zoekt Lisa informatie over de buurt?",
+      "options": [
+        "In de bibliotheek",
+        "Op de website",
+        "In de krant",
+        "Op de radio"
+      ],
+      "correctAnswer": "Correct answer: Op de website"
+    }
+  ]
+}

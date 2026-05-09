@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/8cbc5561-553b-4cb5-b01a-d546b45fbf08",
+  "title": "Routebeschrijving lezen naar een locatie bij een groot evenement",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/8cbc5561-553b-4cb5-b01a-d546b45fbf08/4fb3c50d-ddf8-4f05-8d0a-25b45f876a33.mp3",
+  "audioFile": "audio/8cbc5561-553b-4cb5-b01a-d546b45fbf08.mp3",
+  "transcript": "Hallo, welkom op de jaarlijkse bloemenmarkt in Utrecht. Laat me je de weg wijzen naar de ingang. Je bent nu op het treinstation. Zodra je het station uitloopt, ga je links. Je loopt dan langs het park. Blijf op deze weg voor ongeveer tien minuten. Aan het einde van de weg zie je een grote rotonde. Ga bij de rotonde rechtsaf. Je ziet dan een groot gebouw met een blauw dak, dat is het Jaarbeursgebouw. Loop niet naar het Jaarbeursgebouw toe, maar blijf rechtdoor lopen. Na ongeveer vijf minuten zie je aan je linkerhand de ingang van de bloemenmarkt. Je kan niet missen, want je ziet alle kleurrijke bloemen en de mensen. Als je die ziet, ben je op de juiste plaats. Geniet van je bezoek aan de bloemenmarkt!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Waar ben je nu?",
+      "options": [
+        "In het park",
+        "Bij de bloemenmarkt",
+        "Op het treinstation",
+        "Bij het Jaarbeursgebouw"
+      ],
+      "correctAnswer": "Correct answer: Op het treinstation"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Welke richting ga je als je het station uitloopt?",
+      "options": [
+        "Rechts",
+        "Links",
+        "Rechtdoor",
+        "Terug"
+      ],
+      "correctAnswer": "Correct answer: Links"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat zie je aan het einde van de weg?",
+      "options": [
+        "Een park",
+        "Een grote rotonde",
+        "Het Jaarbeursgebouw",
+        "Een treinstation"
+      ],
+      "correctAnswer": "Correct answer: Een grote rotonde"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Welke kant ga je op bij de rotonde?",
+      "options": [
+        "Rechtsaf",
+        "Linksaf",
+        "Rechtdoor",
+        "Terug"
+      ],
+      "correctAnswer": "Correct answer: Rechtsaf"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat moet je niet doen als je het Jaarbeursgebouw ziet?",
+      "options": [
+        "Ernaar toe lopen",
+        "Rechtdoor lopen",
+        "De bloemenmarkt zoeken",
+        "Naar links gaan"
+      ],
+      "correctAnswer": "Correct answer: Ernaar toe lopen"
+    }
+  ]
+}

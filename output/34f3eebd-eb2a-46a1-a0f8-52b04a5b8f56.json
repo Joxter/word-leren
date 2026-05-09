@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/34f3eebd-eb2a-46a1-a0f8-52b04a5b8f56",
+  "title": "Vragen stellen over veiligheid op de werkvloer",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/aeb14462-d4d4-4a4d-ad29-abf9bfa91d3f/34f3eebd-eb2a-46a1-a0f8-52b04a5b8f56/9422fb7a-4dbe-4003-b109-ace2d0bf727c.mp3",
+  "audioFile": "audio/34f3eebd-eb2a-46a1-a0f8-52b04a5b8f56.mp3",
+  "transcript": "Hallo team! We hebben een belangrijke bijeenkomst vandaag over de veiligheid op de werkvloer. Veiligheid is erg belangrijk voor ons. Daarom moeten we alles goed bespreken. We hebben nieuwe veiligheidsregels opgesteld. Deze regels zijn gemaakt om ons allemaal te beschermen. Ik wil dat iedereen deze regels kent en volgt. Eén van de nieuwe regels is dat iedereen een helm moet dragen. De helm beschermt je hoofd als er iets valt. Ook moeten we allemaal veiligheidsschoenen dragen. Deze schoenen beschermen je voeten. Zijn er vragen over deze nieuwe regels? Als je iets niet begrijpt, vraag het dan. Het is belangrijk dat we allemaal veilig zijn op het werk. Onthoud, veiligheid gaat voor alles. Als je ziet dat iemand de regels niet volgt, vertel het ons dan. Samen kunnen we een veilige werkomgeving maken. Bedankt voor jullie aandacht.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat is het onderwerp van de bijeenkomst vandaag?",
+      "options": [
+        "De nieuwe koffiemachine",
+        "Het vakantieplan",
+        "De veiligheid op de werkvloer",
+        "De verjaardag van de manager"
+      ],
+      "correctAnswer": "Correct answer: De veiligheid op de werkvloer"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat is één van de nieuwe veiligheidsregels?",
+      "options": [
+        "Iedereen moet een das dragen",
+        "Iedereen moet een helm dragen",
+        "Iedereen moet een jas dragen",
+        "Iedereen moet een zonnebril dragen"
+      ],
+      "correctAnswer": "Correct answer: Iedereen moet een helm dragen"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat moeten medewerkers doen als ze zien dat iemand de regels niet volgt?",
+      "options": [
+        "Ze moeten het negeren",
+        "Ze moeten het ons vertellen",
+        "Ze moeten het filmen",
+        "Ze moeten het op sociale media posten"
+      ],
+      "correctAnswer": "Correct answer: Ze moeten het ons vertellen"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat beschermen veiligheidsschoenen?",
+      "options": [
+        "Je handen",
+        "Je hoofd",
+        "Je voeten",
+        "Je ogen"
+      ],
+      "correctAnswer": "Correct answer: Je voeten"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat moet je doen als je iets niet begrijpt over de nieuwe regels?",
+      "options": [
+        "Je moet het negeren",
+        "Je moet het opzoeken op internet",
+        "Je moet het vragen",
+        "Je moet het aan je collega's vertellen"
+      ],
+      "correctAnswer": "Correct answer: Je moet het vragen"
+    }
+  ]
+}

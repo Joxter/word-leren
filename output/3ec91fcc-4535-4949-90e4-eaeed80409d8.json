@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/3ec91fcc-4535-4949-90e4-eaeed80409d8",
+  "title": "Een buurtapp downloaden en gebruiken",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/3ec91fcc-4535-4949-90e4-eaeed80409d8/d180c32d-b19e-442c-9435-c975df2bc8c6.mp3",
+  "audioFile": "audio/3ec91fcc-4535-4949-90e4-eaeed80409d8.mp3",
+  "transcript": "Hallo iedereen! Vandaag gaan we het hebben over een nieuwe manier om in contact te blijven met je buurt. Er is een app genaamd 'Buurtapp'. Met deze app kun je gemakkelijk informatie uitwisselen met je buren. Je kunt bijvoorbeeld een bericht sturen als je een pakketje verwacht maar je bent niet thuis. Of als je hulp nodig hebt bij het tuinieren. Om de app te downloaden, ga je naar de app store op je telefoon. Typ 'Buurtapp' in de zoekbalk en klik op downloaden. Het is gratis. Als de app is gedownload, moet je je aanmelden. Je hebt een e-mailadres nodig en je moet een wachtwoord kiezen. Daarna vul je je adres in en je bent klaar om te beginnen. Het is heel makkelijk om een bericht te sturen in de app. Klik op het icoontje met de pen om een nieuw bericht te beginnen. Typ je bericht en klik op verzenden. Iedereen in je buurt die de app heeft, kan nu je bericht zien. Het is een handige manier om in contact te blijven met je buren. Probeer het maar eens!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Waar gaat de 'Buurtapp' over?",
+      "options": [
+        "Het is een spel voor kinderen.",
+        "Het is een manier om in contact te blijven met je buren.",
+        "Het is een app voor het bestellen van eten.",
+        "Het is een app voor het vinden van een baan."
+      ],
+      "correctAnswer": "Correct answer: Het is een manier om in contact te blijven met je buren."
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat moet je doen om een bericht te sturen in de 'Buurtapp'?",
+      "options": [
+        "Bel de klantenservice.",
+        "Stuur een e-mail.",
+        "Klik op het icoontje met de pen, typ het bericht en klik op verzenden.",
+        "Schrijf een brief."
+      ],
+      "correctAnswer": "Correct answer: Klik op het icoontje met de pen, typ het bericht en klik op verzenden."
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Hoeveel kost het om de 'Buurtapp' te downloaden?",
+      "options": [
+        "Het kost 5 euro.",
+        "Het is gratis.",
+        "Het kost 1 euro.",
+        "Het kost 10 euro."
+      ],
+      "correctAnswer": "Correct answer: Het is gratis."
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat heb je nodig om je aan te melden bij de 'Buurtapp'?",
+      "options": [
+        "Je hebt een rijbewijs nodig.",
+        "Je hebt een e-mailadres en een wachtwoord nodig.",
+        "Je hebt een bankrekening nodig.",
+        "Je hebt een paspoort nodig."
+      ],
+      "correctAnswer": "Correct answer: Je hebt een e-mailadres en een wachtwoord nodig."
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Waar kun je de 'Buurtapp' downloaden?",
+      "options": [
+        "In de bibliotheek.",
+        "In de supermarkt.",
+        "In de app store op je telefoon.",
+        "Op de website van de gemeente."
+      ],
+      "correctAnswer": "Correct answer: In de app store op je telefoon."
+    }
+  ]
+}

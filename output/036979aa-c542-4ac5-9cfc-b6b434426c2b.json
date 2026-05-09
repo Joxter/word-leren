@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/036979aa-c542-4ac5-9cfc-b6b434426c2b",
+  "title": "Een oudergesprek voeren op school",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/aeb14462-d4d4-4a4d-ad29-abf9bfa91d3f/036979aa-c542-4ac5-9cfc-b6b434426c2b/651ea858-0bf9-4b16-a704-2349a0b46991.mp3",
+  "audioFile": "audio/036979aa-c542-4ac5-9cfc-b6b434426c2b.mp3",
+  "transcript": "Hallo, fijn dat u er bent voor het oudergesprek. Ik ben juf Anouk, de leerkracht van uw zoon, Joris. Vandaag willen we het over Joris zijn prestaties op school hebben. Joris doet het over het algemeen goed. Hij is goed in rekenen en hij houdt van lezen. Maar we maken ons een beetje zorgen over zijn Nederlandse taalvaardigheid. Hij heeft moeite met grammatica en spelling. We denken dat het nuttig zou zijn als hij extra hulp zou krijgen. We kunnen een bijlesdocent aanbevelen of we kunnen extra oefeningen geven die hij thuis kan doen. Wat denkt u ervan? Het is belangrijk dat we samenwerken om Joris te helpen. Ook willen we dat Joris zich op zijn gemak voelt en plezier heeft op school. Dus als u vragen of zorgen heeft, kunt u altijd naar school komen of mij bellen. Bedankt dat u de tijd heeft genomen om vandaag te komen.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat is de rol van Anouk in school?",
+      "options": [
+        "Zij is de schooldirecteur",
+        "Zij is de moeder van Joris",
+        "Zij is de leerkracht van Joris",
+        "Zij is de bijlesdocent"
+      ],
+      "correctAnswer": "Correct answer: Zij is de leerkracht van Joris"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Waar is Joris goed in?",
+      "options": [
+        "Nederlandse taalvaardigheid",
+        "Rekenen en lezen",
+        "Grammatica en spelling",
+        "Sport en muziek"
+      ],
+      "correctAnswer": "Correct answer: Rekenen en lezen"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat is het probleem met Joris zijn Nederlandse taalvaardigheid?",
+      "options": [
+        "Hij kan niet goed lezen",
+        "Hij spreekt geen Nederlands",
+        "Hij heeft moeite met grammatica en spelling",
+        "Hij houdt niet van Nederlands"
+      ],
+      "correctAnswer": "Correct answer: Hij heeft moeite met grammatica en spelling"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat stelt de leerkracht voor om Joris te helpen?",
+      "options": [
+        "Hij moet meer huiswerk doen",
+        "Hij moet veranderen van school",
+        "Hij moet bijles krijgen of extra oefeningen doen thuis",
+        "Hij moet stoppen met lezen en rekenen"
+      ],
+      "correctAnswer": "Correct answer: Hij moet bijles krijgen of extra oefeningen doen thuis"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Hoe kunnen de ouders van Joris contact opnemen met de school?",
+      "options": [
+        "Ze kunnen een brief sturen",
+        "Ze kunnen naar school komen of de leerkracht bellen",
+        "Ze kunnen een e-mail sturen",
+        "Ze kunnen een bericht sturen via de schoolapp"
+      ],
+      "correctAnswer": "Correct answer: Ze kunnen naar school komen of de leerkracht bellen"
+    }
+  ]
+}

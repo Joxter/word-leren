@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/c47d6c53-d56a-41b5-bbeb-4c5560a07e7f",
+  "title": "Lezen hoe je iemand kunt aanmelden voor buurtzorg",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/c47d6c53-d56a-41b5-bbeb-4c5560a07e7f/582b3727-9244-4119-b391-beb7fadc5638.mp3",
+  "audioFile": "audio/c47d6c53-d56a-41b5-bbeb-4c5560a07e7f.mp3",
+  "transcript": "Hallo, ik ben Jan. Ik werk bij Buurtzorg, een organisatie die mensen helpt die zorg nodig hebben. We hebben veel ervaren verpleegkundigen en verzorgenden die graag willen helpen. Wil je iemand aanmelden voor Buurtzorg? Dat is heel makkelijk. Je kunt ons bellen op 123456789. Je kunt ook een e-mail sturen naar info@buurtzorg.nl. Vertel ons dan over de persoon die zorg nodig heeft. Hoe heet deze persoon? Hoe oud is hij of zij? Wat voor soort zorg heeft hij of zij nodig? Hoe vaak heeft deze persoon zorg nodig? We willen dit allemaal graag weten. Daarna zullen we contact met je opnemen om een afspraak te maken. We komen dan naar de persoon die zorg nodig heeft om te kijken hoe we kunnen helpen. Dank je wel voor je hulp. Samen kunnen we zorgen voor de mensen in onze buurt.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Waar werkt Jan?",
+      "options": [
+        "Bij de gemeente",
+        "Bij Buurtzorg",
+        "Bij een ziekenhuis",
+        "Bij een school"
+      ],
+      "correctAnswer": "Correct answer: Bij Buurtzorg"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Hoe kun je iemand aanmelden voor Buurtzorg?",
+      "options": [
+        "Door een brief te sturen",
+        "Door te bellen of een e-mail te sturen",
+        "Door langs te gaan bij Buurtzorg",
+        "Door een formulier in te vullen op de website"
+      ],
+      "correctAnswer": "Correct answer: Door te bellen of een e-mail te sturen"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat moet je vertellen als je iemand aanmeldt voor Buurtzorg?",
+      "options": [
+        "Je eigen naam en adres",
+        "Over de persoon die zorg nodig heeft",
+        "Hoeveel geld je hebt",
+        "Waarom je niet zelf voor deze persoon kunt zorgen"
+      ],
+      "correctAnswer": "Correct answer: Over de persoon die zorg nodig heeft"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat doen ze bij Buurtzorg nadat je iemand hebt aangemeld?",
+      "options": [
+        "Ze sturen een bevestigingsbrief",
+        "Ze nemen contact op om een afspraak te maken",
+        "Ze sturen een factuur",
+        "Ze sturen direct een verpleegkundige"
+      ],
+      "correctAnswer": "Correct answer: Ze nemen contact op om een afspraak te maken"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat is het doel van Buurtzorg?",
+      "options": [
+        "Om mensen te helpen die zorg nodig hebben",
+        "Om mensen te leren hoe ze voor zichzelf kunnen zorgen",
+        "Om trainingen te geven aan verpleegkundigen",
+        "Om geld te verdienen"
+      ],
+      "correctAnswer": "Correct answer: Om mensen te helpen die zorg nodig hebben"
+    }
+  ]
+}

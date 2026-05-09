@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/d545b798-47a6-4007-bfc2-60568fd29d4d",
+  "title": "Een afspraak maken bij de huisarts",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/bc950169-3904-406e-b425-24f98bd3eedd/d545b798-47a6-4007-bfc2-60568fd29d4d/48a97a04-b508-4bfc-9413-447c633d01a6.mp3",
+  "audioFile": "audio/d545b798-47a6-4007-bfc2-60568fd29d4d.mp3",
+  "transcript": "Hallo, mijn naam is Jeroen. Ik voel me een beetje ziek en ik wil graag een afspraak maken met de huisarts. Mijn keel doet pijn en ik heb ook koorts. Het begon twee dagen geleden. Ik denk dat het misschien griep is, maar ik weet het niet zeker. Daarom wil ik graag naar de huisarts gaan. Als het mogelijk is, wil ik graag morgenochtend een afspraak maken. Is dat mogelijk? Ik kan tussen acht uur en twaalf uur komen. Als er geen plek is, kan ik ook in de middag komen. Ik weet dat de huisartsenpraktijk om vijf uur sluit. Ik hoop dat er een plek voor mij is. Naast de afspraak met de huisarts, wil ik ook vragen of ik medicijnen kan krijgen. Ik heb veel hoofdpijn en paracetamol werkt niet. Misschien kan de huisarts iets sterkers voorschrijven. Bedankt voor uw hulp. Ik hoop dat ik me snel beter voel. Tot morgen bij de huisartsenpraktijk.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Hoe voelt Jeroen zich?",
+      "options": [
+        "Hij voelt zich goed.",
+        "Hij voelt zich een beetje ziek.",
+        "Hij voelt zich erg ziek.",
+        "Hij voelt zich verdrietig."
+      ],
+      "correctAnswer": "Correct answer: Hij voelt zich een beetje ziek."
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat denkt Jeroen dat hij heeft?",
+      "options": [
+        "Hij denkt dat hij een verkoudheid heeft.",
+        "Hij denkt dat hij griep heeft.",
+        "Hij denkt dat hij een allergie heeft.",
+        "Hij weet niet wat hij heeft."
+      ],
+      "correctAnswer": "Correct answer: Hij denkt dat hij griep heeft."
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wanneer wil Jeroen naar de huisarts gaan?",
+      "options": [
+        "Hij wil vandaag naar de huisarts gaan.",
+        "Hij wil morgenochtend naar de huisarts gaan.",
+        "Hij wil morgenmiddag naar de huisarts gaan.",
+        "Hij wil overmorgen naar de huisarts gaan."
+      ],
+      "correctAnswer": "Correct answer: Hij wil morgenochtend naar de huisarts gaan."
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat wil Jeroen naast de afspraak met de huisarts?",
+      "options": [
+        "Hij wil een recept voor medicijnen.",
+        "Hij wil een verwijzing naar een specialist.",
+        "Hij wil een tweede afspraak maken.",
+        "Hij wil een afspraak maken voor een vriend."
+      ],
+      "correctAnswer": "Correct answer: Hij wil een recept voor medicijnen."
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Hoe lang is Jeroen al ziek?",
+      "options": [
+        "Hij is al een week ziek.",
+        "Hij is al drie dagen ziek.",
+        "Hij is al twee dagen ziek.",
+        "Hij is al een maand ziek."
+      ],
+      "correctAnswer": "Correct answer: Hij is al twee dagen ziek."
+    }
+  ]
+}

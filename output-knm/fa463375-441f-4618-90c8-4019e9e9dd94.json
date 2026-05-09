@@ -1,0 +1,18 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/knm/practices/fa463375-441f-4618-90c8-4019e9e9dd94",
+  "title": "Het slavernijverleden van Nederland",
+  "transcript": "<span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_0_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">Wat</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_2_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">deed</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_4_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">Nederland</span></span><span class=\"inline-block\"><span class=\"px-0.5\">in</span></span><span class=\"inline-block\"><span class=\"px-0.5\">het</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_6_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">verleden</span></span><span class=\"inline-block\"><span class=\"px-0.5\">met</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_8_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">slavernij</span><span class=\"-ml-0.5\">?</span></span>",
+  "questions": [
+    {
+      "label": "",
+      "question": "",
+      "options": [
+        "Nederland voerde oorlog tegen slavernij.",
+        "Nederland handelde in slaven in Azië, Afrika en Amerika.",
+        "Nederland verbood slavernij vanaf het begin.",
+        "Nederland had er niets mee te maken."
+      ],
+      "correctAnswer": "Correct answer: Nederland handelde in slaven in Azië, Afrika en Amerika."
+    }
+  ]
+}

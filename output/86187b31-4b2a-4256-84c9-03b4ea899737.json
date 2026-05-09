@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/86187b31-4b2a-4256-84c9-03b4ea899737",
+  "title": "Zien wanneer de vuilnis wordt opgehaald",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/86187b31-4b2a-4256-84c9-03b4ea899737/873dc201-afce-47f0-8ed3-6f7eeb978b0b.mp3",
+  "audioFile": "audio/86187b31-4b2a-4256-84c9-03b4ea899737.mp3",
+  "transcript": "Hallo, buren! Weet je wanneer het vuilnis wordt opgehaald in onze buurt? Het schema is een beetje veranderd. Nu wordt het restafval elke woensdag opgehaald, en niet op donderdag zoals voorheen. Het oud papier en karton wordt nog steeds elke eerste maandag van de maand opgehaald. Vergeet niet om je afval gescheiden te houden. Het plastic, blik en drankkartons worden op dinsdag opgehaald. Houd ook rekening met de tijd. Zorg ervoor dat je jouw bakken 's ochtends voor 7.30 uur buiten zet. Ze halen het afval op tussen 7.30 uur en 16.00 uur. Als je hulp nodig hebt met zware bakken, kun je altijd een buurman of buurvrouw vragen. Samen zorgen we voor een schone en nette buurt. Dank je!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wanneer wordt het restafval opgehaald?",
+      "options": [
+        "Elke donderdag",
+        "Elke woensdag",
+        "Elke dinsdag",
+        "Elke maandag"
+      ],
+      "correctAnswer": "Correct answer: Elke woensdag"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wanneer moet je jouw bakken buiten zetten?",
+      "options": [
+        "'s Ochtends voor 8.00 uur",
+        "'s Middags voor 12.00 uur",
+        "'s Ochtends voor 7.30 uur",
+        "'s Avonds voor 18.00 uur"
+      ],
+      "correctAnswer": "Correct answer: 's Ochtends voor 7.30 uur"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wanneer wordt het oud papier en karton opgehaald?",
+      "options": [
+        "Elke eerste maandag van de maand",
+        "Elke tweede maandag van de maand",
+        "Elke laatste maandag van de maand",
+        "Elke derde maandag van de maand"
+      ],
+      "correctAnswer": "Correct answer: Elke eerste maandag van de maand"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat wordt op dinsdag opgehaald?",
+      "options": [
+        "Het oud papier en karton",
+        "Het restafval",
+        "Het plastic, blik en drankkartons",
+        "Het tuinafval"
+      ],
+      "correctAnswer": "Correct answer: Het plastic, blik en drankkartons"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat moet je doen als je hulp nodig hebt met zware bakken?",
+      "options": [
+        "Je kunt altijd een buurman of buurvrouw vragen",
+        "Je moet de vuilniswagenchauffeur bellen",
+        "Je moet de gemeente bellen",
+        "Je moet het zelf doen"
+      ],
+      "correctAnswer": "Correct answer: Je kunt altijd een buurman of buurvrouw vragen"
+    }
+  ]
+}

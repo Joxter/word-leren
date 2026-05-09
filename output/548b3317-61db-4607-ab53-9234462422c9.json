@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/548b3317-61db-4607-ab53-9234462422c9",
+  "title": "Informatie krijgen van de docent op school",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/aeb14462-d4d4-4a4d-ad29-abf9bfa91d3f/548b3317-61db-4607-ab53-9234462422c9/73650861-824f-4db3-bec6-f7e7d977b3df.mp3",
+  "audioFile": "audio/548b3317-61db-4607-ab53-9234462422c9.mp3",
+  "transcript": "Hallo, studenten! Ik wil met jullie over de volgende week praten. We beginnen met een nieuw onderwerp in de les: \"Nederlandse Geschiedenis\". Dit is een belangrijk onderwerp voor je inburgeringsexamen. We leren over de belangrijkste gebeurtenissen en personen in de Nederlandse geschiedenis. Jullie krijgen een boek uit de bibliotheek om thuis te lezen. Er is ook een werkboek met oefeningen. We zullen in de les samen oefeningen maken. Volgende week dinsdag hebben we een excursie naar het Rijksmuseum in Amsterdam. Daar zien we schilderijen en objecten uit de geschiedenis van Nederland. Vergeet niet, we ontmoeten elkaar om 9.30 uur bij de ingang van het museum, niet op school. Voor de excursie moeten jullie het eerste hoofdstuk van het boek lezen. Hebben jullie vragen? Nee? Oké, laten we beginnen met de les van vandaag.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat is het nieuwe onderwerp dat we volgende week in de les gaan beginnen?",
+      "options": [
+        "Nederlandse Taal",
+        "Nederlandse Geschiedenis",
+        "Nederlandse Cultuur",
+        "Nederlandse Geografie"
+      ],
+      "correctAnswer": "Correct answer: Nederlandse Geschiedenis"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Waar zullen we elkaar volgende week dinsdag ontmoeten?",
+      "options": [
+        "Op school",
+        "In de bibliotheek",
+        "Bij de ingang van het Rijksmuseum",
+        "In het werkboek"
+      ],
+      "correctAnswer": "Correct answer: Bij de ingang van het Rijksmuseum"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat moeten de studenten voor de excursie doen?",
+      "options": [
+        "Het hele boek lezen",
+        "Het eerste hoofdstuk van het boek lezen",
+        "Een werkboek maken",
+        "Een presentatie voorbereiden"
+      ],
+      "correctAnswer": "Correct answer: Het eerste hoofdstuk van het boek lezen"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat zullen we in het Rijksmuseum zien?",
+      "options": [
+        "Schilderijen en objecten uit de geschiedenis van Nederland",
+        "Boeken en oefeningen",
+        "Belangrijke personen in de Nederlandse geschiedenis",
+        "De Nederlandse taal"
+      ],
+      "correctAnswer": "Correct answer: Schilderijen en objecten uit de geschiedenis van Nederland"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Hoe laat ontmoeten we elkaar bij het museum?",
+      "options": [
+        "Om 8.30 uur",
+        "Om 9.30 uur",
+        "Om 10.30 uur",
+        "Om 11.30 uur"
+      ],
+      "correctAnswer": "Correct answer: Om 9.30 uur"
+    }
+  ]
+}

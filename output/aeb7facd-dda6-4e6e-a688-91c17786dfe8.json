@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/aeb7facd-dda6-4e6e-a688-91c17786dfe8",
+  "title": "Een melding krijgen over een storing in de water- of stroomvoorziening",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/aeb7facd-dda6-4e6e-a688-91c17786dfe8/55f16654-dd57-400c-938e-b70720fbeb5f.mp3",
+  "audioFile": "audio/aeb7facd-dda6-4e6e-a688-91c17786dfe8.mp3",
+  "transcript": "Hallo, dit is een dringende melding voor de bewoners van Amsterdam-Noord. Door een onverwacht probleem met onze waterleiding, is er op dit moment geen water beschikbaar in uw gebied. We werken hard om dit probleem zo snel mogelijk op te lossen. Volgens onze schatting zal het ongeveer vier uur duren voordat de reparatie is voltooid. We vragen u om geduld te hebben en excuses voor het ongemak. Zorg ervoor dat u voldoende drinkwater bij de hand heeft. Als u problemen ondervindt, bel dan onze klantenservice op nummer 0800-123456. We zullen een nieuwe melding sturen zodra de waterdienst is hersteld. Heel erg bedankt voor uw begrip en medewerking.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat is het probleem in Amsterdam-Noord?",
+      "options": [
+        "Er is een probleem met de elektriciteit",
+        "Er is een probleem met het internet",
+        "Er is een probleem met de waterleiding",
+        "Er is een probleem met het gas"
+      ],
+      "correctAnswer": "Correct answer: Er is een probleem met de waterleiding"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Hoe lang zal de reparatie duren?",
+      "options": [
+        "Twee uur",
+        "Drie uur",
+        "Vier uur",
+        "Vijf uur"
+      ],
+      "correctAnswer": "Correct answer: Vier uur"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat moeten de bewoners doen als ze problemen ondervinden?",
+      "options": [
+        "Ze moeten de burgemeester bellen",
+        "Ze moeten hun buren bellen",
+        "Ze moeten de klantenservice bellen",
+        "Ze moeten de politie bellen"
+      ],
+      "correctAnswer": "Correct answer: Ze moeten de klantenservice bellen"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wanneer zal er een nieuwe melding worden gestuurd?",
+      "options": [
+        "Als er een nieuw probleem is",
+        "Als de reparatie is begonnen",
+        "Na vier uur",
+        "Zodra de waterdienst is hersteld"
+      ],
+      "correctAnswer": "Correct answer: Zodra de waterdienst is hersteld"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat wordt er van de bewoners gevraagd?",
+      "options": [
+        "Om te helpen met de reparatie",
+        "Om geduld te hebben",
+        "Om water te doneren",
+        "Om te verhuizen"
+      ],
+      "correctAnswer": "Correct answer: Om geduld te hebben"
+    }
+  ]
+}

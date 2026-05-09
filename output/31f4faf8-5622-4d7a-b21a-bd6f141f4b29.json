@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/31f4faf8-5622-4d7a-b21a-bd6f141f4b29",
+  "title": "Een oproep lezen om vrijwilligerswerk te doen in de buurt",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/31f4faf8-5622-4d7a-b21a-bd6f141f4b29/e0e78f1e-4059-435f-8139-8fc0d65abf9f.mp3",
+  "audioFile": "audio/31f4faf8-5622-4d7a-b21a-bd6f141f4b29.mp3",
+  "transcript": "Hallo buren! Onze buurt heeft een beetje hulp nodig. We willen een grote schoonmaakdag organiseren. Dit is een dag waarop we allemaal samen onze buurt schoonmaken. We beginnen om 10.00 uur 's ochtends op het centrale plein. We hebben mensen nodig die vuilnis kunnen verzamelen, de straten kunnen vegen en de bomen kunnen snoeien. Natuurlijk, na al het harde werk, hebben we ook een feest. We hebben vrijwilligers nodig om te helpen met het bereiden van het eten en het organiseren van spelletjes voor de kinderen. Als je mee wilt doen, stuur dan een e-mail naar buurtschoonmaak@gmail.com. Vermeld in de e-mail wat je wilt doen. Iedereen is welkom om te helpen, jong en oud. Samen kunnen we onze buurt mooier maken!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat willen de buren organiseren?",
+      "options": [
+        "Een buurtfeest",
+        "Een schoonmaakdag",
+        "Een spelletjesdag",
+        "Een tuinfeest"
+      ],
+      "correctAnswer": "Correct answer: Een schoonmaakdag"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Hoe laat begint de schoonmaakdag?",
+      "options": [
+        "'s middags om 2.00 uur",
+        "'s ochtends om 10.00 uur",
+        "'s avonds om 8.00 uur",
+        "'s ochtends om 8.00 uur"
+      ],
+      "correctAnswer": "Correct answer: 's ochtends om 10.00 uur"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat moeten de vrijwilligers doen na het harde werk?",
+      "options": [
+        "Naar huis gaan",
+        "Rusten",
+        "Helpen met het bereiden van het eten en het organiseren van spelletjes",
+        "De straten vegen"
+      ],
+      "correctAnswer": "Correct answer: Helpen met het bereiden van het eten en het organiseren van spelletjes"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Hoe kun je je aanmelden om te helpen?",
+      "options": [
+        "Door een brief te sturen",
+        "Door een e-mail te sturen naar buurtschoonmaak@gmail.com",
+        "Door te bellen",
+        "Door langs te gaan bij de buren"
+      ],
+      "correctAnswer": "Correct answer: Door een e-mail te sturen naar buurtschoonmaak@gmail.com"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wie kan helpen bij de schoonmaakdag?",
+      "options": [
+        "Alleen volwassenen",
+        "Alleen kinderen",
+        "Alleen ouderen",
+        "Iedereen, jong en oud"
+      ],
+      "correctAnswer": "Correct answer: Iedereen, jong en oud"
+    }
+  ]
+}

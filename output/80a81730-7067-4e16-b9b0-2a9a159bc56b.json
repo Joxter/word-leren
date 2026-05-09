@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/80a81730-7067-4e16-b9b0-2a9a159bc56b",
+  "title": "Lezen hoe je een straatfeest mag organiseren",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/80a81730-7067-4e16-b9b0-2a9a159bc56b/aa458f2e-d897-4ca9-8f79-c05e07867f9d.mp3",
+  "audioFile": "audio/80a81730-7067-4e16-b9b0-2a9a159bc56b.mp3",
+  "transcript": "Hallo, ben je van plan om een straatfeest te organiseren? Luister dan goed naar de volgende stappen. Eerst moet je toestemming vragen aan de gemeente. Dit doe je door een vergunning aan te vragen. Je moet dit minimaal zes weken voor het feest doen. Daarna moet je overleggen met de buren. Zij moeten het er ook mee eens zijn. Denk eraan om een plan te maken voor het opruimen na het feest. Niemand wil rommel op straat achterlaten. Het is ook belangrijk om na te denken over geluidsoverlast. Je wilt niet dat mensen last hebben van het feest. Daarom is het een goed idee om 's avonds laat geen luide muziek te spelen. Denk ten slotte aan de veiligheid. Zorg dat er een EHBO-doos aanwezig is en dat er een nooduitgang is. Veel plezier met het organiseren van je straatfeest!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat moet je eerst doen als je een straatfeest wilt organiseren?",
+      "options": [
+        "Overleggen met de buren",
+        "Een EHBO-doos klaarzetten",
+        "Toestemming vragen aan de gemeente",
+        "Een opruimplan maken"
+      ],
+      "correctAnswer": "Correct answer: Toestemming vragen aan de gemeente"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wanneer moet je een vergunning aanvragen voor het feest?",
+      "options": [
+        "Een week voor het feest",
+        "Zes weken voor het feest",
+        "Op de dag van het feest",
+        "Twee maanden voor het feest"
+      ],
+      "correctAnswer": "Correct answer: Zes weken voor het feest"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat wordt aangeraden om te doen om geluidsoverlast te voorkomen?",
+      "options": [
+        "Geen muziek spelen",
+        "'s Avonds laat geen luide muziek spelen",
+        "Alleen zachte muziek spelen",
+        "Muziek spelen met koptelefoons"
+      ],
+      "correctAnswer": "Correct answer: 's Avonds laat geen luide muziek spelen"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat moet er aanwezig zijn voor de veiligheid tijdens het feest?",
+      "options": [
+        "Een brandblusser",
+        "Een EHBO-doos",
+        "Een beveiligingsmedewerker",
+        "Een bewakingscamera"
+      ],
+      "correctAnswer": "Correct answer: Een EHBO-doos"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat moet je doen na het feest?",
+      "options": [
+        "De gemeente bedanken",
+        "Het feest evalueren",
+        "De straat opruimen",
+        "De buren bedanken"
+      ],
+      "correctAnswer": "Correct answer: De straat opruimen"
+    }
+  ]
+}

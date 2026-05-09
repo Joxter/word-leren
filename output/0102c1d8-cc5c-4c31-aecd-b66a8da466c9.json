@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/0102c1d8-cc5c-4c31-aecd-b66a8da466c9",
+  "title": "Informatie zoeken over een gemeentelijke subsidie",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/0102c1d8-cc5c-4c31-aecd-b66a8da466c9/529423fa-a68e-4aba-969a-37ebb22b6149.mp3",
+  "audioFile": "audio/0102c1d8-cc5c-4c31-aecd-b66a8da466c9.mp3",
+  "transcript": "Hallo luisteraars, ik ben Hans en ik werk op het gemeentehuis. Vandaag wil ik met jullie praten over gemeentelijke subsidies. Wist je dat onze gemeente subsidies geeft aan lokale projecten? Dit kunnen projecten zijn op het gebied van kunst, cultuur, sport, of sociale projecten. Als je geïnteresseerd bent in een subsidie, moet je een aanvraag indienen bij de gemeente. In deze aanvraag vermeld je wat het doel van je project is, hoeveel geld je nodig hebt en hoe je het geld gaat gebruiken. De aanvraag moet je indienen voor 1 maart van het jaar dat je de subsidie wilt ontvangen. Je kunt het formulier downloaden van onze gemeentewebsite. Na het indienen van je aanvraag, krijg je binnen zes weken bericht of je subsidie krijgt. Wees er snel bij, want er is een beperkt budget voor subsidies en het geld kan snel op zijn. Als je hulp nodig hebt bij je aanvraag, kun je altijd contact opnemen met ons kantoor. Onze contactgegevens vind je op de website. Veel succes met je aanvraag!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Waar werkt Hans?",
+      "options": [
+        "Bij een sportclub",
+        "Op het gemeentehuis",
+        "Bij een school",
+        "In een museum"
+      ],
+      "correctAnswer": "Correct answer: Op het gemeentehuis"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wanneer moet je een subsidieaanvraag indienen?",
+      "options": [
+        "Voor 1 januari",
+        "Voor 1 mei",
+        "Voor 1 maart",
+        "Voor 1 juli"
+      ],
+      "correctAnswer": "Correct answer: Voor 1 maart"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat moet in de subsidieaanvraag vermeld worden?",
+      "options": [
+        "Het doel van je project, hoeveel geld je nodig hebt en hoe je de subsidie gaat gebruiken",
+        "Alleen het doel van je project",
+        "Alleen hoeveel geld je nodig hebt",
+        "Alleen hoe je de subsidie gaat gebruiken"
+      ],
+      "correctAnswer": "Correct answer: Het doel van je project, hoeveel geld je nodig hebt en hoe je de subsidie gaat gebruiken"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Waar kan je het aanvraagformulier voor een subsidie vinden?",
+      "options": [
+        "In het gemeentehuis",
+        "In de bibliotheek",
+        "Op de gemeentewebsite",
+        "In de supermarkt"
+      ],
+      "correctAnswer": "Correct answer: Op de gemeentewebsite"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Hoe lang duurt het voordat je bericht krijgt over je subsidieaanvraag?",
+      "options": [
+        "Binnen twee weken",
+        "Binnen zes weken",
+        "Binnen tien weken",
+        "Binnen twaalf weken"
+      ],
+      "correctAnswer": "Correct answer: Binnen zes weken"
+    }
+  ]
+}

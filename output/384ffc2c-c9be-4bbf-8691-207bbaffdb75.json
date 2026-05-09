@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/384ffc2c-c9be-4bbf-8691-207bbaffdb75",
+  "title": "Informatie krijgen over een woninginspectie",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/384ffc2c-c9be-4bbf-8691-207bbaffdb75/15e9a624-0bc3-45fa-8f40-0c17b67ba39d.mp3",
+  "audioFile": "audio/384ffc2c-c9be-4bbf-8691-207bbaffdb75.mp3",
+  "transcript": "Hallo, ik ben Jan, jouw woninginspecteur. Ik wil je graag wat vertellen over de woninginspectie die volgende week plaatsvindt. We beginnen met de buitenkant van het huis. We kijken naar de muren, het dak, de ramen en de deuren. We controleren of er geen schade is aan de buitenkant. Daarna gaan we naar binnen. We kijken naar de staat van de vloeren, de muren, het plafond, de keuken, de badkamer en de toiletten. We controleren ook de elektrische installaties en de verwarming. De inspectie duurt ongeveer twee uur. Maak je geen zorgen, de inspectie is standaard. Het is niet omdat er een probleem is. Het is belangrijk dat je thuis bent tijdens de inspectie. Als je niet thuis kunt zijn, vraag dan iemand anders om er te zijn. Je kunt me altijd bellen als je vragen hebt. Mijn nummer is 0612345678. Ik kijk ernaar uit je volgende week te ontmoeten. Tot dan!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat is de naam van de persoon die de inspectie uitvoert?",
+      "options": [
+        "Jan",
+        "Johan",
+        "Pieter",
+        "Kees"
+      ],
+      "correctAnswer": "Correct answer: Jan"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat wordt gecontroleerd tijdens de inspectie?",
+      "options": [
+        "Alleen de buitenkant van het huis",
+        "Alleen de binnenkant van het huis",
+        "Zowel de binnenkant als de buitenkant van het huis",
+        "Geen van bovenstaande"
+      ],
+      "correctAnswer": "Correct answer: Zowel de binnenkant als de buitenkant van het huis"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Hoe lang duurt de inspectie volgens Jan?",
+      "options": [
+        "Eén uur",
+        "Twee uur",
+        "Drie uur",
+        "Vier uur"
+      ],
+      "correctAnswer": "Correct answer: Twee uur"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat moet je doen als je niet thuis kunt zijn tijdens de inspectie?",
+      "options": [
+        "Het huis onbeheerd achterlaten",
+        "De inspectie annuleren",
+        "Iemand anders vragen om er te zijn",
+        "Jan bellen om het af te zeggen"
+      ],
+      "correctAnswer": "Correct answer: Iemand anders vragen om er te zijn"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Waarom wordt de inspectie uitgevoerd?",
+      "options": [
+        "Omdat er een probleem is met het huis",
+        "Omdat het een standaardprocedure is",
+        "Omdat Jan het huis wil kopen",
+        "Omdat het huis te koop is"
+      ],
+      "correctAnswer": "Correct answer: Omdat het een standaardprocedure is"
+    }
+  ]
+}

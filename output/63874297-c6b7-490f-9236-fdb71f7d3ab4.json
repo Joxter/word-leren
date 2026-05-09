@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/63874297-c6b7-490f-9236-fdb71f7d3ab4",
+  "title": "Lezen over regels voor vuurwerk tijdens oud en nieuw",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/63874297-c6b7-490f-9236-fdb71f7d3ab4/e7eebffd-2f33-46c8-b8c9-ec912084b106.mp3",
+  "audioFile": "audio/63874297-c6b7-490f-9236-fdb71f7d3ab4.mp3",
+  "transcript": "Hallo iedereen! Laten we het vandaag hebben over de regels voor vuurwerk tijdens Oud en Nieuw. Het is belangrijk om deze regels te kennen. Het afsteken van vuurwerk is alleen toegestaan op 31 december. En dan alleen tussen 18.00 uur 's avonds en 2.00 uur 's nachts. Het is verboden om vuurwerk af te steken buiten deze tijden. Als je dat wel doet, krijg je een boete. Het is ook belangrijk om te weten dat je alleen legaal vuurwerk mag kopen. Illegaal vuurwerk is gevaarlijk en het is strafbaar om het te kopen, te verkopen of af te steken. Een veiligheidsbril dragen is ook een aanrader. Het beschermt je ogen tegen vonken. En tot slot, gooi het vuurwerkafval in de vuilnisbak. Laten we samen zorgen voor een veilige en leuke Oud en Nieuw viering!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wanneer is het toegestaan om vuurwerk af te steken tijdens Oud en Nieuw?",
+      "options": [
+        "Alleen op 31 december tussen 16.00 uur en 00.00 uur",
+        "Alleen op 31 december tussen 18.00 uur en 2.00 uur",
+        "Alleen op 1 januari tussen 00.00 uur en 2.00 uur",
+        "Op elk moment tijdens Oud en Nieuw"
+      ],
+      "correctAnswer": "Correct answer: Alleen op 31 december tussen 18.00 uur en 2.00 uur"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat gebeurt er als je vuurwerk afsteekt buiten de toegestane tijden?",
+      "options": [
+        "Er gebeurt niets",
+        "Je krijgt een waarschuwing",
+        "Je krijgt een boete",
+        "Je vuurwerk wordt in beslag genomen"
+      ],
+      "correctAnswer": "Correct answer: Je krijgt een boete"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat voor soort vuurwerk mag je kopen?",
+      "options": [
+        "Alleen illegaal vuurwerk",
+        "Zowel legaal als illegaal vuurwerk",
+        "Alleen legaal vuurwerk",
+        "Geen enkel soort vuurwerk"
+      ],
+      "correctAnswer": "Correct answer: Alleen legaal vuurwerk"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat moet je doen met het vuurwerkafval?",
+      "options": [
+        "Laat het op straat liggen",
+        "Zet het in de achtertuin",
+        "Gooi het in de vuilnisbak",
+        "Geef het aan de politie"
+      ],
+      "correctAnswer": "Correct answer: Gooi het in de vuilnisbak"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat is een aanbeveling voor de veiligheid tijdens het afsteken van vuurwerk?",
+      "options": [
+        "Draag een helm",
+        "Draag een veiligheidsbril",
+        "Draag oordopjes",
+        "Draag handschoenen"
+      ],
+      "correctAnswer": "Correct answer: Draag een veiligheidsbril"
+    }
+  ]
+}

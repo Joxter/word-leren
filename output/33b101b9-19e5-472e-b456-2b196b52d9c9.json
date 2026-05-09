@@ -1,0 +1,53 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/33b101b9-19e5-472e-b456-2b196b52d9c9",
+  "title": "Instructies volgen voor het innemen van medicijnen",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/bc950169-3904-406e-b425-24f98bd3eedd/33b101b9-19e5-472e-b456-2b196b52d9c9/32ec0211-8fb5-47a7-9a72-4e317a6f5e84.mp3",
+  "audioFile": "audio/33b101b9-19e5-472e-b456-2b196b52d9c9.mp3",
+  "transcript": "Hallo allemaal! Vandaag wil ik het met jullie hebben over het belang van goed medicijngebruik. Het is namelijk ontzettend belangrijk dat je medicijnen op de juiste manier inneemt. Allereerst moet je altijd de instructies van de arts of apotheker volgen. Zij weten precies hoe en wanneer je het medicijn moet innemen. Sommige medicijnen moet je bijvoorbeeld met voedsel innemen, terwijl andere op een lege maag moeten worden genomen. Ook de tijd van de dag kan belangrijk zijn. Sommige medicijnen werken het best als je ze in de ochtend neemt, andere juist in de avond. En let op: stop nooit zomaar met het innemen van je medicijnen, ook niet als je je beter voelt. Als je te vroeg stopt, kunnen je klachten terugkomen. Overleg altijd met je arts of apotheker voordat je stopt met je medicijnen. Kortom, het is belangrijk om je medicijnen op de juiste manier in te nemen. Als je vragen hebt, kun je altijd terecht bij je arts of apotheker.",
+  "questions": [
+    {
+      "label": "Question 1 of 4",
+      "question": "Wie weet precies hoe en wanneer je het medicijn moet innemen?",
+      "options": [
+        "Je vrienden",
+        "Je familie",
+        "De arts of apotheker",
+        "De leraar"
+      ],
+      "correctAnswer": "Correct answer: De arts of apotheker"
+    },
+    {
+      "label": "Question 2 of 4",
+      "question": "Wanneer moet je stoppen met het innemen van je medicijnen?",
+      "options": [
+        "Wanneer je je beter voelt",
+        "Wanneer je geen zin meer hebt om ze in te nemen",
+        "Na overleg met je arts of apotheker",
+        "Wanneer de medicijnen op zijn"
+      ],
+      "correctAnswer": "Correct answer: Na overleg met je arts of apotheker"
+    },
+    {
+      "label": "Question 3 of 4",
+      "question": "Wat kan er gebeuren als je te vroeg stopt met het innemen van je medicijnen?",
+      "options": [
+        "Je kunt een prijs winnen",
+        "Je klachten kunnen terugkomen",
+        "Je kunt sneller hardlopen",
+        "Je kunt beter slapen"
+      ],
+      "correctAnswer": "Correct answer: Je klachten kunnen terugkomen"
+    },
+    {
+      "label": "Question 4 of 4",
+      "question": "Wat is belangrijk over de tijd van de dag voor het innemen van medicijnen?",
+      "options": [
+        "Het maakt niet uit welk tijdstip van de dag je medicijnen inneemt",
+        "Sommige medicijnen werken het best als je ze in de ochtend neemt, andere juist in de avond",
+        "Je moet je medicijnen altijd 's avonds innemen",
+        "Je moet je medicijnen altijd 's ochtends innemen"
+      ],
+      "correctAnswer": "Correct answer: Sommige medicijnen werken het best als je ze in de ochtend neemt, andere juist in de avond"
+    }
+  ]
+}

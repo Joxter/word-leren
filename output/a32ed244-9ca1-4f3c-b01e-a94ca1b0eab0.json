@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/a32ed244-9ca1-4f3c-b01e-a94ca1b0eab0",
+  "title": "Een inschrijving regelen voor een opleiding",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/aeb14462-d4d4-4a4d-ad29-abf9bfa91d3f/a32ed244-9ca1-4f3c-b01e-a94ca1b0eab0/d721c8e6-8ed4-4d65-ba16-a9f069185432.mp3",
+  "audioFile": "audio/a32ed244-9ca1-4f3c-b01e-a94ca1b0eab0.mp3",
+  "transcript": "Hallo allemaal! Vandaag gaan we praten over het regelen van een inschrijving voor een opleiding. Allereerst, heb je al besloten welke opleiding je wilt volgen? Goed, laten we zeggen dat je hebt besloten om Bedrijfskunde te studeren. Hoe ga je je dan inschrijven? Eerst moet je naar de website van de universiteit of hogeschool waar je wilt studeren. Daar vind je een knop die zegt 'Aanmelden' of 'Inschrijven'. Klik daarop. Je wordt dan gevraagd om je persoonlijke gegevens in te vullen. Dat zijn je naam, adres, geboortedatum en e-mail. Daarna moet je bewijsstukken uploaden. Dat kunnen je diploma's zijn, of certificaten van eerdere opleidingen. Ten slotte betaal je het inschrijfgeld. Dit is meestal rond de 50 euro. Nu ben je ingeschreven! Maar let op: je moet je inschrijving bevestigen. Dat doe je door op de link in de bevestigingsmail te klikken die je krijgt. Dus vergeet niet je e-mail te checken!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat is de eerste stap om je in te schrijven voor een opleiding?",
+      "options": [
+        "Betaal het inschrijfgeld",
+        "Upload je diploma's",
+        "Ga naar de website van de universiteit of hogeschool",
+        "Vul je persoonlijke gegevens in"
+      ],
+      "correctAnswer": "Correct answer: Ga naar de website van de universiteit of hogeschool"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat moet je doen na het invullen van je persoonlijke gegevens?",
+      "options": [
+        "Ga naar de website van de universiteit of hogeschool",
+        "Upload je bewijsstukken",
+        "Betaal het inschrijfgeld",
+        "Bevestig je inschrijving"
+      ],
+      "correctAnswer": "Correct answer: Upload je bewijsstukken"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Hoeveel kost het inschrijfgeld meestal?",
+      "options": [
+        "100 euro",
+        "50 euro",
+        "75 euro",
+        "25 euro"
+      ],
+      "correctAnswer": "Correct answer: 50 euro"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Hoe bevestig je je inschrijving?",
+      "options": [
+        "Door een brief te sturen",
+        "Door te bellen naar de universiteit of hogeschool",
+        "Door op de link in de bevestigingsmail te klikken",
+        "Door het inschrijfgeld te betalen"
+      ],
+      "correctAnswer": "Correct answer: Door op de link in de bevestigingsmail te klikken"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Welke persoonlijke gegevens moet je invullen tijdens de aanmelding?",
+      "options": [
+        "Je naam, adres, telefoonnummer en e-mail",
+        "Je naam, adres, geboortedatum en e-mail",
+        "Je naam, adres, geboortedatum en nationaliteit",
+        "Je naam, adres, geboortedatum en beroep"
+      ],
+      "correctAnswer": "Correct answer: Je naam, adres, geboortedatum en e-mail"
+    }
+  ]
+}

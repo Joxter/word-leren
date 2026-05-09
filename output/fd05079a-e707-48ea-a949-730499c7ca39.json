@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/fd05079a-e707-48ea-a949-730499c7ca39",
+  "title": "Boodschappenlijst maken en inkopen doen voor een evenement",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/fd05079a-e707-48ea-a949-730499c7ca39/5ed230a2-f6a5-4a43-b204-1420be1b3ab7.mp3",
+  "audioFile": "audio/fd05079a-e707-48ea-a949-730499c7ca39.mp3",
+  "transcript": "Hallo allemaal! We gaan een feest organiseren en we hebben boodschappen nodig. Ik heb een boodschappenlijst gemaakt. Op de lijst staan brood, kaas, ham, eieren, groenten, fruit en drankjes. We hebben ook servetten, plastic bekers en bordjes nodig. We moeten ook wat zoetigheden kopen zoals koekjes en chocolade. En natuurlijk, we mogen de taart niet vergeten. We hebben ook vegetarische en veganistische opties nodig voor sommige gasten. Kunnen jullie helpen met het inkopen doen? We ontmoeten elkaar morgenmiddag bij de supermarkt. Het adres is Hoofdstraat 32. Vergeet je boodschappenlijst niet mee te nemen! En breng ook je eigen boodschappentas mee, om het milieu te beschermen. Na het winkelen gaan we alles naar de feestlocatie brengen. De locatie is op loopafstand van de supermarkt. We moeten alles klaarzetten voor het feest begint. Bedankt voor jullie hulp! Tot morgen!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat moeten we organiseren?",
+      "options": [
+        "Een vergadering",
+        "Een diner",
+        "Een feest",
+        "Een concert"
+      ],
+      "correctAnswer": "Correct answer: Een feest"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat moeten we na het winkelen doen?",
+      "options": [
+        "We gaan naar huis",
+        "We gaan alles naar de feestlocatie brengen",
+        "We gaan eten",
+        "We gaan slapen"
+      ],
+      "correctAnswer": "Correct answer: We gaan alles naar de feestlocatie brengen"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat is het adres van de supermarkt?",
+      "options": [
+        "Hoofdstraat 32",
+        "Hoofdstraat 12",
+        "Hoofdstraat 22",
+        "Hoofdstraat 42"
+      ],
+      "correctAnswer": "Correct answer: Hoofdstraat 32"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat moeten we niet vergeten om mee te nemen naar de supermarkt?",
+      "options": [
+        "Je mobiele telefoon",
+        "Je boodschappenlijst",
+        "Je portemonnee",
+        "Je sleutels"
+      ],
+      "correctAnswer": "Correct answer: Je boodschappenlijst"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat moeten we ook kopen voor het feest?",
+      "options": [
+        "Boeken",
+        "Kleding",
+        "Servetten, plastic bekers en bordjes",
+        "Speelgoed"
+      ],
+      "correctAnswer": "Correct answer: Servetten, plastic bekers en bordjes"
+    }
+  ]
+}

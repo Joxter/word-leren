@@ -1,0 +1,53 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/6385ba03-48f8-4739-ac30-c3997f1e432d",
+  "title": "Lezen over opvanglocaties bij een noodsituatie",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/6385ba03-48f8-4739-ac30-c3997f1e432d/22d8b317-3a43-41c9-a732-7bad8b1d16fa.mp3",
+  "audioFile": "audio/6385ba03-48f8-4739-ac30-c3997f1e432d.mp3",
+  "transcript": "Hallo iedereen! Vandaag gaan we het hebben over een belangrijk onderwerp: noodsituaties. Soms gebeuren er dingen die we niet kunnen voorspellen, zoals een grote brand, overstroming of een aardbeving. In zo'n geval moeten we snel naar een veilige plek gaan. In onze stad hebben we verschillende opvanglocaties voor noodgevallen. Deze plekken zijn bijvoorbeeld scholen, sporthallen en soms zelfs winkelcentra. De locaties zijn altijd groot genoeg om veel mensen te kunnen opvangen. Het is belangrijk om te weten waar deze opvanglocaties zijn. In het geval van een noodsituatie, luister naar de instructies van de hulpdiensten. Zij zullen je vertellen waar je heen moet. Als je niet zeker weet waar de dichtstbijzijnde opvanglocatie is, vraag het dan aan je buren of kijk op de website van de gemeente. Het is ook een goed idee om een noodpakket in huis te hebben, met dingen zoals eten, drinken, medicijnen en belangrijke documenten. Veiligheid is altijd het belangrijkst. Zorg dat je voorbereid bent, en blijf kalm in een noodsituatie.",
+  "questions": [
+    {
+      "label": "Question 1 of 4",
+      "question": "Wat zijn voorbeelden van noodsituaties die in de tekst worden genoemd?",
+      "options": [
+        "Een feest, een concert en een voetbalwedstrijd",
+        "Een grote brand, overstroming en een aardbeving",
+        "Een verjaardagsfeestje, een bruiloft en een picknick",
+        "Een boekenverkoop, een kunsttentoonstelling en een filmfestival"
+      ],
+      "correctAnswer": "Correct answer: Een grote brand, overstroming en een aardbeving"
+    },
+    {
+      "label": "Question 2 of 4",
+      "question": "Wat zijn voorbeelden van opvanglocaties in geval van een noodsituatie?",
+      "options": [
+        "Supermarkten, restaurants en bioscopen",
+        "Scholen, sporthallen en soms zelfs winkelcentra",
+        "Parken, stranden en bossen",
+        "Musea, bibliotheken en treinstations"
+      ],
+      "correctAnswer": "Correct answer: Scholen, sporthallen en soms zelfs winkelcentra"
+    },
+    {
+      "label": "Question 3 of 4",
+      "question": "Wat moet je doen als je niet weet waar de dichtstbijzijnde opvanglocatie is?",
+      "options": [
+        "Bel de politie",
+        "Vraag het aan je buren of kijk op de website van de gemeente",
+        "Ga naar het dichtstbijzijnde ziekenhuis",
+        "Blijf thuis en wacht op hulp"
+      ],
+      "correctAnswer": "Correct answer: Vraag het aan je buren of kijk op de website van de gemeente"
+    },
+    {
+      "label": "Question 4 of 4",
+      "question": "Wat is een goed idee om in huis te hebben voor een noodsituatie volgens de tekst?",
+      "options": [
+        "Een taart, kaarsen en cadeautjes",
+        "Een noodpakket met eten, drinken, medicijnen en belangrijke documenten",
+        "Een televisie, een computer en een telefoon",
+        "Boeken, tijdschriften en kranten"
+      ],
+      "correctAnswer": "Correct answer: Een noodpakket met eten, drinken, medicijnen en belangrijke documenten"
+    }
+  ]
+}

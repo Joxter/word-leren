@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/197f7052-156a-49f3-bb16-086ee026bcc8",
+  "title": "Deelnemen aan een buurtactiviteit of evenement",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/197f7052-156a-49f3-bb16-086ee026bcc8/5e076cbb-787e-40b3-b938-074d23102687.mp3",
+  "audioFile": "audio/197f7052-156a-49f3-bb16-086ee026bcc8.mp3",
+  "transcript": "Hallo, ben je nieuw in de buurt? Ik wil je uitnodigen voor onze jaarlijkse buurtbarbecue volgende week zaterdag. We beginnen om vijf uur 's middags in het grote park aan het einde van de straat. Iedereen brengt iets te eten of te drinken mee. Het is een leuke manier om de buren te leren kennen en om nieuwe vrienden te maken. Je kunt ook je familie meenemen. Er is een speeltuin voor de kinderen en we organiseren ook wat spelletjes. Als je wilt, kun je ook helpen met de organisatie. We hebben nog mensen nodig voor de versiering en om te helpen met de barbecue. Als je geïnteresseerd bent, kun je me bellen of een bericht sturen. Mijn telefoonnummer is 0612345678. Ik hoop je daar te zien!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Waar vindt de jaarlijkse buurtbarbecue plaats?",
+      "options": [
+        "In het kleine park",
+        "In het grote park aan het einde van de straat",
+        "Thuis",
+        "In de tuin"
+      ],
+      "correctAnswer": "Correct answer: In het grote park aan het einde van de straat"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat is de bedoeling dat iedereen meebrengt naar de barbecue?",
+      "options": [
+        "Iedereen brengt een cadeau mee",
+        "Iedereen brengt iets te eten of te drinken mee",
+        "Iedereen brengt zijn eigen stoel mee",
+        "Iedereen brengt een huisdier mee"
+      ],
+      "correctAnswer": "Correct answer: Iedereen brengt iets te eten of te drinken mee"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Hoe kan je contact opnemen als je wilt helpen met de organisatie?",
+      "options": [
+        "Je kunt een e-mail sturen",
+        "Je kunt een brief schrijven",
+        "Je kunt bellen of een bericht sturen",
+        "Je kunt een fax sturen"
+      ],
+      "correctAnswer": "Correct answer: Je kunt bellen of een bericht sturen"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat is het telefoonnummer waarmee je contact kunt opnemen?",
+      "options": [
+        "0612345678",
+        "0712345678",
+        "0812345678",
+        "0912345678"
+      ],
+      "correctAnswer": "Correct answer: 0612345678"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wanneer begint de buurtbarbecue?",
+      "options": [
+        "Om vier uur 's middags",
+        "Om vijf uur 's middags",
+        "Om zes uur 's avonds",
+        "Om zeven uur 's avonds"
+      ],
+      "correctAnswer": "Correct answer: Om vijf uur 's middags"
+    }
+  ]
+}

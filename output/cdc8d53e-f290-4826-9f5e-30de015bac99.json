@@ -1,0 +1,53 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/cdc8d53e-f290-4826-9f5e-30de015bac99",
+  "title": "Informatie zoeken over een buurtpreventieteam",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/cdc8d53e-f290-4826-9f5e-30de015bac99/d4e9da51-0e64-4dc8-9a51-3ff43c4fc49d.mp3",
+  "audioFile": "audio/cdc8d53e-f290-4826-9f5e-30de015bac99.mp3",
+  "transcript": "Hallo, ben je geïnteresseerd in de veiligheid van je buurt? Heb je ooit gedacht aan het toetreden tot een buurtpreventieteam? Een buurtpreventieteam is een groep mensen uit dezelfde buurt die samenwerken om hun buurt veiliger te maken. Ze houden een oogje in het zeil en melden verdachte situaties aan de politie. In onze stad zijn er verschillende buurtpreventieteams. Elk team bestaat uit vrijwilligers die op verschillende momenten van de dag en nacht actief zijn. Je hoeft geen speciale vaardigheden te hebben om lid te worden, maar het is belangrijk dat je betrouwbaar bent en dat je een goede relatie hebt met je buurtgenoten. Als je interesse hebt om deel te nemen aan een buurtpreventieteam, kun je contact opnemen met de gemeente of bezoek de website voor meer informatie. Je kunt ook een informatiebijeenkomst bijwonen om meer te leren over het werk van een buurtpreventieteam. Samen kunnen we onze buurt veiliger maken!",
+  "questions": [
+    {
+      "label": "Question 1 of 4",
+      "question": "Wat is een buurtpreventieteam?",
+      "options": [
+        "Een groep mensen die politieagenten zijn.",
+        "Een groep mensen uit dezelfde buurt die samenwerken om hun buurt veiliger te maken.",
+        "Een groep mensen die samenwerken om een feest in de buurt te organiseren.",
+        "Een groep mensen die samenwerken om een nieuwe school in de buurt te bouwen."
+      ],
+      "correctAnswer": "Correct answer: Een groep mensen uit dezelfde buurt die samenwerken om hun buurt veiliger te maken."
+    },
+    {
+      "label": "Question 2 of 4",
+      "question": "Wanneer zijn de vrijwilligers van een buurtpreventieteam actief?",
+      "options": [
+        "Alleen tijdens de dag.",
+        "Alleen tijdens de nacht.",
+        "Op verschillende momenten van de dag en nacht.",
+        "Alleen in het weekend."
+      ],
+      "correctAnswer": "Correct answer: Op verschillende momenten van de dag en nacht."
+    },
+    {
+      "label": "Question 3 of 4",
+      "question": "Welke eigenschappen moet je hebben om lid te worden van een buurtpreventieteam?",
+      "options": [
+        "Je moet speciale vaardigheden hebben.",
+        "Je moet betrouwbaar zijn en een goede relatie hebben met je buurtgenoten.",
+        "Je moet in de buurt wonen voor minstens tien jaar.",
+        "Je moet een oud-politieagent zijn."
+      ],
+      "correctAnswer": "Correct answer: Je moet betrouwbaar zijn en een goede relatie hebben met je buurtgenoten."
+    },
+    {
+      "label": "Question 4 of 4",
+      "question": "Hoe kun je meer informatie krijgen over het buurtpreventieteam?",
+      "options": [
+        "Door contact op te nemen met de gemeente of de website te bezoeken.",
+        "Door een e-mail te sturen naar de burgemeester.",
+        "Door de lokale krant te lezen.",
+        "Door een brief te sturen naar het stadhuis."
+      ],
+      "correctAnswer": "Correct answer: Door contact op te nemen met de gemeente of de website te bezoeken."
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/9d484719-af42-4f0c-9411-a87e7966afe2",
+  "title": "Lezen over regels bij barbecueën in de openbare ruimte",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/9d484719-af42-4f0c-9411-a87e7966afe2/8edccf33-55d8-4b78-8929-d3b448a51f5f.mp3",
+  "audioFile": "audio/9d484719-af42-4f0c-9411-a87e7966afe2.mp3",
+  "transcript": "Hallo allemaal, vandaag bespreken we de regels voor het barbecueën in openbare ruimtes in Nederland. Het is belangrijk deze regels te kennen om boetes te voorkomen en rekening te houden met anderen. Allereerst, mag je niet overal barbecueën. In sommige parken is het toegestaan, maar in andere niet. Kijk dus altijd naar de borden of check de website van de gemeente. Ten tweede, houd rekening met de rook. Zorg ervoor dat de rook niet overlast veroorzaakt voor andere mensen in het park. En ten derde, ruim alles op na het barbecueën. Laat geen afval achter en doof de barbecue volledig. Vergeet niet dat je verantwoordelijk bent voor je eigen veiligheid en die van anderen. Als je deze regels volgt, kun je genieten van een leuke en veilige barbecue in de openbare ruimte.",
+  "questions": [
+    {
+      "label": "Question 1 of 3",
+      "question": "Waar kunt u controleren of u in een park mag barbecueën?",
+      "options": [
+        "Op het nieuws",
+        "Op de borden in het park of op de website van de gemeente",
+        "In een kookboek",
+        "Bij de brandweer"
+      ],
+      "correctAnswer": "Correct answer: Op de borden in het park of op de website van de gemeente"
+    },
+    {
+      "label": "Question 2 of 3",
+      "question": "Wat moet je doen om te voorkomen dat de rook van de barbecue overlast veroorzaakt voor anderen?",
+      "options": [
+        "Niet barbecueën",
+        "Barbecueën in een gesloten ruimte",
+        "Zorg ervoor dat de rook niet overlast veroorzaakt",
+        "Barbecueën zonder vlees"
+      ],
+      "correctAnswer": "Correct answer: Zorg ervoor dat de rook niet overlast veroorzaakt"
+    },
+    {
+      "label": "Question 3 of 3",
+      "question": "Wat moet je doen na het barbecueën?",
+      "options": [
+        "Laat het vuur branden",
+        "Laat je afval achter",
+        "Verlaat het park onmiddellijk",
+        "Ruim alles op en doof de barbecue volledig"
+      ],
+      "correctAnswer": "Correct answer: Ruim alles op en doof de barbecue volledig"
+    }
+  ]
+}

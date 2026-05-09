@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/c9b06cc2-434e-4394-ab7a-0a4ab36b3b42",
+  "title": "Een rooster bespreken met de werkgever",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/aeb14462-d4d4-4a4d-ad29-abf9bfa91d3f/c9b06cc2-434e-4394-ab7a-0a4ab36b3b42/424d20bd-0e07-46be-ac6a-2bd9718994b0.mp3",
+  "audioFile": "audio/c9b06cc2-434e-4394-ab7a-0a4ab36b3b42.mp3",
+  "transcript": "Hallo, ik ben jouw nieuwe werkgever. Welkom bij ons bedrijf! Ik wil graag ons werkrooster met je bespreken. We werken hier van maandag tot vrijdag. Je start elke dag om acht uur 's ochtends. De lunchpauze is om twaalf uur 's middags, en deze duurt een half uur. Je werkt dan door tot vier uur 's middags. Op sommige dagen moeten we overwerken. Dit gebeurt meestal op woensdagen en donderdagen. Als je moet overwerken, werk je tot zes uur 's avonds. Je krijgt dan extra betaald voor de extra uren. Vergeet niet om jouw vakantiedagen op tijd aan te vragen. Je hebt recht op 20 vakantiedagen per jaar. Als je ziek bent, moet je ons zo snel mogelijk bellen. Kun je deze werktijden volgen? Heb je nog vragen over het rooster? Laat het me weten! Het is belangrijk dat je comfortabel bent met je werkschema.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Op welke dagen moet je mogelijk overwerken?",
+      "options": [
+        "Maandag en dinsdag",
+        "Woensdag en donderdag",
+        "Vrijdag en zaterdag",
+        "Zaterdag en zondag"
+      ],
+      "correctAnswer": "Correct answer: Woensdag en donderdag"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Hoeveel vakantiedagen heb je per jaar?",
+      "options": [
+        "10 dagen",
+        "15 dagen",
+        "20 dagen",
+        "25 dagen"
+      ],
+      "correctAnswer": "Correct answer: 20 dagen"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Hoe lang duurt de lunchpauze?",
+      "options": [
+        "15 minuten",
+        "30 minuten",
+        "45 minuten",
+        "60 minuten"
+      ],
+      "correctAnswer": "Correct answer: 30 minuten"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wanneer start je werkdag?",
+      "options": [
+        "Om zeven uur 's ochtends",
+        "Om acht uur 's ochtends",
+        "Om negen uur 's ochtends",
+        "Om tien uur 's ochtends"
+      ],
+      "correctAnswer": "Correct answer: Om acht uur 's ochtends"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Tot hoe laat werk je als je moet overwerken?",
+      "options": [
+        "Tot vijf uur 's avonds",
+        "Tot zes uur 's avonds",
+        "Tot zeven uur 's avonds",
+        "Tot acht uur 's avonds"
+      ],
+      "correctAnswer": "Correct answer: Tot zes uur 's avonds"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/f1da8280-d1a4-4920-a905-c1f7534924e4",
+  "title": "Uitleg volgen tijdens een les",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/aeb14462-d4d4-4a4d-ad29-abf9bfa91d3f/f1da8280-d1a4-4920-a905-c1f7534924e4/4ff3813a-5a15-4d29-ab46-d363ebeb0290.mp3",
+  "audioFile": "audio/f1da8280-d1a4-4920-a905-c1f7534924e4.mp3",
+  "transcript": "Hallo klas, vandaag gaan we een nieuwe taaloefening doen. We gaan nieuwe woorden leren. Deze woorden zijn erg belangrijk voor het inburgeringsexamen. Ik zal een woord zeggen en dan laat ik een foto zien. Jullie moeten dan het woord opschrijven. De woorden zijn \"boek\", \"stoel\", \"tafel\", \"raam\" en \"deur\". Dus als ik zeg \"boek\", laat ik een foto van een boek zien. Vervolgens schrijf je het woord \"boek\" op je papier. We doen dit voor alle woorden. Let op, dit is een oefening voor het luistergedeelte van het examen. Dus probeer goed te luisteren naar de woorden die ik zeg. Na deze oefening gaan we de woorden samen bespreken. Vragen kunnen dan gesteld worden. Pak nu je pen en papier en we gaan beginnen.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat is de bedoeling van deze taaloefening?",
+      "options": [
+        "De woorden uitspreken",
+        "Een foto tekenen",
+        "De woorden opschrijven",
+        "Een verhaal schrijven"
+      ],
+      "correctAnswer": "Correct answer: De woorden opschrijven"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Welke hulpmiddelen moet je gebruiken voor deze oefening?",
+      "options": [
+        "Een boek en een pen",
+        "Een pen en papier",
+        "Een computer en een muis",
+        "Een schaar en lijm"
+      ],
+      "correctAnswer": "Correct answer: Een pen en papier"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat is het eerste woord dat je moet opschrijven?",
+      "options": [
+        "Tafel",
+        "Boek",
+        "Stoel",
+        "Deur"
+      ],
+      "correctAnswer": "Correct answer: Boek"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat gebeurt er nadat je de woorden hebt opgeschreven?",
+      "options": [
+        "We gaan een pauze nemen",
+        "We gaan de woorden samen bespreken",
+        "We gaan een spel spelen",
+        "We gaan naar huis"
+      ],
+      "correctAnswer": "Correct answer: We gaan de woorden samen bespreken"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Voor welk deel van het examen is deze oefening?",
+      "options": [
+        "Het schrijfgedeelte",
+        "Het leesgedeelte",
+        "Het spreekgedeelte",
+        "Het luistergedeelte"
+      ],
+      "correctAnswer": "Correct answer: Het luistergedeelte"
+    }
+  ]
+}

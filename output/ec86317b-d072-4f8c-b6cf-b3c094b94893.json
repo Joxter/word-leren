@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/ec86317b-d072-4f8c-b6cf-b3c094b94893",
+  "title": "Informatie lezen over energiebesparing in de woning",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/ec86317b-d072-4f8c-b6cf-b3c094b94893/b2babb25-dccc-4a43-aa45-9b4bc4e9b105.mp3",
+  "audioFile": "audio/ec86317b-d072-4f8c-b6cf-b3c094b94893.mp3",
+  "transcript": "Hallo allemaal, vandaag wil ik het graag hebben over energiebesparing in de woning. Energie besparen is niet alleen goed voor het milieu, maar ook voor je portemonnee. Laten we beginnen met de verlichting. Gebruik je nog gloeilampen? Vervang deze dan door led-verlichting. Led-lampen zijn energiezuiniger en gaan langer mee. Vergeet ook niet om de lichten uit te doen als je een kamer verlaat. Nu, verwarming. Zet de thermostaat een graad lager dan je gewend bent. Dit kan al veel energie besparen. En trek een warme trui aan, natuurlijk! Gebruik ook de isolatie in je huis. Dubbel glas en dakisolatie houden de warmte beter binnen. Heb je veel elektrische apparaten? Zet ze helemaal uit als je ze niet gebruikt. Stand-by modus verbruikt ook energie. En overweeg om oude apparaten te vervangen door energiezuinige modellen. Onthoud, elke kleine verandering kan helpen. Begin vandaag nog met energie besparen! Het is beter voor de aarde en je kunt er ook geld mee besparen.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Waarom is energie besparen goed volgens de spreker?",
+      "options": [
+        "Het is goed voor de gezondheid",
+        "Het is goed voor het milieu en je portemonnee",
+        "Het is goed voor het onderhoud van het huis",
+        "Het is goed voor de decoratie van het huis"
+      ],
+      "correctAnswer": "Correct answer: Het is goed voor het milieu en je portemonnee"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat kun je doen om de verlichting in je huis energiezuiniger te maken?",
+      "options": [
+        "Vervang gloeilampen door led-verlichting",
+        "Zet de lichten aan als je een kamer verlaat",
+        "Gebruik meer gloeilampen",
+        "Zet de lichten aan in de hele woning"
+      ],
+      "correctAnswer": "Correct answer: Vervang gloeilampen door led-verlichting"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Hoe kun je energie besparen met de verwarming?",
+      "options": [
+        "Zet de thermostaat hoger dan je gewend bent",
+        "Zet de thermostaat een graad lager dan je gewend bent",
+        "Zet de verwarming altijd op de maximale temperatuur",
+        "Gebruik geen verwarming in huis"
+      ],
+      "correctAnswer": "Correct answer: Zet de thermostaat een graad lager dan je gewend bent"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat wordt aanbevolen om te doen met elektrische apparaten om energie te besparen?",
+      "options": [
+        "Gebruik ze altijd op de hoogste instelling",
+        "Zet ze op stand-by modus als je ze niet gebruikt",
+        "Vervang oude apparaten door energiezuinige modellen",
+        "Gebruik ze zo vaak mogelijk"
+      ],
+      "correctAnswer": "Correct answer: Vervang oude apparaten door energiezuinige modellen"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat is het voordeel van het gebruik van led-lampen volgens de spreker?",
+      "options": [
+        "Ze zijn goedkoper",
+        "Ze zijn energiezuiniger en gaan langer mee",
+        "Ze geven meer licht",
+        "Ze zijn groter dan gewone gloeilampen"
+      ],
+      "correctAnswer": "Correct answer: Ze zijn energiezuiniger en gaan langer mee"
+    }
+  ]
+}

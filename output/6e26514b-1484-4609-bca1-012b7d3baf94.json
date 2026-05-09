@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/6e26514b-1484-4609-bca1-012b7d3baf94",
+  "title": "De regels lezen voor het huren van een buurtcentrum",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/6e26514b-1484-4609-bca1-012b7d3baf94/493690a5-4e66-4b63-af46-8b61ba7d9625.mp3",
+  "audioFile": "audio/6e26514b-1484-4609-bca1-012b7d3baf94.mp3",
+  "transcript": "Hallo iedereen! Wij hebben een buurtcentrum dat mensen kunnen huren voor verschillende evenementen. Voordat je het buurtcentrum huurt, zijn er een paar regels die je moet kennen. Eerst, het centrum mag alleen gehuurd worden tot 22.00 uur. Na deze tijd moeten alle activiteiten stoppen. Ten tweede, je moet zelf zorgen voor de schoonmaak na je evenement. Dat betekent dat je alle afval moet weggooien en de ruimte netjes moet achterlaten. Ten derde, je mag geen alcohol verkopen of serveren zonder de juiste vergunning. Tot slot, het is niet toegestaan om luide muziek te spelen zonder toestemming van de gemeente. Als je deze regels niet volgt, dan mag je het buurtcentrum niet meer huren in de toekomst. Als je geïnteresseerd bent om het buurtcentrum te huren, bel ons dan op het nummer 123456789. Dank je wel!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Tot hoe laat mag het buurtcentrum gehuurd worden?",
+      "options": [
+        "Tot 20.00 uur",
+        "Tot 22.00 uur",
+        "Tot 24.00 uur",
+        "Er is geen tijdslimiet"
+      ],
+      "correctAnswer": "Correct answer: Tot 22.00 uur"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wie is verantwoordelijk voor de schoonmaak na het evenement?",
+      "options": [
+        "Het buurtcentrum",
+        "Een schoonmaakbedrijf",
+        "De persoon die het centrum heeft gehuurd",
+        "De gemeente"
+      ],
+      "correctAnswer": "Correct answer: De persoon die het centrum heeft gehuurd"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Mag je alcohol verkopen of serveren in het buurtcentrum zonder vergunning?",
+      "options": [
+        "Ja, dat is toegestaan",
+        "Nee, dat is niet toegestaan",
+        "Alleen als je toestemming hebt van de gemeente",
+        "Het is niet duidelijk uit de tekst"
+      ],
+      "correctAnswer": "Correct answer: Nee, dat is niet toegestaan"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat gebeurt er als je de regels van het buurtcentrum niet volgt?",
+      "options": [
+        "Je krijgt een boete",
+        "Je mag het buurtcentrum niet meer huren in de toekomst",
+        "Je moet voor de schoonmaak betalen",
+        "Je moet het buurtcentrum vaker huren"
+      ],
+      "correctAnswer": "Correct answer: Je mag het buurtcentrum niet meer huren in de toekomst"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Hoe kan je het buurtcentrum huren?",
+      "options": [
+        "Door een e-mail te sturen",
+        "Door te bellen naar het nummer 123456789",
+        "Door een formulier in te vullen op de website",
+        "Door persoonlijk naar het centrum te gaan"
+      ],
+      "correctAnswer": "Correct answer: Door te bellen naar het nummer 123456789"
+    }
+  ]
+}

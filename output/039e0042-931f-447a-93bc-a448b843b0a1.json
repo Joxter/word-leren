@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/039e0042-931f-447a-93bc-a448b843b0a1",
+  "title": "Informatie krijgen over een medische behandeling",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/bc950169-3904-406e-b425-24f98bd3eedd/039e0042-931f-447a-93bc-a448b843b0a1/3fb65922-65e1-4da2-a999-a11b759d6b58.mp3",
+  "audioFile": "audio/039e0042-931f-447a-93bc-a448b843b0a1.mp3",
+  "transcript": "Hallo allemaal! Vandaag gaan we het hebben over gezondheid en zorg. Stel je voor dat je naar de dokter moet voor een medische behandeling. Het is heel belangrijk om goed te begrijpen wat er gaat gebeuren. De dokter zal eerst met je praten over de behandeling. Hij zal uitleggen wat de behandeling inhoudt, hoe lang het duurt en wat de mogelijke bijwerkingen zijn. Het is belangrijk om vragen te stellen als je iets niet begrijpt. De dokter kan ook vragen stellen om er zeker van te zijn dat je de informatie begrijpt. Daarna krijg je een brief mee met alle informatie over de behandeling. Deze brief moet je thuis goed doorlezen. Het kan helpen om de brief aan iemand anders te laten lezen, bijvoorbeeld een familielid of een vriend. Zij kunnen je misschien helpen als je iets niet begrijpt. Vergeet niet, het is jouw gezondheid en het is belangrijk dat je alle informatie begrijpt voordat je een beslissing neemt.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat doet de dokter voordat hij een medische behandeling begint?",
+      "options": [
+        "De dokter geeft je meteen de behandeling",
+        "De dokter praat eerst met je over de behandeling",
+        "De dokter vraagt je om de behandeling zelf uit te leggen",
+        "De dokter geeft je een brief om thuis te lezen"
+      ],
+      "correctAnswer": "Correct answer: De dokter praat eerst met je over de behandeling"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat moet je doen als je iets niet begrijpt?",
+      "options": [
+        "Je moet de dokter negeren",
+        "Je moet het zelf proberen te begrijpen",
+        "Je moet vragen stellen",
+        "Je moet de behandeling weigeren"
+      ],
+      "correctAnswer": "Correct answer: Je moet vragen stellen"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat krijg je van de dokter na het gesprek?",
+      "options": [
+        "Je krijgt een recept",
+        "Je krijgt een brief mee met alle informatie",
+        "Je krijgt medicijnen",
+        "Je krijgt een boek over gezondheid"
+      ],
+      "correctAnswer": "Correct answer: Je krijgt een brief mee met alle informatie"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wie kan je helpen om de brief te begrijpen?",
+      "options": [
+        "Een familielid of een vriend",
+        "Een medische professional",
+        "Een postbode",
+        "Niemand"
+      ],
+      "correctAnswer": "Correct answer: Een familielid of een vriend"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat is belangrijk voordat je een beslissing neemt over de behandeling?",
+      "options": [
+        "Het is belangrijk dat je alle informatie begrijpt",
+        "Het is belangrijk dat je de dokter vertrouwt",
+        "Het is belangrijk dat je de brief aan iemand anders laat lezen",
+        "Het is belangrijk dat je de behandeling wilt"
+      ],
+      "correctAnswer": "Correct answer: Het is belangrijk dat je alle informatie begrijpt"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/8e3b5ed6-3774-40e9-9f71-c51b0313d71a",
+  "title": "Een e-mail krijgen van de gemeente over een nieuwe dienst",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/8e3b5ed6-3774-40e9-9f71-c51b0313d71a/7e729dd1-dd96-4f8e-9dac-38964c81642c.mp3",
+  "audioFile": "audio/8e3b5ed6-3774-40e9-9f71-c51b0313d71a.mp3",
+  "transcript": "Hallo! Je hebt een e-mail ontvangen van de gemeente. Er is een nieuwe dienst beschikbaar voor alle inwoners. Deze dienst heet \"Buurthulp\". Met Buurthulp, kun je hulp vragen aan je buren voor kleine klusjes. Of je kunt zelf hulp bieden aan anderen in je buurt. Het kan gaan om kleine klusjes zoals de hond uitlaten, boodschappen doen, of zelfs het gras maaien. Om van deze dienst gebruik te maken, moet je je aanmelden op de website van de gemeente. Na je aanmelding krijg je een bevestigingsmail. Dan kun je beginnen met het posten of reageren op klusjes. De Buurthulp is een geweldige manier om elkaar te helpen en de gemeenschap sterker te maken. Wil je meer informatie? Ga dan naar de website van de gemeente. Daar vind je ook een handleiding om je te helpen bij het aanmelden. Probeer het eens, en maak je buurt een betere plek om te wonen!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat is de nieuwe dienst die door de gemeente wordt aangeboden?",
+      "options": [
+        "Een nieuwe school",
+        "Buurthulp",
+        "Een nieuwe supermarkt",
+        "Een nieuw ziekenhuis"
+      ],
+      "correctAnswer": "Correct answer: Buurthulp"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Hoe kun je deelnemen aan de dienst Buurthulp?",
+      "options": [
+        "Door een brief te sturen naar de gemeente",
+        "Door je aan te melden op de website van de gemeente",
+        "Door te bellen naar de gemeente",
+        "Door persoonlijk naar het gemeentehuis te gaan"
+      ],
+      "correctAnswer": "Correct answer: Door je aan te melden op de website van de gemeente"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat kan je doen met de dienst Buurthulp?",
+      "options": [
+        "Je kan hulp vragen aan je buren voor kleine klusjes of zelf hulp bieden",
+        "Je kan gratis boodschappen doen bij de supermarkt",
+        "Je kan gratis naar de sportschool gaan",
+        "Je kan gratis eten krijgen bij het gemeentehuis"
+      ],
+      "correctAnswer": "Correct answer: Je kan hulp vragen aan je buren voor kleine klusjes of zelf hulp bieden"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat gebeurt er nadat je je hebt aangemeld voor de dienst Buurthulp?",
+      "options": [
+        "Je krijgt een welkomstpakket thuisgestuurd",
+        "Je moet naar het gemeentehuis gaan voor een interview",
+        "Je krijgt een bevestigingsmail",
+        "Je moet een cursus volgen"
+      ],
+      "correctAnswer": "Correct answer: Je krijgt een bevestigingsmail"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Waar kan je meer informatie vinden over de dienst Buurthulp?",
+      "options": [
+        "In de krant",
+        "Op de website van de gemeente",
+        "Op de radio",
+        "Op de televisie"
+      ],
+      "correctAnswer": "Correct answer: Op de website van de gemeente"
+    }
+  ]
+}

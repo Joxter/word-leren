@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/09ceb03d-50db-441e-81b8-e1cb6719c109",
+  "title": "Een uitnodiging ontvangen voor een buurt schoonmaakactie",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/09ceb03d-50db-441e-81b8-e1cb6719c109/5b9b199e-cf86-42fa-a2a0-def2d96a3b8b.mp3",
+  "audioFile": "audio/09ceb03d-50db-441e-81b8-e1cb6719c109.mp3",
+  "transcript": "Hallo, ik ben Klaas, jouw buurman van nummer 24. We organiseren volgende week zaterdag een schoonmaakactie in onze buurt. We willen onze straat en het nabijgelegen park schoonmaken. We willen allemaal een schone en veilige plek om te wonen, toch? We hebben jouw hulp ook nodig. We verzamelen om 10.00 uur bij het park. We zullen handschoenen en vuilniszakken regelen. Iedereen is welkom, ook kinderen. Na het schoonmaken, hebben we een kleine picknick gepland in het park. Kun je komen? Laat het ons dan even weten. Je kunt mij bellen op 0612345678 of stuur een e-mail naar klaas24@buurtschoon.nl. Doe je mee? Jouw hulp is erg belangrijk voor ons. Dank je wel.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wie is Klaas?",
+      "options": [
+        "Hij is een leraar",
+        "Hij is een vriend",
+        "Hij is een buurman",
+        "Hij is een familie"
+      ],
+      "correctAnswer": "Correct answer: Hij is een buurman"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat organiseren ze volgende week zaterdag?",
+      "options": [
+        "Een feest",
+        "Een vergadering",
+        "Een schoonmaakactie",
+        "Een picknick"
+      ],
+      "correctAnswer": "Correct answer: Een schoonmaakactie"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Waar verzamelen ze?",
+      "options": [
+        "In het huis van Klaas",
+        "In het park",
+        "Op school",
+        "In de supermarkt"
+      ],
+      "correctAnswer": "Correct answer: In het park"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat doen ze na het schoonmaken?",
+      "options": [
+        "Ze gaan naar huis",
+        "Ze gaan winkelen",
+        "Ze hebben een picknick",
+        "Ze gaan naar de bioscoop"
+      ],
+      "correctAnswer": "Correct answer: Ze hebben een picknick"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Hoe kun je Klaas bereiken om je deelname te bevestigen?",
+      "options": [
+        "Door een brief te sturen",
+        "Door hem te bellen of een e-mail te sturen",
+        "Door hem een sms te sturen",
+        "Door hem persoonlijk te bezoeken"
+      ],
+      "correctAnswer": "Correct answer: Door hem te bellen of een e-mail te sturen"
+    }
+  ]
+}

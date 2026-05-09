@@ -1,0 +1,17 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/knm/practices/7688a49f-5004-4778-a5df-b33477399978",
+  "title": "Het bellen van 112 bij nood",
+  "transcript": "<span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_0_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">Wanneer</span></span><span class=\"inline-block\"><span class=\"px-0.5 cursor-help inline-block rounded-sm transition-colors duration-200 hover:bg-orange-200 data-[state=open]:bg-orange-200\" type=\"button\" id=\"radix-_r_2_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\">bel</span></span><span class=\"inline-block\"><span class=\"px-0.5\">je</span></span><span>112?</span>",
+  "questions": [
+    {
+      "label": "",
+      "question": "",
+      "options": [
+        "Als je een brood wilt kopen.",
+        "Als je in gevaar bent of een ongeluk ziet.",
+        "Als je wilt reizen."
+      ],
+      "correctAnswer": "Correct answer: Als je in gevaar bent of een ongeluk ziet."
+    }
+  ]
+}

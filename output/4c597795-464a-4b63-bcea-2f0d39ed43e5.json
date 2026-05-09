@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/4c597795-464a-4b63-bcea-2f0d39ed43e5",
+  "title": "Een storing of probleem met het openbaar vervoer volgen",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/4c597795-464a-4b63-bcea-2f0d39ed43e5/66405c0d-1582-4446-ae52-0c639f7eb477.mp3",
+  "audioFile": "audio/4c597795-464a-4b63-bcea-2f0d39ed43e5.mp3",
+  "transcript": "Goedemorgen luisteraars! Dit is een belangrijke mededeling voor mensen die vandaag met het openbaar vervoer reizen. Er is een probleem met de tramlijn 7. Er is een storing bij de halte Centraal Station. Hierdoor kunnen trams van lijn 7 niet rijden tussen de haltes Centraal Station en Leidseplein. De monteurs zijn al aan het werk om het probleem op te lossen. Maar voorlopig is het beter om een andere route te nemen of een andere vorm van vervoer te kiezen. Bussen en metro's rijden zoals normaal. Je kunt ook de tramlijn 5 of 9 nemen. Deze trams stoppen ook bij de halte Leidseplein. We hopen dat het probleem snel wordt opgelost. We zullen jullie op de hoogte houden. Hou onze website en sociale media in de gaten voor de laatste updates. Ons excuus voor het ongemak. Bedankt voor jullie begrip en een fijne dag verder!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat is het probleem met de tramlijn 7?",
+      "options": [
+        "Er is een ongeluk gebeurd.",
+        "Er is een storing bij de halte Centraal Station.",
+        "De trams rijden niet.",
+        "De trambestuurder is ziek."
+      ],
+      "correctAnswer": "Correct answer: Er is een storing bij de halte Centraal Station."
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat is het advies aan de reizigers?",
+      "options": [
+        "Blijf thuis.",
+        "Neem een taxi.",
+        "Neem een andere route of een andere vorm van vervoer.",
+        "Wacht op de tram."
+      ],
+      "correctAnswer": "Correct answer: Neem een andere route of een andere vorm van vervoer."
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Welke alternatieve tramlijnen kunnen reizigers nemen?",
+      "options": [
+        "Tramlijn 1 of 2",
+        "Tramlijn 3 of 4",
+        "Tramlijn 5 of 9",
+        "Tramlijn 6 of 8"
+      ],
+      "correctAnswer": "Correct answer: Tramlijn 5 of 9"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Waar kunnen reizigers updates over het probleem vinden?",
+      "options": [
+        "Op de radio.",
+        "Op de website en sociale media.",
+        "In de krant.",
+        "Op de televisie."
+      ],
+      "correctAnswer": "Correct answer: Op de website en sociale media."
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wie werken aan het oplossen van het probleem?",
+      "options": [
+        "De bestuurders.",
+        "De reizigers.",
+        "De monteurs.",
+        "Het management."
+      ],
+      "correctAnswer": "Correct answer: De monteurs."
+    }
+  ]
+}

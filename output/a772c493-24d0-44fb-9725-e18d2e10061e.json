@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/a772c493-24d0-44fb-9725-e18d2e10061e",
+  "title": "Een e-mail ontvangen over stemlocatie voor verkiezingen",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/a772c493-24d0-44fb-9725-e18d2e10061e/c899e1f0-94f3-4d43-9f06-8d5d14882c94.mp3",
+  "audioFile": "audio/a772c493-24d0-44fb-9725-e18d2e10061e.mp3",
+  "transcript": "Hallo, goede middag! Ik wil jullie informeren over een e-mail die jullie mogelijk hebben ontvangen. De e-mail gaat over de komende verkiezingen. In deze e-mail vind je informatie over waar je kunt stemmen. Meestal stem je in een openbaar gebouw, zoals een school of een bibliotheek, in jouw buurt. Het is belangrijk om je stempas mee te nemen. Deze heb je per post ontvangen. Vergeet ook niet je identiteitsbewijs mee te nemen. Dit kan je paspoort, identiteitskaart of rijbewijs zijn. Als je de e-mail nog niet hebt bekeken, doe dat dan na deze les. Het is belangrijk om te weten waar je stemlocatie is. De verkiezingen vinden plaats op 17 maart. Iedereen mag stemmen vanaf 18 jaar. Wees er zeker van dat je stemt, want elke stem telt. Heb je vragen over de verkiezingen of over de e-mail, stel ze dan gerust.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat is het onderwerp van de e-mail die je mogelijk hebt ontvangen?",
+      "options": [
+        "Over de nieuwe bibliotheek in de stad",
+        "Over de komende verkiezingen",
+        "Over een schoolfeest",
+        "Over een verloren identiteitsbewijs"
+      ],
+      "correctAnswer": "Correct answer: Over de komende verkiezingen"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Waar kun je meestal stemmen?",
+      "options": [
+        "In een café",
+        "In een privéwoning",
+        "In een openbaar gebouw",
+        "In een winkelcentrum"
+      ],
+      "correctAnswer": "Correct answer: In een openbaar gebouw"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Welke documenten moet je meenemen om te stemmen?",
+      "options": [
+        "Je stempas en je identiteitsbewijs",
+        "Je stempas en je bankpas",
+        "Je paspoort en je bankafschrift",
+        "Je rijbewijs en je verzekeringskaart"
+      ],
+      "correctAnswer": "Correct answer: Je stempas en je identiteitsbewijs"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wanneer vinden de verkiezingen plaats?",
+      "options": [
+        "Op 17 februari",
+        "Op 17 maart",
+        "Op 17 april",
+        "Op 17 mei"
+      ],
+      "correctAnswer": "Correct answer: Op 17 maart"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wie mag stemmen?",
+      "options": [
+        "Iedereen vanaf 16 jaar",
+        "Iedereen vanaf 18 jaar",
+        "Alleen Nederlandse staatsburgers",
+        "Alleen mensen met een rijbewijs"
+      ],
+      "correctAnswer": "Correct answer: Iedereen vanaf 18 jaar"
+    }
+  ]
+}

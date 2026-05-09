@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/04045ecf-e167-461d-b0b3-1bc3cfec30fe",
+  "title": "Een afspraak maken voor een tandartscontrole",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/bc950169-3904-406e-b425-24f98bd3eedd/04045ecf-e167-461d-b0b3-1bc3cfec30fe/a9d56e18-47c0-4336-9384-9703443b4e3e.mp3",
+  "audioFile": "audio/04045ecf-e167-461d-b0b3-1bc3cfec30fe.mp3",
+  "transcript": "Hallo, ik ben Peter en ik wil graag een afspraak maken voor een controle bij de tandarts. Het is al een tijdje geleden dat ik voor het laatst ben geweest. Ik heb geen pijn in mijn tanden, maar ik wil gewoon zeker weten dat alles goed is. Ik ben doorgaans beschikbaar op dinsdagen en donderdagen na 17.00 uur, omdat ik overdag werk. Is er een mogelijkheid om een afspraak te maken op een van deze dagen, misschien volgende week? Ook wil ik weten of ik iets speciaals moet doen voordat ik kom. Moet ik bijvoorbeeld mijn tanden poetsen of niet eten voordat ik kom? En tot slot, ik heb een nieuwe zorgverzekering. Moet ik mijn verzekeringskaart meenemen of kunnen jullie die informatie van tevoren opzoeken? Ik kijk uit naar uw antwoord. Bedankt!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat wil Peter doen?",
+      "options": [
+        "Hij wil een afspraak maken bij de kapper.",
+        "Hij wil een afspraak maken voor een controle bij de tandarts.",
+        "Hij wil een afspraak annuleren bij de tandarts.",
+        "Hij wil een nieuwe zorgverzekering afsluiten."
+      ],
+      "correctAnswer": "Correct answer: Hij wil een afspraak maken voor een controle bij de tandarts."
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wanneer is Peter doorgaans beschikbaar voor een afspraak?",
+      "options": [
+        "Op maandagen en woensdagen voor 17.00 uur.",
+        "Op dinsdagen en donderdagen na 17.00 uur.",
+        "Op zaterdagen en zondagen de hele dag.",
+        "Elke dag na 20.00 uur."
+      ],
+      "correctAnswer": "Correct answer: Op dinsdagen en donderdagen na 17.00 uur."
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat wil Peter weten over zijn bezoek aan de tandarts?",
+      "options": [
+        "Of hij zijn tanden moet poetsen voordat hij komt.",
+        "Of hij niet moet eten voordat hij komt.",
+        "Of hij zijn verzekeringskaart moet meenemen.",
+        "Alle bovenstaande."
+      ],
+      "correctAnswer": "Correct answer: Alle bovenstaande."
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat is er veranderd in Peter's situatie?",
+      "options": [
+        "Hij heeft een nieuwe baan.",
+        "Hij is verhuisd.",
+        "Hij heeft een nieuwe zorgverzekering.",
+        "Hij is van tandarts veranderd."
+      ],
+      "correctAnswer": "Correct answer: Hij heeft een nieuwe zorgverzekering."
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Heeft Peter pijn in zijn tanden?",
+      "options": [
+        "Ja, hij heeft pijn in zijn tanden.",
+        "Nee, hij heeft geen pijn in zijn tanden.",
+        "Het is niet duidelijk of hij pijn heeft in zijn tanden.",
+        "Peter heeft het niet over pijn in zijn tanden."
+      ],
+      "correctAnswer": "Correct answer: Nee, hij heeft geen pijn in zijn tanden."
+    }
+  ]
+}

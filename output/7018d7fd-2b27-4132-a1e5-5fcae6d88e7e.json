@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/7018d7fd-2b27-4132-a1e5-5fcae6d88e7e",
+  "title": "Een poster lezen over veiligheid in de buurt",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/7018d7fd-2b27-4132-a1e5-5fcae6d88e7e/0549d335-8f10-426f-816e-bdab7079216c.mp3",
+  "audioFile": "audio/7018d7fd-2b27-4132-a1e5-5fcae6d88e7e.mp3",
+  "transcript": "Hallo iedereen, ik wil jullie aandacht even trekken naar deze poster hier. Het gaat over veiligheid in onze buurt. De politie heeft het gemaakt om ons te helpen. Het is belangrijk dat we allemaal opletten en samenwerken om onze buurt veilig te houden. Allereerst, als je iets verdachts ziet, bel dan altijd de politie. Je hoeft niet bang te zijn. Het is beter om veilig te zijn dan sorry. Ten tweede, zorg ervoor dat je huis altijd goed is afgesloten. Vergeet niet je ramen en deuren te sluiten als je weggaat. Ten derde, wees vriendelijk en behulpzaam voor je buren. We zijn allemaal samen in deze buurt. Als je op vakantie gaat, vraag dan een buurman of buurvrouw om een oogje in het zeil te houden. En vergeet niet, wij zijn de ogen en oren van de buurt. Laten we onze buurt veilig en aangenaam houden voor iedereen.",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wie heeft de poster gemaakt?",
+      "options": [
+        "De buren",
+        "De politie",
+        "De spreker",
+        "De buurtbewoners"
+      ],
+      "correctAnswer": "Correct answer: De politie"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat moet je doen als je iets verdachts ziet?",
+      "options": [
+        "Het negeren",
+        "Het aan je buren vertellen",
+        "De politie bellen",
+        "Het opschrijven"
+      ],
+      "correctAnswer": "Correct answer: De politie bellen"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Wat moet je doen voordat je weggaat uit je huis?",
+      "options": [
+        "Je ramen en deuren open laten",
+        "Je ramen en deuren sluiten",
+        "Je buren vertellen dat je weggaat",
+        "De politie bellen"
+      ],
+      "correctAnswer": "Correct answer: Je ramen en deuren sluiten"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat moet je doen als je op vakantie gaat?",
+      "options": [
+        "Je huis open laten",
+        "Een buurman of buurvrouw vragen om een oogje in het zeil te houden",
+        "De politie bellen",
+        "Niets doen"
+      ],
+      "correctAnswer": "Correct answer: Een buurman of buurvrouw vragen om een oogje in het zeil te houden"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wie zijn de ogen en oren van de buurt?",
+      "options": [
+        "De politie",
+        "De buren",
+        "Wij",
+        "De voorbijgangers"
+      ],
+      "correctAnswer": "Correct answer: Wij"
+    }
+  ]
+}

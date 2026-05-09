@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/3e4d9d18-0b64-49e1-905d-97b3c457d678",
+  "title": "Zien waar je grofvuil kunt brengen",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/3e4d9d18-0b64-49e1-905d-97b3c457d678/ffa10b5c-3f86-4891-8aa4-0a06af2c16f0.mp3",
+  "audioFile": "audio/3e4d9d18-0b64-49e1-905d-97b3c457d678.mp3",
+  "transcript": "Hallo allemaal! Vandaag gaan we het hebben over grofvuil. Grofvuil is huishoudelijk afval dat te groot of te zwaar is om in de normale vuilniszak te doen. Denk aan oude meubels, kapotte apparaten of tuinafval. Als je zulk soort afval hebt, kun je dit niet zomaar op straat zetten. Je moet dit naar een speciale afvalinzameling brengen. In veel steden en gemeenten in Nederland zijn er speciale grofvuildepots. Daar kun je jouw grofvuil gratis afgeven. Op de website van jouw gemeente kun je vinden waar deze depots zijn. Ook kun je daar de openingstijden vinden. Het is belangrijk dat we ons afval goed scheiden en op de juiste plek weggooien. Zo houden we onze steden schoon en helpen we het milieu. Dus de volgende keer als je grofvuil hebt, weet je nu waar je het naartoe kunt brengen. Bedankt voor het luisteren en tot de volgende keer!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wat is grofvuil?",
+      "options": [
+        "Afval dat in een normale vuilniszak past",
+        "Kleine stukjes afval die je op straat kunt vinden",
+        "Huishoudelijk afval dat te groot of te zwaar is voor een normale vuilniszak",
+        "Alle soorten afval die je in de vuilnisbak kunt gooien"
+      ],
+      "correctAnswer": "Correct answer: Huishoudelijk afval dat te groot of te zwaar is voor een normale vuilniszak"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat moet je doen als je grofvuil hebt?",
+      "options": [
+        "Het op straat zetten",
+        "Het in een normale vuilniszak doen",
+        "Het naar een speciale afvalinzameling brengen",
+        "Het in de vuilnisbak gooien"
+      ],
+      "correctAnswer": "Correct answer: Het naar een speciale afvalinzameling brengen"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Waar kun je informatie vinden over grofvuildepots?",
+      "options": [
+        "In de krant",
+        "Op de website van je gemeente",
+        "In het telefoonboek",
+        "Op de radio"
+      ],
+      "correctAnswer": "Correct answer: Op de website van je gemeente"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Waarom is het belangrijk om ons afval goed te scheiden?",
+      "options": [
+        "Om onze steden schoon te houden en het milieu te helpen",
+        "Om geld te besparen",
+        "Om ruimte te besparen in onze vuilnisbakken",
+        "Omdat het verplicht is"
+      ],
+      "correctAnswer": "Correct answer: Om onze steden schoon te houden en het milieu te helpen"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Is het gratis om grofvuil af te geven bij grofvuildepots?",
+      "options": [
+        "Ja",
+        "Nee",
+        "Het hangt af van het type grofvuil",
+        "Dit is niet duidelijk in de tekst"
+      ],
+      "correctAnswer": "Correct answer: Ja"
+    }
+  ]
+}

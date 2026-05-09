@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/c95eb6d0-6fd6-451f-b242-a3dcfe4e0fa2",
+  "title": "Openingstijden van het gemeentehuis opzoeken",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/c95eb6d0-6fd6-451f-b242-a3dcfe4e0fa2/0eb3fb51-9cf9-453c-92a2-dbb419109dc5.mp3",
+  "audioFile": "audio/c95eb6d0-6fd6-451f-b242-a3dcfe4e0fa2.mp3",
+  "transcript": "Hallo allemaal! Vandaag gaan we het over de openingstijden van het gemeentehuis hebben. Het is belangrijk om te weten wanneer het gemeentehuis open is. Weet je dat al? Nee? Dat dacht ik al. Dus, laten we beginnen. Het gemeentehuis is op maandag, woensdag en vrijdag van 9.00 uur 's ochtends tot 5.00 uur 's middags geopend. Op dinsdag en donderdag is het gemeentehuis open van 9.00 uur 's ochtends tot 8.00 uur 's avonds. Op zaterdag en zondag is het gemeentehuis gesloten. Dus, als je bijvoorbeeld een nieuw paspoort nodig hebt, moet je op een van deze dagen naar het gemeentehuis gaan. Vergeet niet een afspraak te maken voordat je gaat. Je kunt een afspraak maken door de gemeente te bellen of online een afspraak te boeken. Zo, nu weet je wanneer je naar het gemeentehuis kunt gaan. Vergeet deze informatie niet, want het kan erg nuttig zijn!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wanneer is het gemeentehuis op maandag geopend?",
+      "options": [
+        "Van 9.00 uur 's ochtends tot 8.00 uur 's avonds",
+        "Van 9.00 uur 's ochtends tot 5.00 uur 's middags",
+        "Het gemeentehuis is op maandag gesloten",
+        "Van 10.00 uur 's ochtends tot 4.00 uur 's middags"
+      ],
+      "correctAnswer": "Correct answer: Van 9.00 uur 's ochtends tot 5.00 uur 's middags"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat moet je doen voordat je naar het gemeentehuis gaat?",
+      "options": [
+        "Een afspraak maken",
+        "Een paspoort meenemen",
+        "Een formulier invullen",
+        "Een vriend meenemen"
+      ],
+      "correctAnswer": "Correct answer: Een afspraak maken"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Hoe kun je een afspraak maken om naar het gemeentehuis te gaan?",
+      "options": [
+        "Door een brief te sturen",
+        "Door de gemeente te bellen of online een afspraak te boeken",
+        "Door een e-mail te sturen",
+        "Door persoonlijk naar het gemeentehuis te gaan"
+      ],
+      "correctAnswer": "Correct answer: Door de gemeente te bellen of online een afspraak te boeken"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wanneer is het gemeentehuis gesloten?",
+      "options": [
+        "Op zaterdag en zondag",
+        "Op vrijdag en zaterdag",
+        "Op zondag en maandag",
+        "Op woensdag en donderdag"
+      ],
+      "correctAnswer": "Correct answer: Op zaterdag en zondag"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat als je bijvoorbeeld een nieuw paspoort nodig hebt?",
+      "options": [
+        "Je moet naar het politiebureau gaan",
+        "Je kunt het online aanvragen",
+        "Je moet naar het gemeentehuis gaan",
+        "Je kunt het bij de post ophalen"
+      ],
+      "correctAnswer": "Correct answer: Je moet naar het gemeentehuis gaan"
+    }
+  ]
+}

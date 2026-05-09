@@ -1,0 +1,53 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/23456a02-da11-4ed3-8bf6-eadc36e4010e",
+  "title": "Instructies krijgen van een leidinggevende",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/aeb14462-d4d4-4a4d-ad29-abf9bfa91d3f/23456a02-da11-4ed3-8bf6-eadc36e4010e/a6416f42-28a1-4ab2-a1cc-ba0526294a11.mp3",
+  "audioFile": "audio/23456a02-da11-4ed3-8bf6-eadc36e4010e.mp3",
+  "transcript": "Hallo team! Ik hoop dat het goed gaat met iedereen. Vandaag wil ik met jullie praten over de nieuwe taken die we hebben. We starten met een nieuw project en ik heb jullie hulp nodig. Ten eerste, hebben we vijf mensen nodig voor het onderzoeksteam. Jullie zullen informatie verzamelen over onze concurrenten. Dit is erg belangrijk, dus zorg ervoor dat jullie grondig werk leveren. Ten tweede, ik wil dat twee van jullie werken aan het verbeteren van onze website. We moeten ervoor zorgen dat onze klanten een goede ervaring hebben als ze onze site bezoeken. Ten derde, we hebben drie mensen nodig om te werken aan klantenservice. Jullie taak is om ervoor te zorgen dat onze klanten tevreden zijn en hulp krijgen wanneer ze het nodig hebben. Als je geïnteresseerd bent in een van deze taken, stuur me dan een e-mail of kom naar mijn kantoor. We zullen dan de details bespreken. Onthoud dat dit project belangrijk is voor ons bedrijf. Ik weet dat jullie allemaal geweldig werk zullen leveren. Dank je wel.",
+  "questions": [
+    {
+      "label": "Question 1 of 4",
+      "question": "Hoeveel mensen zijn nodig voor het onderzoeksteam?",
+      "options": [
+        "Twee mensen",
+        "Drie mensen",
+        "Vijf mensen",
+        "Vier mensen"
+      ],
+      "correctAnswer": "Correct answer: Vijf mensen"
+    },
+    {
+      "label": "Question 2 of 4",
+      "question": "Wat is de taak van de mensen die aan de website werken?",
+      "options": [
+        "Informatie verzamelen",
+        "De klantenservice verbeteren",
+        "De website verbeteren",
+        "De taken verdelen"
+      ],
+      "correctAnswer": "Correct answer: De website verbeteren"
+    },
+    {
+      "label": "Question 3 of 4",
+      "question": "Hoe kunnen mensen hun interesse in een taak tonen?",
+      "options": [
+        "Door een e-mail te sturen",
+        "Door naar het kantoor te komen",
+        "Beide opties zijn correct",
+        "Geen van de opties is correct"
+      ],
+      "correctAnswer": "Correct answer: Beide opties zijn correct"
+    },
+    {
+      "label": "Question 4 of 4",
+      "question": "Wat is de taak van de mensen die aan de klantenservice werken?",
+      "options": [
+        "Klanten helpen wanneer ze het nodig hebben",
+        "Zorgen dat de klanten tevreden zijn",
+        "Beide opties zijn correct",
+        "Geen van de opties is correct"
+      ],
+      "correctAnswer": "Correct answer: Beide opties zijn correct"
+    }
+  ]
+}

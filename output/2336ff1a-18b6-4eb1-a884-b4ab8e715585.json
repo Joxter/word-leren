@@ -1,0 +1,53 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/2336ff1a-18b6-4eb1-a884-b4ab8e715585",
+  "title": "Een sollicitatiegesprek voeren met een werkgever",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/aeb14462-d4d4-4a4d-ad29-abf9bfa91d3f/2336ff1a-18b6-4eb1-a884-b4ab8e715585/803acf5e-59b5-4d81-b3f9-6db679026186.mp3",
+  "audioFile": "audio/2336ff1a-18b6-4eb1-a884-b4ab8e715585.mp3",
+  "transcript": "Goedemiddag, mijn naam is Pieter en ik ben de manager van dit bedrijf. Bedankt voor het komen naar het sollicitatiegesprek. We hebben je CV bekeken en we zijn erg geïnteresseerd in je werkervaring. Kun je ons iets meer vertellen over je vorige baan? Wat waren je verantwoordelijkheden en wat vond je leuk aan die baan? We zijn ook benieuwd naar je taalvaardigheden. Spreek je naast Nederlands ook andere talen? En hoe zou je je communicatieve vaardigheden beoordelen? Dit bedrijf is een team van gemotiveerde mensen, dus we zoeken iemand die goed past in ons team. Kun je ons iets vertellen over je teamvaardigheden? En wat zijn je sterke punten en zwakke punten in een teamomgeving? We begrijpen dat sollicitatiegesprekken spannend kunnen zijn, maar we willen dat je je comfortabel voelt. Als je vragen hebt over de functie of over ons bedrijf, stel ze dan gerust. We kijken ernaar uit om meer over jou te leren.",
+  "questions": [
+    {
+      "label": "Question 1 of 4",
+      "question": "Wat is de rol van Pieter in het bedrijf?",
+      "options": [
+        "Hij is een medewerker",
+        "Hij is de CEO van het bedrijf",
+        "Hij is de manager van het bedrijf",
+        "Hij is een sollicitant"
+      ],
+      "correctAnswer": "Correct answer: Hij is de manager van het bedrijf"
+    },
+    {
+      "label": "Question 2 of 4",
+      "question": "Wat wil het bedrijf weten over de sollicitant?",
+      "options": [
+        "Hun favoriete kleur",
+        "Hun werkervaring, taalvaardigheden en teamvaardigheden",
+        "Hun favoriete eten",
+        "Hun hobby's"
+      ],
+      "correctAnswer": "Correct answer: Hun werkervaring, taalvaardigheden en teamvaardigheden"
+    },
+    {
+      "label": "Question 3 of 4",
+      "question": "Wat is de sfeer tijdens het sollicitatiegesprek volgens Pieter?",
+      "options": [
+        "Het is stressvol",
+        "Het is comfortabel",
+        "Het is ongemakkelijk",
+        "Het is formeel"
+      ],
+      "correctAnswer": "Correct answer: Het is comfortabel"
+    },
+    {
+      "label": "Question 4 of 4",
+      "question": "Wat is de houding van het bedrijf ten opzichte van vragen van de sollicitant?",
+      "options": [
+        "Ze moedigen het stellen van vragen niet aan",
+        "Ze staan open voor vragen",
+        "Ze negeren vragen",
+        "Ze beantwoorden alleen specifieke vragen"
+      ],
+      "correctAnswer": "Correct answer: Ze staan open voor vragen"
+    }
+  ]
+}

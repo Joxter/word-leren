@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/19803087-6101-42f7-8f7c-75a4c65e3e4b",
+  "title": "Een uitnodiging lezen voor een informatieavond in de wijk",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/19803087-6101-42f7-8f7c-75a4c65e3e4b/7c96f4d3-f8d1-49a3-8240-4a35c50d6488.mp3",
+  "audioFile": "audio/19803087-6101-42f7-8f7c-75a4c65e3e4b.mp3",
+  "transcript": "Hallo buurtbewoners! Wij nodigen u uit voor een informatieavond in onze wijk. Deze avond gaat over de nieuwe plannen voor het park. We gaan praten over het planten van nieuwe bomen, het bouwen van een speeltuin en het verbeteren van de wandelpaden. Het is een goede kans om nieuwe mensen te ontmoeten en uw ideeën te delen. De informatieavond vindt plaats in het gemeenschapshuis, vlakbij de oude kerk. We beginnen om 19.00 uur en het duurt tot ongeveer 21.00 uur. Er zullen snacks en drankjes zijn. U hoeft zich niet aan te melden, maar laat ons alstublieft weten of u komt. U kunt een e-mail sturen naar info@onzewijk.nl of bel naar 0623456789. We hopen u daar te zien. Laten we samen onze wijk mooier maken!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Waar gaat de informatieavond over?",
+      "options": [
+        "Nieuwe plannen voor de school",
+        "Nieuwe plannen voor het park",
+        "Nieuwe plannen voor de supermarkt",
+        "Nieuwe plannen voor het gemeentehuis"
+      ],
+      "correctAnswer": "Correct answer: Nieuwe plannen voor het park"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Hoe laat begint de informatieavond?",
+      "options": [
+        "Om 17.00 uur",
+        "Om 18.00 uur",
+        "Om 19.00 uur",
+        "Om 20.00 uur"
+      ],
+      "correctAnswer": "Correct answer: Om 19.00 uur"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Hoe kunnen buurtbewoners laten weten dat ze komen?",
+      "options": [
+        "Ze kunnen een brief sturen",
+        "Ze kunnen een e-mail sturen of bellen",
+        "Ze kunnen een bericht sturen via sociale media",
+        "Ze kunnen persoonlijk langskomen"
+      ],
+      "correctAnswer": "Correct answer: Ze kunnen een e-mail sturen of bellen"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat is het doel van de informatieavond?",
+      "options": [
+        "Om te praten over de nieuwe plannen voor het park",
+        "Om een feest te vieren",
+        "Om een nieuwe burgemeester te kiezen",
+        "Om een wedstrijd te organiseren"
+      ],
+      "correctAnswer": "Correct answer: Om te praten over de nieuwe plannen voor het park"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Waar vindt de informatieavond plaats?",
+      "options": [
+        "In de oude kerk",
+        "In het park",
+        "In het gemeenschapshuis",
+        "In de school"
+      ],
+      "correctAnswer": "Correct answer: In het gemeenschapshuis"
+    }
+  ]
+}

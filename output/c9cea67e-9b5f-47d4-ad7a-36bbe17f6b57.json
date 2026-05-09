@@ -1,0 +1,64 @@
+{
+  "url": "https://www.inburgeringexam.nl/systems/listening/practices/c9cea67e-9b5f-47d4-ad7a-36bbe17f6b57",
+  "title": "Lezen hoe je een buurthuis kunt gebruiken voor een activiteit",
+  "audioSrc": "https://tdmjgi2ssoewmd8i.public.blob.vercel-storage.com/systems/8380b494-5fa7-4e44-8d04-68ae7bf6475c/c9cea67e-9b5f-47d4-ad7a-36bbe17f6b57/53be58a4-383a-4ade-b2f3-05c2a7314337.mp3",
+  "audioFile": "audio/c9cea67e-9b5f-47d4-ad7a-36bbe17f6b57.mp3",
+  "transcript": "Hallo, ik ben Jan en ik werk bij het buurthuis. Wil je een activiteit in het buurthuis organiseren? Dat is mogelijk! Het buurthuis is een plek voor iedereen in de buurt. Je kan hier een verjaardagsfeest, een vergadering of zelfs een kookles organiseren. Maar hoe doe je dat? Eerst moet je een aanvraag doen. Dat kan bij ons aan de balie of via onze website. Hierop vul je in wat voor soort activiteit je wil organiseren, met hoeveel personen en op welke datum. We hebben wel regels. Zo mag je na 22.00 uur geen lawaai maken en moet je alles netjes achterlaten. Als je aanvraag is goedgekeurd, kun je de ruimte komen bekijken en de sleutel ophalen. Het is belangrijk dat je je aan de regels houdt. Als alles goed gaat, kun je het buurthuis vaker gebruiken voor je activiteiten. Tot snel in het buurthuis!",
+  "questions": [
+    {
+      "label": "Question 1 of 5",
+      "question": "Wie is Jan?",
+      "options": [
+        "Hij is een bezoeker van het buurthuis",
+        "Hij is een werknemer van het buurthuis",
+        "Hij is een vrijwilliger bij het buurthuis",
+        "Hij is de eigenaar van het buurthuis"
+      ],
+      "correctAnswer": "Correct answer: Hij is een werknemer van het buurthuis"
+    },
+    {
+      "label": "Question 2 of 5",
+      "question": "Wat moet je doen om een activiteit in het buurthuis te organiseren?",
+      "options": [
+        "Je moet een reservering maken",
+        "Je moet een aanvraag doen",
+        "Je moet een vergunning aanvragen",
+        "Je moet betalen"
+      ],
+      "correctAnswer": "Correct answer: Je moet een aanvraag doen"
+    },
+    {
+      "label": "Question 3 of 5",
+      "question": "Waar kan je de aanvraag doen?",
+      "options": [
+        "Aan de balie of via de telefoon",
+        "Aan de balie of via de website",
+        "Via de website of via email",
+        "Via de telefoon of via email"
+      ],
+      "correctAnswer": "Correct answer: Aan de balie of via de website"
+    },
+    {
+      "label": "Question 4 of 5",
+      "question": "Wat is een van de regels van het buurthuis?",
+      "options": [
+        "Je mag na 22.00 uur geen lawaai maken",
+        "Je moet het buurthuis voor 22.00 uur verlaten",
+        "Je mag niet koken in het buurthuis",
+        "Je moet altijd een vergoeding betalen voor het gebruik van het buurthuis"
+      ],
+      "correctAnswer": "Correct answer: Je mag na 22.00 uur geen lawaai maken"
+    },
+    {
+      "label": "Question 5 of 5",
+      "question": "Wat gebeurt er als je aanvraag is goedgekeurd?",
+      "options": [
+        "Je kunt de ruimte komen bekijken en de sleutel ophalen",
+        "Je kunt direct beginnen met je activiteit",
+        "Je krijgt een bevestigingsmail",
+        "Je moet betalen voor de reservering"
+      ],
+      "correctAnswer": "Correct answer: Je kunt de ruimte komen bekijken en de sleutel ophalen"
+    }
+  ]
+}
