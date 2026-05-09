@@ -4,6 +4,14 @@ import wyw from "@wyw-in-js/vite";
 
 export default defineConfig({
   base: "/word-leren/",
+  build: {
+    rollupOptions: {
+      input: {
+        main: "index.html",
+        tests: "tests.html",
+      },
+    },
+  },
   plugins: [
     wyw({
       displayName: true,
