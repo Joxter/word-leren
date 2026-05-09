@@ -3,7 +3,11 @@
     "allow": [
       "Bash(npm install:*)",
       "Bash(git:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(xargs -I{} cat /Users/nikolaimorozov/projects/word-leren/output-reading/{})",
+      "Bash(xargs -I{} cat /Users/nikolaimorozov/projects/word-leren/output-knm/{})",
+      "Bash(node -e ' *)",
+      "Bash(node *)"
     ]
   }
 }

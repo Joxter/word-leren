@@ -1,0 +1,2095 @@
+[
+  {
+    "id": "fe9f6242-d7e2-4f0e-b7dd-129ed945f839",
+    "title": "Afval scheiden",
+    "question": "Hoe scheid je afval?",
+    "options": [
+      "Alles in dezelfde bak doen.",
+      "Afval in de juiste container sorteren.",
+      "Afval in de natuur achterlaten."
+    ],
+    "correctAnswer": "Afval in de juiste container sorteren."
+  },
+  {
+    "id": "067b2fc7-c399-481c-bb10-e3dec4ff12bd",
+    "title": "Andermans spullen niet gebruiken",
+    "question": "Waarom mag je andermans spullen niet gebruiken zonder te vragen?",
+    "options": [
+      "Omdat dat netjes is.",
+      "Omdat je dan meer spullen krijgt.",
+      "Omdat je anders straf krijgt van de politie."
+    ],
+    "correctAnswer": "Omdat dat netjes is."
+  },
+  {
+    "id": "d3146554-9a97-465d-8bb1-3eb798df5df4",
+    "title": "Aruba en de Nederlandse staat",
+    "question": "Wat is de relatie tussen Aruba en Nederland?",
+    "options": [
+      "Aruba is onafhankelijk van Nederland.",
+      "Aruba is een zelfstandig land binnen het Koninkrijk der Nederlanden.",
+      "Aruba hoort bij Frankrijk."
+    ],
+    "correctAnswer": "Aruba is een zelfstandig land binnen het Koninkrijk der Nederlanden."
+  },
+  {
+    "id": "b7af6e46-a57b-4620-8ffd-1a4a704dbe78",
+    "title": "Behandeling bij de fysiotherapeut",
+    "question": "Wat doet een fysiotherapeut?",
+    "options": [
+      "Geeft psychische hulp.",
+      "Helpt bij lichamelijke klachten en oefeningen.",
+      "Geeft kooklessen."
+    ],
+    "correctAnswer": "Helpt bij lichamelijke klachten en oefeningen."
+  },
+  {
+    "id": "f0f9cbbf-3f60-4696-9686-355ce39418b6",
+    "title": "Bonaire en Nederland",
+    "question": "Wat is Bonaire voor Nederland?",
+    "options": [
+      "Een onafhankelijk land.",
+      "Een bijzondere gemeente van Nederland.",
+      "Een stad in Zuid-Holland."
+    ],
+    "correctAnswer": "Een bijzondere gemeente van Nederland."
+  },
+  {
+    "id": "bffa0736-7163-43c1-b21a-7b0f2062e135",
+    "title": "Burenhulp in de wijk",
+    "question": "Wat is burenhulp in de wijk?",
+    "options": [
+      "Nooit contact hebben met de buren.",
+      "De buren altijd storen.",
+      "Je buren helpen als ze iets nodig hebben."
+    ],
+    "correctAnswer": "Je buren helpen als ze iets nodig hebben."
+  },
+  {
+    "id": "b955b241-2819-47df-96e6-eedcf9c63318",
+    "title": "Curaçao en de Nederlandse geschiedenis",
+    "question": "Wat is de band tussen Curaçao en Nederland?",
+    "options": [
+      "Curaçao is een onafhankelijk land zonder band.",
+      "Curaçao is een deel van het Koninkrijk der Nederlanden.",
+      "Curaçao hoort bij België."
+    ],
+    "correctAnswer": "Curaçao is een deel van het Koninkrijk der Nederlanden."
+  },
+  {
+    "id": "ea9cda47-8362-4464-a409-81da577d732a",
+    "title": "Dankjewel en alstublieft zeggen",
+    "question": "Wanneer zeg je dankjewel of alsjeblieft?",
+    "options": [
+      "Als je boos bent.",
+      "Als je iets vraagt of krijgt.",
+      "Als je niemand wilt groeten."
+    ],
+    "correctAnswer": "Als je iets vraagt of krijgt."
+  },
+  {
+    "id": "4e339398-7ae6-4bbc-8c84-4ba601689ae5",
+    "title": "De basiszorgverzekering",
+    "question": "Wat is een basiszorgverzekering?",
+    "options": [
+      "Een verzekering voor je fiets.",
+      "Een verzekering voor je huis.",
+      "Een verzekering voor medische zorg."
+    ],
+    "correctAnswer": "Een verzekering voor medische zorg."
+  },
+  {
+    "id": "b3727bec-a371-4523-99e5-704dee0ad995",
+    "title": "De Belgische Revolutie van 1830",
+    "question": "Wat gebeurde er bij de Belgische Revolutie van 1830?",
+    "options": [
+      "België werd onafhankelijk van Nederland.",
+      "België sloot zich aan bij Frankrijk.",
+      "België kreeg een nieuwe taal."
+    ],
+    "correctAnswer": "België werd onafhankelijk van Nederland."
+  },
+  {
+    "id": "2487d7ab-d305-423c-a952-9601627cd985",
+    "title": "De betekenis van Rembrandt",
+    "question": "Waarom is Rembrandt beroemd?",
+    "options": [
+      "Hij was een beroemde schilder.",
+      "Hij was een bekende politicus.",
+      "Hij schreef veel boeken."
+    ],
+    "correctAnswer": "Hij was een beroemde schilder."
+  },
+  {
+    "id": "62f2f61c-b77c-4a32-9d84-687bb52c13ed",
+    "title": "De bevrijding van Nederland",
+    "question": "Wat betekent de bevrijding van Nederland?",
+    "options": [
+      "Nederland werd vrij van de Duitse bezetting.",
+      "Nederland begon een nieuwe oorlog.",
+      "Nederland werd veroverd door België."
+    ],
+    "correctAnswer": "Nederland werd vrij van de Duitse bezetting."
+  },
+  {
+    "id": "b8c5e3f6-684c-46a3-be6c-596d67268cc4",
+    "title": "De bouw van de Deltawerken",
+    "question": "Waarom zijn de Deltawerken gebouwd?",
+    "options": [
+      "Om meer huizen te bouwen.",
+      "Om Nederland te beschermen tegen het water.",
+      "Om vis te vangen."
+    ],
+    "correctAnswer": "Om Nederland te beschermen tegen het water."
+  },
+  {
+    "id": "d7a9c17b-3737-47b5-914d-befbf96f64a0",
+    "title": "De Duitse bezetting",
+    "question": "Wat gebeurde er tijdens de Duitse bezetting?",
+    "options": [
+      "Nederland werd bevrijd.",
+      "Nederland werd bestuurd door Duitsland.",
+      "Nederland viel Duitsland aan."
+    ],
+    "correctAnswer": "Nederland werd bestuurd door Duitsland."
+  },
+  {
+    "id": "fa1d6b09-36c4-4251-9304-a8f209ea38b9",
+    "title": "De economische groei in de 20e eeuw",
+    "question": "Waardoor groeide de economie van Nederland in de 20 e eeuw sterk?",
+    "options": [
+      "Door het verbouwen van meer tulpen.",
+      "Door oorlogen in Europa.",
+      "Door het sluiten van alle fabrieken.",
+      "Door meer handel en industrie."
+    ],
+    "correctAnswer": "Door meer handel en industrie."
+  },
+  {
+    "id": "7dfe6f3b-b555-4330-99b4-053c58a7f486",
+    "title": "De Eerste en Tweede Kamer",
+    "question": "Wat doen de Eerste en Tweede Kamer in Nederland?",
+    "options": [
+      "Ze maken en controleren wetten.",
+      "Ze bouwen huizen.",
+      "Ze kiezen de koning."
+    ],
+    "correctAnswer": "Ze maken en controleren wetten."
+  },
+  {
+    "id": "f3a5627c-84de-4fee-b1bd-949ee1e1c2f3",
+    "title": "De Franse bezetting van Nederland",
+    "question": "Wat gebeurde er tijdens de Franse bezetting?",
+    "options": [
+      "Nederland werd onderdeel van Frankrijk.",
+      "Nederland viel Frankrijk aan.",
+      "Frankrijk werd onderdeel van Nederland."
+    ],
+    "correctAnswer": "Nederland werd onderdeel van Frankrijk."
+  },
+  {
+    "id": "6ad27753-b8db-4149-8e8b-17893e600061",
+    "title": "De Friese taal en cultuur",
+    "question": "Wat is speciaal aan Friesland?",
+    "options": [
+      "Daar wordt Fries gesproken, naast Nederlands.",
+      "Daar wonen alleen ouderen.",
+      "Daar is altijd zomer."
+    ],
+    "correctAnswer": "Daar wordt Fries gesproken, naast Nederlands."
+  },
+  {
+    "id": "f907c984-7aac-4d4b-b07d-8c65318abfc9",
+    "title": "De geschiedenis van de arbeidersbeweging",
+    "question": "Wat deed de arbeidersbeweging in Nederland?",
+    "options": [
+      "Ze organiseerden sportclubs.",
+      "Ze streden voor betere werkomstandigheden en rechten.",
+      "Ze bouwden fabrieken."
+    ],
+    "correctAnswer": "Ze streden voor betere werkomstandigheden en rechten."
+  },
+  {
+    "id": "ba011a80-a089-47c2-ad30-1e51f569d469",
+    "title": "De Gouden Eeuw van Nederland",
+    "question": "Wat was de Gouden Eeuw?",
+    "options": [
+      "Een tijd van veel rijkdom en handel in Nederland.",
+      "Een tijd van oorlog met België.",
+      "Een periode zonder regering."
+    ],
+    "correctAnswer": "Een tijd van veel rijkdom en handel in Nederland."
+  },
+  {
+    "id": "8ed5757f-96d3-4753-8274-bf08bf1cbcbe",
+    "title": "De Gouden Koets en de slavernij",
+    "question": "Wat is het probleem met de Gouden Koets?",
+    "options": [
+      "Hij is te zwaar voor paarden.",
+      "Er staan afbeeldingen op die te maken hebben met slavernij.",
+      "Hij is gemaakt in Duitsland."
+    ],
+    "correctAnswer": "Er staan afbeeldingen op die te maken hebben met slavernij."
+  },
+  {
+    "id": "73b264fe-35fc-4a38-be95-a647f6c5e1d6",
+    "title": "De groei van de verzorgingsstaat",
+    "question": "Wat betekent verzorgingsstaat?",
+    "options": [
+      "Een staat met veel winkels.",
+      "Een staat waar mensen hulp krijgen bij zorg, werk en inkomen.",
+      "Een staat met veel kerken."
+    ],
+    "correctAnswer": "Een staat waar mensen hulp krijgen bij zorg, werk en inkomen."
+  },
+  {
+    "id": "b3d27d29-716e-4349-b177-ed111056b786",
+    "title": "De grondwet van Thorbecke",
+    "question": "Wat was belangrijk aan de grondwet van Thorbecke?",
+    "options": [
+      "Hij maakte Nederland een dictatuur.",
+      "Hij zorgde voor meer macht van de koning.",
+      "Hij gaf burgers meer rechten en invloed."
+    ],
+    "correctAnswer": "Hij gaf burgers meer rechten en invloed."
+  },
+  {
+    "id": "ae7b8ea9-ad0c-4318-ba77-871c440d3cae",
+    "title": "De grote rivieren in Nederland",
+    "question": "Waarom zijn de grote rivieren belangrijk voor Nederland?",
+    "options": [
+      "Ze zorgen voor drinkwater, transport en natuur.",
+      "Ze brengen stenen uit België.",
+      "Ze maken het land hoger."
+    ],
+    "correctAnswer": "Ze zorgen voor drinkwater, transport en natuur."
+  },
+  {
+    "id": "9338f289-6a75-4d17-8cd2-1df6654df36f",
+    "title": "De hongerwinter",
+    "question": "Wat was de hongerwinter?",
+    "options": [
+      "Een winter met veel sneeuw en kou.",
+      "Een tijd in de oorlog waarin mensen bijna geen eten hadden.",
+      "Een feest in de winter met veel eten."
+    ],
+    "correctAnswer": "Een tijd in de oorlog waarin mensen bijna geen eten hadden."
+  },
+  {
+    "id": "d9f12d5e-d659-4a07-ae84-a3f24c227734",
+    "title": "De hoofdstad Amsterdam",
+    "question": "Wat is de hoofdstad van Nederland?",
+    "options": [
+      "Rotterdam.",
+      "Den Haag.",
+      "Amsterdam."
+    ],
+    "correctAnswer": "Amsterdam."
+  },
+  {
+    "id": "e56dade1-551f-4615-955a-64b17bb2a8b6",
+    "title": "De huisarts als eerste contactpunt",
+    "question": "Wat betekent: de huisarts is het eerste contactpunt?",
+    "options": [
+      "Je gaat eerst naar de huisarts bij gezondheidsklachten.",
+      "Je belt meteen het ziekenhuis.",
+      "Je gaat naar de tandarts."
+    ],
+    "correctAnswer": "Je gaat eerst naar de huisarts bij gezondheidsklachten."
+  },
+  {
+    "id": "81bcc48a-99a3-438f-b8df-a22f52522d90",
+    "title": "De huisarts in Nederland",
+    "question": "Wat doet een huisarts in Nederland?",
+    "options": [
+      "Geeft rijlessen.",
+      "Helpt bij gezondheidsklachten.",
+      "Verkoopt medicijnen."
+    ],
+    "correctAnswer": "Helpt bij gezondheidsklachten."
+  },
+  {
+    "id": "da8b876c-5d82-4362-a5c8-84b9cf2600ba",
+    "title": "De huisartsenpost in het weekend",
+    "question": "Wat is de huisartsenpost in het weekend?",
+    "options": [
+      "Een plek voor spoedzorg als je huisarts dicht is.",
+      "Een plek om koffie te drinken.",
+      "Een markt voor groenten."
+    ],
+    "correctAnswer": "Een plek voor spoedzorg als je huisarts dicht is."
+  },
+  {
+    "id": "1af61da0-a0df-44ae-8258-d938d2b0c33e",
+    "title": "De industriële revolutie in Nederland",
+    "question": "Wat veranderde er tijdens de industriële revolutie in Nederland?",
+    "options": [
+      "Er kwamen veel fabrieken en machines.",
+      "Er kwamen minder mensen in steden.",
+      "Mensen gingen meer op het platteland werken."
+    ],
+    "correctAnswer": "Er kwamen veel fabrieken en machines."
+  },
+  {
+    "id": "c7141ec0-6ff7-4bac-8ccc-e85d8461e043",
+    "title": "De invloed van de jaren '60",
+    "question": "Wat veranderde er in de jaren 60 in Nederland?",
+    "options": [
+      "Meer mensen werden religieus.",
+      "Er kwamen nieuwe ideeën over vrijheid en gelijkheid.",
+      "Iedereen verhuisde naar het platteland."
+    ],
+    "correctAnswer": "Er kwamen nieuwe ideeën over vrijheid en gelijkheid."
+  },
+  {
+    "id": "0b115a83-5987-4a83-b381-f94a916eb1fb",
+    "title": "De invloed van de Reformatie",
+    "question": "Wat veranderde er tijdens de Reformatie?",
+    "options": [
+      "Mensen gingen naar een ander geloof.",
+      "Er kwamen meer scholen.",
+      "Er kwamen meer auto’s op straat."
+    ],
+    "correctAnswer": "Mensen gingen naar een ander geloof."
+  },
+  {
+    "id": "67bb7ae7-9ad2-4139-873f-ad6c5bba79a2",
+    "title": "De invloed van migratie op Nederland",
+    "question": "Wat is een gevolg van migratie in Nederland?",
+    "options": [
+      "Er is minder cultuur in het land.",
+      "Er is meer culturele diversiteit.",
+      "Er zijn geen scholen meer."
+    ],
+    "correctAnswer": "Er is meer culturele diversiteit."
+  },
+  {
+    "id": "d9e04f71-2434-47bb-840b-8786e96368aa",
+    "title": "De legalisering van euthanasie",
+    "question": "Wat betekent legalisering van euthanasie?",
+    "options": [
+      "Dat mensen verplicht worden te sterven.",
+      "Dat hulp bij sterven onder voorwaarden mag.",
+      "Dat iedereen in het ziekenhuis moet blijven."
+    ],
+    "correctAnswer": "Dat hulp bij sterven onder voorwaarden mag."
+  },
+  {
+    "id": "ba218a1c-e23f-45d4-a004-f7c21a1922a2",
+    "title": "De legalisering van het homohuwelijk",
+    "question": "Wat betekent de legalisering van het homohuwelijk?",
+    "options": [
+      "Twee mensen van hetzelfde geslacht mogen trouwen.",
+      "Huwelijken worden verboden.",
+      "Iedereen moet trouwen."
+    ],
+    "correctAnswer": "Twee mensen van hetzelfde geslacht mogen trouwen."
+  },
+  {
+    "id": "6084c9ef-fc26-41e5-a76d-503bd64ceb62",
+    "title": "De ligging van Nederland in Europa",
+    "question": "Waar ligt Nederland in Europa?",
+    "options": [
+      "In het zuiden van Europa.",
+      "In het noorden van Europa.",
+      "In het westen van Europa."
+    ],
+    "correctAnswer": "In het westen van Europa."
+  },
+  {
+    "id": "42d0d3fb-3dcc-49f3-9035-cbfaa663564b",
+    "title": "De Marshallhulp",
+    "question": "Wat was de Marshallhulp?",
+    "options": [
+      "Hulp van Amerika om Nederland te helpen na de oorlog.",
+      "Een wet van de Nederlandse regering.",
+      "Een groep Nederlandse soldaten."
+    ],
+    "correctAnswer": "Hulp van Amerika om Nederland te helpen na de oorlog."
+  },
+  {
+    "id": "b1c5ad4f-6f37-46c9-a9de-45b4f636262f",
+    "title": "De multiculturele samenleving",
+    "question": "Wat is een kenmerk van een multiculturele samenleving?",
+    "options": [
+      "Mensen hebben allemaal dezelfde cultuur.",
+      "Er zijn verschillende culturen samen.",
+      "Iedereen komt uit Nederland."
+    ],
+    "correctAnswer": "Er zijn verschillende culturen samen."
+  },
+  {
+    "id": "81c1c172-2679-47a0-8140-a51ecbf83790",
+    "title": "De multiculturele samenleving en integratie",
+    "question": "Wat is een multiculturele samenleving?",
+    "options": [
+      "Een samenleving met mensen van verschillende culturen.",
+      "Een samenleving waar iedereen hetzelfde is.",
+      "Een samenleving zonder wetten."
+    ],
+    "correctAnswer": "Een samenleving met mensen van verschillende culturen."
+  },
+  {
+    "id": "79ac04d2-bae9-4773-8d32-921338fa0458",
+    "title": "De onafhankelijkheid van de Nederlandse Antillen",
+    "question": "Wat gebeurde er met de Nederlandse Antillen in 2010?",
+    "options": [
+      "Ze werden onafhankelijk.",
+      "Ze sloten zich aan bij Suriname.",
+      "Ze fuseerden met België."
+    ],
+    "correctAnswer": "Ze werden onafhankelijk."
+  },
+  {
+    "id": "f43c57c1-af26-4fa8-91ea-e499bc02ca61",
+    "title": "De onafhankelijkheid van Indonesië",
+    "question": "Wanneer werd Indonesië onafhankelijk van Nederland?",
+    "options": [
+      "In 1949.",
+      "In 1965.",
+      "In 1980."
+    ],
+    "correctAnswer": "In 1949."
+  },
+  {
+    "id": "eec37aee-983d-494f-ab37-b60ba99d77bc",
+    "title": "De onafhankelijkheid van Suriname",
+    "question": "Wanneer werd Suriname onafhankelijk?",
+    "options": [
+      "In 1945.",
+      "In 1975.",
+      "In 2000."
+    ],
+    "correctAnswer": "In 1975."
+  },
+  {
+    "id": "252f7dc6-d858-4734-a4f8-37e633484e3a",
+    "title": "De opkomst van het populisme",
+    "question": "Wat is populisme?",
+    "options": [
+      "Een manier van schilderen.",
+      "Een politieke stroming die de stem van het volk belangrijk vindt.",
+      "Een sport in Nederland."
+    ],
+    "correctAnswer": "Een politieke stroming die de stem van het volk belangrijk vindt."
+  },
+  {
+    "id": "23bad669-ec65-45f9-a681-93a12858e35b",
+    "title": "De oprichting van de Europese Unie",
+    "question": "Wat is een doel van de Europese Unie?",
+    "options": [
+      "Om oorlog te voeren.",
+      "Om landen samen te laten werken.",
+      "Om minder regels te maken."
+    ],
+    "correctAnswer": "Om landen samen te laten werken."
+  },
+  {
+    "id": "9bfc1caf-1674-49d7-99cf-9f24931ac487",
+    "title": "De oprichting van de VOC",
+    "question": "Waarom werd de VOC opgericht?",
+    "options": [
+      "Om handel te drijven met andere landen.",
+      "Om een school te bouwen.",
+      "Om de koning te beschermen."
+    ],
+    "correctAnswer": "Om handel te drijven met andere landen."
+  },
+  {
+    "id": "a85ca8bd-767f-4eee-a052-027b709a687f",
+    "title": "De oprichting van het Koninkrijk der Nederlanden",
+    "question": "Wat gebeurde er bij de oprichting van het Koninkrijk der Nederlanden?",
+    "options": [
+      "Nederland kreeg een koning.",
+      "Nederland werd een republiek.",
+      "Nederland werd een kolonie."
+    ],
+    "correctAnswer": "Nederland kreeg een koning."
+  },
+  {
+    "id": "47cfda7d-3367-42a7-90b6-498c5c51d66f",
+    "title": "De opstand tegen Spanje",
+    "question": "Waarom kwamen de Nederlanders in opstand tegen Spanje?",
+    "options": [
+      "Vanwege hoge belastingen en religieuze onderdrukking.",
+      "Omdat ze meer bloemen wilden verkopen.",
+      "Omdat ze een nieuw land wilden maken."
+    ],
+    "correctAnswer": "Vanwege hoge belastingen en religieuze onderdrukking."
+  },
+  {
+    "id": "54631994-097e-4961-8319-465ec67c11df",
+    "title": "De opvang van vluchtelingen in Nederland",
+    "question": "Wat doet Nederland voor vluchtelingen?",
+    "options": [
+      "Ze worden meteen uitgezet.",
+      "Ze worden geholpen met opvang en begeleiding.",
+      "Ze moeten in gevangenissen wonen."
+    ],
+    "correctAnswer": "Ze worden geholpen met opvang en begeleiding."
+  },
+  {
+    "id": "691024db-4ff9-4a86-9d2d-faec082b2d0d",
+    "title": "De provincies van Nederland",
+    "question": "Wat zijn provincies in Nederland?",
+    "options": [
+      "Regio’s met een eigen bestuur.",
+      "Steden met een burgemeester.",
+      "Dorpen met fabrieken."
+    ],
+    "correctAnswer": "Regio’s met een eigen bestuur."
+  },
+  {
+    "id": "f3c7e4dd-c331-46b4-b850-dc97cdcaa22f",
+    "title": "De regering in Den Haag",
+    "question": "Wat gebeurt er in Den Haag?",
+    "options": [
+      "Daar is de regering gevestigd.",
+      "Daar woont de paus.",
+      "Daar is de hoofdstad van Europa."
+    ],
+    "correctAnswer": "Daar is de regering gevestigd."
+  },
+  {
+    "id": "fadd1c12-af40-4884-8607-9fb7811e3b91",
+    "title": "De Republiek der Zeven Verenigde Nederlanden",
+    "question": "Wat was de Republiek der Zeven Verenigde Nederlanden?",
+    "options": [
+      "Een groep provincies die samen een land vormden.",
+      "Een kolonie van Spanje.",
+      "Een vereniging van boeren.",
+      "Een deel van Frankrijk."
+    ],
+    "correctAnswer": "Een groep provincies die samen een land vormden."
+  },
+  {
+    "id": "7912dbe2-b58c-48dd-aa62-ff615203f5b1",
+    "title": "De rol van de geallieerden",
+    "question": "Wat deden de geallieerden in de Tweede Wereldoorlog?",
+    "options": [
+      "Ze hielpen Nederland bevrijden.",
+      "Ze vielen Nederland aan.",
+      "Ze bouwden scholen in Nederland."
+    ],
+    "correctAnswer": "Ze hielpen Nederland bevrijden."
+  },
+  {
+    "id": "00a5915e-1868-487a-aa64-34883d6720e5",
+    "title": "De rol van de GGD",
+    "question": "Wat doet de GGD?",
+    "options": [
+      "Geeft rijlessen.",
+      "Helpt met gezondheid en vaccinaties.",
+      "Geeft belastingadvies."
+    ],
+    "correctAnswer": "Helpt met gezondheid en vaccinaties."
+  },
+  {
+    "id": "c5b7337a-0f6d-4f0e-b7db-2ed59b10669a",
+    "title": "De rol van de koning(in)",
+    "question": "Wat is de taak van de koning(in) in Nederland?",
+    "options": [
+      "De koning(in) maakt alle wetten.",
+      "De koning(in) heeft vooral een ceremoniële rol.",
+      "De koning(in) leidt het parlement."
+    ],
+    "correctAnswer": "De koning(in) heeft vooral een ceremoniële rol."
+  },
+  {
+    "id": "1eab9582-6fab-420c-ba39-c90f1ff40312",
+    "title": "De rol van de VOC",
+    "question": "Wat deed de VOC?",
+    "options": [
+      "Het regelde de zorg in Nederland.",
+      "Het handelde met andere landen.",
+      "Het gaf mensen les op school."
+    ],
+    "correctAnswer": "Het handelde met andere landen."
+  },
+  {
+    "id": "bd994b13-f010-45ed-8f98-0e9a3fb87fad",
+    "title": "De rol van de WIC",
+    "question": "Wat deed de WIC?",
+    "options": [
+      "Ze organiseerden sportwedstrijden.",
+      "Ze handelden in mensen, suiker en goud.",
+      "Ze gaven les aan kinderen."
+    ],
+    "correctAnswer": "Ze handelden in mensen, suiker en goud."
+  },
+  {
+    "id": "075bf788-6442-43ac-9348-108fc65a9762",
+    "title": "De rol van dijken en sluizen",
+    "question": "Waarom zijn dijken belangrijk in Nederland?",
+    "options": [
+      "Om huizen mooier te maken.",
+      "Om water tegen te houden.",
+      "Om meer vissen te vangen."
+    ],
+    "correctAnswer": "Om water tegen te houden."
+  },
+  {
+    "id": "ed17dcb7-d6de-480a-bad4-22ea2368dd55",
+    "title": "De rol van gastarbeiders",
+    "question": "Wat was de rol van gastarbeiders in Nederland?",
+    "options": [
+      "Ze kwamen voor vakantie.",
+      "Ze kwamen werken in de industrie.",
+      "Ze kwamen les geven op scholen."
+    ],
+    "correctAnswer": "Ze kwamen werken in de industrie."
+  },
+  {
+    "id": "f7fff68a-4b3d-4494-8aa2-e6004e2f94bb",
+    "title": "De rol van Nederland in de NAVO",
+    "question": "Wat doet Nederland binnen de NAVO?",
+    "options": [
+      "Het werkt mee aan gezamenlijke veiligheid en defensie.",
+      "Het beslist alleen over het leger.",
+      "Het organiseert sportwedstrijden."
+    ],
+    "correctAnswer": "Het werkt mee aan gezamenlijke veiligheid en defensie."
+  },
+  {
+    "id": "16999eb4-a57a-4590-a538-8251340ddf95",
+    "title": "De rol van Nederland in de slavernij",
+    "question": "Wat was de rol van Nederland in de slavernij?",
+    "options": [
+      "Nederland hielp om slavernij te stoppen.",
+      "Nederland was actief in de slavenhandel.",
+      "Nederland had geen slaven."
+    ],
+    "correctAnswer": "Nederland was actief in de slavenhandel."
+  },
+  {
+    "id": "3712c73c-00fc-4589-b489-85a19dce1052",
+    "title": "De rol van Nederland in de Verenigde Naties",
+    "question": "Wat doet Nederland in de Verenigde Naties?",
+    "options": [
+      "Nederland helpt bij vrede en veiligheid.",
+      "Nederland maakt nieuwe landen.",
+      "Nederland organiseert de VN alleen."
+    ],
+    "correctAnswer": "Nederland helpt bij vrede en veiligheid."
+  },
+  {
+    "id": "f59d77c6-057d-4156-8581-1613c0e4b9d8",
+    "title": "De rol van religie in de Nederlandse geschiedenis",
+    "question": "Wat was de rol van religie in de Nederlandse geschiedenis?",
+    "options": [
+      "Religie speelde een grote rol bij onderwijs en politiek.",
+      "Er was geen religie in Nederland.",
+      "Religie werd verboden."
+    ],
+    "correctAnswer": "Religie speelde een grote rol bij onderwijs en politiek."
+  },
+  {
+    "id": "ab5eb999-8d9c-44c6-aa33-9e71317db863",
+    "title": "De rol van vrouwen in de geschiedenis",
+    "question": "Wat veranderde in de rol van vrouwen in de geschiedenis?",
+    "options": [
+      "Vrouwen mochten niet meer stemmen.",
+      "Vrouwen kregen meer rechten en kansen.",
+      "Vrouwen mochten niet meer werken."
+    ],
+    "correctAnswer": "Vrouwen kregen meer rechten en kansen."
+  },
+  {
+    "id": "5b893fae-64bf-4343-b58a-2000ccc0a158",
+    "title": "De secularisatie van Nederland",
+    "question": "Wat betekent secularisatie in Nederland?",
+    "options": [
+      "Meer mensen gaan naar de kerk.",
+      "Mensen hebben minder religie in hun leven.",
+      "Er komen meer religies bij."
+    ],
+    "correctAnswer": "Mensen hebben minder religie in hun leven."
+  },
+  {
+    "id": "c39cf430-221b-4a88-9164-5a68c9786104",
+    "title": "De strijd tegen het water",
+    "question": "Wat betekent ‘ de strijd tegen het water ’?",
+    "options": [
+      "Het gevecht met buurlanden.",
+      "Het beschermen van Nederland tegen overstromingen.",
+      "Het zoeken naar drinkwater."
+    ],
+    "correctAnswer": "Het beschermen van Nederland tegen overstromingen."
+  },
+  {
+    "id": "32ddd0b1-22ee-4840-b9ed-06707b51b9d6",
+    "title": "De Tachtigjarige Oorlog",
+    "question": "Wat was de Tachtigjarige Oorlog?",
+    "options": [
+      "Een oorlog tussen Nederland en België.",
+      "Een oorlog om onafhankelijkheid van Spanje.",
+      "Een oorlog tegen Duitsland."
+    ],
+    "correctAnswer": "Een oorlog om onafhankelijkheid van Spanje."
+  },
+  {
+    "id": "dc3912f1-f5a2-462c-be59-5f61728ee221",
+    "title": "De tandarts bezoeken",
+    "question": "Waarom ga je naar de tandarts?",
+    "options": [
+      "Voor controle of behandeling van je tanden.",
+      "Om boodschappen te doen.",
+      "Om een bril te kopen."
+    ],
+    "correctAnswer": "Voor controle of behandeling van je tanden."
+  },
+  {
+    "id": "2ad4a72a-def6-4289-a979-aaa3069edd85",
+    "title": "De Tweede Wereldoorlog in Nederland",
+    "question": "Wat gebeurde er in Nederland tijdens de Tweede Wereldoorlog?",
+    "options": [
+      "Nederland bleef neutraal.",
+      "Nederland werd bezet door Duitsland.",
+      "Nederland viel Frankrijk aan."
+    ],
+    "correctAnswer": "Nederland werd bezet door Duitsland."
+  },
+  {
+    "id": "f3c79e8d-9200-4496-bfc8-7bc72214ec7a",
+    "title": "De Unie van Utrecht",
+    "question": "Wat is de Unie van Utrecht?",
+    "options": [
+      "Een samenwerking van Nederlandse gewesten tegen Spanje.",
+      "Een voetbalclub.",
+      "Een wetboek voor rechters."
+    ],
+    "correctAnswer": "Een samenwerking van Nederlandse gewesten tegen Spanje."
+  },
+  {
+    "id": "bd5097e5-ae52-44d7-9bcf-62327b585067",
+    "title": "De Veluwe en Nederlandse natuurgebieden",
+    "question": "Wat is de Veluwe?",
+    "options": [
+      "Een groot natuurgebied in Nederland.",
+      "Een rivier in België.",
+      "Een stad in Duitsland."
+    ],
+    "correctAnswer": "Een groot natuurgebied in Nederland."
+  },
+  {
+    "id": "8efb0b06-3cf1-404c-b649-f945bb6479dc",
+    "title": "De verzuiling in Nederland",
+    "question": "Wat betekent verzuiling in Nederland?",
+    "options": [
+      "Mensen leefden in groepen met dezelfde overtuiging.",
+      "Iedereen sprak alleen Frans.",
+      "Er waren alleen kerken in steden."
+    ],
+    "correctAnswer": "Mensen leefden in groepen met dezelfde overtuiging."
+  },
+  {
+    "id": "d2bc0fa2-30d1-4bba-9bb5-9fa18442e460",
+    "title": "De viering van Koningsdag",
+    "question": "Wat gebeurt er op Koningsdag?",
+    "options": [
+      "Nederland viert de verjaardag van de koning.",
+      "De koning stopt met werken.",
+      "Mensen geven hun paspoort terug."
+    ],
+    "correctAnswer": "Nederland viert de verjaardag van de koning."
+  },
+  {
+    "id": "f349c903-c084-44d8-ae33-50b16cd027d1",
+    "title": "De wachttijd in de zorg",
+    "question": "Wat betekent wachttijd in de zorg?",
+    "options": [
+      "De tijd die je moet wachten op zorg.",
+      "De tijd voor pauze op werk.",
+      "De tijd om boodschappen te doen."
+    ],
+    "correctAnswer": "De tijd die je moet wachten op zorg."
+  },
+  {
+    "id": "0eba0622-e544-433f-af36-270c1c0930bc",
+    "title": "De waddeneilanden",
+    "question": "Waar liggen de Waddeneilanden?",
+    "options": [
+      "In het zuiden van Nederland.",
+      "In het midden van Nederland.",
+      "In het noorden van Nederland."
+    ],
+    "correctAnswer": "In het noorden van Nederland."
+  },
+  {
+    "id": "6fbca25f-e755-42ec-959b-59f4196d2716",
+    "title": "De watersnoodramp van 1953",
+    "question": "Wat gebeurde er tijdens de watersnoodramp van 1953?",
+    "options": [
+      "Er vielen veel doden door overstromingen.",
+      "Er werd een nieuwe stad gebouwd.",
+      "Er was een grote brand in Rotterdam."
+    ],
+    "correctAnswer": "Er vielen veel doden door overstromingen."
+  },
+  {
+    "id": "55ebcc1f-11f6-4899-be14-bae5f4cdad17",
+    "title": "De wederopbouw na de oorlog",
+    "question": "Wat gebeurde er in Nederland na de Tweede Wereldoorlog?",
+    "options": [
+      "Er was een periode van wederopbouw.",
+      "Er begon een nieuwe oorlog.",
+      "Iedereen verhuisde naar Duitsland."
+    ],
+    "correctAnswer": "Er was een periode van wederopbouw."
+  },
+  {
+    "id": "cac51d4b-ea2a-44f6-9c97-ad345a32955f",
+    "title": "De wet naleven",
+    "question": "Wat betekent de wet naleven?",
+    "options": [
+      "Doen wat je zelf wilt.",
+      "De regels alleen volgen als je zin hebt.",
+      "Je houden aan de regels en wetten."
+    ],
+    "correctAnswer": "Je houden aan de regels en wetten."
+  },
+  {
+    "id": "68e2cc40-21ae-4654-9996-67db2a6b1d42",
+    "title": "De Zuiderzeewerken",
+    "question": "Wat was het doel van de Zuiderzeewerken?",
+    "options": [
+      "Om meer bergen te maken.",
+      "Om land te winnen en bescherming tegen het water te geven.",
+      "Om het IJsselmeer groter te maken."
+    ],
+    "correctAnswer": "Om land te winnen en bescherming tegen het water te geven."
+  },
+  {
+    "id": "0675cbe8-ac53-4c13-8572-42596f5d4fda",
+    "title": "Delen met anderen",
+    "question": "Wat betekent het om iets te delen met anderen?",
+    "options": [
+      "Dat je alles voor jezelf houdt.",
+      "Dat je iets geeft aan een ander.",
+      "Dat je iets weggooit."
+    ],
+    "correctAnswer": "Dat je iets geeft aan een ander."
+  },
+  {
+    "id": "af5a8109-9d2c-45a4-8e9e-b146f7da078f",
+    "title": "Droogte en overstromingen",
+    "question": "Wat zijn gevolgen van droogte en overstromingen in Nederland?",
+    "options": [
+      "Ze maken het land droger en gevaarlijker.",
+      "Ze zorgen voor meer winkels.",
+      "Ze maken het land hoger."
+    ],
+    "correctAnswer": "Ze maken het land droger en gevaarlijker."
+  },
+  {
+    "id": "f9ff8ab6-d337-48c7-a64c-10a2fafaa082",
+    "title": "Eerlijkheid in het dagelijks leven",
+    "question": "Wat betekent eerlijkheid in het dagelijks leven?",
+    "options": [
+      "Altijd de waarheid vertellen.",
+      "Leugens vertellen om iets te krijgen.",
+      "Iets verzwijgen om straf te vermijden."
+    ],
+    "correctAnswer": "Altijd de waarheid vertellen."
+  },
+  {
+    "id": "c267f1a8-70e1-4a3c-ac64-fe2db04ef4cb",
+    "title": "EHBO bij ongelukken",
+    "question": "Wat hoort bij EHBO bij ongelukken?",
+    "options": [
+      "Een EHBO-doos gebruiken bij verwondingen.",
+      "Een feestje organiseren.",
+      "Snel wegrennen."
+    ],
+    "correctAnswer": "Een EHBO-doos gebruiken bij verwondingen."
+  },
+  {
+    "id": "678a9c1b-02bb-4de5-925c-71c0b59cff62",
+    "title": "Elkaar helpen in moeilijke tijden",
+    "question": "Hoe help je iemand in moeilijke tijden?",
+    "options": [
+      "Door te luisteren en steun te geven.",
+      "Door te lachen om zijn problemen.",
+      "Door hem te negeren."
+    ],
+    "correctAnswer": "Door te luisteren en steun te geven."
+  },
+  {
+    "id": "e9105850-5bc8-40a7-96ea-cedc53a84eac",
+    "title": "Excuses voor het slavernijverleden",
+    "question": "Waarom biedt Nederland excuses aan voor het slavernijverleden?",
+    "options": [
+      "Om verantwoordelijkheid te nemen voor het verleden.",
+      "Om nieuwe wetten te maken.",
+      "Om een feest te organiseren."
+    ],
+    "correctAnswer": "Om verantwoordelijkheid te nemen voor het verleden."
+  },
+  {
+    "id": "3ebedd5f-df2b-465d-8932-a7746c3a7d03",
+    "title": "Feestdagen in Nederland",
+    "question": "Wat is een feestdag in Nederland?",
+    "options": [
+      "Koninginnedag",
+      "Koningsdag",
+      "Werkdag"
+    ],
+    "correctAnswer": "Koningsdag"
+  },
+  {
+    "id": "f1495cff-2532-42d0-aa61-7fa63cd1f15c",
+    "title": "Fysiotherapie na een blessure",
+    "question": "Waarvoor ga je naar de fysiotherapeut na een blessure?",
+    "options": [
+      "Voor hulp met herstellen en oefeningen.",
+      "Voor advies over eten.",
+      "Voor hulp met administratie."
+    ],
+    "correctAnswer": "Voor hulp met herstellen en oefeningen."
+  },
+  {
+    "id": "e6835ece-550a-4e1f-b489-96b71f31ac2b",
+    "title": "Geen afval op straat gooien",
+    "question": "Wat betekent geen afval op straat gooien?",
+    "options": [
+      "Afval in de prullenbak doen.",
+      "Afval op straat laten liggen.",
+      "Afval in de tuin gooien."
+    ],
+    "correctAnswer": "Afval in de prullenbak doen."
+  },
+  {
+    "id": "cffbc6ca-a829-4d20-9250-4856c3721836",
+    "title": "Geen discriminatie",
+    "question": "Wat betekent geen discriminatie?",
+    "options": [
+      "Iedereen gelijk behandelen.",
+      "Mensen uitsluiten vanwege huidskleur.",
+      "Alleen met bekenden omgaan."
+    ],
+    "correctAnswer": "Iedereen gelijk behandelen."
+  },
+  {
+    "id": "f81c0174-73d0-45c8-b502-53616b807674",
+    "title": "Gezonde leefstijl en beweging",
+    "question": "Wat hoort bij een gezonde leefstijl?",
+    "options": [
+      "Veel bewegen en gezond eten.",
+      "Veel snoepen en stilzitten.",
+      "Lang televisie kijken."
+    ],
+    "correctAnswer": "Veel bewegen en gezond eten."
+  },
+  {
+    "id": "dd13d341-5762-4dfd-8fd5-dd4138142261",
+    "title": "Griepvaccinatie voor risicogroepen",
+    "question": "Voor wie is de griepvaccinatie bedoeld?",
+    "options": [
+      "Voor risicogroepen zoals ouderen en zieken.",
+      "Voor mensen die willen sporten.",
+      "Voor mensen met een tuin."
+    ],
+    "correctAnswer": "Voor risicogroepen zoals ouderen en zieken."
+  },
+  {
+    "id": "86b0291c-64e6-408c-9c6b-ee8b99616bb2",
+    "title": "Groeten in Nederland",
+    "question": "Hoe groet je mensen in Nederland vaak?",
+    "options": [
+      "Met een handdruk of een knikje.",
+      "Door te zwaaien met beide handen.",
+      "Door helemaal niets te zeggen."
+    ],
+    "correctAnswer": "Met een handdruk of een knikje."
+  },
+  {
+    "id": "ce32a98c-6b84-455e-80bd-940ca0ca91e1",
+    "title": "Herdenking van het slavernijverleden",
+    "question": "Waarom wordt het slavernijverleden herdacht in Nederland?",
+    "options": [
+      "Om de slachtoffers te herinneren en respect te tonen.",
+      "Om nieuwe wetten te maken.",
+      "Om een feestdag te vieren."
+    ],
+    "correctAnswer": "Om de slachtoffers te herinneren en respect te tonen."
+  },
+  {
+    "id": "6a48e8b1-916c-4762-a04c-1e28831d098f",
+    "title": "Herdenking van historische gebeurtenissen",
+    "question": "Waarom herdenkt Nederland historische gebeurtenissen?",
+    "options": [
+      "Om feest te vieren.",
+      "Om te leren van het verleden.",
+      "Om verkiezingen te houden."
+    ],
+    "correctAnswer": "Om te leren van het verleden."
+  },
+  {
+    "id": "e9589967-453d-4565-ba67-5e48d33f640c",
+    "title": "Het aanvragen van zorgtoeslag",
+    "question": "Wat is zorgtoeslag?",
+    "options": [
+      "Hulp om je zorgverzekering te betalen.",
+      "Hulp bij het vinden van een huis.",
+      "Een lening voor vakantie."
+    ],
+    "correctAnswer": "Hulp om je zorgverzekering te betalen."
+  },
+  {
+    "id": "efd4379b-93a4-48d5-bb1a-896852530eae",
+    "title": "Het belang van goede hygiëne",
+    "question": "Waarom is goede hygiëne belangrijk?",
+    "options": [
+      "Om ziekten te voorkomen.",
+      "Om sneller te kunnen fietsen.",
+      "Om beter te kunnen slapen."
+    ],
+    "correctAnswer": "Om ziekten te voorkomen."
+  },
+  {
+    "id": "7688a49f-5004-4778-a5df-b33477399978",
+    "title": "Het bellen van 112 bij nood",
+    "question": "Wanneer bel je 112?",
+    "options": [
+      "Als je een brood wilt kopen.",
+      "Als je in gevaar bent of een ongeluk ziet.",
+      "Als je wilt reizen."
+    ],
+    "correctAnswer": "Als je in gevaar bent of een ongeluk ziet."
+  },
+  {
+    "id": "56d91c67-47b0-4f83-bbe5-0309c85ce39c",
+    "title": "Het bevolkingsonderzoek",
+    "question": "Wat is het doel van een bevolkingsonderzoek?",
+    "options": [
+      "Ziekten vroeg opsporen.",
+      "Nieuwe banen vinden.",
+      "Een rijbewijs halen."
+    ],
+    "correctAnswer": "Ziekten vroeg opsporen."
+  },
+  {
+    "id": "4e6421e0-f316-41eb-b073-a56dbb1c4190",
+    "title": "Het consultatiebureau voor kinderen",
+    "question": "Wat is het consultatiebureau?",
+    "options": [
+      "Een plek voor kinderzorg en controles.",
+      "Een plek voor huisdieren.",
+      "Een plek om te sporten."
+    ],
+    "correctAnswer": "Een plek voor kinderzorg en controles."
+  },
+  {
+    "id": "5a6b4ddd-a9f7-4f40-8c28-b85f2dd7e36e",
+    "title": "Het dragen van gepaste kleding",
+    "question": "Wat is gepaste kleding?",
+    "options": [
+      "Kleding die past bij de situatie.",
+      "Kleding die je mooi vindt.",
+      "Kleding van een bekend merk."
+    ],
+    "correctAnswer": "Kleding die past bij de situatie."
+  },
+  {
+    "id": "a2aa3a8a-0fb1-45bf-8add-f847b0f54d91",
+    "title": "Het eigen risico in de zorgverzekering",
+    "question": "Wat is het eigen risico in de zorgverzekering?",
+    "options": [
+      "De premie voor de zorgverzekering.",
+      "Een bedrag dat je zelf betaalt voor sommige zorg.",
+      "Het totale bedrag dat je terugkrijgt."
+    ],
+    "correctAnswer": "Een bedrag dat je zelf betaalt voor sommige zorg."
+  },
+  {
+    "id": "15666f45-152a-4f03-a979-a05b54548d0e",
+    "title": "Het gebruik van sociale media",
+    "question": "Waarvoor gebruiken mensen sociale media?",
+    "options": [
+      "Om contact te houden met anderen.",
+      "Om televisie te kijken.",
+      "Om boeken te kopen."
+    ],
+    "correctAnswer": "Om contact te houden met anderen."
+  },
+  {
+    "id": "a1540bae-7c43-43ef-a3a1-d5fa983ce71c",
+    "title": "Het geven van complimenten",
+    "question": "Hoe geef je een compliment?",
+    "options": [
+      "Door niets te zeggen.",
+      "Door iets aardigs over iemand te zeggen.",
+      "Door de ander te bekritiseren."
+    ],
+    "correctAnswer": "Door iets aardigs over iemand te zeggen."
+  },
+  {
+    "id": "bdab803a-d464-4542-9bc5-e9c505237b12",
+    "title": "Het geven van een hand",
+    "question": "Wanneer geef je iemand een hand?",
+    "options": [
+      "Als begroeting of afscheid.",
+      "Als je iets niet wilt zeggen.",
+      "Als je boos bent."
+    ],
+    "correctAnswer": "Als begroeting of afscheid."
+  },
+  {
+    "id": "5972ab69-854f-4cbe-95e4-55bc5bcdde2c",
+    "title": "Het IJsselmeer en de Afsluitdijk",
+    "question": "Wat is de functie van de Afsluitdijk?",
+    "options": [
+      "Om auto’s sneller te laten rijden.",
+      "Om het land te beschermen tegen het water.",
+      "Om vissen tegen te houden."
+    ],
+    "correctAnswer": "Om het land te beschermen tegen het water."
+  },
+  {
+    "id": "44621862-bcbf-4952-a618-4615687ebfd7",
+    "title": "Het maken van afspraken",
+    "question": "Wat doe je als je een afspraak maakt?",
+    "options": [
+      "Je gaat op bezoek zonder iets te zeggen.",
+      "Je belt of stuurt een bericht.",
+      "Je wacht tot iemand jou belt."
+    ],
+    "correctAnswer": "Je belt of stuurt een bericht."
+  },
+  {
+    "id": "a8b1384d-71cd-4093-980d-777a34f91157",
+    "title": "Het maken van een doktersafspraak",
+    "question": "Hoe maak je een doktersafspraak?",
+    "options": [
+      "Via de supermarkt.",
+      "Via de huisarts of online.",
+      "Via het postkantoor."
+    ],
+    "correctAnswer": "Via de huisarts of online."
+  },
+  {
+    "id": "4dccf498-5d33-4851-8acf-826657d439fc",
+    "title": "Het Nederlandse kustgebied",
+    "question": "Wat is kenmerkend voor het Nederlandse kustgebied?",
+    "options": [
+      "Het ligt in de bergen.",
+      "Het ligt aan zee met veel duinen.",
+      "Er groeien tropische bomen."
+    ],
+    "correctAnswer": "Het ligt aan zee met veel duinen."
+  },
+  {
+    "id": "2d99cf38-cbd4-4a8f-a34d-e9f6364bc16d",
+    "title": "Het Nederlandse parlement",
+    "question": "Wat doet het Nederlandse parlement?",
+    "options": [
+      "Het maakt wetten en controleert de regering.",
+      "Het organiseert sportwedstrijden.",
+      "Het opent winkels."
+    ],
+    "correctAnswer": "Het maakt wetten en controleert de regering."
+  },
+  {
+    "id": "4237cd3b-8ddd-4a62-a27a-26b252f9c9e3",
+    "title": "Het ontstaan van polders",
+    "question": "Waarom zijn polders belangrijk voor Nederland?",
+    "options": [
+      "Ze maken Nederland groter.",
+      "Ze zorgen voor meer regen.",
+      "Ze maken het water warmer."
+    ],
+    "correctAnswer": "Ze maken Nederland groter."
+  },
+  {
+    "id": "66a0aa5b-3281-4f2d-a042-03d4a7da21e1",
+    "title": "Het ontstaan van vakbonden",
+    "question": "Waarom ontstonden vakbonden?",
+    "options": [
+      "Om feestjes te organiseren.",
+      "Om op te komen voor de rechten van werknemers.",
+      "Om nieuwe regels te maken voor winkels."
+    ],
+    "correctAnswer": "Om op te komen voor de rechten van werknemers."
+  },
+  {
+    "id": "a1a286fe-8b11-4052-b27c-9e7765fd6dd9",
+    "title": "Het ontvangen van gasten",
+    "question": "Hoe ontvang je gasten thuis?",
+    "options": [
+      "Door de deur niet open te doen.",
+      "Met een glimlach en iets te drinken.",
+      "Door ze te vragen zelf eten mee te nemen."
+    ],
+    "correctAnswer": "Met een glimlach en iets te drinken."
+  },
+  {
+    "id": "1fb154f8-a273-46a7-9c78-1d3eda5f8f4f",
+    "title": "Het Plakkaat van Verlatinghe",
+    "question": "Wat was het doel van het Plakkaat van Verlatinghe?",
+    "options": [
+      "Om een koning uit te nodigen.",
+      "Om onafhankelijk te worden van Spanje.",
+      "Om belasting te verhogen."
+    ],
+    "correctAnswer": "Om onafhankelijk te worden van Spanje."
+  },
+  {
+    "id": "fa463375-441f-4618-90c8-4019e9e9dd94",
+    "title": "Het slavernijverleden van Nederland",
+    "question": "Wat deed Nederland in het verleden met slavernij?",
+    "options": [
+      "Nederland voerde oorlog tegen slavernij.",
+      "Nederland handelde in slaven in Azië, Afrika en Amerika.",
+      "Nederland verbood slavernij vanaf het begin.",
+      "Nederland had er niets mee te maken."
+    ],
+    "correctAnswer": "Nederland handelde in slaven in Azië, Afrika en Amerika."
+  },
+  {
+    "id": "740799b3-a4a2-40fd-912a-60a9dc6f2e47",
+    "title": "Het stadhouderschap in de geschiedenis",
+    "question": "Wat was het stadhouderschap in Nederland?",
+    "options": [
+      "Een militaire functie in de koloniën.",
+      "Een leider die het land bestuurde namens de koning.",
+      "Een religieuze titel in de kerk."
+    ],
+    "correctAnswer": "Een leider die het land bestuurde namens de koning."
+  },
+  {
+    "id": "113880f1-196d-4f07-8846-cf5aa7f15888",
+    "title": "Het stemmen bij verkiezingen",
+    "question": "Waarom stemmen mensen bij verkiezingen?",
+    "options": [
+      "Om te kiezen wie er in de regering komt.",
+      "Om een paspoort te krijgen.",
+      "Om werk te vinden."
+    ],
+    "correctAnswer": "Om te kiezen wie er in de regering komt."
+  },
+  {
+    "id": "30896774-9e97-4f08-8d43-2f5086b139f2",
+    "title": "Het tonen van beleefdheid",
+    "question": "Hoe toon je beleefdheid?",
+    "options": [
+      "Door te schreeuwen tegen anderen.",
+      "Door alsjeblieft en dank je te zeggen.",
+      "Door mensen te negeren."
+    ],
+    "correctAnswer": "Door alsjeblieft en dank je te zeggen."
+  },
+  {
+    "id": "eed591db-6294-4601-8790-ff28360d4d54",
+    "title": "Het vaccinatieprogramma",
+    "question": "Wat is het doel van het vaccinatieprogramma?",
+    "options": [
+      "Ziekten voorkomen door vaccinaties.",
+      "Meer sporten op school.",
+      "Beter leren koken."
+    ],
+    "correctAnswer": "Ziekten voorkomen door vaccinaties."
+  },
+  {
+    "id": "25843f74-87a0-4ad1-ae09-becf995c6787",
+    "title": "Het verzet tegen de nazi’s",
+    "question": "Wat deed het verzet in de Tweede Wereldoorlog?",
+    "options": [
+      "Ze werkten samen met de nazi’s.",
+      "Ze vochten tegen de nazi’s.",
+      "Ze verlieten Nederland."
+    ],
+    "correctAnswer": "Ze vochten tegen de nazi’s."
+  },
+  {
+    "id": "810e35c9-6325-4ad0-95bb-5aa555f1db5b",
+    "title": "Het vieren van Koningsdag",
+    "question": "Wat vieren mensen op Koningsdag?",
+    "options": [
+      "De verjaardag van de koning.",
+      "De geboorte van een prinses.",
+      "Het begin van de lente."
+    ],
+    "correctAnswer": "De verjaardag van de koning."
+  },
+  {
+    "id": "63b18844-fd77-499b-81f7-3a4ca689990c",
+    "title": "Het vieren van verjaardagen",
+    "question": "Hoe vieren veel mensen in Nederland hun verjaardag?",
+    "options": [
+      "Met cadeaus en visite.",
+      "Door de hele dag te werken.",
+      "Door een andere naam te kiezen."
+    ],
+    "correctAnswer": "Met cadeaus en visite."
+  },
+  {
+    "id": "dd645377-a67b-4803-8360-c7cfdd9b8fc2",
+    "title": "Het volgen van verkeersregels",
+    "question": "Hoe volg je verkeersregels?",
+    "options": [
+      "Door rood licht negeren.",
+      "Door de verkeersborden en lichten te volgen.",
+      "Door overal te parkeren."
+    ],
+    "correctAnswer": "Door de verkeersborden en lichten te volgen."
+  },
+  {
+    "id": "21b653ab-5a36-4d9a-ba27-f20bbe80a9d2",
+    "title": "Het watermanagement in Nederland",
+    "question": "Waarom is watermanagement belangrijk in Nederland?",
+    "options": [
+      "Omdat het veel regent.",
+      "Omdat veel land onder de zeespiegel ligt.",
+      "Omdat er veel bergen zijn."
+    ],
+    "correctAnswer": "Omdat veel land onder de zeespiegel ligt."
+  },
+  {
+    "id": "368e947c-1d9e-47df-8207-36e680c8d423",
+    "title": "Het zorgverzekeringsstelsel",
+    "question": "Wat doet een zorgverzekering?",
+    "options": [
+      "Betaalt voor boodschappen.",
+      "Helpt met kosten voor de zorg.",
+      "Geeft korting op kleding."
+    ],
+    "correctAnswer": "Helpt met kosten voor de zorg."
+  },
+  {
+    "id": "517b3c3a-4894-4cdc-8842-fe471ee12dfd",
+    "title": "Huisbezoek van de wijkverpleegkundige",
+    "question": "Wat gebeurt er bij een huisbezoek van de wijkverpleegkundige?",
+    "options": [
+      "De verpleegkundige helpt thuis met zorg.",
+      "Je krijgt een nieuwe woning.",
+      "Je wordt meegenomen naar het ziekenhuis."
+    ],
+    "correctAnswer": "De verpleegkundige helpt thuis met zorg."
+  },
+  {
+    "id": "5115d758-cc03-4499-b569-75704b41d4d1",
+    "title": "Huisdieren goed verzorgen",
+    "question": "Hoe verzorg je huisdieren goed?",
+    "options": [
+      "Door ze eten en aandacht te geven.",
+      "Door ze de hele dag buiten te laten.",
+      "Door ze zelf eten te laten zoeken."
+    ],
+    "correctAnswer": "Door ze eten en aandacht te geven."
+  },
+  {
+    "id": "bf7149a0-370e-4458-a0e7-8bd259348325",
+    "title": "Huisregels respecteren",
+    "question": "Hoe respecteer je huisregels?",
+    "options": [
+      "Door je eraan te houden.",
+      "Door ze te negeren.",
+      "Door ze te veranderen zonder te vragen."
+    ],
+    "correctAnswer": "Door je eraan te houden."
+  },
+  {
+    "id": "3ce86a98-25aa-493e-8a41-5c8de9bdc149",
+    "title": "Hulp bij depressie",
+    "question": "Waar kun je hulp krijgen bij depressie?",
+    "options": [
+      "Bij een kledingwinkel.",
+      "Bij een psycholoog of huisarts.",
+      "Bij het tankstation."
+    ],
+    "correctAnswer": "Bij een psycholoog of huisarts."
+  },
+  {
+    "id": "cf94207f-eeb1-49e9-a5b6-f8b111256373",
+    "title": "Hulp bij stoppen met roken",
+    "question": "Wat helpt bij stoppen met roken?",
+    "options": [
+      "Meer roken.",
+      "Ondersteuning van de huisarts of een programma.",
+      "Koffie drinken."
+    ],
+    "correctAnswer": "Ondersteuning van de huisarts of een programma."
+  },
+  {
+    "id": "c5650f18-39da-4267-93f1-4f4e477018a5",
+    "title": "Hulpmiddelen voor mensen met een beperking",
+    "question": "Wat zijn hulpmiddelen voor mensen met een beperking?",
+    "options": [
+      "Een bril of een rollator.",
+      "Een fiets of een bal.",
+      "Een schoolboek."
+    ],
+    "correctAnswer": "Een bril of een rollator."
+  },
+  {
+    "id": "b7fc7798-92c6-4f0b-89da-a425a30e7068",
+    "title": "Joodse geschiedenis tijdens de Tweede Wereldoorlog",
+    "question": "Wat gebeurde er met veel Joden tijdens de Tweede Wereldoorlog?",
+    "options": [
+      "Ze werden naar kampen gestuurd en vermoord.",
+      "Ze gingen op vakantie.",
+      "Ze verhuisden naar Amerika."
+    ],
+    "correctAnswer": "Ze werden naar kampen gestuurd en vermoord."
+  },
+  {
+    "id": "139f40a5-c061-42f2-a2d6-8fef4458835f",
+    "title": "Katholieken en protestanten in Nederland",
+    "question": "Wat is een verschil tussen katholieken en protestanten?",
+    "options": [
+      "Ze gebruiken verschillende boeken.",
+      "Ze hebben andere gewoonten en kerken.",
+      "Ze spreken andere talen."
+    ],
+    "correctAnswer": "Ze hebben andere gewoonten en kerken."
+  },
+  {
+    "id": "ad27611f-01a9-4c9d-9ed8-ca3f76e464f4",
+    "title": "Klimaatverandering en Nederland",
+    "question": "Wat doet Nederland tegen klimaatverandering?",
+    "options": [
+      "Niets, het is geen probleem.",
+      "Het maakt meer fabrieken.",
+      "Het investeert in duurzame energie en minder CO2."
+    ],
+    "correctAnswer": "Het investeert in duurzame energie en minder CO2."
+  },
+  {
+    "id": "3d6b9cd3-25ec-4c27-beb4-44ffc17b7982",
+    "title": "Koloniën en cultuuruitwisseling",
+    "question": "Wat gebeurde er in de kolonies van Nederland?",
+    "options": [
+      "Er was alleen landbouw.",
+      "Er was veel handel en cultuuruitwisseling.",
+      "Er woonden geen mensen."
+    ],
+    "correctAnswer": "Er was veel handel en cultuuruitwisseling."
+  },
+  {
+    "id": "d3f1006b-e811-4d95-800f-ba60fc30e18e",
+    "title": "Koning Willem-Alexander",
+    "question": "Wie is Koning Willem-Alexander?",
+    "options": [
+      "De eerste koning van Nederland.",
+      "De huidige koning van Nederland.",
+      "Een beroemde sporter."
+    ],
+    "correctAnswer": "De huidige koning van Nederland."
+  },
+  {
+    "id": "73b9146b-3437-4857-a5b6-ac5da71a0e71",
+    "title": "Koningin Beatrix en haar tijd",
+    "question": "Wie was Koningin Beatrix?",
+    "options": [
+      "De eerste vrouwelijke minister-president.",
+      "De koningin van Nederland tot 2013.",
+      "Een bekende actrice."
+    ],
+    "correctAnswer": "De koningin van Nederland tot 2013."
+  },
+  {
+    "id": "4153ff75-562b-4a16-9ca1-36e0148eae43",
+    "title": "Kraamzorg voor nieuwe moeders",
+    "question": "Wat is kraamzorg?",
+    "options": [
+      "Zorg voor babys en moeders na de bevalling.",
+      "Zorg voor ouderen.",
+      "Zorg voor zieke dieren."
+    ],
+    "correctAnswer": "Zorg voor babys en moeders na de bevalling."
+  },
+  {
+    "id": "8ef51b2a-0ca7-40be-bf77-cab7d95e9dbc",
+    "title": "Lawaai beperken in de buurt",
+    "question": "Hoe beperk je lawaai in de buurt?",
+    "options": [
+      "Door muziek zachter te zetten.",
+      "Door midden in de nacht te schreeuwen.",
+      "Door elke dag een feestje te geven."
+    ],
+    "correctAnswer": "Door muziek zachter te zetten."
+  },
+  {
+    "id": "0a1a3460-bea5-4fde-8825-9290f4901220",
+    "title": "Luisteren naar anderen",
+    "question": "Waarom is het belangrijk om naar anderen te luisteren?",
+    "options": [
+      "Dan weet je wat de ander zegt.",
+      "Dan hoef je niet te praten.",
+      "Dan kun je sneller weggaan."
+    ],
+    "correctAnswer": "Dan weet je wat de ander zegt."
+  },
+  {
+    "id": "e3c03dc1-81da-4776-813c-2f2478803d70",
+    "title": "Mantelzorg in Nederland",
+    "question": "Wat is mantelzorg?",
+    "options": [
+      "Zorg door familie of vrienden.",
+      "Zorg door een tandarts.",
+      "Zorg door een dierenarts."
+    ],
+    "correctAnswer": "Zorg door familie of vrienden."
+  },
+  {
+    "id": "4535c481-68da-40f5-a68b-f9a6f81b3208",
+    "title": "Medicijnen ophalen bij de apotheek",
+    "question": "Waar haal je medicijnen op?",
+    "options": [
+      "Bij de bibliotheek.",
+      "Bij de apotheek.",
+      "Bij het tankstation."
+    ],
+    "correctAnswer": "Bij de apotheek."
+  },
+  {
+    "id": "865321ba-cfba-43f2-8f6b-50e5b296a4fb",
+    "title": "Meehelpen bij buurtactiviteiten",
+    "question": "Hoe kun je meehelpen bij buurtactiviteiten?",
+    "options": [
+      "Door samen met anderen iets te organiseren.",
+      "Door thuis te blijven.",
+      "Door het werk aan één persoon te laten."
+    ],
+    "correctAnswer": "Door samen met anderen iets te organiseren."
+  },
+  {
+    "id": "6c041f88-a868-4467-8989-1f93c1729420",
+    "title": "Migratie naar Nederland in de jaren '60 en '70",
+    "question": "Waarom kwamen veel mensen in de jaren 60 en 70 naar Nederland?",
+    "options": [
+      "Voor werk in de industrie.",
+      "Voor vakantie in Amsterdam.",
+      "Voor een studiebeurs."
+    ],
+    "correctAnswer": "Voor werk in de industrie."
+  },
+  {
+    "id": "15669d1f-a866-4057-99db-867ba62e8dc3",
+    "title": "Mondzorg voor kinderen",
+    "question": "Waarom is mondzorg belangrijk voor kinderen?",
+    "options": [
+      "Voor sterke tanden en een gezonde mond.",
+      "Om beter te kunnen luisteren.",
+      "Voor betere ogen."
+    ],
+    "correctAnswer": "Voor sterke tanden en een gezonde mond."
+  },
+  {
+    "id": "3c81525c-af9a-43bf-ba58-bc10bd6bfe4d",
+    "title": "Napoleon en Nederland",
+    "question": "Wat had Napoleon te maken met Nederland?",
+    "options": [
+      "Hij was koning van Nederland.",
+      "Hij liet Nederland besturen door zijn broer.",
+      "Hij gaf Nederland onafhankelijkheid."
+    ],
+    "correctAnswer": "Hij liet Nederland besturen door zijn broer."
+  },
+  {
+    "id": "32c11f38-f632-4b5b-acc0-4f6064c23aed",
+    "title": "Nationale feestdag in Nederland",
+    "question": "Wat is een nationale feestdag in Nederland?",
+    "options": [
+      "Kerstmis.",
+      "Prinsjesdag.",
+      "Koningsdag."
+    ],
+    "correctAnswer": "Koningsdag."
+  },
+  {
+    "id": "00733b83-5964-4137-b91e-798dbd09ca66",
+    "title": "Nationale monumenten in Nederland",
+    "question": "Wat is een nationaal monument?",
+    "options": [
+      "Een oud gebouw met historische waarde.",
+      "Een groot winkelcentrum.",
+      "Een nieuw huis met zonnepanelen."
+    ],
+    "correctAnswer": "Een oud gebouw met historische waarde."
+  },
+  {
+    "id": "d0839fcd-616f-452b-baf2-30165b5ce36e",
+    "title": "Nederland als gidsland",
+    "question": "Wat betekent dat Nederland een gidsland wil zijn?",
+    "options": [
+      "Nederland wil andere landen helpen en inspireren.",
+      "Nederland wil meer toeristen.",
+      "Nederland wil grenzen sluiten."
+    ],
+    "correctAnswer": "Nederland wil andere landen helpen en inspireren."
+  },
+  {
+    "id": "ab435f63-2e8f-44b5-9b47-5217f808a472",
+    "title": "Nederland als lid van de Europese Unie",
+    "question": "Wat doet Nederland als lid van de Europese Unie?",
+    "options": [
+      "Het werkt samen met andere landen.",
+      "Het beslist alleen over Europa.",
+      "Het organiseert alleen sportwedstrijden."
+    ],
+    "correctAnswer": "Het werkt samen met andere landen."
+  },
+  {
+    "id": "ab7db91d-320f-4879-b255-00dd563d5e45",
+    "title": "Nederland en de oliecrisis",
+    "question": "Wat was het gevolg van de oliecrisis in Nederland?",
+    "options": [
+      "Er kwamen strengere verkeersregels.",
+      "Er kwamen autoloze zondagen.",
+      "Iedereen kreeg gratis benzine."
+    ],
+    "correctAnswer": "Er kwamen autoloze zondagen."
+  },
+  {
+    "id": "c5ebcf41-2089-408e-8700-0e7e9ec0db4d",
+    "title": "Nederlandse emigratie naar Canada en Australië",
+    "question": "Waarom emigreerden veel Nederlanders naar Canada en Australië?",
+    "options": [
+      "Voor vakantie.",
+      "Voor werk en een nieuw leven na de oorlog.",
+      "Om daar te studeren."
+    ],
+    "correctAnswer": "Voor werk en een nieuw leven na de oorlog."
+  },
+  {
+    "id": "6bfad1eb-6924-4acb-9360-4b5793324fee",
+    "title": "Nederlandse handel in de 17e eeuw",
+    "question": "Wat kenmerkte de Nederlandse handel in de 17 e eeuw?",
+    "options": [
+      "Nederland was een belangrijke handelsnatie.",
+      "Nederland handelde alleen met België.",
+      "Er was geen handel in die tijd."
+    ],
+    "correctAnswer": "Nederland was een belangrijke handelsnatie."
+  },
+  {
+    "id": "0dbaf913-5f4b-4610-b91f-5182e656421f",
+    "title": "Nederlandse koloniale geschiedenis",
+    "question": "Wat deed Nederland in de koloniale tijd?",
+    "options": [
+      "Het land bleef altijd neutraal.",
+      "Nederland had gebieden in andere delen van de wereld.",
+      "Nederland was alleen bezig met landbouw."
+    ],
+    "correctAnswer": "Nederland had gebieden in andere delen van de wereld."
+  },
+  {
+    "id": "7098374a-cb8e-4e57-8bc4-d3f1f39b3e05",
+    "title": "Nederlandse missie in het buitenland",
+    "question": "Wat doet Nederland bij een missie in het buitenland?",
+    "options": [
+      "Het helpt bij vrede en wederopbouw.",
+      "Het opent winkels.",
+      "Het geeft Nederlandse lessen."
+    ],
+    "correctAnswer": "Het helpt bij vrede en wederopbouw."
+  },
+  {
+    "id": "bfa7dac8-94ef-4479-acf1-4e0464f47f8a",
+    "title": "Nederlandse schilderkunst in de Gouden Eeuw",
+    "question": "Wat is kenmerkend voor Nederlandse schilderkunst in de Gouden Eeuw?",
+    "options": [
+      "Abstracte schilderijen van dieren.",
+      "Gedetailleerde schilderijen van het dagelijks leven.",
+      "Alleen landschappen uit Duitsland."
+    ],
+    "correctAnswer": "Gedetailleerde schilderijen van het dagelijks leven."
+  },
+  {
+    "id": "9b02b1ec-7d66-447b-bb91-40c39c6736bf",
+    "title": "Netjes praten met anderen",
+    "question": "Hoe praat je netjes met anderen?",
+    "options": [
+      "Door te schreeuwen.",
+      "Door beleefd woorden te gebruiken.",
+      "Door de ander te negeren."
+    ],
+    "correctAnswer": "Door beleefd woorden te gebruiken."
+  },
+  {
+    "id": "5daebe74-bd08-45a2-ac9e-d255a838273d",
+    "title": "Om hulp vragen",
+    "question": "Wanneer vraag je om hulp?",
+    "options": [
+      "Als je alles zelf weet.",
+      "Als je iets niet begrijpt of moeilijk vindt.",
+      "Als je geen zin hebt om iets te doen."
+    ],
+    "correctAnswer": "Als je iets niet begrijpt of moeilijk vindt."
+  },
+  {
+    "id": "2337d1e3-f78f-4d91-86bf-b5fa8be8581c",
+    "title": "Omgaan met kritiek",
+    "question": "Hoe kun je goed omgaan met kritiek?",
+    "options": [
+      "Door rustig te luisteren.",
+      "Door direct boos te worden.",
+      "Door de ander uit te lachen."
+    ],
+    "correctAnswer": "Door rustig te luisteren."
+  },
+  {
+    "id": "c40cc77a-e0f5-4819-9476-eb59e28fa68a",
+    "title": "Omgaan met meningsverschillen",
+    "question": "Hoe ga je om met meningsverschillen?",
+    "options": [
+      "Door de ander te negeren.",
+      "Door rustig te praten en te luisteren.",
+      "Door te schreeuwen en boos te worden."
+    ],
+    "correctAnswer": "Door rustig te praten en te luisteren."
+  },
+  {
+    "id": "2afd16b3-0703-4b2d-b9e8-d463c0a45c76",
+    "title": "Omgaan met ruzie",
+    "question": "Wat kun je doen bij een ruzie?",
+    "options": [
+      "Rustig praten en luisteren.",
+      "De ander uitschelden.",
+      "Wegrennen zonder iets te zeggen."
+    ],
+    "correctAnswer": "Rustig praten en luisteren."
+  },
+  {
+    "id": "a0333401-feec-46cb-9e10-a01e05998269",
+    "title": "Omgaan met stilte in openbare plekken",
+    "question": "Hoe ga je om met stilte in openbare plekken?",
+    "options": [
+      "Door hard te zingen.",
+      "Door muziek heel hard te zetten.",
+      "Door rustig te praten of stil te zijn."
+    ],
+    "correctAnswer": "Door rustig te praten of stil te zijn."
+  },
+  {
+    "id": "d5a8bb33-fb9a-4d70-b548-6b3726af0fad",
+    "title": "Oogzorg en opticiens",
+    "question": "Wat doet een opticien?",
+    "options": [
+      "Geeft advies over eten.",
+      "Helpt met je ogen en brillen.",
+      "Geeft zwemles."
+    ],
+    "correctAnswer": "Helpt met je ogen en brillen."
+  },
+  {
+    "id": "513c4b13-fbcc-4f70-b00a-302e033ff735",
+    "title": "Op tijd komen",
+    "question": "Wat betekent op tijd komen?",
+    "options": [
+      "Vijf minuten te laat zijn.",
+      "Op het afgesproken tijdstip aanwezig zijn.",
+      "Een uur te vroeg zijn."
+    ],
+    "correctAnswer": "Op het afgesproken tijdstip aanwezig zijn."
+  },
+  {
+    "id": "ea1ca05a-d3be-4d06-ab0e-6d21a07f9d55",
+    "title": "Openstaan voor nieuwe ideeën",
+    "question": "Hoe sta je open voor nieuwe ideeën?",
+    "options": [
+      "Door alles direct af te wijzen.",
+      "Door naar andere meningen te luisteren.",
+      "Door alleen je eigen mening te volgen."
+    ],
+    "correctAnswer": "Door naar andere meningen te luisteren."
+  },
+  {
+    "id": "c6e3baa3-fcdf-4254-9a90-11756fc917da",
+    "title": "Preventieve gezondheidszorg",
+    "question": "Wat is preventieve gezondheidszorg?",
+    "options": [
+      "Zorg om gezond te blijven en ziekten te voorkomen.",
+      "Zorg na een operatie.",
+      "Zorg voor huisdieren."
+    ],
+    "correctAnswer": "Zorg om gezond te blijven en ziekten te voorkomen."
+  },
+  {
+    "id": "85e8544a-dcc5-4665-b847-6774927995e4",
+    "title": "Privacy van anderen respecteren",
+    "question": "Hoe respecteer je de privacy van anderen?",
+    "options": [
+      "Door hun persoonlijke informatie geheim te houden.",
+      "Door alles aan anderen te vertellen.",
+      "Door in hun brieven te kijken."
+    ],
+    "correctAnswer": "Door hun persoonlijke informatie geheim te houden."
+  },
+  {
+    "id": "8e5ac7b0-2ec1-434d-8add-f1c6f8026719",
+    "title": "Psychische hulp en counseling",
+    "question": "Waarvoor kun je psychische hulp krijgen?",
+    "options": [
+      "Voor mentale problemen zoals stress of depressie.",
+      "Voor kapotte schoenen.",
+      "Voor het schoonmaken van je huis."
+    ],
+    "correctAnswer": "Voor mentale problemen zoals stress of depressie."
+  },
+  {
+    "id": "1aa77aef-d4de-4b2b-beeb-0656cf16c4e5",
+    "title": "Recepten en herhaalmedicatie",
+    "question": "Wat is een herhaalmedicatie?",
+    "options": [
+      "Medicatie die je maar één keer gebruikt.",
+      "Medicatie die je vaker moet ophalen.",
+      "Medicatie voor dieren."
+    ],
+    "correctAnswer": "Medicatie die je vaker moet ophalen."
+  },
+  {
+    "id": "f8307ca6-1c5c-4a6b-ad51-96d2c7be4e85",
+    "title": "Rekening houden met anderen",
+    "question": "Hoe houd je rekening met anderen?",
+    "options": [
+      "Door altijd je eigen zin te doen.",
+      "Door te letten op wat anderen nodig hebben.",
+      "Door anderen te negeren."
+    ],
+    "correctAnswer": "Door te letten op wat anderen nodig hebben."
+  },
+  {
+    "id": "46f7105b-579c-40bc-a483-874ad0bc5e11",
+    "title": "Respect voor andere culturen",
+    "question": "Wat is respect voor andere culturen?",
+    "options": [
+      "Lachen om andere gewoontes.",
+      "Luisteren en openstaan voor andere manieren.",
+      "Alleen je eigen cultuur belangrijk vinden."
+    ],
+    "correctAnswer": "Luisteren en openstaan voor andere manieren."
+  },
+  {
+    "id": "16593316-4ddd-47da-8510-9dc3a2d18502",
+    "title": "Respect voor het milieu",
+    "question": "Wat betekent respect voor het milieu?",
+    "options": [
+      "Afval op straat gooien.",
+      "Rekening houden met de natuur.",
+      "Elke dag vlees eten."
+    ],
+    "correctAnswer": "Rekening houden met de natuur."
+  },
+  {
+    "id": "839a5d9e-13cc-4104-840b-9984eb8dd33c",
+    "title": "Respect voor ouderen",
+    "question": "Hoe laat je respect zien voor ouderen?",
+    "options": [
+      "Door naar ze te luisteren en te helpen.",
+      "Door ze te negeren.",
+      "Door altijd voor te dringen."
+    ],
+    "correctAnswer": "Door naar ze te luisteren en te helpen."
+  },
+  {
+    "id": "0d22e914-3827-486e-8eda-0a704b857298",
+    "title": "Samen schoonmaken",
+    "question": "Wat is samen schoonmaken?",
+    "options": [
+      "Iedereen maakt zelf zijn eigen huis schoon.",
+      "Je huurt iemand in om schoon te maken.",
+      "Je maakt samen met anderen iets schoon."
+    ],
+    "correctAnswer": "Je maakt samen met anderen iets schoon."
+  },
+  {
+    "id": "f408a72a-9d30-4734-b486-721fe4a4f856",
+    "title": "Samenwerken met anderen",
+    "question": "Hoe werk je samen met anderen?",
+    "options": [
+      "Door alleen te werken.",
+      "Door naar elkaar te luisteren en taken te verdelen.",
+      "Door te doen wat jij wilt."
+    ],
+    "correctAnswer": "Door naar elkaar te luisteren en taken te verdelen."
+  },
+  {
+    "id": "69c3a9bb-a041-41a6-bd95-d26553b3f76a",
+    "title": "Sinterklaas en Kerstmis",
+    "question": "Welke feesten vallen in december in Nederland?",
+    "options": [
+      "Sinterklaas en Kerstmis.",
+      "Pasen en Koningsdag.",
+      "Pinksteren en Oud en Nieuw."
+    ],
+    "correctAnswer": "Sinterklaas en Kerstmis."
+  },
+  {
+    "id": "361334c3-d2e3-4cc9-b7e0-d6d48587baca",
+    "title": "Spoedeisende hulp in het ziekenhuis",
+    "question": "Wat is spoedeisende hulp?",
+    "options": [
+      "Hulp bij noodgevallen in het ziekenhuis.",
+      "Hulp bij belastingaangifte.",
+      "Hulp bij verhuizen."
+    ],
+    "correctAnswer": "Hulp bij noodgevallen in het ziekenhuis."
+  },
+  {
+    "id": "f5a6bcbc-bda1-488f-b48e-87413492719e",
+    "title": "Spreken in een rustige toon",
+    "question": "Hoe spreek je in een rustige toon?",
+    "options": [
+      "Door zacht en vriendelijk te praten.",
+      "Door te schreeuwen.",
+      "Door boos te praten."
+    ],
+    "correctAnswer": "Door zacht en vriendelijk te praten."
+  },
+  {
+    "id": "75f7a44b-e19a-4109-9704-031a2fa31163",
+    "title": "Studentenprotesten in Nederland",
+    "question": "Waarom protesteerden studenten in Nederland?",
+    "options": [
+      "Voor beter openbaar vervoer.",
+      "Voor meer rechten en beter onderwijs.",
+      "Voor meer voetbalvelden."
+    ],
+    "correctAnswer": "Voor meer rechten en beter onderwijs."
+  },
+  {
+    "id": "44392c7d-3dc0-4bf9-b758-61d83bca3cb8",
+    "title": "Surinaamse Nederlanders en hun bijdrage",
+    "question": "Wat is de bijdrage van Surinaamse Nederlanders?",
+    "options": [
+      "Ze helpen mee aan de Nederlandse cultuur en economie.",
+      "Ze wonen alleen in Suriname.",
+      "Ze willen geen contact met Nederland."
+    ],
+    "correctAnswer": "Ze helpen mee aan de Nederlandse cultuur en economie."
+  },
+  {
+    "id": "d7db4347-b1af-451b-ac3e-7c751455099d",
+    "title": "Tandartsverzekering kiezen",
+    "question": "Wat is tandartsverzekering?",
+    "options": [
+      "Een verzekering voor tandzorg.",
+      "Een verzekering voor vakantie.",
+      "Een verzekering voor huisdieren."
+    ],
+    "correctAnswer": "Een verzekering voor tandzorg."
+  },
+  {
+    "id": "3f6aedd0-7dae-45c6-8f60-5a0357d52c6c",
+    "title": "Tandheelkundige controle",
+    "question": "Waarom is een tandheelkundige controle belangrijk?",
+    "options": [
+      "Voor mooie kleding.",
+      "Voor gezonde tanden en kiezen.",
+      "Voor sterk haar."
+    ],
+    "correctAnswer": "Voor gezonde tanden en kiezen."
+  },
+  {
+    "id": "5ddcc0b4-d91e-4b67-9bda-544a278a6fb0",
+    "title": "Turkse en Marokkaanse Nederlanders",
+    "question": "Waarom kwamen veel Turken en Marokkanen naar Nederland?",
+    "options": [
+      "Voor vakantie.",
+      "Voor werk en betere kansen.",
+      "Om te studeren aan de universiteit."
+    ],
+    "correctAnswer": "Voor werk en betere kansen."
+  },
+  {
+    "id": "8d80a23f-5556-4cf7-a330-8f30dac46b2c",
+    "title": "Verantwoord alcoholgebruik",
+    "question": "Wat betekent verantwoord alcoholgebruik?",
+    "options": [
+      "Niet te veel alcohol drinken.",
+      "Elke dag veel alcohol drinken.",
+      "Alcohol drinken op school."
+    ],
+    "correctAnswer": "Niet te veel alcohol drinken."
+  },
+  {
+    "id": "4b9ca6e1-1f30-4a6b-925f-f797a238c48b",
+    "title": "Voedingsadvies van de diëtist",
+    "question": "Wat doet een diëtist?",
+    "options": [
+      "Geeft financieel advies.",
+      "Geeft advies over voeding.",
+      "Geeft les op school."
+    ],
+    "correctAnswer": "Geeft advies over voeding."
+  },
+  {
+    "id": "641160a2-e8e5-49f7-93cd-b6891b0334f2",
+    "title": "Vredesmissies van Nederland",
+    "question": "Wat doet Nederland in vredesmissies?",
+    "options": [
+      "Het stuurt soldaten om andere landen aan te vallen.",
+      "Het helpt mee aan vrede in andere landen.",
+      "Het bouwt nieuwe steden in het buitenland."
+    ],
+    "correctAnswer": "Het helpt mee aan vrede in andere landen."
+  },
+  {
+    "id": "44e6da83-8a43-4e9c-8e24-0dfb21aa47fb",
+    "title": "Vriendschap onderhouden",
+    "question": "Hoe onderhoud je een vriendschap?",
+    "options": [
+      "Door te negeren als iemand belt.",
+      "Door soms contact te houden en te praten.",
+      "Door nooit af te spreken."
+    ],
+    "correctAnswer": "Door soms contact te houden en te praten."
+  },
+  {
+    "id": "448f3f90-4d36-464c-85c9-da21c7fd8b29",
+    "title": "Vrijheid van meningsuiting",
+    "question": "Wat betekent vrijheid van meningsuiting?",
+    "options": [
+      "Dat je alles mag zeggen, ook als het anderen pijn doet.",
+      "Dat je je mening mag geven, met respect voor anderen.",
+      "Dat je alleen op school mag praten."
+    ],
+    "correctAnswer": "Dat je je mening mag geven, met respect voor anderen."
+  },
+  {
+    "id": "a7c70476-5a3e-4412-b187-354d25340a54",
+    "title": "Vrijwilligerswerk voor de gemeenschap",
+    "question": "Wat is vrijwilligerswerk voor de gemeenschap?",
+    "options": [
+      "Werk doen voor veel geld.",
+      "Onbetaald werk doen om anderen te helpen.",
+      "Alleen werken voor jezelf."
+    ],
+    "correctAnswer": "Onbetaald werk doen om anderen te helpen."
+  },
+  {
+    "id": "62e89a9e-e75b-4d99-9b9e-bbab47eead0e",
+    "title": "Wachten op je beurt",
+    "question": "Wat betekent wachten op je beurt?",
+    "options": [
+      "Dat je voordringt in de rij.",
+      "Dat je rustig wacht tot jij aan de beurt bent.",
+      "Dat je altijd eerst mag."
+    ],
+    "correctAnswer": "Dat je rustig wacht tot jij aan de beurt bent."
+  },
+  {
+    "id": "72a9e3ae-66b0-41f1-95fa-5eecde0bf2bc",
+    "title": "Willem van Oranje",
+    "question": "Waarom is Willem van Oranje belangrijk in de Nederlandse geschiedenis?",
+    "options": [
+      "Hij begon de strijd tegen Spanje.",
+      "Hij was de eerste koning van België.",
+      "Hij schreef een boek over water."
+    ],
+    "correctAnswer": "Hij begon de strijd tegen Spanje."
+  },
+  {
+    "id": "49b9a0fc-862e-4064-bdc7-c97be11fdfcf",
+    "title": "Windmolens vroeger en nu",
+    "question": "Waarvoor werden windmolens vroeger gebruikt?",
+    "options": [
+      "Om internet te krijgen.",
+      "Om graan te malen en water weg te pompen.",
+      "Om huizen te verwarmen."
+    ],
+    "correctAnswer": "Om graan te malen en water weg te pompen."
+  }
+]

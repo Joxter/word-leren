@@ -1,0 +1,4020 @@
+[
+  {
+    "id": "fcd89a3e-3452-4d2b-82c6-3de20151aad1",
+    "title": "Advies vragen over gezonde voeding",
+    "transcript": "Hallo! Ik ben Lisa, een voedingsdeskundige. Ik krijg veel vragen over gezonde voeding. Wat is gezond eten? Eigenlijk is dat heel eenvoudig. Het gaat om een balans. Eet gevarieerd met veel groenten en fruit. Probeer ook volkoren producten zoals brood en pasta. Deze hebben meer vezels en zijn beter voor uw spijsvertering. En hoe zit het met vlees? Minder vlees eten is gezond. Kies voor vis, peulvruchten, noten of eieren. Deze bevatten ook eiwitten. Eet niet elke dag vlees, maar misschien twee of drie keer per week. Vergeet niet om genoeg water te drinken. Minstens anderhalve liter per dag. Dat houdt uw lichaam gezond en helpt bij het verwijderen van afvalstoffen. Beweging is ook belangrijk voor een gezonde levensstijl. Probeer elke dag minstens 30 minuten te bewegen. Wandelen, fietsen of zwemmen zijn goede opties. Gezond eten en bewegen betekent niet dat je nooit meer iets lekkers mag eten. Het gaat om balans en genieten. Eet je een keer een stukje taart? Dat is geen probleem. Geniet ervan, maar eet niet elke dag taart. Heeft u nog vragen over gezonde voeding? Ik help u graag!",
+    "questions": [
+      {
+        "question": "Wie is Lisa?",
+        "options": [
+          "Ze is een kok.",
+          "Ze is een voedingsdeskundige.",
+          "Ze is een leraar.",
+          "Ze is een dokter."
+        ],
+        "correctAnswer": "Ze is een voedingsdeskundige."
+      },
+      {
+        "question": "Wat is belangrijk om te eten volgens Lisa?",
+        "options": [
+          "Alleen vlees.",
+          "Alleen groenten en fruit.",
+          "Een evenwichtige voeding.",
+          "Alleen taart."
+        ],
+        "correctAnswer": "Een evenwichtige voeding."
+      },
+      {
+        "question": "Hoe vaak moet je volgens Lisa vlees eten in een week?",
+        "options": [
+          "Elke dag.",
+          "Eén keer.",
+          "Twee of drie keer.",
+          "Nooit."
+        ],
+        "correctAnswer": "Twee of drie keer."
+      },
+      {
+        "question": "Wat is een goede hoeveelheid water om dagelijks te drinken volgens Lisa?",
+        "options": [
+          "Een liter.",
+          "Twee liter.",
+          "Halve liter.",
+          "Minstens anderhalve liter."
+        ],
+        "correctAnswer": "Minstens anderhalve liter."
+      },
+      {
+        "question": "Wat is een goede manier om te bewegen volgens Lisa?",
+        "options": [
+          "Wandelen, fietsen of zwemmen.",
+          "Alleen hardlopen.",
+          "Alleen zwemmen.",
+          "Alleen fietsen."
+        ],
+        "correctAnswer": "Wandelen, fietsen of zwemmen."
+      }
+    ],
+    "audioFile": "audio/fcd89a3e-3452-4d2b-82c6-3de20151aad1.mp3"
+  },
+  {
+    "id": "820f6a4a-5a33-4a2f-8b01-718d80d3bdd9",
+    "title": "Afspraak maken voor het ophalen van grofvuil bij de gemeente",
+    "transcript": "Hallo, ik heb wat hulp nodig bij het ophalen van grofvuil. Ik heb wat oude meubels en kapotte apparaten die ik niet meer nodig heb. Ik weet dat ik een afspraak moet maken bij de gemeente, maar ik weet niet precies hoe. Kun je me vertellen hoe ik dit moet doen? Is er een specifieke dag in de week waarop het grofvuil wordt opgehaald? Of kan ik een specifieke dag en tijd kiezen? Moet ik ook betalen voor deze dienst of is het gratis? En als ik moet betalen, hoeveel kost het dan? Ik woon op de Prinsengracht. Is er iets dat ik moet weten over het ophalen van grofvuil in dit gebied? Ik wil ervoor zorgen dat ik alles goed doe en geen regels overtreed. Alvast bedankt voor je hulp.",
+    "questions": [
+      {
+        "question": "Wat wil de spreker laten ophalen?",
+        "options": [
+          "Zijn post",
+          "Zijn grofvuil",
+          "Zijn pakketjes",
+          "Zijn wasgoed"
+        ],
+        "correctAnswer": "Zijn grofvuil"
+      },
+      {
+        "question": "Waar woont de spreker?",
+        "options": [
+          "Op de Keizersgracht",
+          "Op de Prinsengracht",
+          "Op de Herengracht",
+          "Op de Singel"
+        ],
+        "correctAnswer": "Op de Prinsengracht"
+      },
+      {
+        "question": "Wat moet de spreker doen om zijn grofvuil te laten ophalen?",
+        "options": [
+          "Hij moet een afspraak maken bij de gemeente",
+          "Hij moet het grofvuil zelf wegbrengen",
+          "Hij moet het grofvuil in de vuilnisbak doen",
+          "Hij moet het grofvuil op straat zetten"
+        ],
+        "correctAnswer": "Hij moet een afspraak maken bij de gemeente"
+      },
+      {
+        "question": "Wat wil de spreker weten over het ophalen van grofvuil?",
+        "options": [
+          "De kleur van de vuilniswagen",
+          "De naam van de vuilnisman",
+          "De regels voor het ophalen van grofvuil",
+          "Het merk van de vuilniswagen"
+        ],
+        "correctAnswer": "De regels voor het ophalen van grofvuil"
+      },
+      {
+        "question": "Moet de spreker betalen voor het ophalen van grofvuil?",
+        "options": [
+          "Ja, altijd",
+          "Nee, nooit",
+          "De spreker weet het niet",
+          "Alleen op zondagen"
+        ],
+        "correctAnswer": "De spreker weet het niet"
+      }
+    ],
+    "audioFile": "audio/820f6a4a-5a33-4a2f-8b01-718d80d3bdd9.mp3"
+  },
+  {
+    "id": "9f51d2ca-0525-47a0-acc3-754a644db8f4",
+    "title": "Begrijpen van een bericht over ziekenhuisafspraak",
+    "transcript": "Hallo! Dit bericht is voor mevrouw Jansen. U heeft een afspraak in het ziekenhuis op maandag 15 maart. Uw afspraak is om 10 uur in de ochtend. U moet naar de afdeling cardiologie. Dit is op de tweede verdieping van het ziekenhuis. Neem de lift bij de hoofdingang. U heeft een afspraak met dokter van Dijk. Hij is een specialist in hartziekten. Vergeet niet uw zorgpas en identiteitsbewijs mee te nemen. Het is ook goed om een lijst met uw huidige medicijnen mee te nemen. Als u deze afspraak wilt verzetten, bel dan naar de afdeling. Het nummer is 020-1234567. Als u vragen heeft, kunt u ook dit nummer bellen. Dank u wel, en we zien u graag op 15 maart.",
+    "questions": [
+      {
+        "question": "Wanneer heeft mevrouw Jansen een afspraak?",
+        "options": [
+          "Op vrijdag 15 maart",
+          "Op maandag 25 maart",
+          "Op maandag 15 maart",
+          "Op zondag 15 maart"
+        ],
+        "correctAnswer": "Op maandag 15 maart"
+      },
+      {
+        "question": "Met wie heeft mevrouw Jansen een afspraak?",
+        "options": [
+          "Met dokter van Dijk",
+          "Met mevrouw Jansen",
+          "Met de cardioloog",
+          "Met de hoofdarts"
+        ],
+        "correctAnswer": "Met dokter van Dijk"
+      },
+      {
+        "question": "Wat moet mevrouw Jansen meenemen naar haar afspraak?",
+        "options": [
+          "Haar boodschappenlijst",
+          "Haar zorgpas en identiteitsbewijs",
+          "Een cadeau voor de dokter",
+          "Haar paspoort"
+        ],
+        "correctAnswer": "Haar zorgpas en identiteitsbewijs"
+      },
+      {
+        "question": "Waar is de afdeling cardiologie in het ziekenhuis?",
+        "options": [
+          "Op de eerste verdieping",
+          "Op de tweede verdieping",
+          "Op de derde verdieping",
+          "In de kelder"
+        ],
+        "correctAnswer": "Op de tweede verdieping"
+      },
+      {
+        "question": "Hoe kan mevrouw Jansen haar afspraak verzetten?",
+        "options": [
+          "Door een e-mail te sturen",
+          "Door te bellen naar de afdeling",
+          "Door naar het ziekenhuis te gaan",
+          "Door een brief te schrijven"
+        ],
+        "correctAnswer": "Door te bellen naar de afdeling"
+      }
+    ],
+    "audioFile": "audio/9f51d2ca-0525-47a0-acc3-754a644db8f4.mp3"
+  },
+  {
+    "id": "fd05079a-e707-48ea-a949-730499c7ca39",
+    "title": "Boodschappenlijst maken en inkopen doen voor een evenement",
+    "transcript": "Hallo allemaal! We gaan een feest organiseren en we hebben boodschappen nodig. Ik heb een boodschappenlijst gemaakt. Op de lijst staan brood, kaas, ham, eieren, groenten, fruit en drankjes. We hebben ook servetten, plastic bekers en bordjes nodig. We moeten ook wat zoetigheden kopen zoals koekjes en chocolade. En natuurlijk, we mogen de taart niet vergeten. We hebben ook vegetarische en veganistische opties nodig voor sommige gasten. Kunnen jullie helpen met het inkopen doen? We ontmoeten elkaar morgenmiddag bij de supermarkt. Het adres is Hoofdstraat 32. Vergeet je boodschappenlijst niet mee te nemen! En breng ook je eigen boodschappentas mee, om het milieu te beschermen. Na het winkelen gaan we alles naar de feestlocatie brengen. De locatie is op loopafstand van de supermarkt. We moeten alles klaarzetten voor het feest begint. Bedankt voor jullie hulp! Tot morgen!",
+    "questions": [
+      {
+        "question": "Wat moeten we organiseren?",
+        "options": [
+          "Een vergadering",
+          "Een diner",
+          "Een feest",
+          "Een concert"
+        ],
+        "correctAnswer": "Een feest"
+      },
+      {
+        "question": "Wat moeten we na het winkelen doen?",
+        "options": [
+          "We gaan naar huis",
+          "We gaan alles naar de feestlocatie brengen",
+          "We gaan eten",
+          "We gaan slapen"
+        ],
+        "correctAnswer": "We gaan alles naar de feestlocatie brengen"
+      },
+      {
+        "question": "Wat is het adres van de supermarkt?",
+        "options": [
+          "Hoofdstraat 32",
+          "Hoofdstraat 12",
+          "Hoofdstraat 22",
+          "Hoofdstraat 42"
+        ],
+        "correctAnswer": "Hoofdstraat 32"
+      },
+      {
+        "question": "Wat moeten we niet vergeten om mee te nemen naar de supermarkt?",
+        "options": [
+          "Je mobiele telefoon",
+          "Je boodschappenlijst",
+          "Je portemonnee",
+          "Je sleutels"
+        ],
+        "correctAnswer": "Je boodschappenlijst"
+      },
+      {
+        "question": "Wat moeten we ook kopen voor het feest?",
+        "options": [
+          "Boeken",
+          "Kleding",
+          "Servetten, plastic bekers en bordjes",
+          "Speelgoed"
+        ],
+        "correctAnswer": "Servetten, plastic bekers en bordjes"
+      }
+    ],
+    "audioFile": "audio/fd05079a-e707-48ea-a949-730499c7ca39.mp3"
+  },
+  {
+    "id": "e83d2bfa-a091-4d3d-a1c0-1ca58385dd67",
+    "title": "Contact opnemen met de woningcorporatie over een reparatie",
+    "transcript": "Hallo, ik ben Martijn en ik woon in een flatgebouw in Utrecht. Ik heb een probleem met de verwarming in mijn appartement. Het werkt niet goed. Het is erg koud en ik kan het niet warmer maken. Ik heb besloten om de woningcorporatie te bellen voor hulp. Ik heb het nummer van de woningcorporatie in mijn telefoon. Ik bel ze en wacht tot iemand opneemt. \"Hallo, dit is Martijn. Ik woon in uw flatgebouw op de Hoogstraat. Mijn verwarming werkt niet goed. Het is erg koud in mijn appartement. Kunt u iemand sturen om het te repareren?\" Ze vragen me om mijn adres en telefoonnummer, zodat de reparateur me kan bellen als hij klaar is om te komen. Ze zeggen dat de reparateur morgenochtend komt. Ik bedank ze voor hun hulp en hang op. Morgen zal het hopelijk warmer zijn in mijn appartement.",
+    "questions": [
+      {
+        "question": "Waar woont Martijn?",
+        "options": [
+          "In een huis in Utrecht",
+          "In een flatgebouw in Amsterdam",
+          "In een flatgebouw in Utrecht",
+          "In een huis in Amsterdam"
+        ],
+        "correctAnswer": "In een flatgebouw in Utrecht"
+      },
+      {
+        "question": "Wat is het probleem van Martijn?",
+        "options": [
+          "Zijn televisie werkt niet",
+          "Zijn verwarming werkt niet goed",
+          "Zijn koelkast werkt niet",
+          "Zijn wasmachine werkt niet goed"
+        ],
+        "correctAnswer": "Zijn verwarming werkt niet goed"
+      },
+      {
+        "question": "Wie belt Martijn voor hulp?",
+        "options": [
+          "De politie",
+          "De brandweer",
+          "De woningcorporatie",
+          "Zijn vrienden"
+        ],
+        "correctAnswer": "De woningcorporatie"
+      },
+      {
+        "question": "Wanneer komt de reparateur?",
+        "options": [
+          "Vanmiddag",
+          "Morgenmiddag",
+          "Morgenochtend",
+          "Volgende week"
+        ],
+        "correctAnswer": "Morgenochtend"
+      },
+      {
+        "question": "Wat is het adres van Martijn?",
+        "options": [
+          "Hoogstraat",
+          "Laagstraat",
+          "Middenstraat",
+          "Breedstraat"
+        ],
+        "correctAnswer": "Hoogstraat"
+      }
+    ],
+    "audioFile": "audio/e83d2bfa-a091-4d3d-a1c0-1ca58385dd67.mp3"
+  },
+  {
+    "id": "6e26514b-1484-4609-bca1-012b7d3baf94",
+    "title": "De regels lezen voor het huren van een buurtcentrum",
+    "transcript": "Hallo iedereen! Wij hebben een buurtcentrum dat mensen kunnen huren voor verschillende evenementen. Voordat je het buurtcentrum huurt, zijn er een paar regels die je moet kennen. Eerst, het centrum mag alleen gehuurd worden tot 22.00 uur. Na deze tijd moeten alle activiteiten stoppen. Ten tweede, je moet zelf zorgen voor de schoonmaak na je evenement. Dat betekent dat je alle afval moet weggooien en de ruimte netjes moet achterlaten. Ten derde, je mag geen alcohol verkopen of serveren zonder de juiste vergunning. Tot slot, het is niet toegestaan om luide muziek te spelen zonder toestemming van de gemeente. Als je deze regels niet volgt, dan mag je het buurtcentrum niet meer huren in de toekomst. Als je geïnteresseerd bent om het buurtcentrum te huren, bel ons dan op het nummer 123456789. Dank je wel!",
+    "questions": [
+      {
+        "question": "Tot hoe laat mag het buurtcentrum gehuurd worden?",
+        "options": [
+          "Tot 20.00 uur",
+          "Tot 22.00 uur",
+          "Tot 24.00 uur",
+          "Er is geen tijdslimiet"
+        ],
+        "correctAnswer": "Tot 22.00 uur"
+      },
+      {
+        "question": "Wie is verantwoordelijk voor de schoonmaak na het evenement?",
+        "options": [
+          "Het buurtcentrum",
+          "Een schoonmaakbedrijf",
+          "De persoon die het centrum heeft gehuurd",
+          "De gemeente"
+        ],
+        "correctAnswer": "De persoon die het centrum heeft gehuurd"
+      },
+      {
+        "question": "Mag je alcohol verkopen of serveren in het buurtcentrum zonder vergunning?",
+        "options": [
+          "Ja, dat is toegestaan",
+          "Nee, dat is niet toegestaan",
+          "Alleen als je toestemming hebt van de gemeente",
+          "Het is niet duidelijk uit de tekst"
+        ],
+        "correctAnswer": "Nee, dat is niet toegestaan"
+      },
+      {
+        "question": "Wat gebeurt er als je de regels van het buurtcentrum niet volgt?",
+        "options": [
+          "Je krijgt een boete",
+          "Je mag het buurtcentrum niet meer huren in de toekomst",
+          "Je moet voor de schoonmaak betalen",
+          "Je moet het buurtcentrum vaker huren"
+        ],
+        "correctAnswer": "Je mag het buurtcentrum niet meer huren in de toekomst"
+      },
+      {
+        "question": "Hoe kan je het buurtcentrum huren?",
+        "options": [
+          "Door een e-mail te sturen",
+          "Door te bellen naar het nummer 123456789",
+          "Door een formulier in te vullen op de website",
+          "Door persoonlijk naar het centrum te gaan"
+        ],
+        "correctAnswer": "Door te bellen naar het nummer 123456789"
+      }
+    ],
+    "audioFile": "audio/6e26514b-1484-4609-bca1-012b7d3baf94.mp3"
+  },
+  {
+    "id": "197f7052-156a-49f3-bb16-086ee026bcc8",
+    "title": "Deelnemen aan een buurtactiviteit of evenement",
+    "transcript": "Hallo, ben je nieuw in de buurt? Ik wil je uitnodigen voor onze jaarlijkse buurtbarbecue volgende week zaterdag. We beginnen om vijf uur 's middags in het grote park aan het einde van de straat. Iedereen brengt iets te eten of te drinken mee. Het is een leuke manier om de buren te leren kennen en om nieuwe vrienden te maken. Je kunt ook je familie meenemen. Er is een speeltuin voor de kinderen en we organiseren ook wat spelletjes. Als je wilt, kun je ook helpen met de organisatie. We hebben nog mensen nodig voor de versiering en om te helpen met de barbecue. Als je geïnteresseerd bent, kun je me bellen of een bericht sturen. Mijn telefoonnummer is 0612345678. Ik hoop je daar te zien!",
+    "questions": [
+      {
+        "question": "Waar vindt de jaarlijkse buurtbarbecue plaats?",
+        "options": [
+          "In het kleine park",
+          "In het grote park aan het einde van de straat",
+          "Thuis",
+          "In de tuin"
+        ],
+        "correctAnswer": "In het grote park aan het einde van de straat"
+      },
+      {
+        "question": "Wat is de bedoeling dat iedereen meebrengt naar de barbecue?",
+        "options": [
+          "Iedereen brengt een cadeau mee",
+          "Iedereen brengt iets te eten of te drinken mee",
+          "Iedereen brengt zijn eigen stoel mee",
+          "Iedereen brengt een huisdier mee"
+        ],
+        "correctAnswer": "Iedereen brengt iets te eten of te drinken mee"
+      },
+      {
+        "question": "Hoe kan je contact opnemen als je wilt helpen met de organisatie?",
+        "options": [
+          "Je kunt een e-mail sturen",
+          "Je kunt een brief schrijven",
+          "Je kunt bellen of een bericht sturen",
+          "Je kunt een fax sturen"
+        ],
+        "correctAnswer": "Je kunt bellen of een bericht sturen"
+      },
+      {
+        "question": "Wat is het telefoonnummer waarmee je contact kunt opnemen?",
+        "options": [
+          "0612345678",
+          "0712345678",
+          "0812345678",
+          "0912345678"
+        ],
+        "correctAnswer": "0612345678"
+      },
+      {
+        "question": "Wanneer begint de buurtbarbecue?",
+        "options": [
+          "Om vier uur 's middags",
+          "Om vijf uur 's middags",
+          "Om zes uur 's avonds",
+          "Om zeven uur 's avonds"
+        ],
+        "correctAnswer": "Om vijf uur 's middags"
+      }
+    ],
+    "audioFile": "audio/197f7052-156a-49f3-bb16-086ee026bcc8.mp3"
+  },
+  {
+    "id": "d545b798-47a6-4007-bfc2-60568fd29d4d",
+    "title": "Een afspraak maken bij de huisarts",
+    "transcript": "Hallo, mijn naam is Jeroen. Ik voel me een beetje ziek en ik wil graag een afspraak maken met de huisarts. Mijn keel doet pijn en ik heb ook koorts. Het begon twee dagen geleden. Ik denk dat het misschien griep is, maar ik weet het niet zeker. Daarom wil ik graag naar de huisarts gaan. Als het mogelijk is, wil ik graag morgenochtend een afspraak maken. Is dat mogelijk? Ik kan tussen acht uur en twaalf uur komen. Als er geen plek is, kan ik ook in de middag komen. Ik weet dat de huisartsenpraktijk om vijf uur sluit. Ik hoop dat er een plek voor mij is. Naast de afspraak met de huisarts, wil ik ook vragen of ik medicijnen kan krijgen. Ik heb veel hoofdpijn en paracetamol werkt niet. Misschien kan de huisarts iets sterkers voorschrijven. Bedankt voor uw hulp. Ik hoop dat ik me snel beter voel. Tot morgen bij de huisartsenpraktijk.",
+    "questions": [
+      {
+        "question": "Hoe voelt Jeroen zich?",
+        "options": [
+          "Hij voelt zich goed.",
+          "Hij voelt zich een beetje ziek.",
+          "Hij voelt zich erg ziek.",
+          "Hij voelt zich verdrietig."
+        ],
+        "correctAnswer": "Hij voelt zich een beetje ziek."
+      },
+      {
+        "question": "Wat denkt Jeroen dat hij heeft?",
+        "options": [
+          "Hij denkt dat hij een verkoudheid heeft.",
+          "Hij denkt dat hij griep heeft.",
+          "Hij denkt dat hij een allergie heeft.",
+          "Hij weet niet wat hij heeft."
+        ],
+        "correctAnswer": "Hij denkt dat hij griep heeft."
+      },
+      {
+        "question": "Wanneer wil Jeroen naar de huisarts gaan?",
+        "options": [
+          "Hij wil vandaag naar de huisarts gaan.",
+          "Hij wil morgenochtend naar de huisarts gaan.",
+          "Hij wil morgenmiddag naar de huisarts gaan.",
+          "Hij wil overmorgen naar de huisarts gaan."
+        ],
+        "correctAnswer": "Hij wil morgenochtend naar de huisarts gaan."
+      },
+      {
+        "question": "Wat wil Jeroen naast de afspraak met de huisarts?",
+        "options": [
+          "Hij wil een recept voor medicijnen.",
+          "Hij wil een verwijzing naar een specialist.",
+          "Hij wil een tweede afspraak maken.",
+          "Hij wil een afspraak maken voor een vriend."
+        ],
+        "correctAnswer": "Hij wil een recept voor medicijnen."
+      },
+      {
+        "question": "Hoe lang is Jeroen al ziek?",
+        "options": [
+          "Hij is al een week ziek.",
+          "Hij is al drie dagen ziek.",
+          "Hij is al twee dagen ziek.",
+          "Hij is al een maand ziek."
+        ],
+        "correctAnswer": "Hij is al twee dagen ziek."
+      }
+    ],
+    "audioFile": "audio/d545b798-47a6-4007-bfc2-60568fd29d4d.mp3"
+  },
+  {
+    "id": "04045ecf-e167-461d-b0b3-1bc3cfec30fe",
+    "title": "Een afspraak maken voor een tandartscontrole",
+    "transcript": "Hallo, ik ben Peter en ik wil graag een afspraak maken voor een controle bij de tandarts. Het is al een tijdje geleden dat ik voor het laatst ben geweest. Ik heb geen pijn in mijn tanden, maar ik wil gewoon zeker weten dat alles goed is. Ik ben doorgaans beschikbaar op dinsdagen en donderdagen na 17.00 uur, omdat ik overdag werk. Is er een mogelijkheid om een afspraak te maken op een van deze dagen, misschien volgende week? Ook wil ik weten of ik iets speciaals moet doen voordat ik kom. Moet ik bijvoorbeeld mijn tanden poetsen of niet eten voordat ik kom? En tot slot, ik heb een nieuwe zorgverzekering. Moet ik mijn verzekeringskaart meenemen of kunnen jullie die informatie van tevoren opzoeken? Ik kijk uit naar uw antwoord. Bedankt!",
+    "questions": [
+      {
+        "question": "Wat wil Peter doen?",
+        "options": [
+          "Hij wil een afspraak maken bij de kapper.",
+          "Hij wil een afspraak maken voor een controle bij de tandarts.",
+          "Hij wil een afspraak annuleren bij de tandarts.",
+          "Hij wil een nieuwe zorgverzekering afsluiten."
+        ],
+        "correctAnswer": "Hij wil een afspraak maken voor een controle bij de tandarts."
+      },
+      {
+        "question": "Wanneer is Peter doorgaans beschikbaar voor een afspraak?",
+        "options": [
+          "Op maandagen en woensdagen voor 17.00 uur.",
+          "Op dinsdagen en donderdagen na 17.00 uur.",
+          "Op zaterdagen en zondagen de hele dag.",
+          "Elke dag na 20.00 uur."
+        ],
+        "correctAnswer": "Op dinsdagen en donderdagen na 17.00 uur."
+      },
+      {
+        "question": "Wat wil Peter weten over zijn bezoek aan de tandarts?",
+        "options": [
+          "Of hij zijn tanden moet poetsen voordat hij komt.",
+          "Of hij niet moet eten voordat hij komt.",
+          "Of hij zijn verzekeringskaart moet meenemen.",
+          "Alle bovenstaande."
+        ],
+        "correctAnswer": "Alle bovenstaande."
+      },
+      {
+        "question": "Wat is er veranderd in Peter's situatie?",
+        "options": [
+          "Hij heeft een nieuwe baan.",
+          "Hij is verhuisd.",
+          "Hij heeft een nieuwe zorgverzekering.",
+          "Hij is van tandarts veranderd."
+        ],
+        "correctAnswer": "Hij heeft een nieuwe zorgverzekering."
+      },
+      {
+        "question": "Heeft Peter pijn in zijn tanden?",
+        "options": [
+          "Ja, hij heeft pijn in zijn tanden.",
+          "Nee, hij heeft geen pijn in zijn tanden.",
+          "Het is niet duidelijk of hij pijn heeft in zijn tanden.",
+          "Peter heeft het niet over pijn in zijn tanden."
+        ],
+        "correctAnswer": "Nee, hij heeft geen pijn in zijn tanden."
+      }
+    ],
+    "audioFile": "audio/04045ecf-e167-461d-b0b3-1bc3cfec30fe.mp3"
+  },
+  {
+    "id": "4d482088-1a22-439a-92ce-47980e251236",
+    "title": "Een brief lezen over een bewonersvergadering",
+    "transcript": "Hallo allemaal, ik wil jullie even informeren over de bewonersvergadering die volgende week dinsdag plaatsvindt. We houden de vergadering in het buurthuis, en we beginnen om 19.00 uur. We gaan het hebben over een aantal belangrijke zaken. Ten eerste, de renovatie van het speeltuintje. De gemeente heeft geld beschikbaar gesteld en we mogen zelf beslissen hoe we het gaan inrichten. Ook gaan we praten over het onderhoud van de gemeenschappelijke tuin. We zoeken vrijwilligers die willen helpen met het tuinonderhoud. Tot slot willen we het hebben over de veiligheid in de buurt. Er zijn de laatste tijd enkele inbraken geweest. We willen samen bekijken hoe we de veiligheid kunnen verbeteren. Heb je ideeën of suggesties? Kom dan naar de vergadering. We hopen jullie allemaal te zien.",
+    "questions": [
+      {
+        "question": "Waar vindt de bewonersvergadering plaats?",
+        "options": [
+          "In het speeltuintje",
+          "In het gemeentehuis",
+          "In het buurthuis",
+          "In de gemeenschappelijke tuin"
+        ],
+        "correctAnswer": "In het buurthuis"
+      },
+      {
+        "question": "Welke onderwerpen zullen tijdens de vergadering worden besproken?",
+        "options": [
+          "De renovatie van het speeltuintje, het onderhoud van de gemeenschappelijke tuin en de veiligheid in de buurt",
+          "De openingstijden van het buurthuis en de veiligheid in het speeltuintje",
+          "Het schoonmaken van de straten en het onderhoud van het speeltuintje",
+          "De openingstijden van de speeltuin en het onderhoud van de gemeenschappelijke tuin"
+        ],
+        "correctAnswer": "De renovatie van het speeltuintje, het onderhoud van de gemeenschappelijke tuin en de veiligheid in de buurt"
+      },
+      {
+        "question": "Waarom worden vrijwilligers gezocht?",
+        "options": [
+          "Om het buurthuis te onderhouden",
+          "Om het speeltuintje te renoveren",
+          "Om te helpen met het tuinonderhoud",
+          "Om de veiligheid in de buurt te verbeteren"
+        ],
+        "correctAnswer": "Om te helpen met het tuinonderhoud"
+      },
+      {
+        "question": "Wat is het probleem met de veiligheid in de buurt?",
+        "options": [
+          "Er zijn te veel auto's",
+          "Er is te veel lawaai",
+          "Er zijn de laatste tijd enkele inbraken geweest",
+          "Er zijn te veel mensen"
+        ],
+        "correctAnswer": "Er zijn de laatste tijd enkele inbraken geweest"
+      },
+      {
+        "question": "Wat gaat er gebeuren met het speeltuintje?",
+        "options": [
+          "Het wordt gesloten",
+          "Het wordt gerenoveerd",
+          "Het wordt verkocht",
+          "Het wordt verplaatst"
+        ],
+        "correctAnswer": "Het wordt gerenoveerd"
+      }
+    ],
+    "audioFile": "audio/4d482088-1a22-439a-92ce-47980e251236.mp3"
+  },
+  {
+    "id": "b2d5dbb7-1622-4c6f-9dfe-98c0f39b1334",
+    "title": "Een brief lezen van de gemeente over onderhoudswerk",
+    "transcript": "Hallo allemaal! Ik heb een brief van de gemeente ontvangen over onderhoudswerkzaamheden in onze straat. De brief zegt dat het werk volgende week maandag begint en ongeveer twee weken zal duren. Ze gaan de straat opnieuw bestraten en nieuwe straatverlichting installeren. Dat betekent dat we tijdens deze periode geen auto's in de straat kunnen parkeren. De gemeente raadt ons aan om onze auto's in de nabijgelegen parkeergarage te parkeren. Ze zeggen dat het werk elke dag om acht uur 's ochtends begint en om vier uur 's middags eindigt. De gemeente heeft ook gezegd dat ze hun best zullen doen om het lawaai tot een minimum te beperken, maar ze verontschuldigen zich alvast voor eventuele overlast. Als je vragen hebt over het onderhoudswerk, kun je de gemeente bellen op hun speciale informatienummer.",
+    "questions": [
+      {
+        "question": "Wat gaat de gemeente doen?",
+        "options": [
+          "Ze gaan een nieuw park bouwen",
+          "Ze gaan de straat opnieuw bestraten en nieuwe straatverlichting installeren",
+          "Ze gaan het stadhuis renoveren",
+          "Ze gaan een nieuwe bibliotheek openen"
+        ],
+        "correctAnswer": "Ze gaan de straat opnieuw bestraten en nieuwe straatverlichting installeren"
+      },
+      {
+        "question": "Wanneer begint het werk?",
+        "options": [
+          "Volgende week dinsdag",
+          "Volgende week zaterdag",
+          "Volgende week maandag",
+          "Volgende week donderdag"
+        ],
+        "correctAnswer": "Volgende week maandag"
+      },
+      {
+        "question": "Waar raadt de gemeente aan om auto's te parkeren tijdens de werkzaamheden?",
+        "options": [
+          "Op de stoep",
+          "In de nabijgelegen parkeergarage",
+          "In de achtertuin",
+          "Bij het stadhuis"
+        ],
+        "correctAnswer": "In de nabijgelegen parkeergarage"
+      },
+      {
+        "question": "Wanneer eindigt het werk elke dag?",
+        "options": [
+          "Om vijf uur 's middags",
+          "Om zes uur 's middags",
+          "Om vier uur 's middags",
+          "Om drie uur 's middags"
+        ],
+        "correctAnswer": "Om vier uur 's middags"
+      },
+      {
+        "question": "Wat belooft de gemeente te doen betreft het lawaai?",
+        "options": [
+          "Ze zullen het lawaai helemaal stoppen",
+          "Ze zullen het lawaai verhogen",
+          "Ze zullen hun best doen om het lawaai tot een minimum te beperken",
+          "Ze zullen het lawaai negeren"
+        ],
+        "correctAnswer": "Ze zullen hun best doen om het lawaai tot een minimum te beperken"
+      }
+    ],
+    "audioFile": "audio/b2d5dbb7-1622-4c6f-9dfe-98c0f39b1334.mp3"
+  },
+  {
+    "id": "3ec91fcc-4535-4949-90e4-eaeed80409d8",
+    "title": "Een buurtapp downloaden en gebruiken",
+    "transcript": "Hallo iedereen! Vandaag gaan we het hebben over een nieuwe manier om in contact te blijven met je buurt. Er is een app genaamd 'Buurtapp'. Met deze app kun je gemakkelijk informatie uitwisselen met je buren. Je kunt bijvoorbeeld een bericht sturen als je een pakketje verwacht maar je bent niet thuis. Of als je hulp nodig hebt bij het tuinieren. Om de app te downloaden, ga je naar de app store op je telefoon. Typ 'Buurtapp' in de zoekbalk en klik op downloaden. Het is gratis. Als de app is gedownload, moet je je aanmelden. Je hebt een e-mailadres nodig en je moet een wachtwoord kiezen. Daarna vul je je adres in en je bent klaar om te beginnen. Het is heel makkelijk om een bericht te sturen in de app. Klik op het icoontje met de pen om een nieuw bericht te beginnen. Typ je bericht en klik op verzenden. Iedereen in je buurt die de app heeft, kan nu je bericht zien. Het is een handige manier om in contact te blijven met je buren. Probeer het maar eens!",
+    "questions": [
+      {
+        "question": "Waar gaat de 'Buurtapp' over?",
+        "options": [
+          "Het is een spel voor kinderen.",
+          "Het is een manier om in contact te blijven met je buren.",
+          "Het is een app voor het bestellen van eten.",
+          "Het is een app voor het vinden van een baan."
+        ],
+        "correctAnswer": "Het is een manier om in contact te blijven met je buren."
+      },
+      {
+        "question": "Wat moet je doen om een bericht te sturen in de 'Buurtapp'?",
+        "options": [
+          "Bel de klantenservice.",
+          "Stuur een e-mail.",
+          "Klik op het icoontje met de pen, typ het bericht en klik op verzenden.",
+          "Schrijf een brief."
+        ],
+        "correctAnswer": "Klik op het icoontje met de pen, typ het bericht en klik op verzenden."
+      },
+      {
+        "question": "Hoeveel kost het om de 'Buurtapp' te downloaden?",
+        "options": [
+          "Het kost 5 euro.",
+          "Het is gratis.",
+          "Het kost 1 euro.",
+          "Het kost 10 euro."
+        ],
+        "correctAnswer": "Het is gratis."
+      },
+      {
+        "question": "Wat heb je nodig om je aan te melden bij de 'Buurtapp'?",
+        "options": [
+          "Je hebt een rijbewijs nodig.",
+          "Je hebt een e-mailadres en een wachtwoord nodig.",
+          "Je hebt een bankrekening nodig.",
+          "Je hebt een paspoort nodig."
+        ],
+        "correctAnswer": "Je hebt een e-mailadres en een wachtwoord nodig."
+      },
+      {
+        "question": "Waar kun je de 'Buurtapp' downloaden?",
+        "options": [
+          "In de bibliotheek.",
+          "In de supermarkt.",
+          "In de app store op je telefoon.",
+          "Op de website van de gemeente."
+        ],
+        "correctAnswer": "In de app store op je telefoon."
+      }
+    ],
+    "audioFile": "audio/3ec91fcc-4535-4949-90e4-eaeed80409d8.mp3"
+  },
+  {
+    "id": "result_single",
+    "title": "Een buurtapp downloaden en gebruiken",
+    "transcript": "Hallo iedereen! Vandaag gaan we het hebben over een nieuwe manier om in contact te blijven met je buurt. Er is een app genaamd 'Buurtapp'. Met deze app kun je gemakkelijk informatie uitwisselen met je buren. Je kunt bijvoorbeeld een bericht sturen als je een pakketje verwacht maar je bent niet thuis. Of als je hulp nodig hebt bij het tuinieren. Om de app te downloaden, ga je naar de app store op je telefoon. Typ 'Buurtapp' in de zoekbalk en klik op downloaden. Het is gratis. Als de app is gedownload, moet je je aanmelden. Je hebt een e-mailadres nodig en je moet een wachtwoord kiezen. Daarna vul je je adres in en je bent klaar om te beginnen. Het is heel makkelijk om een bericht te sturen in de app. Klik op het icoontje met de pen om een nieuw bericht te beginnen. Typ je bericht en klik op verzenden. Iedereen in je buurt die de app heeft, kan nu je bericht zien. Het is een handige manier om in contact te blijven met je buren. Probeer het maar eens!",
+    "questions": [
+      {
+        "question": "Waar gaat de 'Buurtapp' over?",
+        "options": [
+          "Het is een spel voor kinderen.",
+          "Het is een manier om in contact te blijven met je buren.",
+          "Het is een app voor het bestellen van eten.",
+          "Het is een app voor het vinden van een baan."
+        ],
+        "correctAnswer": "Het is een manier om in contact te blijven met je buren."
+      },
+      {
+        "question": "Wat moet je doen om een bericht te sturen in de 'Buurtapp'?",
+        "options": [
+          "Bel de klantenservice.",
+          "Stuur een e-mail.",
+          "Klik op het icoontje met de pen, typ het bericht en klik op verzenden.",
+          "Schrijf een brief."
+        ],
+        "correctAnswer": "Klik op het icoontje met de pen, typ het bericht en klik op verzenden."
+      },
+      {
+        "question": "Hoeveel kost het om de 'Buurtapp' te downloaden?",
+        "options": [
+          "Het kost 5 euro.",
+          "Het is gratis.",
+          "Het kost 1 euro.",
+          "Het kost 10 euro."
+        ],
+        "correctAnswer": "Het is gratis."
+      },
+      {
+        "question": "Wat heb je nodig om je aan te melden bij de 'Buurtapp'?",
+        "options": [
+          "Je hebt een rijbewijs nodig.",
+          "Je hebt een e-mailadres en een wachtwoord nodig.",
+          "Je hebt een bankrekening nodig.",
+          "Je hebt een paspoort nodig."
+        ],
+        "correctAnswer": "Je hebt een e-mailadres en een wachtwoord nodig."
+      },
+      {
+        "question": "Waar kun je de 'Buurtapp' downloaden?",
+        "options": [
+          "In de bibliotheek.",
+          "In de supermarkt.",
+          "In de app store op je telefoon.",
+          "Op de website van de gemeente."
+        ],
+        "correctAnswer": "In de app store op je telefoon."
+      }
+    ],
+    "audioFile": "audio/result_single.mp3"
+  },
+  {
+    "id": "e7dfcca9-d369-44d6-be21-ad50fd70b5c0",
+    "title": "Een cursus of training volgen op het werk",
+    "transcript": "Hallo allemaal! Welkom bij de training voor nieuwe medewerkers. Deze training is bedoeld om jullie meer te leren over ons bedrijf en om jullie voor te bereiden op jullie nieuwe baan. We zullen beginnen met een rondleiding door het kantoor. Daarna volgen er presentaties over de geschiedenis van ons bedrijf en over de verschillende afdelingen. Tijdens de lunch zullen jullie de kans krijgen om elkaar beter te leren kennen. Na de lunch gaan we verder met een workshop over effectieve communicatie op de werkvloer. We zullen de dag afsluiten met een vraag-en-antwoord sessie. Daar kunnen jullie alles vragen wat jullie willen weten. De training begint om 9 uur 's ochtends en eindigt om 5 uur 's middags. Vergeet niet om een notitieboek en pen mee te nemen voor aantekeningen. We kijken ernaar uit om jullie morgen te zien. Tot dan!",
+    "questions": [
+      {
+        "question": "Wat is het doel van de training voor nieuwe medewerkers?",
+        "options": [
+          "Om te leren over de geschiedenis van het bedrijf",
+          "Om elkaar beter te leren kennen",
+          "Om te leren over effectieve communicatie",
+          "Om meer te leren over het bedrijf en voor te bereiden op de nieuwe baan"
+        ],
+        "correctAnswer": "Om meer te leren over het bedrijf en voor te bereiden op de nieuwe baan"
+      },
+      {
+        "question": "Wat gebeurt er na de lunch tijdens de training?",
+        "options": [
+          "Er zal een vraag-en-antwoord sessie zijn",
+          "Er zal een rondleiding door het kantoor zijn",
+          "Er zal een workshop over effectieve communicatie op de werkvloer zijn",
+          "Er zal een presentatie over de geschiedenis van het bedrijf zijn"
+        ],
+        "correctAnswer": "Er zal een workshop over effectieve communicatie op de werkvloer zijn"
+      },
+      {
+        "question": "Hoe laat begint en eindigt de training?",
+        "options": [
+          "Begint om 8 uur 's ochtends en eindigt om 4 uur 's middags",
+          "Begint om 9 uur 's ochtends en eindigt om 5 uur 's middags",
+          "Begint om 10 uur 's ochtends en eindigt om 6 uur 's middags",
+          "Begint om 11 uur 's ochtends en eindigt om 7 uur 's middags"
+        ],
+        "correctAnswer": "Begint om 9 uur 's ochtends en eindigt om 5 uur 's middags"
+      },
+      {
+        "question": "Wat moeten de nieuwe medewerkers meenemen naar de training?",
+        "options": [
+          "Een laptop",
+          "Een notitieboek en pen",
+          "Hun lunch",
+          "Hun identificatie"
+        ],
+        "correctAnswer": "Een notitieboek en pen"
+      }
+    ],
+    "audioFile": "audio/e7dfcca9-d369-44d6-be21-ad50fd70b5c0.mp3"
+  },
+  {
+    "id": "8e3b5ed6-3774-40e9-9f71-c51b0313d71a",
+    "title": "Een e-mail krijgen van de gemeente over een nieuwe dienst",
+    "transcript": "Hallo! Je hebt een e-mail ontvangen van de gemeente. Er is een nieuwe dienst beschikbaar voor alle inwoners. Deze dienst heet \"Buurthulp\". Met Buurthulp, kun je hulp vragen aan je buren voor kleine klusjes. Of je kunt zelf hulp bieden aan anderen in je buurt. Het kan gaan om kleine klusjes zoals de hond uitlaten, boodschappen doen, of zelfs het gras maaien. Om van deze dienst gebruik te maken, moet je je aanmelden op de website van de gemeente. Na je aanmelding krijg je een bevestigingsmail. Dan kun je beginnen met het posten of reageren op klusjes. De Buurthulp is een geweldige manier om elkaar te helpen en de gemeenschap sterker te maken. Wil je meer informatie? Ga dan naar de website van de gemeente. Daar vind je ook een handleiding om je te helpen bij het aanmelden. Probeer het eens, en maak je buurt een betere plek om te wonen!",
+    "questions": [
+      {
+        "question": "Wat is de nieuwe dienst die door de gemeente wordt aangeboden?",
+        "options": [
+          "Een nieuwe school",
+          "Buurthulp",
+          "Een nieuwe supermarkt",
+          "Een nieuw ziekenhuis"
+        ],
+        "correctAnswer": "Buurthulp"
+      },
+      {
+        "question": "Hoe kun je deelnemen aan de dienst Buurthulp?",
+        "options": [
+          "Door een brief te sturen naar de gemeente",
+          "Door je aan te melden op de website van de gemeente",
+          "Door te bellen naar de gemeente",
+          "Door persoonlijk naar het gemeentehuis te gaan"
+        ],
+        "correctAnswer": "Door je aan te melden op de website van de gemeente"
+      },
+      {
+        "question": "Wat kan je doen met de dienst Buurthulp?",
+        "options": [
+          "Je kan hulp vragen aan je buren voor kleine klusjes of zelf hulp bieden",
+          "Je kan gratis boodschappen doen bij de supermarkt",
+          "Je kan gratis naar de sportschool gaan",
+          "Je kan gratis eten krijgen bij het gemeentehuis"
+        ],
+        "correctAnswer": "Je kan hulp vragen aan je buren voor kleine klusjes of zelf hulp bieden"
+      },
+      {
+        "question": "Wat gebeurt er nadat je je hebt aangemeld voor de dienst Buurthulp?",
+        "options": [
+          "Je krijgt een welkomstpakket thuisgestuurd",
+          "Je moet naar het gemeentehuis gaan voor een interview",
+          "Je krijgt een bevestigingsmail",
+          "Je moet een cursus volgen"
+        ],
+        "correctAnswer": "Je krijgt een bevestigingsmail"
+      },
+      {
+        "question": "Waar kan je meer informatie vinden over de dienst Buurthulp?",
+        "options": [
+          "In de krant",
+          "Op de website van de gemeente",
+          "Op de radio",
+          "Op de televisie"
+        ],
+        "correctAnswer": "Op de website van de gemeente"
+      }
+    ],
+    "audioFile": "audio/8e3b5ed6-3774-40e9-9f71-c51b0313d71a.mp3"
+  },
+  {
+    "id": "a772c493-24d0-44fb-9725-e18d2e10061e",
+    "title": "Een e-mail ontvangen over stemlocatie voor verkiezingen",
+    "transcript": "Hallo, goede middag! Ik wil jullie informeren over een e-mail die jullie mogelijk hebben ontvangen. De e-mail gaat over de komende verkiezingen. In deze e-mail vind je informatie over waar je kunt stemmen. Meestal stem je in een openbaar gebouw, zoals een school of een bibliotheek, in jouw buurt. Het is belangrijk om je stempas mee te nemen. Deze heb je per post ontvangen. Vergeet ook niet je identiteitsbewijs mee te nemen. Dit kan je paspoort, identiteitskaart of rijbewijs zijn. Als je de e-mail nog niet hebt bekeken, doe dat dan na deze les. Het is belangrijk om te weten waar je stemlocatie is. De verkiezingen vinden plaats op 17 maart. Iedereen mag stemmen vanaf 18 jaar. Wees er zeker van dat je stemt, want elke stem telt. Heb je vragen over de verkiezingen of over de e-mail, stel ze dan gerust.",
+    "questions": [
+      {
+        "question": "Wat is het onderwerp van de e-mail die je mogelijk hebt ontvangen?",
+        "options": [
+          "Over de nieuwe bibliotheek in de stad",
+          "Over de komende verkiezingen",
+          "Over een schoolfeest",
+          "Over een verloren identiteitsbewijs"
+        ],
+        "correctAnswer": "Over de komende verkiezingen"
+      },
+      {
+        "question": "Waar kun je meestal stemmen?",
+        "options": [
+          "In een café",
+          "In een privéwoning",
+          "In een openbaar gebouw",
+          "In een winkelcentrum"
+        ],
+        "correctAnswer": "In een openbaar gebouw"
+      },
+      {
+        "question": "Welke documenten moet je meenemen om te stemmen?",
+        "options": [
+          "Je stempas en je identiteitsbewijs",
+          "Je stempas en je bankpas",
+          "Je paspoort en je bankafschrift",
+          "Je rijbewijs en je verzekeringskaart"
+        ],
+        "correctAnswer": "Je stempas en je identiteitsbewijs"
+      },
+      {
+        "question": "Wanneer vinden de verkiezingen plaats?",
+        "options": [
+          "Op 17 februari",
+          "Op 17 maart",
+          "Op 17 april",
+          "Op 17 mei"
+        ],
+        "correctAnswer": "Op 17 maart"
+      },
+      {
+        "question": "Wie mag stemmen?",
+        "options": [
+          "Iedereen vanaf 16 jaar",
+          "Iedereen vanaf 18 jaar",
+          "Alleen Nederlandse staatsburgers",
+          "Alleen mensen met een rijbewijs"
+        ],
+        "correctAnswer": "Iedereen vanaf 18 jaar"
+      }
+    ],
+    "audioFile": "audio/a772c493-24d0-44fb-9725-e18d2e10061e.mp3"
+  },
+  {
+    "id": "a32ed244-9ca1-4f3c-b01e-a94ca1b0eab0",
+    "title": "Een inschrijving regelen voor een opleiding",
+    "transcript": "Hallo allemaal! Vandaag gaan we praten over het regelen van een inschrijving voor een opleiding. Allereerst, heb je al besloten welke opleiding je wilt volgen? Goed, laten we zeggen dat je hebt besloten om Bedrijfskunde te studeren. Hoe ga je je dan inschrijven? Eerst moet je naar de website van de universiteit of hogeschool waar je wilt studeren. Daar vind je een knop die zegt 'Aanmelden' of 'Inschrijven'. Klik daarop. Je wordt dan gevraagd om je persoonlijke gegevens in te vullen. Dat zijn je naam, adres, geboortedatum en e-mail. Daarna moet je bewijsstukken uploaden. Dat kunnen je diploma's zijn, of certificaten van eerdere opleidingen. Ten slotte betaal je het inschrijfgeld. Dit is meestal rond de 50 euro. Nu ben je ingeschreven! Maar let op: je moet je inschrijving bevestigen. Dat doe je door op de link in de bevestigingsmail te klikken die je krijgt. Dus vergeet niet je e-mail te checken!",
+    "questions": [
+      {
+        "question": "Wat is de eerste stap om je in te schrijven voor een opleiding?",
+        "options": [
+          "Betaal het inschrijfgeld",
+          "Upload je diploma's",
+          "Ga naar de website van de universiteit of hogeschool",
+          "Vul je persoonlijke gegevens in"
+        ],
+        "correctAnswer": "Ga naar de website van de universiteit of hogeschool"
+      },
+      {
+        "question": "Wat moet je doen na het invullen van je persoonlijke gegevens?",
+        "options": [
+          "Ga naar de website van de universiteit of hogeschool",
+          "Upload je bewijsstukken",
+          "Betaal het inschrijfgeld",
+          "Bevestig je inschrijving"
+        ],
+        "correctAnswer": "Upload je bewijsstukken"
+      },
+      {
+        "question": "Hoeveel kost het inschrijfgeld meestal?",
+        "options": [
+          "100 euro",
+          "50 euro",
+          "75 euro",
+          "25 euro"
+        ],
+        "correctAnswer": "50 euro"
+      },
+      {
+        "question": "Hoe bevestig je je inschrijving?",
+        "options": [
+          "Door een brief te sturen",
+          "Door te bellen naar de universiteit of hogeschool",
+          "Door op de link in de bevestigingsmail te klikken",
+          "Door het inschrijfgeld te betalen"
+        ],
+        "correctAnswer": "Door op de link in de bevestigingsmail te klikken"
+      },
+      {
+        "question": "Welke persoonlijke gegevens moet je invullen tijdens de aanmelding?",
+        "options": [
+          "Je naam, adres, telefoonnummer en e-mail",
+          "Je naam, adres, geboortedatum en e-mail",
+          "Je naam, adres, geboortedatum en nationaliteit",
+          "Je naam, adres, geboortedatum en beroep"
+        ],
+        "correctAnswer": "Je naam, adres, geboortedatum en e-mail"
+      }
+    ],
+    "audioFile": "audio/a32ed244-9ca1-4f3c-b01e-a94ca1b0eab0.mp3"
+  },
+  {
+    "id": "b7a11ada-899f-4244-a121-ed8460d98d40",
+    "title": "Een klacht indienen over vuil op straat",
+    "transcript": "Hallo, mijn naam is Jan en ik woon in de Kerkstraat. Ik wil een klacht indienen over het vuil op onze straat. Het lijkt alsof mensen hun afval gewoon op de grond gooien. Er liggen lege flessen, papier, en zelfs oude meubels. Het is een echt probleem en het maakt onze straat erg vies. We hebben een afvalcontainer, maar blijkbaar gebruiken niet alle mensen die. Ik heb ook ratten en andere ongedierte gezien, wat echt niet veilig is, vooral voor de kinderen die in onze straat spelen. Ik vraag me af of de gemeente iets kan doen om dit probleem op te lossen. Misschien kunnen er meer afvalbakken geplaatst worden of kunnen er boetes gegeven worden aan de mensen die hun afval op de straat gooien. Ik hoop dat er snel iets aan gedaan wordt. Dank je wel voor je aandacht.",
+    "questions": [
+      {
+        "question": "Waar woont Jan?",
+        "options": [
+          "In de Kerkstraat",
+          "In de Schoolstraat",
+          "In de Havenstraat",
+          "In de Zandstraat"
+        ],
+        "correctAnswer": "In de Kerkstraat"
+      },
+      {
+        "question": "Waarover wil Jan een klacht indienen?",
+        "options": [
+          "Over het lawaai in zijn straat",
+          "Over het vuil op zijn straat",
+          "Over de honden in zijn straat",
+          "Over de verlichting in zijn straat"
+        ],
+        "correctAnswer": "Over het vuil op zijn straat"
+      },
+      {
+        "question": "Wat voor soort afval ziet Jan op zijn straat?",
+        "options": [
+          "Lege flessen, papier en oude meubels",
+          "Voedselresten en plastic zakken",
+          "Autobanden en elektronisch afval",
+          "Bouwafval en glas"
+        ],
+        "correctAnswer": "Lege flessen, papier en oude meubels"
+      },
+      {
+        "question": "Wat stelt Jan voor als mogelijke oplossingen?",
+        "options": [
+          "Meer afvalbakken plaatsen en boetes geven",
+          "Een schoonmaakbedrijf inhuren",
+          "Een buurtfeest organiseren om het vuil op te ruimen",
+          "Meer vuilniswagens sturen"
+        ],
+        "correctAnswer": "Meer afvalbakken plaatsen en boetes geven"
+      },
+      {
+        "question": "Wat heeft Jan naast afval nog meer op zijn straat gezien?",
+        "options": [
+          "Honden",
+          "Katten",
+          "Ratten en ander ongedierte",
+          "Vogels"
+        ],
+        "correctAnswer": "Ratten en ander ongedierte"
+      }
+    ],
+    "audioFile": "audio/b7a11ada-899f-4244-a121-ed8460d98d40.mp3"
+  },
+  {
+    "id": "549646c5-e50b-4020-9bc3-0445ddfbb1a8",
+    "title": "Een melding doen van overlast in de buurt",
+    "transcript": "Hallo, ik ben Jan. Ik woon in de Meidoornstraat, nummer 32, in Rotterdam. Ik wil graag een klacht indienen over lawaai in mijn buurt. Elke avond, vooral in het weekend, is er veel herrie van een bar aan het einde van de straat. Het lawaai gaat vaak door tot diep in de nacht. Mensen praten hard, lachen en soms is er zelfs luide muziek. Dit stoort ons heel erg, vooral omdat mijn kinderen niet kunnen slapen door het lawaai. Ik heb geprobeerd om met de eigenaar van de bar te praten, maar hij zegt dat hij niets kan doen. Ik heb ook met mijn buren gesproken en zij hebben hetzelfde probleem. Wij vragen ons af of hier iets aan gedaan kan worden. Ik hoop dat de gemeente ons kan helpen. Misschien kunnen ze met de eigenaar van de bar praten of een regel instellen dat het na een bepaalde tijd stil moet zijn. Ik kijk uit naar uw antwoord. Alvast bedankt voor uw hulp.",
+    "questions": [
+      {
+        "question": "Waar woont Jan?",
+        "options": [
+          "In Amsterdam",
+          "In de Meidoornstraat, nummer 32, in Rotterdam",
+          "In Utrecht",
+          "In de Meidoornstraat, nummer 30, in Rotterdam"
+        ],
+        "correctAnswer": "In de Meidoornstraat, nummer 32, in Rotterdam"
+      },
+      {
+        "question": "Wat is het probleem van Jan?",
+        "options": [
+          "Er is een probleem met zijn auto",
+          "Hij heeft problemen op zijn werk",
+          "Er is lawaai in zijn buurt",
+          "Hij heeft problemen met zijn huis"
+        ],
+        "correctAnswer": "Er is lawaai in zijn buurt"
+      },
+      {
+        "question": "Wat is de reactie van de eigenaar van de bar op de klacht van Jan?",
+        "options": [
+          "Hij zegt dat hij het lawaai zal stoppen",
+          "Hij zegt dat hij niets kan doen",
+          "Hij zegt dat Jan moet verhuizen",
+          "Hij negeert de klacht van Jan"
+        ],
+        "correctAnswer": "Hij zegt dat hij niets kan doen"
+      },
+      {
+        "question": "Wat hoopt Jan dat de gemeente zal doen?",
+        "options": [
+          "Dat ze een nieuwe bar zullen openen",
+          "Dat ze met de eigenaar van de bar zullen praten of een regel instellen dat het na een bepaalde tijd stil moet zijn",
+          "Dat ze het lawaai zullen stoppen",
+          "Dat ze de bar zullen sluiten"
+        ],
+        "correctAnswer": "Dat ze met de eigenaar van de bar zullen praten of een regel instellen dat het na een bepaalde tijd stil moet zijn"
+      },
+      {
+        "question": "Hebben de buren van Jan hetzelfde probleem?",
+        "options": [
+          "Ja, ze hebben hetzelfde probleem",
+          "Nee, ze hebben geen probleem",
+          "Het is niet duidelijk",
+          "Ja, maar ze vinden het lawaai niet erg"
+        ],
+        "correctAnswer": "Ja, ze hebben hetzelfde probleem"
+      }
+    ],
+    "audioFile": "audio/549646c5-e50b-4020-9bc3-0445ddfbb1a8.mp3"
+  },
+  {
+    "id": "aeb7facd-dda6-4e6e-a688-91c17786dfe8",
+    "title": "Een melding krijgen over een storing in de water- of stroomvoorziening",
+    "transcript": "Hallo, dit is een dringende melding voor de bewoners van Amsterdam-Noord. Door een onverwacht probleem met onze waterleiding, is er op dit moment geen water beschikbaar in uw gebied. We werken hard om dit probleem zo snel mogelijk op te lossen. Volgens onze schatting zal het ongeveer vier uur duren voordat de reparatie is voltooid. We vragen u om geduld te hebben en excuses voor het ongemak. Zorg ervoor dat u voldoende drinkwater bij de hand heeft. Als u problemen ondervindt, bel dan onze klantenservice op nummer 0800-123456. We zullen een nieuwe melding sturen zodra de waterdienst is hersteld. Heel erg bedankt voor uw begrip en medewerking.",
+    "questions": [
+      {
+        "question": "Wat is het probleem in Amsterdam-Noord?",
+        "options": [
+          "Er is een probleem met de elektriciteit",
+          "Er is een probleem met het internet",
+          "Er is een probleem met de waterleiding",
+          "Er is een probleem met het gas"
+        ],
+        "correctAnswer": "Er is een probleem met de waterleiding"
+      },
+      {
+        "question": "Hoe lang zal de reparatie duren?",
+        "options": [
+          "Twee uur",
+          "Drie uur",
+          "Vier uur",
+          "Vijf uur"
+        ],
+        "correctAnswer": "Vier uur"
+      },
+      {
+        "question": "Wat moeten de bewoners doen als ze problemen ondervinden?",
+        "options": [
+          "Ze moeten de burgemeester bellen",
+          "Ze moeten hun buren bellen",
+          "Ze moeten de klantenservice bellen",
+          "Ze moeten de politie bellen"
+        ],
+        "correctAnswer": "Ze moeten de klantenservice bellen"
+      },
+      {
+        "question": "Wanneer zal er een nieuwe melding worden gestuurd?",
+        "options": [
+          "Als er een nieuw probleem is",
+          "Als de reparatie is begonnen",
+          "Na vier uur",
+          "Zodra de waterdienst is hersteld"
+        ],
+        "correctAnswer": "Zodra de waterdienst is hersteld"
+      },
+      {
+        "question": "Wat wordt er van de bewoners gevraagd?",
+        "options": [
+          "Om te helpen met de reparatie",
+          "Om geduld te hebben",
+          "Om water te doneren",
+          "Om te verhuizen"
+        ],
+        "correctAnswer": "Om geduld te hebben"
+      }
+    ],
+    "audioFile": "audio/aeb7facd-dda6-4e6e-a688-91c17786dfe8.mp3"
+  },
+  {
+    "id": "31f4faf8-5622-4d7a-b21a-bd6f141f4b29",
+    "title": "Een oproep lezen om vrijwilligerswerk te doen in de buurt",
+    "transcript": "Hallo buren! Onze buurt heeft een beetje hulp nodig. We willen een grote schoonmaakdag organiseren. Dit is een dag waarop we allemaal samen onze buurt schoonmaken. We beginnen om 10.00 uur 's ochtends op het centrale plein. We hebben mensen nodig die vuilnis kunnen verzamelen, de straten kunnen vegen en de bomen kunnen snoeien. Natuurlijk, na al het harde werk, hebben we ook een feest. We hebben vrijwilligers nodig om te helpen met het bereiden van het eten en het organiseren van spelletjes voor de kinderen. Als je mee wilt doen, stuur dan een e-mail naar buurtschoonmaak@gmail.com. Vermeld in de e-mail wat je wilt doen. Iedereen is welkom om te helpen, jong en oud. Samen kunnen we onze buurt mooier maken!",
+    "questions": [
+      {
+        "question": "Wat willen de buren organiseren?",
+        "options": [
+          "Een buurtfeest",
+          "Een schoonmaakdag",
+          "Een spelletjesdag",
+          "Een tuinfeest"
+        ],
+        "correctAnswer": "Een schoonmaakdag"
+      },
+      {
+        "question": "Hoe laat begint de schoonmaakdag?",
+        "options": [
+          "'s middags om 2.00 uur",
+          "'s ochtends om 10.00 uur",
+          "'s avonds om 8.00 uur",
+          "'s ochtends om 8.00 uur"
+        ],
+        "correctAnswer": "'s ochtends om 10.00 uur"
+      },
+      {
+        "question": "Wat moeten de vrijwilligers doen na het harde werk?",
+        "options": [
+          "Naar huis gaan",
+          "Rusten",
+          "Helpen met het bereiden van het eten en het organiseren van spelletjes",
+          "De straten vegen"
+        ],
+        "correctAnswer": "Helpen met het bereiden van het eten en het organiseren van spelletjes"
+      },
+      {
+        "question": "Hoe kun je je aanmelden om te helpen?",
+        "options": [
+          "Door een brief te sturen",
+          "Door een e-mail te sturen naar buurtschoonmaak@gmail.com",
+          "Door te bellen",
+          "Door langs te gaan bij de buren"
+        ],
+        "correctAnswer": "Door een e-mail te sturen naar buurtschoonmaak@gmail.com"
+      },
+      {
+        "question": "Wie kan helpen bij de schoonmaakdag?",
+        "options": [
+          "Alleen volwassenen",
+          "Alleen kinderen",
+          "Alleen ouderen",
+          "Iedereen, jong en oud"
+        ],
+        "correctAnswer": "Iedereen, jong en oud"
+      }
+    ],
+    "audioFile": "audio/31f4faf8-5622-4d7a-b21a-bd6f141f4b29.mp3"
+  },
+  {
+    "id": "036979aa-c542-4ac5-9cfc-b6b434426c2b",
+    "title": "Een oudergesprek voeren op school",
+    "transcript": "Hallo, fijn dat u er bent voor het oudergesprek. Ik ben juf Anouk, de leerkracht van uw zoon, Joris. Vandaag willen we het over Joris zijn prestaties op school hebben. Joris doet het over het algemeen goed. Hij is goed in rekenen en hij houdt van lezen. Maar we maken ons een beetje zorgen over zijn Nederlandse taalvaardigheid. Hij heeft moeite met grammatica en spelling. We denken dat het nuttig zou zijn als hij extra hulp zou krijgen. We kunnen een bijlesdocent aanbevelen of we kunnen extra oefeningen geven die hij thuis kan doen. Wat denkt u ervan? Het is belangrijk dat we samenwerken om Joris te helpen. Ook willen we dat Joris zich op zijn gemak voelt en plezier heeft op school. Dus als u vragen of zorgen heeft, kunt u altijd naar school komen of mij bellen. Bedankt dat u de tijd heeft genomen om vandaag te komen.",
+    "questions": [
+      {
+        "question": "Wat is de rol van Anouk in school?",
+        "options": [
+          "Zij is de schooldirecteur",
+          "Zij is de moeder van Joris",
+          "Zij is de leerkracht van Joris",
+          "Zij is de bijlesdocent"
+        ],
+        "correctAnswer": "Zij is de leerkracht van Joris"
+      },
+      {
+        "question": "Waar is Joris goed in?",
+        "options": [
+          "Nederlandse taalvaardigheid",
+          "Rekenen en lezen",
+          "Grammatica en spelling",
+          "Sport en muziek"
+        ],
+        "correctAnswer": "Rekenen en lezen"
+      },
+      {
+        "question": "Wat is het probleem met Joris zijn Nederlandse taalvaardigheid?",
+        "options": [
+          "Hij kan niet goed lezen",
+          "Hij spreekt geen Nederlands",
+          "Hij heeft moeite met grammatica en spelling",
+          "Hij houdt niet van Nederlands"
+        ],
+        "correctAnswer": "Hij heeft moeite met grammatica en spelling"
+      },
+      {
+        "question": "Wat stelt de leerkracht voor om Joris te helpen?",
+        "options": [
+          "Hij moet meer huiswerk doen",
+          "Hij moet veranderen van school",
+          "Hij moet bijles krijgen of extra oefeningen doen thuis",
+          "Hij moet stoppen met lezen en rekenen"
+        ],
+        "correctAnswer": "Hij moet bijles krijgen of extra oefeningen doen thuis"
+      },
+      {
+        "question": "Hoe kunnen de ouders van Joris contact opnemen met de school?",
+        "options": [
+          "Ze kunnen een brief sturen",
+          "Ze kunnen naar school komen of de leerkracht bellen",
+          "Ze kunnen een e-mail sturen",
+          "Ze kunnen een bericht sturen via de schoolapp"
+        ],
+        "correctAnswer": "Ze kunnen naar school komen of de leerkracht bellen"
+      }
+    ],
+    "audioFile": "audio/036979aa-c542-4ac5-9cfc-b6b434426c2b.mp3"
+  },
+  {
+    "id": "7018d7fd-2b27-4132-a1e5-5fcae6d88e7e",
+    "title": "Een poster lezen over veiligheid in de buurt",
+    "transcript": "Hallo iedereen, ik wil jullie aandacht even trekken naar deze poster hier. Het gaat over veiligheid in onze buurt. De politie heeft het gemaakt om ons te helpen. Het is belangrijk dat we allemaal opletten en samenwerken om onze buurt veilig te houden. Allereerst, als je iets verdachts ziet, bel dan altijd de politie. Je hoeft niet bang te zijn. Het is beter om veilig te zijn dan sorry. Ten tweede, zorg ervoor dat je huis altijd goed is afgesloten. Vergeet niet je ramen en deuren te sluiten als je weggaat. Ten derde, wees vriendelijk en behulpzaam voor je buren. We zijn allemaal samen in deze buurt. Als je op vakantie gaat, vraag dan een buurman of buurvrouw om een oogje in het zeil te houden. En vergeet niet, wij zijn de ogen en oren van de buurt. Laten we onze buurt veilig en aangenaam houden voor iedereen.",
+    "questions": [
+      {
+        "question": "Wie heeft de poster gemaakt?",
+        "options": [
+          "De buren",
+          "De politie",
+          "De spreker",
+          "De buurtbewoners"
+        ],
+        "correctAnswer": "De politie"
+      },
+      {
+        "question": "Wat moet je doen als je iets verdachts ziet?",
+        "options": [
+          "Het negeren",
+          "Het aan je buren vertellen",
+          "De politie bellen",
+          "Het opschrijven"
+        ],
+        "correctAnswer": "De politie bellen"
+      },
+      {
+        "question": "Wat moet je doen voordat je weggaat uit je huis?",
+        "options": [
+          "Je ramen en deuren open laten",
+          "Je ramen en deuren sluiten",
+          "Je buren vertellen dat je weggaat",
+          "De politie bellen"
+        ],
+        "correctAnswer": "Je ramen en deuren sluiten"
+      },
+      {
+        "question": "Wat moet je doen als je op vakantie gaat?",
+        "options": [
+          "Je huis open laten",
+          "Een buurman of buurvrouw vragen om een oogje in het zeil te houden",
+          "De politie bellen",
+          "Niets doen"
+        ],
+        "correctAnswer": "Een buurman of buurvrouw vragen om een oogje in het zeil te houden"
+      },
+      {
+        "question": "Wie zijn de ogen en oren van de buurt?",
+        "options": [
+          "De politie",
+          "De buren",
+          "Wij",
+          "De voorbijgangers"
+        ],
+        "correctAnswer": "Wij"
+      }
+    ],
+    "audioFile": "audio/7018d7fd-2b27-4132-a1e5-5fcae6d88e7e.mp3"
+  },
+  {
+    "id": "c9b06cc2-434e-4394-ab7a-0a4ab36b3b42",
+    "title": "Een rooster bespreken met de werkgever",
+    "transcript": "Hallo, ik ben jouw nieuwe werkgever. Welkom bij ons bedrijf! Ik wil graag ons werkrooster met je bespreken. We werken hier van maandag tot vrijdag. Je start elke dag om acht uur 's ochtends. De lunchpauze is om twaalf uur 's middags, en deze duurt een half uur. Je werkt dan door tot vier uur 's middags. Op sommige dagen moeten we overwerken. Dit gebeurt meestal op woensdagen en donderdagen. Als je moet overwerken, werk je tot zes uur 's avonds. Je krijgt dan extra betaald voor de extra uren. Vergeet niet om jouw vakantiedagen op tijd aan te vragen. Je hebt recht op 20 vakantiedagen per jaar. Als je ziek bent, moet je ons zo snel mogelijk bellen. Kun je deze werktijden volgen? Heb je nog vragen over het rooster? Laat het me weten! Het is belangrijk dat je comfortabel bent met je werkschema.",
+    "questions": [
+      {
+        "question": "Op welke dagen moet je mogelijk overwerken?",
+        "options": [
+          "Maandag en dinsdag",
+          "Woensdag en donderdag",
+          "Vrijdag en zaterdag",
+          "Zaterdag en zondag"
+        ],
+        "correctAnswer": "Woensdag en donderdag"
+      },
+      {
+        "question": "Hoeveel vakantiedagen heb je per jaar?",
+        "options": [
+          "10 dagen",
+          "15 dagen",
+          "20 dagen",
+          "25 dagen"
+        ],
+        "correctAnswer": "20 dagen"
+      },
+      {
+        "question": "Hoe lang duurt de lunchpauze?",
+        "options": [
+          "15 minuten",
+          "30 minuten",
+          "45 minuten",
+          "60 minuten"
+        ],
+        "correctAnswer": "30 minuten"
+      },
+      {
+        "question": "Wanneer start je werkdag?",
+        "options": [
+          "Om zeven uur 's ochtends",
+          "Om acht uur 's ochtends",
+          "Om negen uur 's ochtends",
+          "Om tien uur 's ochtends"
+        ],
+        "correctAnswer": "Om acht uur 's ochtends"
+      },
+      {
+        "question": "Tot hoe laat werk je als je moet overwerken?",
+        "options": [
+          "Tot vijf uur 's avonds",
+          "Tot zes uur 's avonds",
+          "Tot zeven uur 's avonds",
+          "Tot acht uur 's avonds"
+        ],
+        "correctAnswer": "Tot zes uur 's avonds"
+      }
+    ],
+    "audioFile": "audio/c9b06cc2-434e-4394-ab7a-0a4ab36b3b42.mp3"
+  },
+  {
+    "id": "2336ff1a-18b6-4eb1-a884-b4ab8e715585",
+    "title": "Een sollicitatiegesprek voeren met een werkgever",
+    "transcript": "Goedemiddag, mijn naam is Pieter en ik ben de manager van dit bedrijf. Bedankt voor het komen naar het sollicitatiegesprek. We hebben je CV bekeken en we zijn erg geïnteresseerd in je werkervaring. Kun je ons iets meer vertellen over je vorige baan? Wat waren je verantwoordelijkheden en wat vond je leuk aan die baan? We zijn ook benieuwd naar je taalvaardigheden. Spreek je naast Nederlands ook andere talen? En hoe zou je je communicatieve vaardigheden beoordelen? Dit bedrijf is een team van gemotiveerde mensen, dus we zoeken iemand die goed past in ons team. Kun je ons iets vertellen over je teamvaardigheden? En wat zijn je sterke punten en zwakke punten in een teamomgeving? We begrijpen dat sollicitatiegesprekken spannend kunnen zijn, maar we willen dat je je comfortabel voelt. Als je vragen hebt over de functie of over ons bedrijf, stel ze dan gerust. We kijken ernaar uit om meer over jou te leren.",
+    "questions": [
+      {
+        "question": "Wat is de rol van Pieter in het bedrijf?",
+        "options": [
+          "Hij is een medewerker",
+          "Hij is de CEO van het bedrijf",
+          "Hij is de manager van het bedrijf",
+          "Hij is een sollicitant"
+        ],
+        "correctAnswer": "Hij is de manager van het bedrijf"
+      },
+      {
+        "question": "Wat wil het bedrijf weten over de sollicitant?",
+        "options": [
+          "Hun favoriete kleur",
+          "Hun werkervaring, taalvaardigheden en teamvaardigheden",
+          "Hun favoriete eten",
+          "Hun hobby's"
+        ],
+        "correctAnswer": "Hun werkervaring, taalvaardigheden en teamvaardigheden"
+      },
+      {
+        "question": "Wat is de sfeer tijdens het sollicitatiegesprek volgens Pieter?",
+        "options": [
+          "Het is stressvol",
+          "Het is comfortabel",
+          "Het is ongemakkelijk",
+          "Het is formeel"
+        ],
+        "correctAnswer": "Het is comfortabel"
+      },
+      {
+        "question": "Wat is de houding van het bedrijf ten opzichte van vragen van de sollicitant?",
+        "options": [
+          "Ze moedigen het stellen van vragen niet aan",
+          "Ze staan open voor vragen",
+          "Ze negeren vragen",
+          "Ze beantwoorden alleen specifieke vragen"
+        ],
+        "correctAnswer": "Ze staan open voor vragen"
+      }
+    ],
+    "audioFile": "audio/2336ff1a-18b6-4eb1-a884-b4ab8e715585.mp3"
+  },
+  {
+    "id": "19cc180e-04c4-45bc-baee-476c17bf8ddb",
+    "title": "Een spoedgeval melden bij de huisartsenpost",
+    "transcript": "Hallo, dit is de huisartsenpost. Hoe kan ik u helpen? Oh, uw dochter heeft hoge koorts en ze voelt zich heel ziek? Het is belangrijk dat u haar temperatuur meet met een thermometer. Als de temperatuur boven de 38 graden is, heeft ze inderdaad koorts. Heeft ze ook andere symptomen zoals hoesten of overgeven? Oké, ik noteer dat. Heeft ze pijn? Waar voelt ze de pijn? En heeft ze medicijnen genomen? Goed dat u belt. Het is belangrijk om ernstige symptomen te melden. Blijf rustig, ik stuur een arts naar uw huis. Hij is er over ongeveer een half uur. Probeer ondertussen uw dochter comfortabel te maken en geef haar veel water te drinken. Als haar toestand verandert voor de arts arriveert, bel ons dan onmiddellijk terug. Dank u wel voor uw telefoontje. Sterkte en tot ziens.",
+    "questions": [
+      {
+        "question": "Wat moet je doen als de temperatuur van je dochter boven de 38 graden is?",
+        "options": [
+          "Bel de politie",
+          "Breng haar naar school",
+          "Zeg dat ze koorts heeft",
+          "Geef haar ijs"
+        ],
+        "correctAnswer": "Zeg dat ze koorts heeft"
+      },
+      {
+        "question": "Wat moet u doen als de toestand van uw dochter verandert voordat de arts arriveert?",
+        "options": [
+          "Bel de huisartsenpost onmiddellijk terug",
+          "Ga met haar naar het ziekenhuis",
+          "Wacht tot de arts komt",
+          "Geef haar medicijnen"
+        ],
+        "correctAnswer": "Bel de huisartsenpost onmiddellijk terug"
+      },
+      {
+        "question": "Wat moet u uw dochter geven terwijl u op de arts wacht?",
+        "options": [
+          "Koffie",
+          "Veel water",
+          "Een boek",
+          "Snoep"
+        ],
+        "correctAnswer": "Veel water"
+      },
+      {
+        "question": "Hoe lang duurt het voordat de arts bij uw huis aankomt?",
+        "options": [
+          "Een uur",
+          "Een half uur",
+          "Twee uur",
+          "Vijftien minuten"
+        ],
+        "correctAnswer": "Een half uur"
+      },
+      {
+        "question": "Waarom belt de persoon de huisartsenpost?",
+        "options": [
+          "Omdat haar dochter hoge koorts heeft",
+          "Omdat ze een afspraak willen maken",
+          "Omdat ze medicijnen willen kopen",
+          "Omdat ze de weg kwijt zijn"
+        ],
+        "correctAnswer": "Omdat haar dochter hoge koorts heeft"
+      }
+    ],
+    "audioFile": "audio/19cc180e-04c4-45bc-baee-476c17bf8ddb.mp3"
+  },
+  {
+    "id": "4c597795-464a-4b63-bcea-2f0d39ed43e5",
+    "title": "Een storing of probleem met het openbaar vervoer volgen",
+    "transcript": "Goedemorgen luisteraars! Dit is een belangrijke mededeling voor mensen die vandaag met het openbaar vervoer reizen. Er is een probleem met de tramlijn 7. Er is een storing bij de halte Centraal Station. Hierdoor kunnen trams van lijn 7 niet rijden tussen de haltes Centraal Station en Leidseplein. De monteurs zijn al aan het werk om het probleem op te lossen. Maar voorlopig is het beter om een andere route te nemen of een andere vorm van vervoer te kiezen. Bussen en metro's rijden zoals normaal. Je kunt ook de tramlijn 5 of 9 nemen. Deze trams stoppen ook bij de halte Leidseplein. We hopen dat het probleem snel wordt opgelost. We zullen jullie op de hoogte houden. Hou onze website en sociale media in de gaten voor de laatste updates. Ons excuus voor het ongemak. Bedankt voor jullie begrip en een fijne dag verder!",
+    "questions": [
+      {
+        "question": "Wat is het probleem met de tramlijn 7?",
+        "options": [
+          "Er is een ongeluk gebeurd.",
+          "Er is een storing bij de halte Centraal Station.",
+          "De trams rijden niet.",
+          "De trambestuurder is ziek."
+        ],
+        "correctAnswer": "Er is een storing bij de halte Centraal Station."
+      },
+      {
+        "question": "Wat is het advies aan de reizigers?",
+        "options": [
+          "Blijf thuis.",
+          "Neem een taxi.",
+          "Neem een andere route of een andere vorm van vervoer.",
+          "Wacht op de tram."
+        ],
+        "correctAnswer": "Neem een andere route of een andere vorm van vervoer."
+      },
+      {
+        "question": "Welke alternatieve tramlijnen kunnen reizigers nemen?",
+        "options": [
+          "Tramlijn 1 of 2",
+          "Tramlijn 3 of 4",
+          "Tramlijn 5 of 9",
+          "Tramlijn 6 of 8"
+        ],
+        "correctAnswer": "Tramlijn 5 of 9"
+      },
+      {
+        "question": "Waar kunnen reizigers updates over het probleem vinden?",
+        "options": [
+          "Op de radio.",
+          "Op de website en sociale media.",
+          "In de krant.",
+          "Op de televisie."
+        ],
+        "correctAnswer": "Op de website en sociale media."
+      },
+      {
+        "question": "Wie werken aan het oplossen van het probleem?",
+        "options": [
+          "De bestuurders.",
+          "De reizigers.",
+          "De monteurs.",
+          "Het management."
+        ],
+        "correctAnswer": "De monteurs."
+      }
+    ],
+    "audioFile": "audio/4c597795-464a-4b63-bcea-2f0d39ed43e5.mp3"
+  },
+  {
+    "id": "19803087-6101-42f7-8f7c-75a4c65e3e4b",
+    "title": "Een uitnodiging lezen voor een informatieavond in de wijk",
+    "transcript": "Hallo buurtbewoners! Wij nodigen u uit voor een informatieavond in onze wijk. Deze avond gaat over de nieuwe plannen voor het park. We gaan praten over het planten van nieuwe bomen, het bouwen van een speeltuin en het verbeteren van de wandelpaden. Het is een goede kans om nieuwe mensen te ontmoeten en uw ideeën te delen. De informatieavond vindt plaats in het gemeenschapshuis, vlakbij de oude kerk. We beginnen om 19.00 uur en het duurt tot ongeveer 21.00 uur. Er zullen snacks en drankjes zijn. U hoeft zich niet aan te melden, maar laat ons alstublieft weten of u komt. U kunt een e-mail sturen naar info@onzewijk.nl of bel naar 0623456789. We hopen u daar te zien. Laten we samen onze wijk mooier maken!",
+    "questions": [
+      {
+        "question": "Waar gaat de informatieavond over?",
+        "options": [
+          "Nieuwe plannen voor de school",
+          "Nieuwe plannen voor het park",
+          "Nieuwe plannen voor de supermarkt",
+          "Nieuwe plannen voor het gemeentehuis"
+        ],
+        "correctAnswer": "Nieuwe plannen voor het park"
+      },
+      {
+        "question": "Hoe laat begint de informatieavond?",
+        "options": [
+          "Om 17.00 uur",
+          "Om 18.00 uur",
+          "Om 19.00 uur",
+          "Om 20.00 uur"
+        ],
+        "correctAnswer": "Om 19.00 uur"
+      },
+      {
+        "question": "Hoe kunnen buurtbewoners laten weten dat ze komen?",
+        "options": [
+          "Ze kunnen een brief sturen",
+          "Ze kunnen een e-mail sturen of bellen",
+          "Ze kunnen een bericht sturen via sociale media",
+          "Ze kunnen persoonlijk langskomen"
+        ],
+        "correctAnswer": "Ze kunnen een e-mail sturen of bellen"
+      },
+      {
+        "question": "Wat is het doel van de informatieavond?",
+        "options": [
+          "Om te praten over de nieuwe plannen voor het park",
+          "Om een feest te vieren",
+          "Om een nieuwe burgemeester te kiezen",
+          "Om een wedstrijd te organiseren"
+        ],
+        "correctAnswer": "Om te praten over de nieuwe plannen voor het park"
+      },
+      {
+        "question": "Waar vindt de informatieavond plaats?",
+        "options": [
+          "In de oude kerk",
+          "In het park",
+          "In het gemeenschapshuis",
+          "In de school"
+        ],
+        "correctAnswer": "In het gemeenschapshuis"
+      }
+    ],
+    "audioFile": "audio/19803087-6101-42f7-8f7c-75a4c65e3e4b.mp3"
+  },
+  {
+    "id": "09ceb03d-50db-441e-81b8-e1cb6719c109",
+    "title": "Een uitnodiging ontvangen voor een buurt schoonmaakactie",
+    "transcript": "Hallo, ik ben Klaas, jouw buurman van nummer 24. We organiseren volgende week zaterdag een schoonmaakactie in onze buurt. We willen onze straat en het nabijgelegen park schoonmaken. We willen allemaal een schone en veilige plek om te wonen, toch? We hebben jouw hulp ook nodig. We verzamelen om 10.00 uur bij het park. We zullen handschoenen en vuilniszakken regelen. Iedereen is welkom, ook kinderen. Na het schoonmaken, hebben we een kleine picknick gepland in het park. Kun je komen? Laat het ons dan even weten. Je kunt mij bellen op 0612345678 of stuur een e-mail naar klaas24@buurtschoon.nl. Doe je mee? Jouw hulp is erg belangrijk voor ons. Dank je wel.",
+    "questions": [
+      {
+        "question": "Wie is Klaas?",
+        "options": [
+          "Hij is een leraar",
+          "Hij is een vriend",
+          "Hij is een buurman",
+          "Hij is een familie"
+        ],
+        "correctAnswer": "Hij is een buurman"
+      },
+      {
+        "question": "Wat organiseren ze volgende week zaterdag?",
+        "options": [
+          "Een feest",
+          "Een vergadering",
+          "Een schoonmaakactie",
+          "Een picknick"
+        ],
+        "correctAnswer": "Een schoonmaakactie"
+      },
+      {
+        "question": "Waar verzamelen ze?",
+        "options": [
+          "In het huis van Klaas",
+          "In het park",
+          "Op school",
+          "In de supermarkt"
+        ],
+        "correctAnswer": "In het park"
+      },
+      {
+        "question": "Wat doen ze na het schoonmaken?",
+        "options": [
+          "Ze gaan naar huis",
+          "Ze gaan winkelen",
+          "Ze hebben een picknick",
+          "Ze gaan naar de bioscoop"
+        ],
+        "correctAnswer": "Ze hebben een picknick"
+      },
+      {
+        "question": "Hoe kun je Klaas bereiken om je deelname te bevestigen?",
+        "options": [
+          "Door een brief te sturen",
+          "Door hem te bellen of een e-mail te sturen",
+          "Door hem een sms te sturen",
+          "Door hem persoonlijk te bezoeken"
+        ],
+        "correctAnswer": "Door hem te bellen of een e-mail te sturen"
+      }
+    ],
+    "audioFile": "audio/09ceb03d-50db-441e-81b8-e1cb6719c109.mp3"
+  },
+  {
+    "id": "527ca139-c85a-40a4-8052-38556eadf50e",
+    "title": "Hulp vragen aan de gemeente bij overlast van buren",
+    "transcript": "Hallo allemaal, ik wil jullie vandaag iets vertellen over een probleem dat ik heb met mijn buren. De buren maken namelijk veel lawaai, vooral 's nachts. Dit is erg vervelend, want ik kan niet slapen. Ik heb al een paar keer met hen gepraat, maar ze luisteren niet. Nu wil ik hulp vragen bij de gemeente. Maar hoe doe ik dat? Ik kan een brief schrijven of bellen. In de brief moet ik uitleggen wat het probleem is. Ik moet ook vertellen dat ik al met de buren heb gepraat. Verder moet ik in de brief schrijven wat ik wil dat de gemeente doet. Als ik bel, moet ik hetzelfde vertellen. Het is belangrijk om rustig en duidelijk te praten. De gemeente kan dan helpen om het probleem op te lossen. Ik hoop dat het dan beter gaat. Ik wil graag rustig wonen en goed slapen. Als jullie ook zoiets hebben meegemaakt, vertel het dan alstublieft. Misschien kunnen we elkaar helpen met advies.",
+    "questions": [
+      {
+        "question": "Wat is het probleem van de spreker?",
+        "options": [
+          "De spreker kan niet werken.",
+          "De spreker heeft een probleem met zijn collega's.",
+          "De spreker heeft een probleem met zijn buren.",
+          "De spreker kan niet studeren."
+        ],
+        "correctAnswer": "De spreker heeft een probleem met zijn buren."
+      },
+      {
+        "question": "Waarom kan de spreker niet slapen?",
+        "options": [
+          "Omdat de buren te veel feesten.",
+          "Omdat de buren te veel lawaai maken.",
+          "Omdat de spreker nachtmerries heeft.",
+          "Omdat de spreker te veel denkt."
+        ],
+        "correctAnswer": "Omdat de buren te veel lawaai maken."
+      },
+      {
+        "question": "Wat wil de spreker dat de gemeente doet?",
+        "options": [
+          "De spreker wil dat de gemeente de buren straft.",
+          "De spreker wil dat de gemeente hem een nieuwe woning geeft.",
+          "De spreker wil dat de gemeente helpt om het probleem op te lossen.",
+          "De spreker wil dat de gemeente de buren verhuist."
+        ],
+        "correctAnswer": "De spreker wil dat de gemeente helpt om het probleem op te lossen."
+      },
+      {
+        "question": "Hoe kan de spreker de gemeente benaderen?",
+        "options": [
+          "Hij kan een brief schrijven of bellen.",
+          "Hij kan een e-mail sturen of bellen.",
+          "Hij kan een brief schrijven of een bezoek brengen.",
+          "Hij kan een e-mail sturen of een bezoek brengen."
+        ],
+        "correctAnswer": "Hij kan een brief schrijven of bellen."
+      },
+      {
+        "question": "Wat moet de spreker doen als hij de gemeente belt?",
+        "options": [
+          "Hij moet luid en onduidelijk praten.",
+          "Hij moet rustig en duidelijk praten.",
+          "Hij moet snel en onduidelijk praten.",
+          "Hij moet luid en snel praten."
+        ],
+        "correctAnswer": "Hij moet rustig en duidelijk praten."
+      }
+    ],
+    "audioFile": "audio/527ca139-c85a-40a4-8052-38556eadf50e.mp3"
+  },
+  {
+    "id": "039e0042-931f-447a-93bc-a448b843b0a1",
+    "title": "Informatie krijgen over een medische behandeling",
+    "transcript": "Hallo allemaal! Vandaag gaan we het hebben over gezondheid en zorg. Stel je voor dat je naar de dokter moet voor een medische behandeling. Het is heel belangrijk om goed te begrijpen wat er gaat gebeuren. De dokter zal eerst met je praten over de behandeling. Hij zal uitleggen wat de behandeling inhoudt, hoe lang het duurt en wat de mogelijke bijwerkingen zijn. Het is belangrijk om vragen te stellen als je iets niet begrijpt. De dokter kan ook vragen stellen om er zeker van te zijn dat je de informatie begrijpt. Daarna krijg je een brief mee met alle informatie over de behandeling. Deze brief moet je thuis goed doorlezen. Het kan helpen om de brief aan iemand anders te laten lezen, bijvoorbeeld een familielid of een vriend. Zij kunnen je misschien helpen als je iets niet begrijpt. Vergeet niet, het is jouw gezondheid en het is belangrijk dat je alle informatie begrijpt voordat je een beslissing neemt.",
+    "questions": [
+      {
+        "question": "Wat doet de dokter voordat hij een medische behandeling begint?",
+        "options": [
+          "De dokter geeft je meteen de behandeling",
+          "De dokter praat eerst met je over de behandeling",
+          "De dokter vraagt je om de behandeling zelf uit te leggen",
+          "De dokter geeft je een brief om thuis te lezen"
+        ],
+        "correctAnswer": "De dokter praat eerst met je over de behandeling"
+      },
+      {
+        "question": "Wat moet je doen als je iets niet begrijpt?",
+        "options": [
+          "Je moet de dokter negeren",
+          "Je moet het zelf proberen te begrijpen",
+          "Je moet vragen stellen",
+          "Je moet de behandeling weigeren"
+        ],
+        "correctAnswer": "Je moet vragen stellen"
+      },
+      {
+        "question": "Wat krijg je van de dokter na het gesprek?",
+        "options": [
+          "Je krijgt een recept",
+          "Je krijgt een brief mee met alle informatie",
+          "Je krijgt medicijnen",
+          "Je krijgt een boek over gezondheid"
+        ],
+        "correctAnswer": "Je krijgt een brief mee met alle informatie"
+      },
+      {
+        "question": "Wie kan je helpen om de brief te begrijpen?",
+        "options": [
+          "Een familielid of een vriend",
+          "Een medische professional",
+          "Een postbode",
+          "Niemand"
+        ],
+        "correctAnswer": "Een familielid of een vriend"
+      },
+      {
+        "question": "Wat is belangrijk voordat je een beslissing neemt over de behandeling?",
+        "options": [
+          "Het is belangrijk dat je alle informatie begrijpt",
+          "Het is belangrijk dat je de dokter vertrouwt",
+          "Het is belangrijk dat je de brief aan iemand anders laat lezen",
+          "Het is belangrijk dat je de behandeling wilt"
+        ],
+        "correctAnswer": "Het is belangrijk dat je alle informatie begrijpt"
+      }
+    ],
+    "audioFile": "audio/039e0042-931f-447a-93bc-a448b843b0a1.mp3"
+  },
+  {
+    "id": "384ffc2c-c9be-4bbf-8691-207bbaffdb75",
+    "title": "Informatie krijgen over een woninginspectie",
+    "transcript": "Hallo, ik ben Jan, jouw woninginspecteur. Ik wil je graag wat vertellen over de woninginspectie die volgende week plaatsvindt. We beginnen met de buitenkant van het huis. We kijken naar de muren, het dak, de ramen en de deuren. We controleren of er geen schade is aan de buitenkant. Daarna gaan we naar binnen. We kijken naar de staat van de vloeren, de muren, het plafond, de keuken, de badkamer en de toiletten. We controleren ook de elektrische installaties en de verwarming. De inspectie duurt ongeveer twee uur. Maak je geen zorgen, de inspectie is standaard. Het is niet omdat er een probleem is. Het is belangrijk dat je thuis bent tijdens de inspectie. Als je niet thuis kunt zijn, vraag dan iemand anders om er te zijn. Je kunt me altijd bellen als je vragen hebt. Mijn nummer is 0612345678. Ik kijk ernaar uit je volgende week te ontmoeten. Tot dan!",
+    "questions": [
+      {
+        "question": "Wat is de naam van de persoon die de inspectie uitvoert?",
+        "options": [
+          "Jan",
+          "Johan",
+          "Pieter",
+          "Kees"
+        ],
+        "correctAnswer": "Jan"
+      },
+      {
+        "question": "Wat wordt gecontroleerd tijdens de inspectie?",
+        "options": [
+          "Alleen de buitenkant van het huis",
+          "Alleen de binnenkant van het huis",
+          "Zowel de binnenkant als de buitenkant van het huis",
+          "Geen van bovenstaande"
+        ],
+        "correctAnswer": "Zowel de binnenkant als de buitenkant van het huis"
+      },
+      {
+        "question": "Hoe lang duurt de inspectie volgens Jan?",
+        "options": [
+          "Eén uur",
+          "Twee uur",
+          "Drie uur",
+          "Vier uur"
+        ],
+        "correctAnswer": "Twee uur"
+      },
+      {
+        "question": "Wat moet je doen als je niet thuis kunt zijn tijdens de inspectie?",
+        "options": [
+          "Het huis onbeheerd achterlaten",
+          "De inspectie annuleren",
+          "Iemand anders vragen om er te zijn",
+          "Jan bellen om het af te zeggen"
+        ],
+        "correctAnswer": "Iemand anders vragen om er te zijn"
+      },
+      {
+        "question": "Waarom wordt de inspectie uitgevoerd?",
+        "options": [
+          "Omdat er een probleem is met het huis",
+          "Omdat het een standaardprocedure is",
+          "Omdat Jan het huis wil kopen",
+          "Omdat het huis te koop is"
+        ],
+        "correctAnswer": "Omdat het een standaardprocedure is"
+      }
+    ],
+    "audioFile": "audio/384ffc2c-c9be-4bbf-8691-207bbaffdb75.mp3"
+  },
+  {
+    "id": "548b3317-61db-4607-ab53-9234462422c9",
+    "title": "Informatie krijgen van de docent op school",
+    "transcript": "Hallo, studenten! Ik wil met jullie over de volgende week praten. We beginnen met een nieuw onderwerp in de les: \"Nederlandse Geschiedenis\". Dit is een belangrijk onderwerp voor je inburgeringsexamen. We leren over de belangrijkste gebeurtenissen en personen in de Nederlandse geschiedenis. Jullie krijgen een boek uit de bibliotheek om thuis te lezen. Er is ook een werkboek met oefeningen. We zullen in de les samen oefeningen maken. Volgende week dinsdag hebben we een excursie naar het Rijksmuseum in Amsterdam. Daar zien we schilderijen en objecten uit de geschiedenis van Nederland. Vergeet niet, we ontmoeten elkaar om 9.30 uur bij de ingang van het museum, niet op school. Voor de excursie moeten jullie het eerste hoofdstuk van het boek lezen. Hebben jullie vragen? Nee? Oké, laten we beginnen met de les van vandaag.",
+    "questions": [
+      {
+        "question": "Wat is het nieuwe onderwerp dat we volgende week in de les gaan beginnen?",
+        "options": [
+          "Nederlandse Taal",
+          "Nederlandse Geschiedenis",
+          "Nederlandse Cultuur",
+          "Nederlandse Geografie"
+        ],
+        "correctAnswer": "Nederlandse Geschiedenis"
+      },
+      {
+        "question": "Waar zullen we elkaar volgende week dinsdag ontmoeten?",
+        "options": [
+          "Op school",
+          "In de bibliotheek",
+          "Bij de ingang van het Rijksmuseum",
+          "In het werkboek"
+        ],
+        "correctAnswer": "Bij de ingang van het Rijksmuseum"
+      },
+      {
+        "question": "Wat moeten de studenten voor de excursie doen?",
+        "options": [
+          "Het hele boek lezen",
+          "Het eerste hoofdstuk van het boek lezen",
+          "Een werkboek maken",
+          "Een presentatie voorbereiden"
+        ],
+        "correctAnswer": "Het eerste hoofdstuk van het boek lezen"
+      },
+      {
+        "question": "Wat zullen we in het Rijksmuseum zien?",
+        "options": [
+          "Schilderijen en objecten uit de geschiedenis van Nederland",
+          "Boeken en oefeningen",
+          "Belangrijke personen in de Nederlandse geschiedenis",
+          "De Nederlandse taal"
+        ],
+        "correctAnswer": "Schilderijen en objecten uit de geschiedenis van Nederland"
+      },
+      {
+        "question": "Hoe laat ontmoeten we elkaar bij het museum?",
+        "options": [
+          "Om 8.30 uur",
+          "Om 9.30 uur",
+          "Om 10.30 uur",
+          "Om 11.30 uur"
+        ],
+        "correctAnswer": "Om 9.30 uur"
+      }
+    ],
+    "audioFile": "audio/548b3317-61db-4607-ab53-9234462422c9.mp3"
+  },
+  {
+    "id": "d4b7711f-78f9-481c-a050-8ba1700a4bdc",
+    "title": "Informatie lezen over een openbare wifi-plek in de stad",
+    "transcript": "Hallo daar! Vandaag wil ik je iets vertellen over openbare wifi-plekken in onze stad. Weet je wat een wifi-plek is? Het is een plaats waar je gratis internet kunt gebruiken. Handig, toch? In onze stad zijn er veel openbare wifi-plekken. Je kunt ze vinden in parken, bibliotheken, cafés en zelfs op sommige pleinen. Maar wees voorzichtig, want niet alle wifi-plekken zijn veilig. Gebruik geen openbare wifi voor het delen van persoonlijke informatie, zoals wachtwoorden of bankgegevens. Als je wilt weten waar de dichtstbijzijnde wifi-plek is, kun je dat op de website van de gemeente vinden. Daar vind je een kaart met alle wifi-plekken in de stad. Je kunt ook de app van de gemeente downloaden op je telefoon. Met deze app kun je altijd zien waar de dichtstbijzijnde wifi-plek is. Onthoud, veiligheid eerst!",
+    "questions": [
+      {
+        "question": "Wat is een wifi-plek?",
+        "options": [
+          "Een plek waar je kunt zwemmen",
+          "Een plek waar je gratis internet kunt gebruiken",
+          "Een plek waar je kunt eten",
+          "Een plek waar je kunt slapen"
+        ],
+        "correctAnswer": "Een plek waar je gratis internet kunt gebruiken"
+      },
+      {
+        "question": "Waar kun je openbare wifi-plekken vinden?",
+        "options": [
+          "In parken, bibliotheken, cafés en sommige pleinen",
+          "Alleen in bibliotheken",
+          "Alleen in cafés",
+          "Alleen op pleinen"
+        ],
+        "correctAnswer": "In parken, bibliotheken, cafés en sommige pleinen"
+      },
+      {
+        "question": "Wat moet je niet doen op een openbare wifi-plek?",
+        "options": [
+          "Je moet niet slapen",
+          "Je moet niet eten",
+          "Je moet geen persoonlijke informatie delen, zoals wachtwoorden of bankgegevens",
+          "Je moet niet lezen"
+        ],
+        "correctAnswer": "Je moet geen persoonlijke informatie delen, zoals wachtwoorden of bankgegevens"
+      },
+      {
+        "question": "Waar kun je informatie vinden over de dichtstbijzijnde wifi-plek?",
+        "options": [
+          "Op de website van de gemeente",
+          "In de krant",
+          "Op de radio",
+          "Op televisie"
+        ],
+        "correctAnswer": "Op de website van de gemeente"
+      },
+      {
+        "question": "Wat kun je doen met de app van de gemeente?",
+        "options": [
+          "Je kunt eten bestellen",
+          "Je kunt een fiets huren",
+          "Je kunt altijd zien waar de dichtstbijzijnde wifi-plek is",
+          "Je kunt een taxi bellen"
+        ],
+        "correctAnswer": "Je kunt altijd zien waar de dichtstbijzijnde wifi-plek is"
+      }
+    ],
+    "audioFile": "audio/d4b7711f-78f9-481c-a050-8ba1700a4bdc.mp3"
+  },
+  {
+    "id": "ec86317b-d072-4f8c-b6cf-b3c094b94893",
+    "title": "Informatie lezen over energiebesparing in de woning",
+    "transcript": "Hallo allemaal, vandaag wil ik het graag hebben over energiebesparing in de woning. Energie besparen is niet alleen goed voor het milieu, maar ook voor je portemonnee. Laten we beginnen met de verlichting. Gebruik je nog gloeilampen? Vervang deze dan door led-verlichting. Led-lampen zijn energiezuiniger en gaan langer mee. Vergeet ook niet om de lichten uit te doen als je een kamer verlaat. Nu, verwarming. Zet de thermostaat een graad lager dan je gewend bent. Dit kan al veel energie besparen. En trek een warme trui aan, natuurlijk! Gebruik ook de isolatie in je huis. Dubbel glas en dakisolatie houden de warmte beter binnen. Heb je veel elektrische apparaten? Zet ze helemaal uit als je ze niet gebruikt. Stand-by modus verbruikt ook energie. En overweeg om oude apparaten te vervangen door energiezuinige modellen. Onthoud, elke kleine verandering kan helpen. Begin vandaag nog met energie besparen! Het is beter voor de aarde en je kunt er ook geld mee besparen.",
+    "questions": [
+      {
+        "question": "Waarom is energie besparen goed volgens de spreker?",
+        "options": [
+          "Het is goed voor de gezondheid",
+          "Het is goed voor het milieu en je portemonnee",
+          "Het is goed voor het onderhoud van het huis",
+          "Het is goed voor de decoratie van het huis"
+        ],
+        "correctAnswer": "Het is goed voor het milieu en je portemonnee"
+      },
+      {
+        "question": "Wat kun je doen om de verlichting in je huis energiezuiniger te maken?",
+        "options": [
+          "Vervang gloeilampen door led-verlichting",
+          "Zet de lichten aan als je een kamer verlaat",
+          "Gebruik meer gloeilampen",
+          "Zet de lichten aan in de hele woning"
+        ],
+        "correctAnswer": "Vervang gloeilampen door led-verlichting"
+      },
+      {
+        "question": "Hoe kun je energie besparen met de verwarming?",
+        "options": [
+          "Zet de thermostaat hoger dan je gewend bent",
+          "Zet de thermostaat een graad lager dan je gewend bent",
+          "Zet de verwarming altijd op de maximale temperatuur",
+          "Gebruik geen verwarming in huis"
+        ],
+        "correctAnswer": "Zet de thermostaat een graad lager dan je gewend bent"
+      },
+      {
+        "question": "Wat wordt aanbevolen om te doen met elektrische apparaten om energie te besparen?",
+        "options": [
+          "Gebruik ze altijd op de hoogste instelling",
+          "Zet ze op stand-by modus als je ze niet gebruikt",
+          "Vervang oude apparaten door energiezuinige modellen",
+          "Gebruik ze zo vaak mogelijk"
+        ],
+        "correctAnswer": "Vervang oude apparaten door energiezuinige modellen"
+      },
+      {
+        "question": "Wat is het voordeel van het gebruik van led-lampen volgens de spreker?",
+        "options": [
+          "Ze zijn goedkoper",
+          "Ze zijn energiezuiniger en gaan langer mee",
+          "Ze geven meer licht",
+          "Ze zijn groter dan gewone gloeilampen"
+        ],
+        "correctAnswer": "Ze zijn energiezuiniger en gaan langer mee"
+      }
+    ],
+    "audioFile": "audio/ec86317b-d072-4f8c-b6cf-b3c094b94893.mp3"
+  },
+  {
+    "id": "ceab47bb-97fd-4a9f-a4c5-c7ec58e73569",
+    "title": "Informatie lezen over speelregels in een speeltuin",
+    "transcript": "Hallo allemaal, welkom in onze mooie speeltuin! Hier kunnen kinderen veilig spelen. Maar er zijn wel een paar regels. Eerst, de speeltuin is open van zonsopgang tot zonsondergang. Spelen in de nacht is niet toegestaan. Dan, volwassenen mogen alleen binnenkomen als ze een kind bij zich hebben. Ook, gooi je afval in de prullenbak. We willen de speeltuin schoon houden. En natuurlijk, wees altijd aardig voor andere kinderen. Geen vechten of schreeuwen. En het allerbelangrijkste, heb plezier! Kinderen kunnen van de glijbaan glijden, schommelen op de schommels, en klimmen op de klimrekken. Maar wees altijd voorzichtig. Als er een probleem is, vraag dan een volwassene om hulp. Geniet van je tijd in de speeltuin!",
+    "questions": [
+      {
+        "question": "Wanneer is de speeltuin open?",
+        "options": [
+          "Van zonsondergang tot zonsopgang",
+          "24 uur per dag",
+          "Van zonsopgang tot zonsondergang",
+          "Alleen in de middag"
+        ],
+        "correctAnswer": "Van zonsopgang tot zonsondergang"
+      },
+      {
+        "question": "Wie mogen de speeltuin betreden?",
+        "options": [
+          "Alleen kinderen",
+          "Alleen volwassenen",
+          "Volwassenen als ze een kind bij zich hebben",
+          "Iedereen"
+        ],
+        "correctAnswer": "Volwassenen als ze een kind bij zich hebben"
+      },
+      {
+        "question": "Wat moeten kinderen doen met hun afval?",
+        "options": [
+          "Laat het op de grond vallen",
+          "Neem het mee naar huis",
+          "Gooi het in de prullenbak",
+          "Geef het aan een volwassene"
+        ],
+        "correctAnswer": "Gooi het in de prullenbak"
+      },
+      {
+        "question": "Wat is het belangrijkste in de speeltuin?",
+        "options": [
+          "Om te schreeuwen",
+          "Om te vechten",
+          "Om plezier te hebben",
+          "Om afval te gooien"
+        ],
+        "correctAnswer": "Om plezier te hebben"
+      },
+      {
+        "question": "Wat moeten kinderen doen als er een probleem is?",
+        "options": [
+          "Ze moeten het zelf oplossen",
+          "Ze moeten een volwassene om hulp vragen",
+          "Ze moeten naar huis gaan",
+          "Ze moeten blijven spelen"
+        ],
+        "correctAnswer": "Ze moeten een volwassene om hulp vragen"
+      }
+    ],
+    "audioFile": "audio/ceab47bb-97fd-4a9f-a4c5-c7ec58e73569.mp3"
+  },
+  {
+    "id": "e450437a-ecaf-45fb-8b09-b7fb554f2007",
+    "title": "Informatie vinden over afval scheiden",
+    "transcript": "Hallo allemaal, vandaag gaan we het hebben over afval scheiden. Het is belangrijk voor het milieu om ons afval goed te scheiden. We hebben vier verschillende bakken: groen, blauw, grijs en oranje. In de groene bak doen we groente-, fruit- en tuinafval. Dit wordt ook wel gft-afval genoemd. In de blauwe bak doen we papier en karton. De grijze bak is voor restafval. Dit is het afval dat overblijft na het scheiden. En in de oranje bak doen we plastic, blik en drinkpakken. Deze bak wordt ook wel de pmd-bak genoemd. Let op: glas en elektrische apparaten mogen niet in deze bakken. Voor glas zijn er speciale glasbakken in de stad. Elektrische apparaten kunt u inleveren bij een elektronicawinkel of bij het afvalbrengstation. Wilt u meer weten over afval scheiden? Kijk dan op de website van de gemeente. Daar staat alle informatie.",
+    "questions": [
+      {
+        "question": "Wat doen we in de groene bak?",
+        "options": [
+          "Papier en karton",
+          "Plastic, blik en drinkpakken",
+          "Groente-, fruit- en tuinafval",
+          "Restafval"
+        ],
+        "correctAnswer": "Groente-, fruit- en tuinafval"
+      },
+      {
+        "question": "Waar kunt u glas inleveren?",
+        "options": [
+          "In de blauwe bak",
+          "Bij een elektronicawinkel",
+          "In speciale glasbakken in de stad",
+          "Bij het afvalbrengstation"
+        ],
+        "correctAnswer": "In speciale glasbakken in de stad"
+      },
+      {
+        "question": "Welk type afval wordt genoemd als restafval?",
+        "options": [
+          "Het afval dat overblijft na het scheiden",
+          "Groente-, fruit- en tuinafval",
+          "Papier en karton",
+          "Plastic, blik en drinkpakken"
+        ],
+        "correctAnswer": "Het afval dat overblijft na het scheiden"
+      },
+      {
+        "question": "Waar kunt u meer informatie vinden over afval scheiden?",
+        "options": [
+          "In de krant",
+          "Op de website van de gemeente",
+          "Bij het afvalbrengstation",
+          "In een boek"
+        ],
+        "correctAnswer": "Op de website van de gemeente"
+      },
+      {
+        "question": "Wat is een andere naam voor de oranje bak?",
+        "options": [
+          "De kartonbak",
+          "De gft-bak",
+          "De pmd-bak",
+          "De restafvalbak"
+        ],
+        "correctAnswer": "De pmd-bak"
+      }
+    ],
+    "audioFile": "audio/e450437a-ecaf-45fb-8b09-b7fb554f2007.mp3"
+  },
+  {
+    "id": "e1004756-1428-4bc0-8d71-c81d6558bc9c",
+    "title": "Informatie zoeken over een buurtbibliotheek",
+    "transcript": "Hallo, ik ben Peter en ik woon net in deze buurt. Ik hou van lezen en ik wil graag weten of er een bibliotheek in de buurt is. Ah, daar is iemand. Goedemiddag, ik ben nieuw hier. Is er een bibliotheek dichtbij? Ja? Geweldig! Kunt u mij vertellen waar het is? En wat zijn de openingstijden? Ah, van maandag tot vrijdag van 10 tot 17 uur. En op zaterdag? Gesloten, oké. En hoe zit het met zondag? Open van 12 tot 16 uur, perfect. En kan ik ook boeken reserveren? Ja, online, dat is handig. Dank u wel voor uw hulp. Ik ga nu naar de bibliotheek om wat boeken te lenen. Tot ziens!",
+    "questions": [
+      {
+        "question": "Waar woont Peter?",
+        "options": [
+          "In een oude buurt",
+          "In een nieuwe buurt",
+          "In het stadscentrum",
+          "In een buitenwijk"
+        ],
+        "correctAnswer": "In een nieuwe buurt"
+      },
+      {
+        "question": "Wanneer is de bibliotheek gesloten?",
+        "options": [
+          "Op zondag",
+          "Op zaterdag",
+          "Op vrijdag",
+          "Op maandag"
+        ],
+        "correctAnswer": "Op zaterdag"
+      },
+      {
+        "question": "Hoe laat is de bibliotheek op zondag open?",
+        "options": [
+          "Van 10 tot 17 uur",
+          "Van 12 tot 16 uur",
+          "Van 9 tot 15 uur",
+          "Van 8 tot 20 uur"
+        ],
+        "correctAnswer": "Van 12 tot 16 uur"
+      },
+      {
+        "question": "Hoe kan Peter boeken reserveren in de bibliotheek?",
+        "options": [
+          "Via e-mail",
+          "Via telefoon",
+          "Online",
+          "Per post"
+        ],
+        "correctAnswer": "Online"
+      },
+      {
+        "question": "Wat gaat Peter nu doen?",
+        "options": [
+          "Peter gaat naar huis",
+          "Peter gaat naar de supermarkt",
+          "Peter gaat naar de bibliotheek",
+          "Peter gaat naar het park"
+        ],
+        "correctAnswer": "Peter gaat naar de bibliotheek"
+      }
+    ],
+    "audioFile": "audio/e1004756-1428-4bc0-8d71-c81d6558bc9c.mp3"
+  },
+  {
+    "id": "cdc8d53e-f290-4826-9f5e-30de015bac99",
+    "title": "Informatie zoeken over een buurtpreventieteam",
+    "transcript": "Hallo, ben je geïnteresseerd in de veiligheid van je buurt? Heb je ooit gedacht aan het toetreden tot een buurtpreventieteam? Een buurtpreventieteam is een groep mensen uit dezelfde buurt die samenwerken om hun buurt veiliger te maken. Ze houden een oogje in het zeil en melden verdachte situaties aan de politie. In onze stad zijn er verschillende buurtpreventieteams. Elk team bestaat uit vrijwilligers die op verschillende momenten van de dag en nacht actief zijn. Je hoeft geen speciale vaardigheden te hebben om lid te worden, maar het is belangrijk dat je betrouwbaar bent en dat je een goede relatie hebt met je buurtgenoten. Als je interesse hebt om deel te nemen aan een buurtpreventieteam, kun je contact opnemen met de gemeente of bezoek de website voor meer informatie. Je kunt ook een informatiebijeenkomst bijwonen om meer te leren over het werk van een buurtpreventieteam. Samen kunnen we onze buurt veiliger maken!",
+    "questions": [
+      {
+        "question": "Wat is een buurtpreventieteam?",
+        "options": [
+          "Een groep mensen die politieagenten zijn.",
+          "Een groep mensen uit dezelfde buurt die samenwerken om hun buurt veiliger te maken.",
+          "Een groep mensen die samenwerken om een feest in de buurt te organiseren.",
+          "Een groep mensen die samenwerken om een nieuwe school in de buurt te bouwen."
+        ],
+        "correctAnswer": "Een groep mensen uit dezelfde buurt die samenwerken om hun buurt veiliger te maken."
+      },
+      {
+        "question": "Wanneer zijn de vrijwilligers van een buurtpreventieteam actief?",
+        "options": [
+          "Alleen tijdens de dag.",
+          "Alleen tijdens de nacht.",
+          "Op verschillende momenten van de dag en nacht.",
+          "Alleen in het weekend."
+        ],
+        "correctAnswer": "Op verschillende momenten van de dag en nacht."
+      },
+      {
+        "question": "Welke eigenschappen moet je hebben om lid te worden van een buurtpreventieteam?",
+        "options": [
+          "Je moet speciale vaardigheden hebben.",
+          "Je moet betrouwbaar zijn en een goede relatie hebben met je buurtgenoten.",
+          "Je moet in de buurt wonen voor minstens tien jaar.",
+          "Je moet een oud-politieagent zijn."
+        ],
+        "correctAnswer": "Je moet betrouwbaar zijn en een goede relatie hebben met je buurtgenoten."
+      },
+      {
+        "question": "Hoe kun je meer informatie krijgen over het buurtpreventieteam?",
+        "options": [
+          "Door contact op te nemen met de gemeente of de website te bezoeken.",
+          "Door een e-mail te sturen naar de burgemeester.",
+          "Door de lokale krant te lezen.",
+          "Door een brief te sturen naar het stadhuis."
+        ],
+        "correctAnswer": "Door contact op te nemen met de gemeente of de website te bezoeken."
+      }
+    ],
+    "audioFile": "audio/cdc8d53e-f290-4826-9f5e-30de015bac99.mp3"
+  },
+  {
+    "id": "0102c1d8-cc5c-4c31-aecd-b66a8da466c9",
+    "title": "Informatie zoeken over een gemeentelijke subsidie",
+    "transcript": "Hallo luisteraars, ik ben Hans en ik werk op het gemeentehuis. Vandaag wil ik met jullie praten over gemeentelijke subsidies. Wist je dat onze gemeente subsidies geeft aan lokale projecten? Dit kunnen projecten zijn op het gebied van kunst, cultuur, sport, of sociale projecten. Als je geïnteresseerd bent in een subsidie, moet je een aanvraag indienen bij de gemeente. In deze aanvraag vermeld je wat het doel van je project is, hoeveel geld je nodig hebt en hoe je het geld gaat gebruiken. De aanvraag moet je indienen voor 1 maart van het jaar dat je de subsidie wilt ontvangen. Je kunt het formulier downloaden van onze gemeentewebsite. Na het indienen van je aanvraag, krijg je binnen zes weken bericht of je subsidie krijgt. Wees er snel bij, want er is een beperkt budget voor subsidies en het geld kan snel op zijn. Als je hulp nodig hebt bij je aanvraag, kun je altijd contact opnemen met ons kantoor. Onze contactgegevens vind je op de website. Veel succes met je aanvraag!",
+    "questions": [
+      {
+        "question": "Waar werkt Hans?",
+        "options": [
+          "Bij een sportclub",
+          "Op het gemeentehuis",
+          "Bij een school",
+          "In een museum"
+        ],
+        "correctAnswer": "Op het gemeentehuis"
+      },
+      {
+        "question": "Wanneer moet je een subsidieaanvraag indienen?",
+        "options": [
+          "Voor 1 januari",
+          "Voor 1 mei",
+          "Voor 1 maart",
+          "Voor 1 juli"
+        ],
+        "correctAnswer": "Voor 1 maart"
+      },
+      {
+        "question": "Wat moet in de subsidieaanvraag vermeld worden?",
+        "options": [
+          "Het doel van je project, hoeveel geld je nodig hebt en hoe je de subsidie gaat gebruiken",
+          "Alleen het doel van je project",
+          "Alleen hoeveel geld je nodig hebt",
+          "Alleen hoe je de subsidie gaat gebruiken"
+        ],
+        "correctAnswer": "Het doel van je project, hoeveel geld je nodig hebt en hoe je de subsidie gaat gebruiken"
+      },
+      {
+        "question": "Waar kan je het aanvraagformulier voor een subsidie vinden?",
+        "options": [
+          "In het gemeentehuis",
+          "In de bibliotheek",
+          "Op de gemeentewebsite",
+          "In de supermarkt"
+        ],
+        "correctAnswer": "Op de gemeentewebsite"
+      },
+      {
+        "question": "Hoe lang duurt het voordat je bericht krijgt over je subsidieaanvraag?",
+        "options": [
+          "Binnen twee weken",
+          "Binnen zes weken",
+          "Binnen tien weken",
+          "Binnen twaalf weken"
+        ],
+        "correctAnswer": "Binnen zes weken"
+      }
+    ],
+    "audioFile": "audio/0102c1d8-cc5c-4c31-aecd-b66a8da466c9.mp3"
+  },
+  {
+    "id": "123fbc74-801f-41e8-9336-2b6ce4c050b2",
+    "title": "Informatie zoeken over fietsstallingen in de stad",
+    "transcript": "Hallo, ik ben Jeroen en ik woon in Utrecht. In onze stad zijn er veel fietsen en daarom zijn er ook veel fietsstallingen. Maar soms is het moeilijk om een plek te vinden om je fiets te parkeren. Ik gebruik een app op mijn telefoon om de dichtstbijzijnde fietsstalling te vinden. Het is heel handig. De app toont alle fietsstallingen in de stad en hoeveel plekken er nog vrij zijn. Sommige fietsstallingen zijn gratis en sommige niet. De app toont ook de prijzen. Als ik geen plek kan vinden in de fietsstallingen, dan zet ik mijn fiets bij een fietsrek. Maar ik moet oppassen, want soms worden fietsen gestolen. Daarom gebruik ik altijd een goed slot. Het is belangrijk om je fiets goed te beveiligen. Als je in Utrecht woont, heb je echt een fiets nodig. Het is de beste manier om rond te reizen in de stad.",
+    "questions": [
+      {
+        "question": "Waar woont Jeroen?",
+        "options": [
+          "In Amsterdam",
+          "In Rotterdam",
+          "In Utrecht",
+          "In Den Haag"
+        ],
+        "correctAnswer": "In Utrecht"
+      },
+      {
+        "question": "Wat gebruikt Jeroen om een fietsstalling te vinden?",
+        "options": [
+          "Een kaart",
+          "Een app op zijn telefoon",
+          "Hij vraagt het aan mensen",
+          "Hij zoekt het op internet"
+        ],
+        "correctAnswer": "Een app op zijn telefoon"
+      },
+      {
+        "question": "Wat doet Jeroen als hij geen plek kan vinden in de fietsstallingen?",
+        "options": [
+          "Hij laat zijn fiets thuis",
+          "Hij neemt de bus",
+          "Hij zet zijn fiets bij een fietsrek",
+          "Hij loopt te voet"
+        ],
+        "correctAnswer": "Hij zet zijn fiets bij een fietsrek"
+      },
+      {
+        "question": "Waarom moet Jeroen oppassen met zijn fiets?",
+        "options": [
+          "Omdat de fiets oud is",
+          "Omdat de fiets vaak kapot gaat",
+          "Omdat soms fietsen gestolen worden",
+          "Omdat hij de fiets vaak vergeet"
+        ],
+        "correctAnswer": "Omdat soms fietsen gestolen worden"
+      },
+      {
+        "question": "Wat is volgens Jeroen de beste manier om rond te reizen in Utrecht?",
+        "options": [
+          "Met de auto",
+          "Met het openbaar vervoer",
+          "Met de fiets",
+          "Te voet"
+        ],
+        "correctAnswer": "Met de fiets"
+      }
+    ],
+    "audioFile": "audio/123fbc74-801f-41e8-9336-2b6ce4c050b2.mp3"
+  },
+  {
+    "id": "211bac3e-b648-49f5-9bf7-103fe37564a8",
+    "title": "Informatie zoeken over hulp bij geldzaken in de gemeente",
+    "transcript": "Heb je problemen met je financiën? Heb je hulp nodig bij het beheren van je geld? Onze gemeente heeft een dienst die je kan helpen. Deze dienst heet de \"Geldzorgdienst\". Ze kunnen je helpen met dingen zoals het betalen van rekeningen, het besparen van geld en het maken van een begroting. Je kunt hen bereiken door te bellen naar het gemeentehuis. Het telefoonnummer is 183654482. Je kunt ook naar het gemeentehuis komen. Het adres is Pleinstraat 1. Het gemeentehuis is open van maandag tot vrijdag, van 09:00 uur tot 17:00 uur. Maar let op, op woensdag is het gemeentehuis 's middags gesloten. Dus als je op woensdag wilt komen, kom dan in de ochtend. Ze zullen blij zijn om je te helpen. Vergeet niet, je bent niet alleen. Er is hulp beschikbaar.",
+    "questions": [
+      {
+        "question": "Wat is de dienst die de gemeente aanbiedt voor mensen die hulp nodig hebben met financiën?",
+        "options": [
+          "Belastingdienst",
+          "Geldzorgdienst",
+          "Financiële assistentie",
+          "Gemeentehuisdienst"
+        ],
+        "correctAnswer": "Geldzorgdienst"
+      },
+      {
+        "question": "Wanneer is het gemeentehuis 's middags gesloten?",
+        "options": [
+          "Op maandag",
+          "Op dinsdag",
+          "Op woensdag",
+          "Op vrijdag"
+        ],
+        "correctAnswer": "Op woensdag"
+      },
+      {
+        "question": "Hoe kun je de Geldzorgdienst bereiken?",
+        "options": [
+          "Door te mailen naar het gemeentehuis",
+          "Door te bellen naar het gemeentehuis",
+          "Door het invullen van een online formulier",
+          "Door een brief te sturen naar het gemeentehuis"
+        ],
+        "correctAnswer": "Door te bellen naar het gemeentehuis"
+      },
+      {
+        "question": "Wat is het adres van het gemeentehuis?",
+        "options": [
+          "Pleinstraat 1",
+          "Pleinstraat 2",
+          "Gemeenteplein 1",
+          "Gemeenteplein 2"
+        ],
+        "correctAnswer": "Pleinstraat 1"
+      },
+      {
+        "question": "Hoe kan de Geldzorgdienst je helpen?",
+        "options": [
+          "Met het vinden van een baan",
+          "Met het betalen van rekeningen, het besparen van geld en het maken van een begroting",
+          "Met het aanvragen van een lening",
+          "Met het kopen van een huis"
+        ],
+        "correctAnswer": "Met het betalen van rekeningen, het besparen van geld en het maken van een begroting"
+      }
+    ],
+    "audioFile": "audio/211bac3e-b648-49f5-9bf7-103fe37564a8.mp3"
+  },
+  {
+    "id": "419dc0cd-678f-4bdb-b0e3-f4dabf91631d",
+    "title": "Informatie zoeken over parkeerregels in de straat",
+    "transcript": "Hallo allemaal! Ik ben nieuw in deze buurt en ik heb een vraag over de parkeerregels hier. Ik heb gehoord dat hier verschillende parkeerzones zijn. Kunt u mij vertellen hoe dit werkt? Ik heb een auto en ik wil weten waar ik kan parkeren. Ik wil geen parkeerboete krijgen. En hoe zit het met bezoekers? Hebben zij ook een parkeervergunning nodig of is er een speciale regeling voor hen? Ik heb ook gehoord dat er op sommige dagen van de week een schoonmaakdag is en dat we dan niet op straat mogen parkeren. Klopt dat? En als het zo is, op welke dagen is het dan? Ik wil graag goed op de hoogte zijn van de regels om problemen te voorkomen. Alvast bedankt voor uw hulp!",
+    "questions": [
+      {
+        "question": "Wat wil de spreker weten over het parkeren?",
+        "options": [
+          "Hij wil weten hoeveel het kost om te parkeren.",
+          "Hij wil weten waar hij kan parkeren en de parkeerregels.",
+          "Hij wil weten hoe hij een parkeervergunning kan krijgen.",
+          "Hij wil weten hoe laat hij kan parkeren."
+        ],
+        "correctAnswer": "Hij wil weten waar hij kan parkeren en de parkeerregels."
+      },
+      {
+        "question": "Wat wil de spreker voorkomen?",
+        "options": [
+          "Hij wil voorkomen dat hij een parkeerboete krijgt.",
+          "Hij wil voorkomen dat hij zijn auto verliest.",
+          "Hij wil voorkomen dat hij de verkeerde weg neemt.",
+          "Hij wil voorkomen dat hij te laat komt."
+        ],
+        "correctAnswer": "Hij wil voorkomen dat hij een parkeerboete krijgt."
+      },
+      {
+        "question": "Wat heeft de spreker gehoord over de parkeerregels?",
+        "options": [
+          "Hij heeft gehoord dat er verschillende parkeerzones zijn.",
+          "Hij heeft gehoord dat parkeren altijd gratis is.",
+          "Hij heeft gehoord dat je altijd en overal kunt parkeren.",
+          "Hij heeft gehoord dat er geen speciale regeling voor bezoekers is."
+        ],
+        "correctAnswer": "Hij heeft gehoord dat er verschillende parkeerzones zijn."
+      },
+      {
+        "question": "Wat wil de spreker weten over bezoekers en parkeren?",
+        "options": [
+          "Hij wil weten of bezoekers mogen parkeren.",
+          "Hij wil weten of bezoekers een parkeervergunning nodig hebben.",
+          "Hij wil weten of bezoekers op elk moment kunnen parkeren.",
+          "Hij wil weten of bezoekers in zijn auto kunnen parkeren."
+        ],
+        "correctAnswer": "Hij wil weten of bezoekers een parkeervergunning nodig hebben."
+      },
+      {
+        "question": "Wat heeft de spreker gehoord over schoonmaakdag?",
+        "options": [
+          "Hij heeft gehoord dat er op sommige dagen van de week een schoonmaakdag is.",
+          "Hij heeft gehoord dat er elke dag een schoonmaakdag is.",
+          "Hij heeft gehoord dat er geen schoonmaakdag is.",
+          "Hij heeft gehoord dat de schoonmaakdag alleen op zondag is."
+        ],
+        "correctAnswer": "Hij heeft gehoord dat er op sommige dagen van de week een schoonmaakdag is."
+      }
+    ],
+    "audioFile": "audio/419dc0cd-678f-4bdb-b0e3-f4dabf91631d.mp3"
+  },
+  {
+    "id": "6199770d-73f7-4247-b8c5-7b11939e08de",
+    "title": "Informatie zoeken over sociale hulp in de wijk",
+    "transcript": "Hallo, ik ben Lisa. Ik woon sinds kort in deze buurt en ik zoek wat informatie. Misschien kunnen jullie me helpen. Ik zoek naar sociale hulp in de wijk. Weet iemand waar ik dit kan vinden? In mijn oude buurt hadden we een wijkcentrum. Daar kon je terecht voor allerlei vragen. Bijvoorbeeld over werk, gezondheid, of als je je eenzaam voelde. Er was ook een voedselbank voor mensen die het financieel moeilijk hebben. Is er hier ook zoiets? En waar zit dat dan? Ook zoek ik naar activiteiten in de buurt. Ik wil graag nieuwe mensen leren kennen. Zijn er bijvoorbeeld clubs of verenigingen waar ik me bij kan aansluiten? En waar kan ik informatie vinden over deze dingen? Misschien is er wel een website? Ik hoor graag van jullie. Bedankt alvast voor jullie hulp.",
+    "questions": [
+      {
+        "question": "Wat is de naam van de vrouw die spreekt?",
+        "options": [
+          "Sara",
+          "Lisa",
+          "Anna",
+          "Laura"
+        ],
+        "correctAnswer": "Lisa"
+      },
+      {
+        "question": "Wat is Lisa op zoek naar in haar nieuwe buurt?",
+        "options": [
+          "Nieuwe vrienden",
+          "Een nieuwe baan",
+          "Sociale hulp en activiteiten",
+          "Een nieuwe woning"
+        ],
+        "correctAnswer": "Sociale hulp en activiteiten"
+      },
+      {
+        "question": "Wat kon Lisa doen in het wijkcentrum van haar oude buurt?",
+        "options": [
+          "Vragen stellen over werk, gezondheid en eenzaamheid",
+          "Boodschappen doen",
+          "Sporten",
+          "Studeren"
+        ],
+        "correctAnswer": "Vragen stellen over werk, gezondheid en eenzaamheid"
+      },
+      {
+        "question": "Wat wil Lisa in haar nieuwe buurt doen?",
+        "options": [
+          "Een nieuwe baan vinden",
+          "Nieuwe mensen leren kennen",
+          "Een huis kopen",
+          "Een taalcursus volgen"
+        ],
+        "correctAnswer": "Nieuwe mensen leren kennen"
+      },
+      {
+        "question": "Waar zoekt Lisa informatie over de buurt?",
+        "options": [
+          "In de bibliotheek",
+          "Op de website",
+          "In de krant",
+          "Op de radio"
+        ],
+        "correctAnswer": "Op de website"
+      }
+    ],
+    "audioFile": "audio/6199770d-73f7-4247-b8c5-7b11939e08de.mp3"
+  },
+  {
+    "id": "9e44c421-6813-4c47-af22-695c8dffcadc",
+    "title": "Informatie zoeken over subsidie voor woningisolatie",
+    "transcript": "Hallo, ik ben Jan en ik woon al vijf jaar in mijn huis. Ik wil mijn huis beter isoleren, maar dat kan best duur zijn. Daarom ben ik op zoek naar informatie over subsidies voor woningisolatie. Ik heb gehoord dat de gemeente soms helpt met de kosten. Dat zou echt geweldig zijn. Zou iemand mij kunnen vertellen waar ik deze informatie kan vinden? Ik heb al gezocht op de website van de gemeente, maar ik heb niets gevonden. Misschien keek ik op de verkeerde plek. Ik zou ook graag willen weten wat voor soort isolatie het beste is voor mijn huis. Ik denk aan dakisolatie, vloerisolatie of misschien muurisolatie. Als iemand ervaring heeft met het aanvragen van subsidies voor woningisolatie, zou ik dat graag horen. Dank je wel.",
+    "questions": [
+      {
+        "question": "Waar woont Jan al vijf jaar?",
+        "options": [
+          "In een appartement",
+          "In een hotel",
+          "In zijn huis",
+          "Bij zijn ouders"
+        ],
+        "correctAnswer": "In zijn huis"
+      },
+      {
+        "question": "Wat wil Jan verbeteren in zijn huis?",
+        "options": [
+          "De tuin",
+          "De isolatie",
+          "De keuken",
+          "De badkamer"
+        ],
+        "correctAnswer": "De isolatie"
+      },
+      {
+        "question": "Waar heeft Jan gezocht naar informatie over subsidies voor woningisolatie?",
+        "options": [
+          "In de bibliotheek",
+          "Op de website van de gemeente",
+          "In de krant",
+          "Op de radio"
+        ],
+        "correctAnswer": "Op de website van de gemeente"
+      },
+      {
+        "question": "Welke soort isolatie overweegt Jan voor zijn huis?",
+        "options": [
+          "Dakisolatie, vloerisolatie en muurisolatie",
+          "Alleen dakisolatie",
+          "Alleen vloerisolatie",
+          "Alleen muurisolatie"
+        ],
+        "correctAnswer": "Dakisolatie, vloerisolatie en muurisolatie"
+      },
+      {
+        "question": "Wie zou Jan kunnen helpen met de kosten van de isolatie?",
+        "options": [
+          "Zijn vrienden",
+          "Zijn familie",
+          "De gemeente",
+          "Zijn buren"
+        ],
+        "correctAnswer": "De gemeente"
+      }
+    ],
+    "audioFile": "audio/9e44c421-6813-4c47-af22-695c8dffcadc.mp3"
+  },
+  {
+    "id": "329b4c34-afff-4d59-8c8f-a52b0b8f7e25",
+    "title": "Informatie zoeken over veilig oversteken bij een school",
+    "transcript": "Hallo allemaal! Vandaag wil ik het hebben over een belangrijk onderwerp: veilig oversteken bij een school. Veiligheid is erg belangrijk, vooral rond scholen waar veel kinderen lopen. Er zijn verschillende dingen die je kunt doen om veilig over te steken. Eerst, kijk altijd naar links en rechts voordat je de straat oversteekt. Ten tweede, gebruik altijd het zebrapad. Het zebrapad is er om ons te helpen veilig over te steken. Ten derde, als er een verkeerslicht is, wacht dan tot het groen is voordat je oversteekt. Het is belangrijk om deze regels te volgen, niet alleen voor je eigen veiligheid, maar ook voor de veiligheid van anderen. Vergeet niet dat we allemaal een rol spelen in het houden van onze straten veilig. Dus, de volgende keer dat je bij een school bent, vergeet dan niet deze regels te volgen. Denk eraan, veiligheid gaat voor alles. Dank jullie wel.",
+    "questions": [
+      {
+        "question": "Waarover wil de spreker het hebben?",
+        "options": [
+          "Over het belang van het zebrapad",
+          "Over veilig oversteken bij een school",
+          "Over de werking van verkeerslichten",
+          "Over het belang van veiligheid bij het bouwen van scholen"
+        ],
+        "correctAnswer": "Over veilig oversteken bij een school"
+      },
+      {
+        "question": "Wat is een ding dat je kunt doen om veilig over te steken?",
+        "options": [
+          "Altijd naar links en rechts kijken",
+          "Zomaar de straat oversteken",
+          "Het zebrapad vermijden",
+          "Oversteken als het verkeerslicht rood is"
+        ],
+        "correctAnswer": "Altijd naar links en rechts kijken"
+      },
+      {
+        "question": "Waarom is het belangrijk om de regels te volgen?",
+        "options": [
+          "Alleen voor je eigen veiligheid",
+          "Alleen voor de veiligheid van anderen",
+          "Voor zowel je eigen veiligheid als de veiligheid van anderen",
+          "Omdat de regels er zijn"
+        ],
+        "correctAnswer": "Voor zowel je eigen veiligheid als de veiligheid van anderen"
+      },
+      {
+        "question": "Wat moet je doen als er een verkeerslicht is?",
+        "options": [
+          "Oversteken wanneer het verkeerslicht rood is",
+          "Wachten tot het verkeerslicht groen is",
+          "Oversteken zonder naar het verkeerslicht te kijken",
+          "Het verkeerslicht negeren"
+        ],
+        "correctAnswer": "Wachten tot het verkeerslicht groen is"
+      },
+      {
+        "question": "Waarvoor is het zebrapad?",
+        "options": [
+          "Om het verkeer te reguleren",
+          "Om ons te helpen veilig over te steken",
+          "Om de straat mooi te maken",
+          "Om auto's te laten stoppen"
+        ],
+        "correctAnswer": "Om ons te helpen veilig over te steken"
+      }
+    ],
+    "audioFile": "audio/329b4c34-afff-4d59-8c8f-a52b0b8f7e25.mp3"
+  },
+  {
+    "id": "0d3d3794-1fa1-44a7-9a35-c871d685aeb1",
+    "title": "Informatie zoeken over werkzaamheden aan de weg in de buurt",
+    "transcript": "Hallo allemaal, ik wil iets met jullie delen. In onze buurt gaan ze volgende week beginnen met wegwerkzaamheden. Ze gaan de straat opnieuw bestraten en de stoepen verbeteren. Dit betekent dat er wat overlast kan zijn. De werkzaamheden beginnen om 7.00 uur 's ochtends en eindigen om 16.00 uur 's middags. Dit gaat zo door van maandag tot en met vrijdag. Let op, tijdens deze werkzaamheden is de straat afgesloten voor verkeer. Dat betekent dat je je auto ergens anders moet parkeren. Er wordt een tijdelijke parkeerplaats ingericht bij het park aan het einde van de straat. Dit is ongeveer vijf minuten lopen. Ook wordt de bushalte tijdelijk verplaatst naar de hoofdstraat. Dat is ongeveer tien minuten lopen vanaf hier. De werkzaamheden duren naar verwachting vier weken. Als er geen onverwachte problemen zijn, is alles voor de zomervakantie klaar. Als je vragen hebt, kun je contact opnemen met de gemeente. Het telefoonnummer van de gemeente staat op de brief die we allemaal hebben ontvangen.",
+    "questions": [
+      {
+        "question": "Wat gaan ze volgende week in onze buurt doen?",
+        "options": [
+          "Ze gaan een nieuw park bouwen",
+          "Ze gaan de straat opnieuw bestraten en de stoepen verbeteren",
+          "Ze gaan een nieuw winkelcentrum bouwen",
+          "Ze gaan een feest organiseren"
+        ],
+        "correctAnswer": "Ze gaan de straat opnieuw bestraten en de stoepen verbeteren"
+      },
+      {
+        "question": "Hoe laat beginnen de werkzaamheden 's ochtends?",
+        "options": [
+          "Om 6.00 uur",
+          "Om 7.00 uur",
+          "Om 8.00 uur",
+          "Om 9.00 uur"
+        ],
+        "correctAnswer": "Om 7.00 uur"
+      },
+      {
+        "question": "Waar moet je je auto parkeren tijdens de werkzaamheden?",
+        "options": [
+          "Je kunt je auto parkeren in de straat",
+          "Je moet je auto parkeren bij het park aan het einde van de straat",
+          "Je kunt je auto parkeren bij het winkelcentrum",
+          "Je kunt je auto parkeren in de garage"
+        ],
+        "correctAnswer": "Je moet je auto parkeren bij het park aan het einde van de straat"
+      },
+      {
+        "question": "Waar wordt de bushalte tijdelijk naar verplaatst?",
+        "options": [
+          "Naar het park aan het einde van de straat",
+          "Naar de garage",
+          "Naar de hoofdstraat",
+          "Naar het winkelcentrum"
+        ],
+        "correctAnswer": "Naar de hoofdstraat"
+      },
+      {
+        "question": "Hoe lang duren de werkzaamheden naar verwachting?",
+        "options": [
+          "Een week",
+          "Twee weken",
+          "Drie weken",
+          "Vier weken"
+        ],
+        "correctAnswer": "Vier weken"
+      }
+    ],
+    "audioFile": "audio/0d3d3794-1fa1-44a7-9a35-c871d685aeb1.mp3"
+  },
+  {
+    "id": "23456a02-da11-4ed3-8bf6-eadc36e4010e",
+    "title": "Instructies krijgen van een leidinggevende",
+    "transcript": "Hallo team! Ik hoop dat het goed gaat met iedereen. Vandaag wil ik met jullie praten over de nieuwe taken die we hebben. We starten met een nieuw project en ik heb jullie hulp nodig. Ten eerste, hebben we vijf mensen nodig voor het onderzoeksteam. Jullie zullen informatie verzamelen over onze concurrenten. Dit is erg belangrijk, dus zorg ervoor dat jullie grondig werk leveren. Ten tweede, ik wil dat twee van jullie werken aan het verbeteren van onze website. We moeten ervoor zorgen dat onze klanten een goede ervaring hebben als ze onze site bezoeken. Ten derde, we hebben drie mensen nodig om te werken aan klantenservice. Jullie taak is om ervoor te zorgen dat onze klanten tevreden zijn en hulp krijgen wanneer ze het nodig hebben. Als je geïnteresseerd bent in een van deze taken, stuur me dan een e-mail of kom naar mijn kantoor. We zullen dan de details bespreken. Onthoud dat dit project belangrijk is voor ons bedrijf. Ik weet dat jullie allemaal geweldig werk zullen leveren. Dank je wel.",
+    "questions": [
+      {
+        "question": "Hoeveel mensen zijn nodig voor het onderzoeksteam?",
+        "options": [
+          "Twee mensen",
+          "Drie mensen",
+          "Vijf mensen",
+          "Vier mensen"
+        ],
+        "correctAnswer": "Vijf mensen"
+      },
+      {
+        "question": "Wat is de taak van de mensen die aan de website werken?",
+        "options": [
+          "Informatie verzamelen",
+          "De klantenservice verbeteren",
+          "De website verbeteren",
+          "De taken verdelen"
+        ],
+        "correctAnswer": "De website verbeteren"
+      },
+      {
+        "question": "Hoe kunnen mensen hun interesse in een taak tonen?",
+        "options": [
+          "Door een e-mail te sturen",
+          "Door naar het kantoor te komen",
+          "Beide opties zijn correct",
+          "Geen van de opties is correct"
+        ],
+        "correctAnswer": "Beide opties zijn correct"
+      },
+      {
+        "question": "Wat is de taak van de mensen die aan de klantenservice werken?",
+        "options": [
+          "Klanten helpen wanneer ze het nodig hebben",
+          "Zorgen dat de klanten tevreden zijn",
+          "Beide opties zijn correct",
+          "Geen van de opties is correct"
+        ],
+        "correctAnswer": "Beide opties zijn correct"
+      }
+    ],
+    "audioFile": "audio/23456a02-da11-4ed3-8bf6-eadc36e4010e.mp3"
+  },
+  {
+    "id": "7a00ee93-b436-449e-ac1d-5cb2b8f8a5b1",
+    "title": "Instructies lezen over wat te doen bij een noodsituatie in de wijk",
+    "transcript": "Hallo allemaal, vandaag wil ik het hebben over een belangrijk onderwerp: wat te doen bij een noodsituatie in onze wijk. Als er een noodsituatie is, moeten we kalm blijven en snel handelen. Hier zijn enkele stappen die je moet volgen. Eerst, bel het noodnummer 112. Vertel de operator wat er aan de hand is en waar je precies bent. Geef zoveel mogelijk details. Ten tweede, blijf veilig. Als het een brand is, ga dan onmiddellijk het huis uit. Als het een overstroming is, ga dan naar de hoogste verdieping van je huis. Daarna, help je buren als het veilig is. Sommige mensen hebben misschien extra hulp nodig, zoals ouderen of mensen met een handicap. Ten slotte, volg de aanwijzingen van de hulpdiensten. Zij weten wat het beste is om te doen in elke situatie. Onthoud, we zijn allemaal onderdeel van deze gemeenschap. In een noodsituatie moeten we elkaar helpen. Dank je wel voor je aandacht. Laten we hopen dat we deze instructies nooit hoeven te gebruiken. Maar het is goed om voorbereid te zijn.",
+    "questions": [
+      {
+        "question": "Wat moet je als eerste doen bij een noodsituatie?",
+        "options": [
+          "Help je buren",
+          "Bel het noodnummer 112",
+          "Ga naar de hoogste verdieping van je huis",
+          "Verlaat het huis onmiddellijk"
+        ],
+        "correctAnswer": "Bel het noodnummer 112"
+      },
+      {
+        "question": "Wat moet je doen als er een overstroming is?",
+        "options": [
+          "Ga naar de hoogste verdieping van je huis",
+          "Bel het noodnummer 112",
+          "Help je buren",
+          "Verlaat het huis onmiddellijk"
+        ],
+        "correctAnswer": "Ga naar de hoogste verdieping van je huis"
+      },
+      {
+        "question": "Wie moet je helpen als het veilig is?",
+        "options": [
+          "Je buren",
+          "De hulpdiensten",
+          "De politie",
+          "Niemand"
+        ],
+        "correctAnswer": "Je buren"
+      },
+      {
+        "question": "Wie weet het beste wat te doen bij een noodsituatie?",
+        "options": [
+          "Je buren",
+          "Jijzelf",
+          "De hulpdiensten",
+          "Je familie"
+        ],
+        "correctAnswer": "De hulpdiensten"
+      },
+      {
+        "question": "Waarom is het belangrijk om deze instructies te kennen?",
+        "options": [
+          "Om voorbereid te zijn in geval van nood",
+          "Om je buren te helpen",
+          "Om het noodnummer 112 te bellen",
+          "Om te weten waar je heen moet in geval van overstroming"
+        ],
+        "correctAnswer": "Om voorbereid te zijn in geval van nood"
+      }
+    ],
+    "audioFile": "audio/7a00ee93-b436-449e-ac1d-5cb2b8f8a5b1.mp3"
+  },
+  {
+    "id": "33b101b9-19e5-472e-b456-2b196b52d9c9",
+    "title": "Instructies volgen voor het innemen van medicijnen",
+    "transcript": "Hallo allemaal! Vandaag wil ik het met jullie hebben over het belang van goed medicijngebruik. Het is namelijk ontzettend belangrijk dat je medicijnen op de juiste manier inneemt. Allereerst moet je altijd de instructies van de arts of apotheker volgen. Zij weten precies hoe en wanneer je het medicijn moet innemen. Sommige medicijnen moet je bijvoorbeeld met voedsel innemen, terwijl andere op een lege maag moeten worden genomen. Ook de tijd van de dag kan belangrijk zijn. Sommige medicijnen werken het best als je ze in de ochtend neemt, andere juist in de avond. En let op: stop nooit zomaar met het innemen van je medicijnen, ook niet als je je beter voelt. Als je te vroeg stopt, kunnen je klachten terugkomen. Overleg altijd met je arts of apotheker voordat je stopt met je medicijnen. Kortom, het is belangrijk om je medicijnen op de juiste manier in te nemen. Als je vragen hebt, kun je altijd terecht bij je arts of apotheker.",
+    "questions": [
+      {
+        "question": "Wie weet precies hoe en wanneer je het medicijn moet innemen?",
+        "options": [
+          "Je vrienden",
+          "Je familie",
+          "De arts of apotheker",
+          "De leraar"
+        ],
+        "correctAnswer": "De arts of apotheker"
+      },
+      {
+        "question": "Wanneer moet je stoppen met het innemen van je medicijnen?",
+        "options": [
+          "Wanneer je je beter voelt",
+          "Wanneer je geen zin meer hebt om ze in te nemen",
+          "Na overleg met je arts of apotheker",
+          "Wanneer de medicijnen op zijn"
+        ],
+        "correctAnswer": "Na overleg met je arts of apotheker"
+      },
+      {
+        "question": "Wat kan er gebeuren als je te vroeg stopt met het innemen van je medicijnen?",
+        "options": [
+          "Je kunt een prijs winnen",
+          "Je klachten kunnen terugkomen",
+          "Je kunt sneller hardlopen",
+          "Je kunt beter slapen"
+        ],
+        "correctAnswer": "Je klachten kunnen terugkomen"
+      },
+      {
+        "question": "Wat is belangrijk over de tijd van de dag voor het innemen van medicijnen?",
+        "options": [
+          "Het maakt niet uit welk tijdstip van de dag je medicijnen inneemt",
+          "Sommige medicijnen werken het best als je ze in de ochtend neemt, andere juist in de avond",
+          "Je moet je medicijnen altijd 's avonds innemen",
+          "Je moet je medicijnen altijd 's ochtends innemen"
+        ],
+        "correctAnswer": "Sommige medicijnen werken het best als je ze in de ochtend neemt, andere juist in de avond"
+      }
+    ],
+    "audioFile": "audio/33b101b9-19e5-472e-b456-2b196b52d9c9.mp3"
+  },
+  {
+    "id": "9fe888e8-5ccb-4de8-b671-4164ca1dc482",
+    "title": "Klachten uitleggen aan een arts",
+    "transcript": "Hallo iedereen! Vandaag zullen we het hebben over hoe je je symptomen aan een arts kunt uitleggen. Stel je voor, je voelt je niet zo goed. Je hebt hoofdpijn, je voelt je moe en je hebt geen eetlust. Hoe zou je dat aan een arts uitleggen? Je zou kunnen zeggen: \"Dokter, ik voel me niet goed. Ik heb hoofdpijn, ik ben moe en ik heb geen trek in eten.\" Het is belangrijk om de dokter zo duidelijk mogelijk te vertellen wat je voelt. Denk aan waar de pijn zit, hoe lang je je al zo voelt en of je nog andere symptomen hebt. Bijvoorbeeld, \"De pijn zit vooral in mijn voorhoofd. Ik voel me al een week zo. Ik heb ook last van duizeligheid.\" De dokter kan je dan beter helpen. Laten we nu een paar oefeningen doen. Ik zal een symptoom beschrijven en jullie moeten dat dan in je eigen woorden aan de dokter uitleggen. Klaar? Laten we beginnen.",
+    "questions": [
+      {
+        "question": "Wat zou je tegen de dokter zeggen als je je niet goed voelt?",
+        "options": [
+          "Dokter, ik voel me goed.",
+          "Dokter, ik voel me niet goed. Ik heb hoofdpijn, ik ben moe en ik heb geen trek in eten.",
+          "Dokter, ik voel me gelukkig.",
+          "Dokter, ik voel me verdrietig."
+        ],
+        "correctAnswer": "Dokter, ik voel me niet goed. Ik heb hoofdpijn, ik ben moe en ik heb geen trek in eten."
+      },
+      {
+        "question": "Hoe lang voel je je al zo?",
+        "options": [
+          "Ik voel me al een week zo.",
+          "Ik voel me al een dag zo.",
+          "Ik voel me al een uur zo.",
+          "Ik voel me al een maand zo."
+        ],
+        "correctAnswer": "Ik voel me al een week zo."
+      },
+      {
+        "question": "Wat is een ander symptoom dat je zou kunnen hebben?",
+        "options": [
+          "Ik heb last van duizeligheid.",
+          "Ik heb last van koorts.",
+          "Ik heb last van een loopneus.",
+          "Ik heb last van hoesten."
+        ],
+        "correctAnswer": "Ik heb last van duizeligheid."
+      },
+      {
+        "question": "Waar zit de pijn vooral?",
+        "options": [
+          "De pijn zit vooral in mijn arm.",
+          "De pijn zit vooral in mijn been.",
+          "De pijn zit vooral in mijn buik.",
+          "De pijn zit vooral in mijn voorhoofd."
+        ],
+        "correctAnswer": "De pijn zit vooral in mijn voorhoofd."
+      },
+      {
+        "question": "Wat moet je zo duidelijk mogelijk aan de dokter vertellen?",
+        "options": [
+          "Je moet je naam duidelijk aan de dokter vertellen.",
+          "Je moet je adres duidelijk aan de dokter vertellen.",
+          "Je moet je symptomen duidelijk aan de dokter vertellen.",
+          "Je moet je werk duidelijk aan de dokter vertellen."
+        ],
+        "correctAnswer": "Je moet je symptomen duidelijk aan de dokter vertellen."
+      }
+    ],
+    "audioFile": "audio/9fe888e8-5ccb-4de8-b671-4164ca1dc482.mp3"
+  },
+  {
+    "id": "f9e938c5-8287-40a4-8b80-82f7112baee2",
+    "title": "Lezen hoe je contact kunt opnemen met een wijkagent",
+    "transcript": "Hallo, wil je met de wijkagent praten? Dat is geen probleem, je kunt op verschillende manieren contact opnemen. De eenvoudigste manier is om naar het politiebureau te gaan. Maar je kunt ook een e-mail sturen. Het e-mailadres van de wijkagent is te vinden op de website van de politie. Als je liever belt, kan dat ook. Het telefoonnummer van de politie is 0900-8844. Vergeet niet je naam, adres en telefoonnummer te geven. Zo kan de wijkagent contact met je opnemen als dat nodig is. Als er iets dringends is, bel dan meteen 112. Dit is het noodnummer. Maar bel dit nummer alleen als er echt gevaar is. De wijkagent is er om te helpen en om de buurt veilig te houden. Dus aarzel niet om contact op te nemen als je hulp nodig hebt.",
+    "questions": [
+      {
+        "question": "Hoe kun je contact opnemen met de wijkagent?",
+        "options": [
+          "Door een brief te sturen",
+          "Door naar het politiebureau te gaan",
+          "Door een sms te sturen",
+          "Door een fax te sturen"
+        ],
+        "correctAnswer": "Door naar het politiebureau te gaan"
+      },
+      {
+        "question": "Wat is het e-mailadres van de wijkagent?",
+        "options": [
+          "Het e-mailadres is te vinden op de website van de politie",
+          "Het e-mailadres is 0900-8844",
+          "Het e-mailadres is te vinden in het telefoonboek",
+          "Het e-mailadres is niet beschikbaar"
+        ],
+        "correctAnswer": "Het e-mailadres is te vinden op de website van de politie"
+      },
+      {
+        "question": "Wat is het telefoonnummer van de politie?",
+        "options": [
+          "112",
+          "0900-8844",
+          "1234",
+          "5678"
+        ],
+        "correctAnswer": "0900-8844"
+      },
+      {
+        "question": "Wat moet je doen als er iets dringends is?",
+        "options": [
+          "Stuur een e-mail",
+          "Bel 0900-8844",
+          "Bel meteen 112",
+          "Ga naar het politiebureau"
+        ],
+        "correctAnswer": "Bel meteen 112"
+      },
+      {
+        "question": "Waarvoor is het noodnummer 112 bedoeld?",
+        "options": [
+          "Voor niet-dringende zaken",
+          "Om een afspraak te maken",
+          "Voor alle vragen over de politie",
+          "Alleen als er echt gevaar is"
+        ],
+        "correctAnswer": "Alleen als er echt gevaar is"
+      }
+    ],
+    "audioFile": "audio/f9e938c5-8287-40a4-8b80-82f7112baee2.mp3"
+  },
+  {
+    "id": "c9cea67e-9b5f-47d4-ad7a-36bbe17f6b57",
+    "title": "Lezen hoe je een buurthuis kunt gebruiken voor een activiteit",
+    "transcript": "Hallo, ik ben Jan en ik werk bij het buurthuis. Wil je een activiteit in het buurthuis organiseren? Dat is mogelijk! Het buurthuis is een plek voor iedereen in de buurt. Je kan hier een verjaardagsfeest, een vergadering of zelfs een kookles organiseren. Maar hoe doe je dat? Eerst moet je een aanvraag doen. Dat kan bij ons aan de balie of via onze website. Hierop vul je in wat voor soort activiteit je wil organiseren, met hoeveel personen en op welke datum. We hebben wel regels. Zo mag je na 22.00 uur geen lawaai maken en moet je alles netjes achterlaten. Als je aanvraag is goedgekeurd, kun je de ruimte komen bekijken en de sleutel ophalen. Het is belangrijk dat je je aan de regels houdt. Als alles goed gaat, kun je het buurthuis vaker gebruiken voor je activiteiten. Tot snel in het buurthuis!",
+    "questions": [
+      {
+        "question": "Wie is Jan?",
+        "options": [
+          "Hij is een bezoeker van het buurthuis",
+          "Hij is een werknemer van het buurthuis",
+          "Hij is een vrijwilliger bij het buurthuis",
+          "Hij is de eigenaar van het buurthuis"
+        ],
+        "correctAnswer": "Hij is een werknemer van het buurthuis"
+      },
+      {
+        "question": "Wat moet je doen om een activiteit in het buurthuis te organiseren?",
+        "options": [
+          "Je moet een reservering maken",
+          "Je moet een aanvraag doen",
+          "Je moet een vergunning aanvragen",
+          "Je moet betalen"
+        ],
+        "correctAnswer": "Je moet een aanvraag doen"
+      },
+      {
+        "question": "Waar kan je de aanvraag doen?",
+        "options": [
+          "Aan de balie of via de telefoon",
+          "Aan de balie of via de website",
+          "Via de website of via email",
+          "Via de telefoon of via email"
+        ],
+        "correctAnswer": "Aan de balie of via de website"
+      },
+      {
+        "question": "Wat is een van de regels van het buurthuis?",
+        "options": [
+          "Je mag na 22.00 uur geen lawaai maken",
+          "Je moet het buurthuis voor 22.00 uur verlaten",
+          "Je mag niet koken in het buurthuis",
+          "Je moet altijd een vergoeding betalen voor het gebruik van het buurthuis"
+        ],
+        "correctAnswer": "Je mag na 22.00 uur geen lawaai maken"
+      },
+      {
+        "question": "Wat gebeurt er als je aanvraag is goedgekeurd?",
+        "options": [
+          "Je kunt de ruimte komen bekijken en de sleutel ophalen",
+          "Je kunt direct beginnen met je activiteit",
+          "Je krijgt een bevestigingsmail",
+          "Je moet betalen voor de reservering"
+        ],
+        "correctAnswer": "Je kunt de ruimte komen bekijken en de sleutel ophalen"
+      }
+    ],
+    "audioFile": "audio/c9cea67e-9b5f-47d4-ad7a-36bbe17f6b57.mp3"
+  },
+  {
+    "id": "80a81730-7067-4e16-b9b0-2a9a159bc56b",
+    "title": "Lezen hoe je een straatfeest mag organiseren",
+    "transcript": "Hallo, ben je van plan om een straatfeest te organiseren? Luister dan goed naar de volgende stappen. Eerst moet je toestemming vragen aan de gemeente. Dit doe je door een vergunning aan te vragen. Je moet dit minimaal zes weken voor het feest doen. Daarna moet je overleggen met de buren. Zij moeten het er ook mee eens zijn. Denk eraan om een plan te maken voor het opruimen na het feest. Niemand wil rommel op straat achterlaten. Het is ook belangrijk om na te denken over geluidsoverlast. Je wilt niet dat mensen last hebben van het feest. Daarom is het een goed idee om 's avonds laat geen luide muziek te spelen. Denk ten slotte aan de veiligheid. Zorg dat er een EHBO-doos aanwezig is en dat er een nooduitgang is. Veel plezier met het organiseren van je straatfeest!",
+    "questions": [
+      {
+        "question": "Wat moet je eerst doen als je een straatfeest wilt organiseren?",
+        "options": [
+          "Overleggen met de buren",
+          "Een EHBO-doos klaarzetten",
+          "Toestemming vragen aan de gemeente",
+          "Een opruimplan maken"
+        ],
+        "correctAnswer": "Toestemming vragen aan de gemeente"
+      },
+      {
+        "question": "Wanneer moet je een vergunning aanvragen voor het feest?",
+        "options": [
+          "Een week voor het feest",
+          "Zes weken voor het feest",
+          "Op de dag van het feest",
+          "Twee maanden voor het feest"
+        ],
+        "correctAnswer": "Zes weken voor het feest"
+      },
+      {
+        "question": "Wat wordt aangeraden om te doen om geluidsoverlast te voorkomen?",
+        "options": [
+          "Geen muziek spelen",
+          "'s Avonds laat geen luide muziek spelen",
+          "Alleen zachte muziek spelen",
+          "Muziek spelen met koptelefoons"
+        ],
+        "correctAnswer": "'s Avonds laat geen luide muziek spelen"
+      },
+      {
+        "question": "Wat moet er aanwezig zijn voor de veiligheid tijdens het feest?",
+        "options": [
+          "Een brandblusser",
+          "Een EHBO-doos",
+          "Een beveiligingsmedewerker",
+          "Een bewakingscamera"
+        ],
+        "correctAnswer": "Een EHBO-doos"
+      },
+      {
+        "question": "Wat moet je doen na het feest?",
+        "options": [
+          "De gemeente bedanken",
+          "Het feest evalueren",
+          "De straat opruimen",
+          "De buren bedanken"
+        ],
+        "correctAnswer": "De straat opruimen"
+      }
+    ],
+    "audioFile": "audio/80a81730-7067-4e16-b9b0-2a9a159bc56b.mp3"
+  },
+  {
+    "id": "b3a538be-f3d2-4971-a796-66b91625a090",
+    "title": "Lezen hoe je hulp krijgt bij invullen van formulieren",
+    "transcript": "Hallo allemaal, goedemiddag! Vandaag gaan we het hebben over het invullen van formulieren. Weet je niet hoe je een formulier moet invullen? Geen zorgen, er is hulp beschikbaar. De gemeente biedt gratis hulp bij het invullen van formulieren. Je kunt naar het gemeentehuis gaan en vragen om hulp. Ze hebben speciale medewerkers die je kunnen helpen. Ze kunnen je bijvoorbeeld helpen met het invullen van belastingformulieren, aanvraagformulieren voor een uitkering of een formulier voor het verlengen van je paspoort. Maar let op, je moet wel een afspraak maken. Je kunt bellen naar de gemeente om een afspraak te maken, of je kunt het online doen op de website van de gemeente. Vergeet niet alle nodige documenten mee te nemen naar je afspraak. Tot de volgende keer en succes met het invullen van je formulieren!",
+    "questions": [
+      {
+        "question": "Wat is het onderwerp van de discussie vandaag?",
+        "options": [
+          "Hoe je een afspraak maakt bij de gemeente",
+          "Hoe je belastingformulieren invult",
+          "Hoe je formulieren invult",
+          "Hoe je je paspoort verlengt"
+        ],
+        "correctAnswer": "Hoe je formulieren invult"
+      },
+      {
+        "question": "Wie biedt hulp bij het invullen van formulieren?",
+        "options": [
+          "De school",
+          "De gemeente",
+          "De belastingdienst",
+          "De bibliotheek"
+        ],
+        "correctAnswer": "De gemeente"
+      },
+      {
+        "question": "Wat moet je doen voordat je hulp kunt krijgen bij het invullen van formulieren?",
+        "options": [
+          "Een formulier invullen",
+          "Een afspraak maken",
+          "Je paspoort verlengen",
+          "Belasting betalen"
+        ],
+        "correctAnswer": "Een afspraak maken"
+      },
+      {
+        "question": "Hoe kun je een afspraak maken om hulp te krijgen bij het invullen van formulieren?",
+        "options": [
+          "Je kunt een e-mail sturen",
+          "Je kunt bellen of het online doen op de website van de gemeente",
+          "Je kunt een brief schrijven",
+          "Je kunt persoonlijk naar de gemeente gaan"
+        ],
+        "correctAnswer": "Je kunt bellen of het online doen op de website van de gemeente"
+      },
+      {
+        "question": "Wat moet je niet vergeten mee te nemen naar je afspraak?",
+        "options": [
+          "Je paspoort",
+          "Je belastingformulieren",
+          "Alle nodige documenten",
+          "Je uitkeringsaanvraag"
+        ],
+        "correctAnswer": "Alle nodige documenten"
+      }
+    ],
+    "audioFile": "audio/b3a538be-f3d2-4971-a796-66b91625a090.mp3"
+  },
+  {
+    "id": "c47d6c53-d56a-41b5-bbeb-4c5560a07e7f",
+    "title": "Lezen hoe je iemand kunt aanmelden voor buurtzorg",
+    "transcript": "Hallo, ik ben Jan. Ik werk bij Buurtzorg, een organisatie die mensen helpt die zorg nodig hebben. We hebben veel ervaren verpleegkundigen en verzorgenden die graag willen helpen. Wil je iemand aanmelden voor Buurtzorg? Dat is heel makkelijk. Je kunt ons bellen op 123456789. Je kunt ook een e-mail sturen naar info@buurtzorg.nl. Vertel ons dan over de persoon die zorg nodig heeft. Hoe heet deze persoon? Hoe oud is hij of zij? Wat voor soort zorg heeft hij of zij nodig? Hoe vaak heeft deze persoon zorg nodig? We willen dit allemaal graag weten. Daarna zullen we contact met je opnemen om een afspraak te maken. We komen dan naar de persoon die zorg nodig heeft om te kijken hoe we kunnen helpen. Dank je wel voor je hulp. Samen kunnen we zorgen voor de mensen in onze buurt.",
+    "questions": [
+      {
+        "question": "Waar werkt Jan?",
+        "options": [
+          "Bij de gemeente",
+          "Bij Buurtzorg",
+          "Bij een ziekenhuis",
+          "Bij een school"
+        ],
+        "correctAnswer": "Bij Buurtzorg"
+      },
+      {
+        "question": "Hoe kun je iemand aanmelden voor Buurtzorg?",
+        "options": [
+          "Door een brief te sturen",
+          "Door te bellen of een e-mail te sturen",
+          "Door langs te gaan bij Buurtzorg",
+          "Door een formulier in te vullen op de website"
+        ],
+        "correctAnswer": "Door te bellen of een e-mail te sturen"
+      },
+      {
+        "question": "Wat moet je vertellen als je iemand aanmeldt voor Buurtzorg?",
+        "options": [
+          "Je eigen naam en adres",
+          "Over de persoon die zorg nodig heeft",
+          "Hoeveel geld je hebt",
+          "Waarom je niet zelf voor deze persoon kunt zorgen"
+        ],
+        "correctAnswer": "Over de persoon die zorg nodig heeft"
+      },
+      {
+        "question": "Wat doen ze bij Buurtzorg nadat je iemand hebt aangemeld?",
+        "options": [
+          "Ze sturen een bevestigingsbrief",
+          "Ze nemen contact op om een afspraak te maken",
+          "Ze sturen een factuur",
+          "Ze sturen direct een verpleegkundige"
+        ],
+        "correctAnswer": "Ze nemen contact op om een afspraak te maken"
+      },
+      {
+        "question": "Wat is het doel van Buurtzorg?",
+        "options": [
+          "Om mensen te helpen die zorg nodig hebben",
+          "Om mensen te leren hoe ze voor zichzelf kunnen zorgen",
+          "Om trainingen te geven aan verpleegkundigen",
+          "Om geld te verdienen"
+        ],
+        "correctAnswer": "Om mensen te helpen die zorg nodig hebben"
+      }
+    ],
+    "audioFile": "audio/c47d6c53-d56a-41b5-bbeb-4c5560a07e7f.mp3"
+  },
+  {
+    "id": "3a4d1267-3af6-40cf-beb1-a4c9aabf0d59",
+    "title": "Lezen over de regels voor verhuizing en adreswijziging",
+    "transcript": "Hallo, allemaal! Vandaag gaan we het hebben over een belangrijk onderwerp: verhuizen en adreswijziging. Als je in Nederland woont en je verhuist naar een ander huis, dan moet je dit binnen vijf dagen melden bij de gemeente waarin je nieuwe woning staat. Dit kan meestal online, maar je kunt ook naar het gemeentehuis gaan. Als je te laat bent met het doorgeven van je nieuwe adres, kun je een boete krijgen. Ook als je naar het buitenland verhuist, is het belangrijk dat je dit meldt bij de gemeente. Je doet dit minimaal vijf dagen voordat je vertrekt. Vergeet niet om ook je nieuwe adres door te geven aan je werk, school en andere belangrijke instanties. Zo blijf je altijd bereikbaar. Dat was het voor vandaag. We gaan nu verder met de volgende opdracht.",
+    "questions": [
+      {
+        "question": "Wat moet je doen als je in Nederland naar een ander huis verhuist?",
+        "options": [
+          "Je moet dit melden bij je werk en school.",
+          "Je moet dit melden bij de gemeente waarin je nieuwe woning staat.",
+          "Je moet dit melden bij de vorige eigenaar van het huis.",
+          "Je moet dit melden bij je verhuurbedrijf."
+        ],
+        "correctAnswer": "Je moet dit melden bij de gemeente waarin je nieuwe woning staat."
+      },
+      {
+        "question": "Wat gebeurt er als je te laat bent met het doorgeven van je nieuwe adres?",
+        "options": [
+          "Je kunt een beloning krijgen.",
+          "Je kunt een boete krijgen.",
+          "Je kunt een waarschuwing krijgen.",
+          "Er gebeurt niets."
+        ],
+        "correctAnswer": "Je kunt een boete krijgen."
+      },
+      {
+        "question": "Aan wie moet je ook je nieuwe adres doorgeven?",
+        "options": [
+          "Aan de vorige eigenaar van het huis.",
+          "Aan je verhuurbedrijf.",
+          "Aan je werk, school en andere belangrijke instanties.",
+          "Aan je vrienden en familie."
+        ],
+        "correctAnswer": "Aan je werk, school en andere belangrijke instanties."
+      },
+      {
+        "question": "Wanneer moet je je verhuizing naar het buitenland melden bij de gemeente?",
+        "options": [
+          "Na je verhuizing.",
+          "Op de dag van je verhuizing.",
+          "Minimaal vijf dagen voordat je vertrekt.",
+          "Een maand voordat je vertrekt."
+        ],
+        "correctAnswer": "Minimaal vijf dagen voordat je vertrekt."
+      }
+    ],
+    "audioFile": "audio/3a4d1267-3af6-40cf-beb1-a4c9aabf0d59.mp3"
+  },
+  {
+    "id": "6385ba03-48f8-4739-ac30-c3997f1e432d",
+    "title": "Lezen over opvanglocaties bij een noodsituatie",
+    "transcript": "Hallo iedereen! Vandaag gaan we het hebben over een belangrijk onderwerp: noodsituaties. Soms gebeuren er dingen die we niet kunnen voorspellen, zoals een grote brand, overstroming of een aardbeving. In zo'n geval moeten we snel naar een veilige plek gaan. In onze stad hebben we verschillende opvanglocaties voor noodgevallen. Deze plekken zijn bijvoorbeeld scholen, sporthallen en soms zelfs winkelcentra. De locaties zijn altijd groot genoeg om veel mensen te kunnen opvangen. Het is belangrijk om te weten waar deze opvanglocaties zijn. In het geval van een noodsituatie, luister naar de instructies van de hulpdiensten. Zij zullen je vertellen waar je heen moet. Als je niet zeker weet waar de dichtstbijzijnde opvanglocatie is, vraag het dan aan je buren of kijk op de website van de gemeente. Het is ook een goed idee om een noodpakket in huis te hebben, met dingen zoals eten, drinken, medicijnen en belangrijke documenten. Veiligheid is altijd het belangrijkst. Zorg dat je voorbereid bent, en blijf kalm in een noodsituatie.",
+    "questions": [
+      {
+        "question": "Wat zijn voorbeelden van noodsituaties die in de tekst worden genoemd?",
+        "options": [
+          "Een feest, een concert en een voetbalwedstrijd",
+          "Een grote brand, overstroming en een aardbeving",
+          "Een verjaardagsfeestje, een bruiloft en een picknick",
+          "Een boekenverkoop, een kunsttentoonstelling en een filmfestival"
+        ],
+        "correctAnswer": "Een grote brand, overstroming en een aardbeving"
+      },
+      {
+        "question": "Wat zijn voorbeelden van opvanglocaties in geval van een noodsituatie?",
+        "options": [
+          "Supermarkten, restaurants en bioscopen",
+          "Scholen, sporthallen en soms zelfs winkelcentra",
+          "Parken, stranden en bossen",
+          "Musea, bibliotheken en treinstations"
+        ],
+        "correctAnswer": "Scholen, sporthallen en soms zelfs winkelcentra"
+      },
+      {
+        "question": "Wat moet je doen als je niet weet waar de dichtstbijzijnde opvanglocatie is?",
+        "options": [
+          "Bel de politie",
+          "Vraag het aan je buren of kijk op de website van de gemeente",
+          "Ga naar het dichtstbijzijnde ziekenhuis",
+          "Blijf thuis en wacht op hulp"
+        ],
+        "correctAnswer": "Vraag het aan je buren of kijk op de website van de gemeente"
+      },
+      {
+        "question": "Wat is een goed idee om in huis te hebben voor een noodsituatie volgens de tekst?",
+        "options": [
+          "Een taart, kaarsen en cadeautjes",
+          "Een noodpakket met eten, drinken, medicijnen en belangrijke documenten",
+          "Een televisie, een computer en een telefoon",
+          "Boeken, tijdschriften en kranten"
+        ],
+        "correctAnswer": "Een noodpakket met eten, drinken, medicijnen en belangrijke documenten"
+      }
+    ],
+    "audioFile": "audio/6385ba03-48f8-4739-ac30-c3997f1e432d.mp3"
+  },
+  {
+    "id": "9d484719-af42-4f0c-9411-a87e7966afe2",
+    "title": "Lezen over regels bij barbecueën in de openbare ruimte",
+    "transcript": "Hallo allemaal, vandaag bespreken we de regels voor het barbecueën in openbare ruimtes in Nederland. Het is belangrijk deze regels te kennen om boetes te voorkomen en rekening te houden met anderen. Allereerst, mag je niet overal barbecueën. In sommige parken is het toegestaan, maar in andere niet. Kijk dus altijd naar de borden of check de website van de gemeente. Ten tweede, houd rekening met de rook. Zorg ervoor dat de rook niet overlast veroorzaakt voor andere mensen in het park. En ten derde, ruim alles op na het barbecueën. Laat geen afval achter en doof de barbecue volledig. Vergeet niet dat je verantwoordelijk bent voor je eigen veiligheid en die van anderen. Als je deze regels volgt, kun je genieten van een leuke en veilige barbecue in de openbare ruimte.",
+    "questions": [
+      {
+        "question": "Waar kunt u controleren of u in een park mag barbecueën?",
+        "options": [
+          "Op het nieuws",
+          "Op de borden in het park of op de website van de gemeente",
+          "In een kookboek",
+          "Bij de brandweer"
+        ],
+        "correctAnswer": "Op de borden in het park of op de website van de gemeente"
+      },
+      {
+        "question": "Wat moet je doen om te voorkomen dat de rook van de barbecue overlast veroorzaakt voor anderen?",
+        "options": [
+          "Niet barbecueën",
+          "Barbecueën in een gesloten ruimte",
+          "Zorg ervoor dat de rook niet overlast veroorzaakt",
+          "Barbecueën zonder vlees"
+        ],
+        "correctAnswer": "Zorg ervoor dat de rook niet overlast veroorzaakt"
+      },
+      {
+        "question": "Wat moet je doen na het barbecueën?",
+        "options": [
+          "Laat het vuur branden",
+          "Laat je afval achter",
+          "Verlaat het park onmiddellijk",
+          "Ruim alles op en doof de barbecue volledig"
+        ],
+        "correctAnswer": "Ruim alles op en doof de barbecue volledig"
+      }
+    ],
+    "audioFile": "audio/9d484719-af42-4f0c-9411-a87e7966afe2.mp3"
+  },
+  {
+    "id": "ce0b8bdc-4b21-4ad6-8a23-8f2a01fa065a",
+    "title": "Lezen over regels voor hondenbezitters in de wijk",
+    "transcript": "Hallo allemaal, vandaag wil ik het met jullie hebben over de regels voor hondenbezitters in onze wijk. Iedereen houdt van zijn hond, maar het is belangrijk om de regels te volgen om de wijk schoon en veilig te houden. Ten eerste, honden moeten altijd aan de lijn zijn, tenzij ze in een aangewezen hondenuitlaatplaats zijn. Daar kunnen ze vrij rondlopen. Ten tweede, hondenbezitters moeten altijd de uitwerpselen van hun hond opruimen. Er zijn speciale afvalbakken voor hondenpoep in de wijk, dus zorg ervoor dat je ze gebruikt. Ten derde, honden zijn niet toegestaan in speeltuinen, sportvelden en zandbakken, om te zorgen dat deze plekken schoon blijven voor onze kinderen. Als we allemaal deze regels volgen, kunnen we ervoor zorgen dat onze wijk een prettige plek blijft voor iedereen. Bedankt voor jullie aandacht.",
+    "questions": [
+      {
+        "question": "Wat moeten hondenbezitters doen met de uitwerpselen van hun hond?",
+        "options": [
+          "Ze moeten het laten liggen",
+          "Ze moeten het opruimen",
+          "Ze moeten het aan de gemeente melden",
+          "Ze moeten het in hun tuin begraven"
+        ],
+        "correctAnswer": "Ze moeten het opruimen"
+      },
+      {
+        "question": "Waar mogen honden vrij rondlopen?",
+        "options": [
+          "In speeltuinen",
+          "Op sportvelden",
+          "In aangewezen hondenuitlaatplaatsen",
+          "Op de weg"
+        ],
+        "correctAnswer": "In aangewezen hondenuitlaatplaatsen"
+      },
+      {
+        "question": "Waar zijn honden niet toegestaan?",
+        "options": [
+          "In speeltuinen, sportvelden en zandbakken",
+          "In winkels",
+          "In restaurants",
+          "In parken"
+        ],
+        "correctAnswer": "In speeltuinen, sportvelden en zandbakken"
+      },
+      {
+        "question": "Waarom moeten deze regels worden gevolgd?",
+        "options": [
+          "Om de wijk schoon en veilig te houden",
+          "Om honden te trainen",
+          "Om minder honden in de wijk te hebben",
+          "Om de hondenbezitters te straffen"
+        ],
+        "correctAnswer": "Om de wijk schoon en veilig te houden"
+      },
+      {
+        "question": "Wat moet je doen met de hondenpoep?",
+        "options": [
+          "Gooi het in de speciale afvalbakken voor hondenpoep",
+          "Laat het op de grond liggen",
+          "Gooi het in elke afvalbak",
+          "Neem het mee naar huis"
+        ],
+        "correctAnswer": "Gooi het in de speciale afvalbakken voor hondenpoep"
+      }
+    ],
+    "audioFile": "audio/ce0b8bdc-4b21-4ad6-8a23-8f2a01fa065a.mp3"
+  },
+  {
+    "id": "63874297-c6b7-490f-9236-fdb71f7d3ab4",
+    "title": "Lezen over regels voor vuurwerk tijdens oud en nieuw",
+    "transcript": "Hallo iedereen! Laten we het vandaag hebben over de regels voor vuurwerk tijdens Oud en Nieuw. Het is belangrijk om deze regels te kennen. Het afsteken van vuurwerk is alleen toegestaan op 31 december. En dan alleen tussen 18.00 uur 's avonds en 2.00 uur 's nachts. Het is verboden om vuurwerk af te steken buiten deze tijden. Als je dat wel doet, krijg je een boete. Het is ook belangrijk om te weten dat je alleen legaal vuurwerk mag kopen. Illegaal vuurwerk is gevaarlijk en het is strafbaar om het te kopen, te verkopen of af te steken. Een veiligheidsbril dragen is ook een aanrader. Het beschermt je ogen tegen vonken. En tot slot, gooi het vuurwerkafval in de vuilnisbak. Laten we samen zorgen voor een veilige en leuke Oud en Nieuw viering!",
+    "questions": [
+      {
+        "question": "Wanneer is het toegestaan om vuurwerk af te steken tijdens Oud en Nieuw?",
+        "options": [
+          "Alleen op 31 december tussen 16.00 uur en 00.00 uur",
+          "Alleen op 31 december tussen 18.00 uur en 2.00 uur",
+          "Alleen op 1 januari tussen 00.00 uur en 2.00 uur",
+          "Op elk moment tijdens Oud en Nieuw"
+        ],
+        "correctAnswer": "Alleen op 31 december tussen 18.00 uur en 2.00 uur"
+      },
+      {
+        "question": "Wat gebeurt er als je vuurwerk afsteekt buiten de toegestane tijden?",
+        "options": [
+          "Er gebeurt niets",
+          "Je krijgt een waarschuwing",
+          "Je krijgt een boete",
+          "Je vuurwerk wordt in beslag genomen"
+        ],
+        "correctAnswer": "Je krijgt een boete"
+      },
+      {
+        "question": "Wat voor soort vuurwerk mag je kopen?",
+        "options": [
+          "Alleen illegaal vuurwerk",
+          "Zowel legaal als illegaal vuurwerk",
+          "Alleen legaal vuurwerk",
+          "Geen enkel soort vuurwerk"
+        ],
+        "correctAnswer": "Alleen legaal vuurwerk"
+      },
+      {
+        "question": "Wat moet je doen met het vuurwerkafval?",
+        "options": [
+          "Laat het op straat liggen",
+          "Zet het in de achtertuin",
+          "Gooi het in de vuilnisbak",
+          "Geef het aan de politie"
+        ],
+        "correctAnswer": "Gooi het in de vuilnisbak"
+      },
+      {
+        "question": "Wat is een aanbeveling voor de veiligheid tijdens het afsteken van vuurwerk?",
+        "options": [
+          "Draag een helm",
+          "Draag een veiligheidsbril",
+          "Draag oordopjes",
+          "Draag handschoenen"
+        ],
+        "correctAnswer": "Draag een veiligheidsbril"
+      }
+    ],
+    "audioFile": "audio/63874297-c6b7-490f-9236-fdb71f7d3ab4.mp3"
+  },
+  {
+    "id": "c5fefc3b-85f4-49bb-b057-8b726910856f",
+    "title": "Medicatie ophalen bij de apotheek",
+    "transcript": "Hallo, ik ben Martijn en ik ga je iets vertellen over het ophalen van medicijnen bij de apotheek. Het is belangrijk om te weten dat je niet zomaar medicijnen kunt kopen zoals je boodschappen doet. Je hebt een recept nodig van je dokter. Met dit recept ga je naar de apotheek. Je geeft het recept aan de apotheker en zij gaan voor je aan de slag. Soms moet je even wachten, maar vaak kun je de medicijnen meteen meenemen. Vergeet niet om je identiteitsbewijs en zorgverzekeringspas mee te nemen, want de apotheek heeft die nodig. Ook is het belangrijk om te vragen hoe je de medicijnen moet gebruiken. De apotheker kan je ook advies geven over de bijwerkingen. Als je alle informatie hebt, kun je de medicijnen ophalen en betalen. Het is heel makkelijk, maar je moet wel goed opletten.",
+    "questions": [
+      {
+        "question": "Wie is Martijn?",
+        "options": [
+          "Een apotheker",
+          "Een dokter",
+          "Een persoon die uitlegt over het ophalen van medicijnen",
+          "Een patiënt bij de apotheek"
+        ],
+        "correctAnswer": "Een persoon die uitlegt over het ophalen van medicijnen"
+      },
+      {
+        "question": "Wat moet je naar de apotheek brengen?",
+        "options": [
+          "Alleen je identiteitsbewijs",
+          "Alleen je zorgverzekeringspas",
+          "Je recept, identiteitsbewijs en zorgverzekeringspas",
+          "Alleen je recept"
+        ],
+        "correctAnswer": "Je recept, identiteitsbewijs en zorgverzekeringspas"
+      },
+      {
+        "question": "Wat doet de apotheker voor je?",
+        "options": [
+          "De apotheker koopt de medicijnen voor je",
+          "De apotheker geeft je advies over de bijwerkingen",
+          "De apotheker neemt je bloeddruk op",
+          "De apotheker maakt je recept klaar"
+        ],
+        "correctAnswer": "De apotheker geeft je advies over de bijwerkingen"
+      },
+      {
+        "question": "Wat moet je doen nadat je alle informatie hebt?",
+        "options": [
+          "Je moet wachten",
+          "Je moet de medicijnen ophalen en betalen",
+          "Je moet naar huis gaan",
+          "Je moet een afspraak maken met de dokter"
+        ],
+        "correctAnswer": "Je moet de medicijnen ophalen en betalen"
+      }
+    ],
+    "audioFile": "audio/c5fefc3b-85f4-49bb-b057-8b726910856f.mp3"
+  },
+  {
+    "id": "7b9509e0-8567-4fe5-9ec8-78e650c921a0",
+    "title": "Nieuwsbericht lezen over een incident in de stad",
+    "transcript": "Goedemorgen allemaal. Er is een belangrijk nieuwsbericht over een incident in onze stad. Gisteren is er een brand uitgebroken in het winkelcentrum in het centrum van de stad. Gelukkig zijn er geen gewonden, maar de winkels zijn zwaar beschadigd. De brandweer was snel ter plaatse en heeft de brand onder controle. De oorzaak van de brand is nog onbekend. De politie doet onderzoek. Het winkelcentrum blijft vandaag gesloten voor het publiek. De winkeliers zijn erg geschrokken, maar blij dat er niemand gewond is geraakt. De burgemeester heeft ook zijn steun betuigd aan de getroffen winkeliers. Hij beloofde dat de stad zal helpen bij het herstel. Als je vandaag van plan was om naar het winkelcentrum te gaan, moet je een ander plan maken. Zodra er meer informatie beschikbaar is, zullen we het laten weten. Dank je wel voor je aandacht.",
+    "questions": [
+      {
+        "question": "Wat is er gisteren gebeurd in het winkelcentrum?",
+        "options": [
+          "Er was een overstroming",
+          "Er was een aardbeving",
+          "Er was een brand",
+          "Er was een inbraak"
+        ],
+        "correctAnswer": "Er was een brand"
+      },
+      {
+        "question": "Wat is de status van het winkelcentrum vandaag?",
+        "options": [
+          "Het winkelcentrum is open voor publiek",
+          "Het winkelcentrum is gesloten voor publiek",
+          "Het winkelcentrum is gedeeltelijk open",
+          "Het winkelcentrum is alleen open voor winkeliers"
+        ],
+        "correctAnswer": "Het winkelcentrum is gesloten voor publiek"
+      },
+      {
+        "question": "Hoe reageerde de burgemeester op het incident?",
+        "options": [
+          "De burgemeester heeft kritiek geuit op de brandweer",
+          "De burgemeester heeft zijn steun betuigd aan de getroffen winkeliers",
+          "De burgemeester heeft de winkeliers de schuld gegeven",
+          "De burgemeester heeft geen reactie gegeven"
+        ],
+        "correctAnswer": "De burgemeester heeft zijn steun betuigd aan de getroffen winkeliers"
+      },
+      {
+        "question": "Wat is de oorzaak van de brand?",
+        "options": [
+          "De oorzaak is bekend",
+          "De oorzaak is onbekend",
+          "De brand is aangestoken",
+          "De brand is ontstaan door een technische fout"
+        ],
+        "correctAnswer": "De oorzaak is onbekend"
+      },
+      {
+        "question": "Hoe reageerden de winkeliers op het incident?",
+        "options": [
+          "De winkeliers zijn boos",
+          "De winkeliers zijn niet geschrokken",
+          "De winkeliers zijn erg geschrokken",
+          "De winkeliers zijn blij"
+        ],
+        "correctAnswer": "De winkeliers zijn erg geschrokken"
+      }
+    ],
+    "audioFile": "audio/7b9509e0-8567-4fe5-9ec8-78e650c921a0.mp3"
+  },
+  {
+    "id": "c95eb6d0-6fd6-451f-b242-a3dcfe4e0fa2",
+    "title": "Openingstijden van het gemeentehuis opzoeken",
+    "transcript": "Hallo allemaal! Vandaag gaan we het over de openingstijden van het gemeentehuis hebben. Het is belangrijk om te weten wanneer het gemeentehuis open is. Weet je dat al? Nee? Dat dacht ik al. Dus, laten we beginnen. Het gemeentehuis is op maandag, woensdag en vrijdag van 9.00 uur 's ochtends tot 5.00 uur 's middags geopend. Op dinsdag en donderdag is het gemeentehuis open van 9.00 uur 's ochtends tot 8.00 uur 's avonds. Op zaterdag en zondag is het gemeentehuis gesloten. Dus, als je bijvoorbeeld een nieuw paspoort nodig hebt, moet je op een van deze dagen naar het gemeentehuis gaan. Vergeet niet een afspraak te maken voordat je gaat. Je kunt een afspraak maken door de gemeente te bellen of online een afspraak te boeken. Zo, nu weet je wanneer je naar het gemeentehuis kunt gaan. Vergeet deze informatie niet, want het kan erg nuttig zijn!",
+    "questions": [
+      {
+        "question": "Wanneer is het gemeentehuis op maandag geopend?",
+        "options": [
+          "Van 9.00 uur 's ochtends tot 8.00 uur 's avonds",
+          "Van 9.00 uur 's ochtends tot 5.00 uur 's middags",
+          "Het gemeentehuis is op maandag gesloten",
+          "Van 10.00 uur 's ochtends tot 4.00 uur 's middags"
+        ],
+        "correctAnswer": "Van 9.00 uur 's ochtends tot 5.00 uur 's middags"
+      },
+      {
+        "question": "Wat moet je doen voordat je naar het gemeentehuis gaat?",
+        "options": [
+          "Een afspraak maken",
+          "Een paspoort meenemen",
+          "Een formulier invullen",
+          "Een vriend meenemen"
+        ],
+        "correctAnswer": "Een afspraak maken"
+      },
+      {
+        "question": "Hoe kun je een afspraak maken om naar het gemeentehuis te gaan?",
+        "options": [
+          "Door een brief te sturen",
+          "Door de gemeente te bellen of online een afspraak te boeken",
+          "Door een e-mail te sturen",
+          "Door persoonlijk naar het gemeentehuis te gaan"
+        ],
+        "correctAnswer": "Door de gemeente te bellen of online een afspraak te boeken"
+      },
+      {
+        "question": "Wanneer is het gemeentehuis gesloten?",
+        "options": [
+          "Op zaterdag en zondag",
+          "Op vrijdag en zaterdag",
+          "Op zondag en maandag",
+          "Op woensdag en donderdag"
+        ],
+        "correctAnswer": "Op zaterdag en zondag"
+      },
+      {
+        "question": "Wat als je bijvoorbeeld een nieuw paspoort nodig hebt?",
+        "options": [
+          "Je moet naar het politiebureau gaan",
+          "Je kunt het online aanvragen",
+          "Je moet naar het gemeentehuis gaan",
+          "Je kunt het bij de post ophalen"
+        ],
+        "correctAnswer": "Je moet naar het gemeentehuis gaan"
+      }
+    ],
+    "audioFile": "audio/c95eb6d0-6fd6-451f-b242-a3dcfe4e0fa2.mp3"
+  },
+  {
+    "id": "cf48eb00-ddc9-4629-a375-d243e231cf0b",
+    "title": "Overleggen met collega’s over een taak",
+    "transcript": "Hallo allemaal, dank je wel voor het komen. Vandaag hebben we een belangrijk overleg over een nieuwe taak. We moeten samen een projectplan maken voor onze klant. Het is een groot project, dus we moeten goed samenwerken. Eerst moeten we de taken verdelen. Pieter, jij bent goed in het maken van planningen. Kun jij dat voor dit project ook doen? En Eva, jij bent goed in het schrijven van teksten. Kun jij de inleiding en de conclusie schrijven? Ik zal het onderzoek doen en de resultaten in het plan zetten. Daarna moeten we allemaal ons deel van het plan controleren. We moeten zeker weten dat er geen fouten in zitten. Daarom wil ik dat we volgende week dinsdag weer bij elkaar komen om het plan te bespreken. Is iedereen het daarmee eens? Zijn er nog vragen? Nee? Goed, laten we dan beginnen. Dank je wel voor jullie tijd en inzet. Veel succes iedereen!",
+    "questions": [
+      {
+        "question": "Wat is het doel van de bijeenkomst?",
+        "options": [
+          "Om een vakantie te plannen",
+          "Om een projectplan te maken",
+          "Om een feest te organiseren",
+          "Om een vergadering te plannen"
+        ],
+        "correctAnswer": "Om een projectplan te maken"
+      },
+      {
+        "question": "Wat is de taak van Pieter?",
+        "options": [
+          "Het onderzoek doen",
+          "Het plan controleren",
+          "De inleiding en conclusie schrijven",
+          "De planning maken"
+        ],
+        "correctAnswer": "De planning maken"
+      },
+      {
+        "question": "Wat is de taak van Eva?",
+        "options": [
+          "Het onderzoek doen",
+          "De inleiding en conclusie schrijven",
+          "Het plan controleren",
+          "De planning maken"
+        ],
+        "correctAnswer": "De inleiding en conclusie schrijven"
+      },
+      {
+        "question": "Wanneer zullen ze weer bij elkaar komen om het plan te bespreken?",
+        "options": [
+          "Volgende week maandag",
+          "Volgende week dinsdag",
+          "Volgende week woensdag",
+          "Volgende week donderdag"
+        ],
+        "correctAnswer": "Volgende week dinsdag"
+      },
+      {
+        "question": "Wat moeten ze allemaal doen met hun deel van het plan?",
+        "options": [
+          "Ze moeten het printen",
+          "Ze moeten het inleveren",
+          "Ze moeten het controleren",
+          "Ze moeten het presenteren"
+        ],
+        "correctAnswer": "Ze moeten het controleren"
+      }
+    ],
+    "audioFile": "audio/cf48eb00-ddc9-4629-a375-d243e231cf0b.mp3"
+  },
+  {
+    "id": "8cbc5561-553b-4cb5-b01a-d546b45fbf08",
+    "title": "Routebeschrijving lezen naar een locatie bij een groot evenement",
+    "transcript": "Hallo, welkom op de jaarlijkse bloemenmarkt in Utrecht. Laat me je de weg wijzen naar de ingang. Je bent nu op het treinstation. Zodra je het station uitloopt, ga je links. Je loopt dan langs het park. Blijf op deze weg voor ongeveer tien minuten. Aan het einde van de weg zie je een grote rotonde. Ga bij de rotonde rechtsaf. Je ziet dan een groot gebouw met een blauw dak, dat is het Jaarbeursgebouw. Loop niet naar het Jaarbeursgebouw toe, maar blijf rechtdoor lopen. Na ongeveer vijf minuten zie je aan je linkerhand de ingang van de bloemenmarkt. Je kan niet missen, want je ziet alle kleurrijke bloemen en de mensen. Als je die ziet, ben je op de juiste plaats. Geniet van je bezoek aan de bloemenmarkt!",
+    "questions": [
+      {
+        "question": "Waar ben je nu?",
+        "options": [
+          "In het park",
+          "Bij de bloemenmarkt",
+          "Op het treinstation",
+          "Bij het Jaarbeursgebouw"
+        ],
+        "correctAnswer": "Op het treinstation"
+      },
+      {
+        "question": "Welke richting ga je als je het station uitloopt?",
+        "options": [
+          "Rechts",
+          "Links",
+          "Rechtdoor",
+          "Terug"
+        ],
+        "correctAnswer": "Links"
+      },
+      {
+        "question": "Wat zie je aan het einde van de weg?",
+        "options": [
+          "Een park",
+          "Een grote rotonde",
+          "Het Jaarbeursgebouw",
+          "Een treinstation"
+        ],
+        "correctAnswer": "Een grote rotonde"
+      },
+      {
+        "question": "Welke kant ga je op bij de rotonde?",
+        "options": [
+          "Rechtsaf",
+          "Linksaf",
+          "Rechtdoor",
+          "Terug"
+        ],
+        "correctAnswer": "Rechtsaf"
+      },
+      {
+        "question": "Wat moet je niet doen als je het Jaarbeursgebouw ziet?",
+        "options": [
+          "Ernaar toe lopen",
+          "Rechtdoor lopen",
+          "De bloemenmarkt zoeken",
+          "Naar links gaan"
+        ],
+        "correctAnswer": "Ernaar toe lopen"
+      }
+    ],
+    "audioFile": "audio/8cbc5561-553b-4cb5-b01a-d546b45fbf08.mp3"
+  },
+  {
+    "id": "10a5c523-c94f-4030-bca8-d2abfe2bed4b",
+    "title": "Uitleg krijgen over een verwijzing naar een specialist",
+    "transcript": "Goedemiddag! Tijdens ons gesprek vandaag, wil ik jullie uitleggen over hoe een verwijzing naar een specialist werkt. Stel je voor, je voelt je niet goed en gaat naar de huisarts. De huisarts onderzoekt je en besluit dat je een specialist nodig hebt. Deze specialist kan bijvoorbeeld een oogarts, een dermatoloog of een orthopedisch chirurg zijn. De huisarts schrijft dan een verwijzing. Met deze verwijzing ga je naar het ziekenhuis of de kliniek waar de specialist werkt. Daar maak je een afspraak voor een consult. Tijdens dit consult onderzoekt de specialist je verder. Het kan zijn dat je daarna nog meer onderzoeken nodig hebt, of dat je een behandeling krijgt. Het is belangrijk dat je de verwijzing van je huisarts meeneemt naar de afspraak met de specialist. Zonder deze verwijzing, kan het zijn dat de afspraak niet doorgaat of dat je de kosten zelf moet betalen. Vergeet dus niet je verwijzing mee te nemen!",
+    "questions": [
+      {
+        "question": "Wat doet de huisarts als hij denkt dat je een specialist nodig hebt?",
+        "options": [
+          "De huisarts geeft je medicijnen",
+          "De huisarts schrijft een verwijzing",
+          "De huisarts maakt een afspraak met de specialist",
+          "De huisarts doet niets"
+        ],
+        "correctAnswer": "De huisarts schrijft een verwijzing"
+      },
+      {
+        "question": "Wat gebeurt er als je je verwijzing vergeet mee te nemen naar de afspraak met de specialist?",
+        "options": [
+          "De afspraak gaat gewoon door",
+          "Je moet de kosten zelf betalen",
+          "Je krijgt een boete",
+          "Niets bijzonders"
+        ],
+        "correctAnswer": "Je moet de kosten zelf betalen"
+      },
+      {
+        "question": "Waar ga je naartoe met de verwijzing van de huisarts?",
+        "options": [
+          "Naar de apotheek",
+          "Naar het ziekenhuis of de kliniek",
+          "Naar het gemeentehuis",
+          "Naar een vriend"
+        ],
+        "correctAnswer": "Naar het ziekenhuis of de kliniek"
+      },
+      {
+        "question": "Wie onderzoekt je verder tijdens het consult?",
+        "options": [
+          "De huisarts",
+          "Een vriend",
+          "De specialist",
+          "Niemand"
+        ],
+        "correctAnswer": "De specialist"
+      },
+      {
+        "question": "Wat moet je doen met de verwijzing van de huisarts?",
+        "options": [
+          "Thuis laten",
+          "Weggooien",
+          "Meenemen naar de afspraak met de specialist",
+          "Verkopen"
+        ],
+        "correctAnswer": "Meenemen naar de afspraak met de specialist"
+      }
+    ],
+    "audioFile": "audio/10a5c523-c94f-4030-bca8-d2abfe2bed4b.mp3"
+  },
+  {
+    "id": "f1da8280-d1a4-4920-a905-c1f7534924e4",
+    "title": "Uitleg volgen tijdens een les",
+    "transcript": "Hallo klas, vandaag gaan we een nieuwe taaloefening doen. We gaan nieuwe woorden leren. Deze woorden zijn erg belangrijk voor het inburgeringsexamen. Ik zal een woord zeggen en dan laat ik een foto zien. Jullie moeten dan het woord opschrijven. De woorden zijn \"boek\", \"stoel\", \"tafel\", \"raam\" en \"deur\". Dus als ik zeg \"boek\", laat ik een foto van een boek zien. Vervolgens schrijf je het woord \"boek\" op je papier. We doen dit voor alle woorden. Let op, dit is een oefening voor het luistergedeelte van het examen. Dus probeer goed te luisteren naar de woorden die ik zeg. Na deze oefening gaan we de woorden samen bespreken. Vragen kunnen dan gesteld worden. Pak nu je pen en papier en we gaan beginnen.",
+    "questions": [
+      {
+        "question": "Wat is de bedoeling van deze taaloefening?",
+        "options": [
+          "De woorden uitspreken",
+          "Een foto tekenen",
+          "De woorden opschrijven",
+          "Een verhaal schrijven"
+        ],
+        "correctAnswer": "De woorden opschrijven"
+      },
+      {
+        "question": "Welke hulpmiddelen moet je gebruiken voor deze oefening?",
+        "options": [
+          "Een boek en een pen",
+          "Een pen en papier",
+          "Een computer en een muis",
+          "Een schaar en lijm"
+        ],
+        "correctAnswer": "Een pen en papier"
+      },
+      {
+        "question": "Wat is het eerste woord dat je moet opschrijven?",
+        "options": [
+          "Tafel",
+          "Boek",
+          "Stoel",
+          "Deur"
+        ],
+        "correctAnswer": "Boek"
+      },
+      {
+        "question": "Wat gebeurt er nadat je de woorden hebt opgeschreven?",
+        "options": [
+          "We gaan een pauze nemen",
+          "We gaan de woorden samen bespreken",
+          "We gaan een spel spelen",
+          "We gaan naar huis"
+        ],
+        "correctAnswer": "We gaan de woorden samen bespreken"
+      },
+      {
+        "question": "Voor welk deel van het examen is deze oefening?",
+        "options": [
+          "Het schrijfgedeelte",
+          "Het leesgedeelte",
+          "Het spreekgedeelte",
+          "Het luistergedeelte"
+        ],
+        "correctAnswer": "Het luistergedeelte"
+      }
+    ],
+    "audioFile": "audio/f1da8280-d1a4-4920-a905-c1f7534924e4.mp3"
+  },
+  {
+    "id": "34f3eebd-eb2a-46a1-a0f8-52b04a5b8f56",
+    "title": "Vragen stellen over veiligheid op de werkvloer",
+    "transcript": "Hallo team! We hebben een belangrijke bijeenkomst vandaag over de veiligheid op de werkvloer. Veiligheid is erg belangrijk voor ons. Daarom moeten we alles goed bespreken. We hebben nieuwe veiligheidsregels opgesteld. Deze regels zijn gemaakt om ons allemaal te beschermen. Ik wil dat iedereen deze regels kent en volgt. Eén van de nieuwe regels is dat iedereen een helm moet dragen. De helm beschermt je hoofd als er iets valt. Ook moeten we allemaal veiligheidsschoenen dragen. Deze schoenen beschermen je voeten. Zijn er vragen over deze nieuwe regels? Als je iets niet begrijpt, vraag het dan. Het is belangrijk dat we allemaal veilig zijn op het werk. Onthoud, veiligheid gaat voor alles. Als je ziet dat iemand de regels niet volgt, vertel het ons dan. Samen kunnen we een veilige werkomgeving maken. Bedankt voor jullie aandacht.",
+    "questions": [
+      {
+        "question": "Wat is het onderwerp van de bijeenkomst vandaag?",
+        "options": [
+          "De nieuwe koffiemachine",
+          "Het vakantieplan",
+          "De veiligheid op de werkvloer",
+          "De verjaardag van de manager"
+        ],
+        "correctAnswer": "De veiligheid op de werkvloer"
+      },
+      {
+        "question": "Wat is één van de nieuwe veiligheidsregels?",
+        "options": [
+          "Iedereen moet een das dragen",
+          "Iedereen moet een helm dragen",
+          "Iedereen moet een jas dragen",
+          "Iedereen moet een zonnebril dragen"
+        ],
+        "correctAnswer": "Iedereen moet een helm dragen"
+      },
+      {
+        "question": "Wat moeten medewerkers doen als ze zien dat iemand de regels niet volgt?",
+        "options": [
+          "Ze moeten het negeren",
+          "Ze moeten het ons vertellen",
+          "Ze moeten het filmen",
+          "Ze moeten het op sociale media posten"
+        ],
+        "correctAnswer": "Ze moeten het ons vertellen"
+      },
+      {
+        "question": "Wat beschermen veiligheidsschoenen?",
+        "options": [
+          "Je handen",
+          "Je hoofd",
+          "Je voeten",
+          "Je ogen"
+        ],
+        "correctAnswer": "Je voeten"
+      },
+      {
+        "question": "Wat moet je doen als je iets niet begrijpt over de nieuwe regels?",
+        "options": [
+          "Je moet het negeren",
+          "Je moet het opzoeken op internet",
+          "Je moet het vragen",
+          "Je moet het aan je collega's vertellen"
+        ],
+        "correctAnswer": "Je moet het vragen"
+      }
+    ],
+    "audioFile": "audio/34f3eebd-eb2a-46a1-a0f8-52b04a5b8f56.mp3"
+  },
+  {
+    "id": "3e4d9d18-0b64-49e1-905d-97b3c457d678",
+    "title": "Zien waar je grofvuil kunt brengen",
+    "transcript": "Hallo allemaal! Vandaag gaan we het hebben over grofvuil. Grofvuil is huishoudelijk afval dat te groot of te zwaar is om in de normale vuilniszak te doen. Denk aan oude meubels, kapotte apparaten of tuinafval. Als je zulk soort afval hebt, kun je dit niet zomaar op straat zetten. Je moet dit naar een speciale afvalinzameling brengen. In veel steden en gemeenten in Nederland zijn er speciale grofvuildepots. Daar kun je jouw grofvuil gratis afgeven. Op de website van jouw gemeente kun je vinden waar deze depots zijn. Ook kun je daar de openingstijden vinden. Het is belangrijk dat we ons afval goed scheiden en op de juiste plek weggooien. Zo houden we onze steden schoon en helpen we het milieu. Dus de volgende keer als je grofvuil hebt, weet je nu waar je het naartoe kunt brengen. Bedankt voor het luisteren en tot de volgende keer!",
+    "questions": [
+      {
+        "question": "Wat is grofvuil?",
+        "options": [
+          "Afval dat in een normale vuilniszak past",
+          "Kleine stukjes afval die je op straat kunt vinden",
+          "Huishoudelijk afval dat te groot of te zwaar is voor een normale vuilniszak",
+          "Alle soorten afval die je in de vuilnisbak kunt gooien"
+        ],
+        "correctAnswer": "Huishoudelijk afval dat te groot of te zwaar is voor een normale vuilniszak"
+      },
+      {
+        "question": "Wat moet je doen als je grofvuil hebt?",
+        "options": [
+          "Het op straat zetten",
+          "Het in een normale vuilniszak doen",
+          "Het naar een speciale afvalinzameling brengen",
+          "Het in de vuilnisbak gooien"
+        ],
+        "correctAnswer": "Het naar een speciale afvalinzameling brengen"
+      },
+      {
+        "question": "Waar kun je informatie vinden over grofvuildepots?",
+        "options": [
+          "In de krant",
+          "Op de website van je gemeente",
+          "In het telefoonboek",
+          "Op de radio"
+        ],
+        "correctAnswer": "Op de website van je gemeente"
+      },
+      {
+        "question": "Waarom is het belangrijk om ons afval goed te scheiden?",
+        "options": [
+          "Om onze steden schoon te houden en het milieu te helpen",
+          "Om geld te besparen",
+          "Om ruimte te besparen in onze vuilnisbakken",
+          "Omdat het verplicht is"
+        ],
+        "correctAnswer": "Om onze steden schoon te houden en het milieu te helpen"
+      },
+      {
+        "question": "Is het gratis om grofvuil af te geven bij grofvuildepots?",
+        "options": [
+          "Ja",
+          "Nee",
+          "Het hangt af van het type grofvuil",
+          "Dit is niet duidelijk in de tekst"
+        ],
+        "correctAnswer": "Ja"
+      }
+    ],
+    "audioFile": "audio/3e4d9d18-0b64-49e1-905d-97b3c457d678.mp3"
+  },
+  {
+    "id": "86187b31-4b2a-4256-84c9-03b4ea899737",
+    "title": "Zien wanneer de vuilnis wordt opgehaald",
+    "transcript": "Hallo, buren! Weet je wanneer het vuilnis wordt opgehaald in onze buurt? Het schema is een beetje veranderd. Nu wordt het restafval elke woensdag opgehaald, en niet op donderdag zoals voorheen. Het oud papier en karton wordt nog steeds elke eerste maandag van de maand opgehaald. Vergeet niet om je afval gescheiden te houden. Het plastic, blik en drankkartons worden op dinsdag opgehaald. Houd ook rekening met de tijd. Zorg ervoor dat je jouw bakken 's ochtends voor 7.30 uur buiten zet. Ze halen het afval op tussen 7.30 uur en 16.00 uur. Als je hulp nodig hebt met zware bakken, kun je altijd een buurman of buurvrouw vragen. Samen zorgen we voor een schone en nette buurt. Dank je!",
+    "questions": [
+      {
+        "question": "Wanneer wordt het restafval opgehaald?",
+        "options": [
+          "Elke donderdag",
+          "Elke woensdag",
+          "Elke dinsdag",
+          "Elke maandag"
+        ],
+        "correctAnswer": "Elke woensdag"
+      },
+      {
+        "question": "Wanneer moet je jouw bakken buiten zetten?",
+        "options": [
+          "'s Ochtends voor 8.00 uur",
+          "'s Middags voor 12.00 uur",
+          "'s Ochtends voor 7.30 uur",
+          "'s Avonds voor 18.00 uur"
+        ],
+        "correctAnswer": "'s Ochtends voor 7.30 uur"
+      },
+      {
+        "question": "Wanneer wordt het oud papier en karton opgehaald?",
+        "options": [
+          "Elke eerste maandag van de maand",
+          "Elke tweede maandag van de maand",
+          "Elke laatste maandag van de maand",
+          "Elke derde maandag van de maand"
+        ],
+        "correctAnswer": "Elke eerste maandag van de maand"
+      },
+      {
+        "question": "Wat wordt op dinsdag opgehaald?",
+        "options": [
+          "Het oud papier en karton",
+          "Het restafval",
+          "Het plastic, blik en drankkartons",
+          "Het tuinafval"
+        ],
+        "correctAnswer": "Het plastic, blik en drankkartons"
+      },
+      {
+        "question": "Wat moet je doen als je hulp nodig hebt met zware bakken?",
+        "options": [
+          "Je kunt altijd een buurman of buurvrouw vragen",
+          "Je moet de vuilniswagenchauffeur bellen",
+          "Je moet de gemeente bellen",
+          "Je moet het zelf doen"
+        ],
+        "correctAnswer": "Je kunt altijd een buurman of buurvrouw vragen"
+      }
+    ],
+    "audioFile": "audio/86187b31-4b2a-4256-84c9-03b4ea899737.mp3"
+  }
+]
