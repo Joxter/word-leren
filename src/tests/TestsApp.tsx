@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { KnmQuiz } from "./KnmQuiz";
 import { ReadingQuiz } from "./ReadingQuiz";
+import { ListeningQuiz } from "./ListeningQuiz";
 
-type TestType = "knm" | "reading";
+type TestType = "knm" | "reading" | "listening";
 
 const LS_TYPE = "tests-type";
 
 function loadType(): TestType {
-  return localStorage.getItem(LS_TYPE) === "reading" ? "reading" : "knm";
+  const v = localStorage.getItem(LS_TYPE);
+  if (v === "reading" || v === "listening") return v;
+  return "knm";
 }
 
 export function TestsApp() {
@@ -30,7 +33,7 @@ export function TestsApp() {
         }}
       >
         <div style={{ display: "flex", gap: 4, paddingBottom: 0 }}>
-          {(["knm", "reading"] as TestType[]).map((t) => (
+          {(["knm", "reading", "listening"] as TestType[]).map((t) => (
             <button
               key={t}
               onClick={() => switchTo(t)}
@@ -53,7 +56,9 @@ export function TestsApp() {
           ))}
         </div>
       </div>
-      {type === "knm" ? <KnmQuiz /> : <ReadingQuiz />}
+      {type === "knm" && <KnmQuiz />}
+      {type === "reading" && <ReadingQuiz />}
+      {type === "listening" && <ListeningQuiz />}
     </div>
   );
 }
