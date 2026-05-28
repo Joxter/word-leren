@@ -4,7 +4,8 @@ import { css } from "@linaria/core";
 import type { Card, CardData } from "../pages/Cards";
 import MarkdocField from "./MarkdocField";
 
-const LANGS = ["EN", "RU", "NL"] as const;
+const A_LANGS = ["NL", "EN"] as const;
+const B_LANGS = ["EN", "RU"] as const;
 
 
 const backdrop = css`
@@ -94,7 +95,7 @@ const label = css`
 
 const segmented = css`
   display: inline-flex;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e8e8e8;
   border-radius: 6px;
   overflow: hidden;
   width: 100%;
@@ -118,9 +119,9 @@ const segmentedItem = css`
     font-size: 0.8rem;
     font-weight: 500;
     cursor: pointer;
-    background: #fff;
-    color: #666;
-    border-right: 1px solid #e0e0e0;
+    background: transparent;
+    color: #aaa;
+    border-right: 1px solid #e8e8e8;
     transition:
       background 0.1s,
       color 0.1s;
@@ -132,16 +133,18 @@ const segmentedItem = css`
   }
 
   input[type="radio"]:checked + label {
-    background: #1a1a1a;
-    color: #fff;
+    background: #ebebeb;
+    color: #333;
   }
 
   &:hover label {
     background: #f5f5f5;
+    color: #888;
   }
 
   input[type="radio"]:checked + label:hover {
-    background: #1a1a1a;
+    background: #ebebeb;
+    color: #333;
   }
 `;
 
@@ -344,7 +347,7 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
               <div className={side}>
                 <span className={label}>Language A</span>
                 <div className={segmented}>
-                  {LANGS.map((l) => (
+                  {A_LANGS.map((l) => (
                     <div key={l} className={segmentedItem}>
                       <input
                         type="radio"
@@ -370,7 +373,7 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
               <div className={side}>
                 <span className={label}>Language B</span>
                 <div className={segmented}>
-                  {LANGS.map((l) => (
+                  {B_LANGS.map((l) => (
                     <div key={l} className={segmentedItem}>
                       <input
                         type="radio"

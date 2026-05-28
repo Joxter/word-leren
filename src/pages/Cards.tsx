@@ -24,16 +24,16 @@ export interface Card extends CardData {
 interface TabDef {
   label: string;
   aLang: string;
-  bLang: string;
+  defaultBLang: string;
 }
 
 const TABS: TabDef[] = [
-  { label: "NL → EN", aLang: "NL", bLang: "EN" },
-  { label: "NL → RU", aLang: "NL", bLang: "RU" },
-  { label: "EN → RU", aLang: "EN", bLang: "RU" },
+  { label: "Dutch cards", aLang: "NL", defaultBLang: "EN" },
+  { label: "English cards", aLang: "EN", defaultBLang: "RU" },
 ];
 
-const LANGS = ["EN", "RU", "NL"] as const;
+const A_LANGS = ["NL", "EN"] as const;
+const B_LANGS = ["EN", "RU"] as const;
 
 const page = css`
   max-width: 840px;
@@ -109,6 +109,12 @@ const formSide = css`
   gap: 0.375rem;
 `;
 
+const formSideRow = css`
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+`;
+
 const formLabel = css`
   font-size: 0.75rem;
   font-weight: 600;
@@ -119,7 +125,7 @@ const formLabel = css`
 
 const segmented = css`
   display: inline-flex;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e8e8e8;
   border-radius: 6px;
   overflow: hidden;
   width: 100%;
@@ -143,9 +149,9 @@ const segmentedItem = css`
     font-size: 0.8rem;
     font-weight: 500;
     cursor: pointer;
-    background: #fff;
-    color: #666;
-    border-right: 1px solid #e0e0e0;
+    background: transparent;
+    color: #aaa;
+    border-right: 1px solid #e8e8e8;
     transition:
       background 0.1s,
       color 0.1s;
@@ -157,16 +163,18 @@ const segmentedItem = css`
   }
 
   input[type="radio"]:checked + label {
-    background: #1a1a1a;
-    color: #fff;
+    background: #ebebeb;
+    color: #333;
   }
 
   &:hover label {
     background: #f5f5f5;
+    color: #888;
   }
 
   input[type="radio"]:checked + label:hover {
-    background: #1a1a1a;
+    background: #ebebeb;
+    color: #333;
   }
 `;
 
@@ -320,7 +328,7 @@ export default function Cards() {
   const activeTab = TABS[activeTabIdx];
 
   const [newForm, setNewForm] = useState<CardData>(
-    makeDefaultForm(activeTab.aLang, activeTab.bLang),
+    makeDefaultForm(activeTab.aLang, activeTab.defaultBLang),
   );
   const [newImageFile, setNewImageFile] = useState<File | null>(null);
   const [newImagePreview, setNewImagePreview] = useState<string | null>(null);
@@ -340,11 +348,7 @@ export default function Cards() {
 
   function switchTab(i: number) {
     setActiveTabIdx(i);
-    setNewForm((prev) => ({
-      ...prev,
-      aLang: TABS[i].aLang,
-      bLang: TABS[i].bLang,
-    }));
+    setNewForm(makeDefaultForm(TABS[i].aLang, TABS[i].defaultBLang));
   }
 
   function setNew(field: keyof CardData, value: string) {
@@ -362,9 +366,7 @@ export default function Cards() {
   });
 
   const allCards = (data?.cards ?? []) as Card[];
-  const cards = allCards.filter(
-    (c) => c.aLang === activeTab.aLang && c.bLang === activeTab.bLang,
-  );
+  const cards = allCards.filter((c) => c.aLang === activeTab.aLang);
 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault();
@@ -382,7 +384,7 @@ export default function Cards() {
       }
     }
     await db.transact(ops);
-    setNewForm(makeDefaultForm(activeTab.aLang, activeTab.bLang));
+    setNewForm(makeDefaultForm(activeTab.aLang, activeTab.defaultBLang));
     setNewImageFile(null);
     setNewSaving(false);
   }
@@ -438,22 +440,6 @@ export default function Cards() {
       <form className={inlineFormPanel} onSubmit={handleCreate}>
         <div className={formSides}>
           <div className={formSide}>
-            <span className={formLabel}>Language A</span>
-            <div className={segmented}>
-              {LANGS.map((l) => (
-                <div key={l} className={segmentedItem}>
-                  <input
-                    type="radio"
-                    id={`new-aLang-${l}`}
-                    name="new-aLang"
-                    value={l}
-                    checked={newForm.aLang === l}
-                    onChange={() => setNew("aLang", l)}
-                  />
-                  <label htmlFor={`new-aLang-${l}`}>{l}</label>
-                </div>
-              ))}
-            </div>
             <MarkdocField
               label="Word / Phrase"
               value={newForm.aCard}
@@ -461,24 +447,23 @@ export default function Cards() {
               rows={3}
               required
             />
-          </div>
-
-          <div className={formSide}>
-            <span className={formLabel}>Language B</span>
-            <div className={segmented}>
-              {LANGS.map((l) => (
-                <div key={l} className={segmentedItem}>
-                  <input
-                    type="radio"
-                    id={`new-bLang-${l}`}
-                    name="new-bLang"
-                    value={l}
-                    checked={newForm.bLang === l}
-                    onChange={() => setNew("bLang", l)}
-                  />
-                  <label htmlFor={`new-bLang-${l}`}>{l}</label>
-                </div>
-              ))}
+            <div className={formSideRow}>
+              <span className={formLabel}>Translation language</span>
+              <div className={segmented}>
+                {B_LANGS.map((l) => (
+                  <div key={l} className={segmentedItem}>
+                    <input
+                      type="radio"
+                      id={`new-bLang-${l}`}
+                      name="new-bLang"
+                      value={l}
+                      checked={newForm.bLang === l}
+                      onChange={() => setNew("bLang", l)}
+                    />
+                    <label htmlFor={`new-bLang-${l}`}>{l}</label>
+                  </div>
+                ))}
+              </div>
             </div>
             <MarkdocField
               label="Translation"
@@ -488,43 +473,48 @@ export default function Cards() {
               required
             />
           </div>
-        </div>
 
-        <MarkdocField
-          label="Note"
-          value={newForm.note}
-          onChange={(v) => setNew("note", v)}
-          rows={2}
-        />
-
-        <div style={{ marginBottom: "0.75rem" }}>
-          <span className={formLabel}>Image</span>
-          <div style={{ marginTop: "0.375rem" }}>
-            {newImagePreview ? (
-              <div className={formImageRow}>
-                <img src={newImagePreview} className={formPreviewImg} alt="" />
-                <button
-                  type="button"
-                  className={removeImgBtn}
-                  onClick={() => setNewImageFile(null)}
-                >
-                  Remove
-                </button>
+          <div className={formSide}>
+            <MarkdocField
+              label="Note"
+              value={newForm.note}
+              onChange={(v) => setNew("note", v)}
+              rows={2}
+            />
+            <div>
+              <span className={formLabel}>Image</span>
+              <div style={{ marginTop: "0.375rem" }}>
+                {newImagePreview ? (
+                  <div className={formImageRow}>
+                    <img
+                      src={newImagePreview}
+                      className={formPreviewImg}
+                      alt=""
+                    />
+                    <button
+                      type="button"
+                      className={removeImgBtn}
+                      onClick={() => setNewImageFile(null)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ) : (
+                  <label className={addImgLabel}>
+                    + Add image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      hidden
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) setNewImageFile(file);
+                      }}
+                    />
+                  </label>
+                )}
               </div>
-            ) : (
-              <label className={addImgLabel}>
-                + Add image
-                <input
-                  type="file"
-                  accept="image/*"
-                  hidden
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) setNewImageFile(file);
-                  }}
-                />
-              </label>
-            )}
+            </div>
           </div>
         </div>
 
