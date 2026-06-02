@@ -5,6 +5,7 @@ import { id } from "@instantdb/react";
 import { db } from "../db";
 import CardModal from "../components/CardModal";
 import MarkdocField from "../components/MarkdocField";
+import { enqueueTop } from "../lib/queue";
 
 export type Lang = "EN" | "RU" | "NL";
 
@@ -384,6 +385,8 @@ export default function Cards() {
       }
     }
     await db.transact(ops);
+    // New card jumps to the top of the line so it's the first one to learn next.
+    await enqueueTop(cardId);
     setNewForm(makeDefaultForm(activeTab.aLang, activeTab.defaultBLang));
     setNewImageFile(null);
     setNewSaving(false);

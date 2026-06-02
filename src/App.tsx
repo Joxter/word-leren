@@ -1,6 +1,8 @@
 import { Router, Route, Switch, Link, useRoute } from "wouter";
 import { css } from "@linaria/core";
 import CardsPage from "./pages/Cards";
+import LearnPage from "./pages/Learn";
+import LinePage from "./pages/Line";
 import GrammarPage from "./pages/Grammar";
 import GrammarDetailPage from "./pages/GrammarDetail";
 import GrammarEditPage from "./pages/GrammarEdit";
@@ -47,10 +49,14 @@ function Layout() {
     <>
       <nav className={nav}>
         <NavLink href="/">Cards</NavLink>
+        <NavLink href="/learn">Learn</NavLink>
+        <NavLink href="/line">Line</NavLink>
         <NavLink href="/grammar">Grammar</NavLink>
       </nav>
       <Switch>
         <Route path="/" component={CardsPage} />
+        <Route path="/learn" component={LearnPage} />
+        <Route path="/line" component={LinePage} />
         <Route path="/grammar" component={GrammarPage} />
         <Route path="/grammar/new" component={GrammarEditPage} />
         <Route path="/grammar/:id/edit" component={GrammarEditPage} />

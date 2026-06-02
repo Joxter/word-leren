@@ -14,6 +14,14 @@ const _schema = i.schema({
     lightCards: i.entity({
       text: i.string(),
     }),
+    queueEntries: i.entity({
+      rank: i.string().indexed(),
+    }),
+    cardEvents: i.entity({
+      at: i.number().indexed(),
+      kind: i.string(),
+      amount: i.number(),
+    }),
     $files: i.entity({
       path: i.string().unique().indexed(),
       url: i.string(),
@@ -42,6 +50,32 @@ const _schema = i.schema({
         has: "one",
         label: "card",
         onDelete: "cascade",
+      },
+    },
+    queueEntryCard: {
+      forward: {
+        on: "queueEntries",
+        has: "one",
+        label: "card",
+        onDelete: "cascade",
+      },
+      reverse: {
+        on: "cards",
+        has: "one",
+        label: "queueEntry",
+      },
+    },
+    cardEventCard: {
+      forward: {
+        on: "cardEvents",
+        has: "one",
+        label: "card",
+        onDelete: "cascade",
+      },
+      reverse: {
+        on: "cards",
+        has: "many",
+        label: "events",
       },
     },
     lightCardImage: {
