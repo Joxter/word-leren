@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "backup": "node scripts/backup.mjs",
-    "generate": "node scripts/generate.mjs"
+    "generate": "node scripts/generate.mjs",
+    "build-dictionary": "node scripts/build-dictionary.mjs"
   },
   "dependencies": {
     "@instantdb/react": "^0.17.0",

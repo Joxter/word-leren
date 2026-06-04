@@ -23,6 +23,10 @@ Positions use fractional-index ranks, so reordering is a single write — no ren
 
 Rich-text notes for grammar rules and examples. Displays as a grid list with a detail view and a split edit/preview layout with live Markdoc rendering. A sidebar lets you navigate between grammar cards.
 
+### Dictionary
+
+A searchable offline Dutch dictionary merged from six imported sources (an Anki frequency dictionary, three vocabulary/grammar decks, and a CSV). Each headword gathers everything available for that word into a single entry: the `de`/`het` article, part of speech, irregular verb forms, and a per-source list of translations, example sentences, and audio clips (native recordings plus TTS). It is built ahead of time into a static JSON file with extracted audio and served directly from the site — no backend, works offline. See [Dictionary data](#dictionary-data) for the build.
+
 ### Quizzes
 
 A separate quiz page (`/tests.html`) with three tabs:
@@ -54,3 +58,30 @@ Schema changes:
 ```bash
 npx instant-cli@latest push schema
 ```
+
+### Dictionary data
+
+The dictionary is generated offline from the source decks in `sources/` (Anki `.apkg` exports + one CSV):
+
+```bash
+npm run build-dictionary
+```
+
+This merges every source by normalized Dutch lemma and writes:
+
+- `public/data/dictionary.json` — ~6,700 merged entries (minified, ~1.7 MB)
+- `public/audio/dict/` — ~6,200 audio clips referenced by the entries
+
+Word-level facts (`article`, `pos`, `verb`) are taken from the most reliable source; generic content (`translation`, `examples`, `audio`) is kept per source under `info[]` so the origin of each stays visible:
+
+```ts
+type DictEntry = {
+  word: string;
+  pos?: string;
+  article?: "de" | "het";
+  verb?: { past?: string; participle?: string; separable?: boolean };
+  info: { source: string; translation: string; audio?: string; examples?: string }[];
+};
+```
+
+Sources (`source` values): `frequency` (A Frequency Dictionary of Dutch — definitions, examples, audio, POS), `common` (1000 Most Common Words — audio), `vocab` (A0–A2 Vocabulary), `csv` (Dutch with articles), plus `de/het` (article only) and the irregular-verbs deck (verb forms only). Re-run the command after changing anything in `sources/`.
