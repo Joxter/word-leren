@@ -6,6 +6,7 @@ import LinePage from "./pages/Line";
 import GrammarPage from "./pages/Grammar";
 import GrammarDetailPage from "./pages/GrammarDetail";
 import GrammarEditPage from "./pages/GrammarEdit";
+import DictionaryPage from "./pages/Dictionary";
 
 const nav = css`
   background: #fff;
@@ -52,11 +53,13 @@ function Layout() {
         <NavLink href="/learn">Learn</NavLink>
         <NavLink href="/line">Line</NavLink>
         <NavLink href="/grammar">Grammar</NavLink>
+        <NavLink href="/dictionary">Dictionary</NavLink>
       </nav>
       <Switch>
         <Route path="/" component={CardsPage} />
         <Route path="/learn" component={LearnPage} />
         <Route path="/line" component={LinePage} />
+        <Route path="/dictionary" component={DictionaryPage} />
         <Route path="/grammar" component={GrammarPage} />
         <Route path="/grammar/new" component={GrammarEditPage} />
         <Route path="/grammar/:id/edit" component={GrammarEditPage} />
