@@ -51,7 +51,8 @@
       "Bash(python3 /tmp/show.py)",
       "Bash(sqlite3 /tmp/apkg_inspect/d_Dutch_A0-A2_Vocabulary_Words/collection.anki2 \"SELECT flds FROM notes WHERE flds LIKE '%perfume%' OR flds LIKE '%lace curtain%' OR flds LIKE '%dresser%';\")",
       "Bash(sqlite3 /tmp/apkg_inspect/big/collection.anki2 \"SELECT flds FROM notes WHERE flds LIKE '%suit jacket%' OR flds LIKE '%the sweets%';\")",
-      "Bash(python3 /tmp/q.py)"
+      "Bash(python3 /tmp/q.py)",
+      "Bash(npx instant-cli@latest push schema)"
     ]
   }
 }

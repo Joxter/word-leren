@@ -262,6 +262,9 @@ function EntryCard({
     setSaving(true);
     const cardId = id();
     const note = examplesList.map((e) => e.examples).join("\n\n");
+    // entry.info[].audio is stored as "dict/<file>.mp3"; the card keeps the full
+    // path from public/ so it can be played directly.
+    const rawAudio = entry.info.find((i) => i.audio)?.audio;
     await db.transact(
       db.tx.cards[cardId].update({
         aLang: "NL",
@@ -269,6 +272,7 @@ function EntryCard({
         aCard: entry.word,
         bCard: translations.map((t) => t.text).join(", "),
         note,
+        ...(rawAudio ? { audio: `audio/${rawAudio}` } : {}),
       }),
     );
     // New card jumps to the top of the line, like cards added from the Cards page.

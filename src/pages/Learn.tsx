@@ -3,6 +3,7 @@ import { css } from "@linaria/core";
 import { db } from "../db";
 import { DEPTH_BUTTONS, placeAtDepth } from "../lib/queue";
 import MarkdocContent from "../components/MarkdocContent";
+import PlayButton from "../components/PlayButton";
 
 const page = css`
   max-width: 640px;
@@ -48,6 +49,12 @@ const langTag = css`
 const front = css`
   font-size: 1.5rem;
   font-weight: 600;
+`;
+
+const frontRow = css`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 `;
 
 const divider = css`
@@ -145,6 +152,7 @@ interface QueueCard {
     aCard: string;
     bCard: string;
     note?: string;
+    audio?: string;
     image?: { url: string };
   };
 }
@@ -218,8 +226,11 @@ export default function Learn() {
       <div className={card}>
         <div className={sideBlock}>
           <span className={langTag}>{c.aLang}</span>
-          <div className={front}>
-            <MarkdocContent content={c.aCard} />
+          <div className={frontRow}>
+            <div className={front}>
+              <MarkdocContent content={c.aCard} />
+            </div>
+            {c.audio && <PlayButton path={c.audio} small />}
           </div>
         </div>
 

@@ -10,6 +10,8 @@ const _schema = i.schema({
       aCard: i.string(),
       bCard: i.string(),
       note: i.string().optional(),
+      // Path to an audio file under public/, e.g. "audio/dict/hond.mp3".
+      audio: i.string().optional(),
     }),
     lightCards: i.entity({
       text: i.string(),

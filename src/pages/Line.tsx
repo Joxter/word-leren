@@ -7,6 +7,7 @@ import {
   generateKeyBetween,
   moveToRank,
 } from "../lib/queue";
+import PlayButton from "../components/PlayButton";
 
 const page = css`
   max-width: 760px;
@@ -95,6 +96,14 @@ const cellText = css`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 0;
+`;
+
+const aCell = css`
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
 `;
 
 const toolbar = css`
@@ -143,6 +152,7 @@ interface LineEntry {
     bLang: string;
     aCard: string;
     bCard: string;
+    audio?: string;
   };
 }
 
@@ -219,7 +229,10 @@ export default function Line() {
               onClick={() => setSelectedId(selected ? null : e.id)}
             >
               <span className={idx}>{i + 1}</span>
-              <span className={cellText}>{e.card?.aCard}</span>
+              <div className={aCell}>
+                <span className={cellText}>{e.card?.aCard}</span>
+                {e.card?.audio && <PlayButton path={e.card.audio} small />}
+              </div>
               <span className={cellText}>{e.card?.bCard}</span>
 
               {selected && (

@@ -3,6 +3,7 @@ import { useImagePaste } from "../hooks/useImagePaste";
 import { css } from "@linaria/core";
 import type { Card, CardData } from "../pages/Cards";
 import MarkdocField from "./MarkdocField";
+import PlayButton from "./PlayButton";
 
 const A_LANGS = ["NL", "EN"] as const;
 const B_LANGS = ["EN", "RU"] as const;
@@ -163,6 +164,26 @@ const textarea = css`
   }
 `;
 
+const audioRow = css`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+const audioInput = css`
+  flex: 1;
+  min-width: 0;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 0.875rem;
+
+  &:focus {
+    outline: none;
+    border-color: #999;
+  }
+`;
+
 const imageRow = css`
   display: flex;
   align-items: flex-start;
@@ -288,6 +309,7 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
     aCard: card.aCard,
     bCard: card.bCard,
     note: card.note ?? "",
+    audio: card.audio ?? "",
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageRemoved, setImageRemoved] = useState(false);
@@ -403,6 +425,21 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
               onChange={(v) => set("note", v)}
               rows={2}
             />
+
+            <div className={fieldGroup}>
+              <span className={label}>Audio (side A)</span>
+              <div className={audioRow}>
+                <input
+                  className={audioInput}
+                  value={form.audio}
+                  onChange={(e) => set("audio", e.target.value)}
+                  placeholder="audio/dict/hond.mp3"
+                  autoComplete="off"
+                  spellCheck={false}
+                />
+                {form.audio.trim() && <PlayButton path={form.audio.trim()} />}
+              </div>
+            </div>
 
             <div className={fieldGroup}>
               <span className={label}>Image</span>

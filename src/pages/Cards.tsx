@@ -5,6 +5,7 @@ import { id } from "@instantdb/react";
 import { db } from "../db";
 import CardModal from "../components/CardModal";
 import MarkdocField from "../components/MarkdocField";
+import PlayButton from "../components/PlayButton";
 import { enqueueTop } from "../lib/queue";
 
 export type Lang = "EN" | "RU" | "NL";
@@ -15,6 +16,8 @@ export interface CardData {
   aCard: string;
   bCard: string;
   note: string;
+  // Path (relative to public/) to a side-A audio clip, e.g. "audio/dict/hond.mp3".
+  audio: string;
 }
 
 export interface Card extends CardData {
@@ -225,6 +228,33 @@ const addImgLabel = css`
   }
 `;
 
+const audioFieldGroup = css`
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin-top: 1rem;
+`;
+
+const audioRow = css`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+const audioInput = css`
+  flex: 1;
+  min-width: 0;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 0.875rem;
+
+  &:focus {
+    outline: none;
+    border-color: #999;
+  }
+`;
+
 const formFooter = css`
   display: flex;
   justify-content: flex-end;
@@ -309,6 +339,7 @@ const cardText = css`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 0;
 `;
 
 const empty = css`
@@ -319,7 +350,7 @@ const empty = css`
 `;
 
 function makeDefaultForm(aLang: string, bLang: string): CardData {
-  return { aLang, bLang, aCard: "", bCard: "", note: "" };
+  return { aLang, bLang, aCard: "", bCard: "", note: "", audio: "" };
 }
 
 export default function Cards() {
@@ -521,6 +552,21 @@ export default function Cards() {
           </div>
         </div>
 
+        <div className={audioFieldGroup}>
+          <span className={formLabel}>Audio (side A)</span>
+          <div className={audioRow}>
+            <input
+              className={audioInput}
+              value={newForm.audio}
+              onChange={(e) => setNew("audio", e.target.value)}
+              placeholder="audio/dict/hond.mp3"
+              autoComplete="off"
+              spellCheck={false}
+            />
+            {newForm.audio.trim() && <PlayButton path={newForm.audio.trim()} />}
+          </div>
+        </div>
+
         <div className={formFooter}>
           <button type="submit" className={createBtn} disabled={newSaving}>
             {newSaving ? "Saving…" : "Add card"}
@@ -543,6 +589,7 @@ export default function Cards() {
               <div className={cardSide}>
                 <span className={langTag}>{card.aLang}</span>
                 <span className={cardText}>{card.aCard}</span>
+                {card.audio && <PlayButton path={card.audio} small />}
               </div>
               <div className={cardSide}>
                 <span className={langTag}>{card.bLang}</span>
