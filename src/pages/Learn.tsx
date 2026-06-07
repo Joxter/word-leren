@@ -46,6 +46,21 @@ const langTag = css`
   border-radius: 3px;
 `;
 
+const langRow = css`
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+`;
+
+// Target language of the (hidden) answer, shown as a hint on the prompt.
+const langHint = css`
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #bbb;
+`;
+
 const front = css`
   font-size: 1.5rem;
   font-weight: 600;
@@ -225,12 +240,12 @@ export default function Learn() {
     <div className={page}>
       <div className={card}>
         <div className={sideBlock}>
-          <span className={langTag}>{c.aLang}</span>
-          <div className={frontRow}>
-            <div className={front}>
-              <MarkdocContent content={c.aCard} />
-            </div>
-            {c.audio && <PlayButton path={c.audio} small />}
+          <div className={langRow}>
+            <span className={langTag}>{c.bLang}</span>
+            <span className={langHint}>→ {c.aLang}</span>
+          </div>
+          <div className={front}>
+            <MarkdocContent content={c.bCard} />
           </div>
         </div>
 
@@ -238,8 +253,13 @@ export default function Learn() {
           <>
             <hr className={divider} />
             <div className={sideBlock}>
-              <span className={langTag}>{c.bLang}</span>
-              <MarkdocContent content={c.bCard} />
+              <span className={langTag}>{c.aLang}</span>
+              <div className={frontRow}>
+                <div className={front}>
+                  <MarkdocContent content={c.aCard} />
+                </div>
+                {c.audio && <PlayButton path={c.audio} small />}
+              </div>
             </div>
             {c.note?.trim() && (
               <div className={noteBlock}>
