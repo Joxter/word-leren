@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { css } from "@linaria/core";
+import { id } from "@instantdb/react";
 import { db } from "../db";
 import {
   MOVE_STEPS,
@@ -8,6 +9,8 @@ import {
   moveToRank,
 } from "../lib/queue";
 import PlayButton from "../components/PlayButton";
+import CardModal from "../components/CardModal";
+import type { Card, CardData } from "./Cards";
 
 const page = css`
   max-width: 760px;
@@ -62,7 +65,7 @@ const list = css`
 
 const row = css`
   display: grid;
-  grid-template-columns: 2.5rem 1fr 1fr;
+  grid-template-columns: 2.5rem 1fr 1fr auto;
   gap: 0.75rem;
   align-items: center;
   padding: 0.5rem 0.75rem;
@@ -73,6 +76,22 @@ const row = css`
 
   &:hover {
     border-color: #bbb;
+  }
+`;
+
+const editBtn = css`
+  background: #f4f4f4;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 0.3rem 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+
+  &:hover {
+    background: #e8e8e8;
+    border-color: #1a1a1a;
   }
 `;
 
@@ -152,17 +171,20 @@ interface LineEntry {
     bLang: string;
     aCard: string;
     bCard: string;
+    note?: string;
     audio?: string;
+    image?: { id: string; url: string; path: string };
   };
 }
 
 export default function Line() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [backfilling, setBackfilling] = useState(false);
+  const [modalCard, setModalCard] = useState<Card | null>(null);
 
   const { data, isLoading } = db.useQuery({
     queueEntries: {
-      card: {},
+      card: { image: {} },
       $: { order: { rank: "asc" }, limit: 2000 },
     },
   });
@@ -200,6 +222,36 @@ export default function Line() {
     }
   }
 
+  async function handleUpdate(
+    formData: CardData,
+    imageFile: File | null,
+    removeImageId: string | null,
+  ): Promise<void> {
+    const cardId = (modalCard as Card).id;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const ops: any[] = [db.tx.cards[cardId].update(formData)];
+    if (removeImageId) {
+      ops.push(db.tx.cards[cardId].unlink({ image: removeImageId }));
+      ops.push(db.tx.$files[removeImageId].delete());
+    }
+    if (imageFile) {
+      const { data: fileData } = await db.storage.uploadFile(
+        `cards/${cardId}-${Date.now()}`,
+        imageFile,
+      );
+      if (fileData) {
+        ops.push(db.tx.cards[cardId].link({ image: fileData.id }));
+      }
+    }
+    await db.transact(ops);
+    setModalCard(null);
+  }
+
+  function handleDelete(cardId: string) {
+    db.transact(db.tx.cards[cardId].delete());
+    setModalCard(null);
+  }
+
   return (
     <div className={page}>
       <div className={header}>
@@ -234,6 +286,15 @@ export default function Line() {
                 {e.card?.audio && <PlayButton path={e.card.audio} small />}
               </div>
               <span className={cellText}>{e.card?.bCard}</span>
+              <button
+                className={editBtn}
+                onClick={(ev) => {
+                  ev.stopPropagation();
+                  if (e.card) setModalCard(e.card as Card);
+                }}
+              >
+                Edit
+              </button>
 
               {selected && (
                 <div
@@ -269,6 +330,15 @@ export default function Line() {
           );
         })}
       </div>
+
+      {modalCard !== null && (
+        <CardModal
+          card={modalCard}
+          onSave={handleUpdate}
+          onDelete={handleDelete}
+          onClose={() => setModalCard(null)}
+        />
+      )}
     </div>
   );
 }
