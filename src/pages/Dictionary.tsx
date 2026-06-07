@@ -1,5 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { css } from "@linaria/core";
+import { id } from "@instantdb/react";
+import { db } from "../db";
+import { enqueueTop } from "../lib/queue";
 import {
   loadDictionary,
   searchDictionary,
@@ -168,6 +171,30 @@ const verbLabel = css`
   margin-right: 0.25rem;
 `;
 
+const addBtn = css`
+  margin-left: auto;
+  border: 1px solid #e5e5e5;
+  background: #fafafa;
+  border-radius: 6px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.7rem;
+  color: #555;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover {
+    border-color: #1a1a1a;
+    color: #111;
+  }
+
+  &:disabled {
+    cursor: default;
+    border-color: #cfe8d4;
+    background: #f0f9f1;
+    color: #2c7a3f;
+  }
+`;
+
 const exampleRow = css`
   display: flex;
   align-items: baseline;
@@ -227,6 +254,29 @@ function EntryCard({
     .filter((i) => i.examples)
     .map((i) => ({ examples: i.examples as string, source: i.source }));
 
+  // State for the "add to cards" button (one card per dictionary entry).
+  const [saving, setSaving] = useState(false);
+  const [added, setAdded] = useState(false);
+
+  async function addToCards() {
+    setSaving(true);
+    const cardId = id();
+    const note = examplesList.map((e) => e.examples).join("\n\n");
+    await db.transact(
+      db.tx.cards[cardId].update({
+        aLang: "NL",
+        bLang: "EN",
+        aCard: entry.word,
+        bCard: translations.map((t) => t.text).join(", "),
+        note,
+      }),
+    );
+    // New card jumps to the top of the line, like cards added from the Cards page.
+    await enqueueTop(cardId);
+    setAdded(true);
+    setSaving(false);
+  }
+
   return (
     <div className={card}>
       <div className={head}>
@@ -239,6 +289,14 @@ function EntryCard({
           </span>
         )}
         {entry.pos && <span className={pos}>{entry.pos}</span>}
+        <button
+          className={addBtn}
+          onClick={addToCards}
+          disabled={added || saving || translations.length === 0}
+          title="Add to cards (NL → EN)"
+        >
+          {added ? "✓ Added" : saving ? "Adding…" : "+ Add to cards"}
+        </button>
       </div>
 
       {translations.length > 0 && (

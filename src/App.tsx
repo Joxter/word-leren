@@ -39,7 +39,10 @@ const navLinkActive = css`
 function NavLink({ href, children }: { href: string; children: string }) {
   const [isActive] = useRoute(href === "/" ? "/" : `${href}*`);
   return (
-    <Link href={href} className={isActive ? `${navLink} ${navLinkActive}` : navLink}>
+    <Link
+      href={href}
+      className={isActive ? `${navLink} ${navLinkActive}` : navLink}
+    >
       {children}
     </Link>
   );
@@ -50,10 +53,10 @@ function Layout() {
     <>
       <nav className={nav}>
         <NavLink href="/">Cards</NavLink>
-        <NavLink href="/learn">Learn</NavLink>
-        <NavLink href="/line">Line</NavLink>
-        <NavLink href="/grammar">Grammar</NavLink>
         <NavLink href="/dictionary">Dictionary</NavLink>
+        <NavLink href="/learn">Learn</NavLink>
+        <NavLink href="/grammar">Grammar</NavLink>
+        <NavLink href="/line">Line</NavLink>
       </nav>
       <Switch>
         <Route path="/" component={CardsPage} />
