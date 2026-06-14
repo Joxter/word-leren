@@ -8,14 +8,14 @@ Built for a single user — me.
 
 ### Vocabulary Cards
 
-Bilingual flashcards for three language pairs: NL↔EN, NL↔RU, and EN↔RU. Cards support optional images (paste from clipboard or upload), and text fields accept Markdoc (markdown) syntax. Cards are filtered by language pair via tabs. New cards are added to the top of the learning line.
+Bilingual flashcards for three language pairs: NL↔EN, NL↔RU, and EN↔RU. Cards support optional images (paste from clipboard or upload) and an optional side-A audio clip (a path under `public/`, e.g. a dictionary pronunciation); a play button appears wherever the side-A word is shown — the create/edit forms, the card list, the line, and during review. Text fields accept Markdoc (markdown) syntax. Cards are filtered by language pair via tabs. New cards are added to the top of the learning line.
 
 ### Learning
 
 A deliberately simple, Anki-inspired review mode built around a single global queue — "the line". No timers, days, or sessions, just one dynamic ordered list.
 
-- **Learn** (`/learn`) — see the top card, reveal the back side and note, then press a **Depth** button to drop the card to the N-th place from the top (`5 / 10 / 50 / 100 / 500 / 1000`). The next card surfaces immediately. `Space`/`Enter` reveals; number keys `1`–`6` pick a depth.
-- **Line** (`/line`) — view the whole line in order and nudge any card up or down by a number of steps. A button backfills cards that aren't in the line yet.
+- **Learn** (`/learn`) — see the top card's side B as the prompt, with a hint of the answer's language (e.g. `EN → NL`). Reveal shows side A — its word, audio, and note — then press a **Depth** button to drop the card to the N-th place from the top (`5 / 10 / 50 / 100 / 500 / 1000`). The next card surfaces immediately. `Space`/`Enter` reveals; number keys `1`–`6` pick a depth.
+- **Line** (`/line`) — view the whole line in order and nudge any card up or down by a number of steps, or open any card in the editor via its **Edit** button. A button backfills cards that aren't in the line yet.
 
 Positions use fractional-index ranks, so reordering is a single write — no renumbering. Every action (a `place` from Learn or a `move` from Line) is logged to a history of card events.
 
@@ -26,6 +26,8 @@ Rich-text notes for grammar rules and examples. Displays as a grid list with a d
 ### Dictionary
 
 A searchable offline Dutch dictionary merged from six imported sources (an Anki frequency dictionary, three vocabulary/grammar decks, and a CSV). Each headword gathers everything available for that word into a single entry: the `de`/`het` article, part of speech, irregular verb forms, and a per-source list of translations, example sentences, and audio clips (native recordings plus TTS). It is built ahead of time into a static JSON file with extracted audio and served directly from the site — no backend, works offline. See [Dictionary data](#dictionary-data) for the build.
+
+Each entry has an **Add to cards** button that creates an NL→EN flashcard from it: the Dutch headword on side A (with its pronunciation audio), the entry's translations on side B, any example sentences in the note. The new card lands at the top of the line.
 
 ### Quizzes
 

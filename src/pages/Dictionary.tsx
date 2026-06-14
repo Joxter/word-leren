@@ -66,22 +66,10 @@ const word = css`
   font-weight: 600;
 `;
 
-const chip = css`
-  font-size: 0.75rem;
+const article = css`
+  font-size: 1.125rem;
   font-weight: 600;
-  padding: 0.1rem 0.4rem;
-  border-radius: 5px;
-  line-height: 1.4;
-`;
-
-const chipDe = css`
-  background: #e7f0fb;
-  color: #1c5fb0;
-`;
-
-const chipHet = css`
-  background: #eaf6ec;
-  color: #2c7a3f;
+  color: #999;
 `;
 
 const pos = css`
@@ -269,7 +257,7 @@ function EntryCard({
       db.tx.cards[cardId].update({
         aLang: "NL",
         bLang: "EN",
-        aCard: entry.word,
+        aCard: entry.article ? `${entry.article} ${entry.word}` : entry.word,
         bCard: translations.map((t) => t.text).join(", "),
         note,
         ...(rawAudio ? { audio: `audio/${rawAudio}` } : {}),
@@ -284,14 +272,10 @@ function EntryCard({
   return (
     <div className={card}>
       <div className={head}>
-        <span className={word}>{entry.word}</span>
         {entry.article && (
-          <span
-            className={`${chip} ${entry.article === "het" ? chipHet : chipDe}`}
-          >
-            {entry.article}
-          </span>
+          <span className={article}>{entry.article}</span>
         )}
+        <span className={word}>{entry.word}</span>
         {entry.pos && <span className={pos}>{entry.pos}</span>}
         <button
           className={addBtn}
