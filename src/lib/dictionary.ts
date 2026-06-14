@@ -42,8 +42,10 @@ export function audioUrl(audio: string): string {
   return encodeURI(`${import.meta.env.BASE_URL}audio/${audio}`);
 }
 
-// Search both the Dutch headword and the English translations. Dutch matches
-// outrank English ones; within each, exact > prefix > substring.
+// Search the Dutch headword, translations, and examples.
+// Priority: exact word > word prefix > word substring > exact translation >
+//   translation prefix > translation substring > example match.
+// Within the same tier, shorter words rank higher, then alphabetical.
 export function searchDictionary(
   entries: DictEntry[],
   rawQuery: string,
@@ -65,6 +67,8 @@ export function searchDictionary(
       if (t === q) score = Math.min(score, 3);
       else if (t.startsWith(q)) score = Math.min(score, 4);
       else if (t.includes(q)) score = Math.min(score, 5);
+
+      if (score > 6 && info.examples?.toLowerCase().includes(q)) score = 6;
     }
 
     if (score !== Infinity) scored.push({ entry, score });
@@ -72,7 +76,9 @@ export function searchDictionary(
 
   scored.sort(
     (a, b) =>
-      a.score - b.score || a.entry.word.localeCompare(b.entry.word, "nl"),
+      a.score - b.score ||
+      a.entry.word.length - b.entry.word.length ||
+      a.entry.word.localeCompare(b.entry.word, "nl"),
   );
   return scored.slice(0, limit).map((s) => s.entry);
 }

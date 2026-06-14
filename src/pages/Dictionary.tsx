@@ -218,9 +218,11 @@ function play(audio: HTMLAudioElement | null, url: string) {
 function EntryCard({
   entry,
   audioEl,
+  existingCards,
 }: {
   entry: DictEntry;
   audioEl: HTMLAudioElement | null;
+  existingCards: Set<string>;
 }) {
   const audios = entryAudios(entry);
   const verb = entry.verb;
@@ -242,9 +244,14 @@ function EntryCard({
     .filter((i) => i.examples)
     .map((i) => ({ examples: i.examples as string, source: i.source }));
 
-  // State for the "add to cards" button (one card per dictionary entry).
+  const cardKey = (
+    entry.article ? `${entry.article} ${entry.word}` : entry.word
+  ).toLowerCase();
+  const alreadyAdded = existingCards.has(cardKey);
+
   const [saving, setSaving] = useState(false);
-  const [added, setAdded] = useState(false);
+  const [justAdded, setJustAdded] = useState(false);
+  const added = alreadyAdded || justAdded;
 
   async function addToCards() {
     setSaving(true);
@@ -265,7 +272,7 @@ function EntryCard({
     );
     // New card jumps to the top of the line, like cards added from the Cards page.
     await enqueueTop(cardId);
-    setAdded(true);
+    setJustAdded(true);
     setSaving(false);
   }
 
@@ -357,6 +364,13 @@ export default function Dictionary() {
   const [query, setQuery] = useState("");
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  const { data: cardsData } = db.useQuery({ cards: { $: { where: { aLang: "NL" } } } });
+  const existingCards = useMemo(() => {
+    const set = new Set<string>();
+    for (const c of cardsData?.cards ?? []) set.add(c.aCard.toLowerCase());
+    return set;
+  }, [cardsData?.cards]);
+
   useEffect(() => {
     audioRef.current = new Audio();
     loadDictionary()
@@ -401,6 +415,7 @@ export default function Dictionary() {
               key={`${entry.word}-${i}`}
               entry={entry}
               audioEl={audioRef.current}
+              existingCards={existingCards}
             />
           ))}
         </div>
