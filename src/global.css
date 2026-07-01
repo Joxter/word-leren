@@ -1,3 +1,21 @@
+/* Official Inter variable font, self-hosted so all OpenType features
+   (cvXX / ssXX / zero) are available — the Google Fonts and Fontsource builds
+   strip them. Single file covers weights 100–900 via the variable axis. */
+@font-face {
+  font-family: "Inter Variable";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("./fonts/InterVariable.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter Variable";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("./fonts/InterVariable-Italic.woff2") format("woff2");
+}
+
 *,
 *::before,
 *::after {
@@ -10,10 +28,17 @@ html {
 
 body {
   margin: 0;
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-family: "Inter Variable", "Inter", system-ui, -apple-system, sans-serif;
   font-weight: 300;
   background: #f5f5f5;
   color: #111;
+  /* Inter OpenType features for less ambiguous characters (inherited by all):
+     zero = slashed zero (0 vs O), cv05 = lower-case l with tail (l vs I / 1),
+     cv08 = upper-case I with serifs (I vs l). */
+  font-feature-settings:
+    "zero" 1,
+    "cv05" 1,
+    "cv08" 1;
 }
 
 button,
