@@ -60,15 +60,27 @@ const db = init({ appId: APP_ID, adminToken: ADMIN_TOKEN });
 
 console.log("🔍  Querying InstantDB...");
 const data = await db.query({
+  // cards carry their line membership + history inline as `queues` / `log` JSON,
+  // so dumping the cards captures the whole learning state.
   cards: { image: {} },
   lightCards: { image: {} },
+  lines: {},
+  // Legacy single-line tables — still dumped so pre-migration state is captured.
+  queueEntries: { card: {} },
+  cardEvents: {},
 });
 
 const cards = data?.cards ?? [];
 const lightCards = data?.lightCards ?? [];
+const lines = data?.lines ?? [];
+const queueEntries = data?.queueEntries ?? [];
+const cardEvents = data?.cardEvents ?? [];
 
-console.log(`    cards:      ${cards.length}`);
-console.log(`    lightCards: ${lightCards.length}\n`);
+console.log(`    cards:        ${cards.length}`);
+console.log(`    lightCards:   ${lightCards.length}`);
+console.log(`    lines:        ${lines.length}`);
+console.log(`    queueEntries: ${queueEntries.length}`);
+console.log(`    cardEvents:   ${cardEvents.length}\n`);
 
 // ── download images ───────────────────────────────────────────────────────────
 
@@ -132,6 +144,9 @@ const backup = {
   appId: APP_ID,
   cards,
   lightCards,
+  lines,
+  queueEntries,
+  cardEvents,
 };
 
 const jsonPath = join(OUT_DIR, "data.json");
@@ -139,7 +154,12 @@ writeFileSync(jsonPath, JSON.stringify(backup, null, 2), "utf8");
 
 // ── summary ───────────────────────────────────────────────────────────────────
 
-const totalRecords = cards.length + lightCards.length;
+const totalRecords =
+  cards.length +
+  lightCards.length +
+  lines.length +
+  queueEntries.length +
+  cardEvents.length;
 console.log("✅  Done!");
 console.log(`    data.json  — ${totalRecords} record(s)`);
 console.log(

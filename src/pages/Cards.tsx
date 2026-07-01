@@ -7,6 +7,8 @@ import CardModal from "../components/CardModal";
 import MarkdocField from "../components/MarkdocField";
 import PlayButton from "../components/PlayButton";
 import { enqueueTop } from "../lib/queue";
+import { useLines } from "../lib/lines";
+import LineCheckboxes from "../components/LineCheckboxes";
 
 export type Lang = "EN" | "RU" | "NL";
 
@@ -23,6 +25,7 @@ export interface CardData {
 export interface Card extends CardData {
   id: string;
   image?: { id: string; url: string; path: string };
+  queues?: { [lineId: string]: { rank: string } };
 }
 
 interface TabDef {
@@ -365,6 +368,19 @@ export default function Cards() {
   const [newImageFile, setNewImageFile] = useState<File | null>(null);
   const [newImagePreview, setNewImagePreview] = useState<string | null>(null);
   const [newSaving, setNewSaving] = useState(false);
+  // null means "untouched" → defaults to the default (first) line pre-checked.
+  const [newLines, setNewLines] = useState<Set<string> | null>(null);
+
+  const { lines } = useLines();
+  const defaultLineId = lines[0]?.id;
+  const selectedNewLines =
+    newLines ?? new Set(defaultLineId ? [defaultLineId] : []);
+
+  function toggleNewLine(lineId: string) {
+    const next = new Set(selectedNewLines);
+    next.has(lineId) ? next.delete(lineId) : next.add(lineId);
+    setNewLines(next);
+  }
 
   useEffect(() => {
     if (!newImageFile) {
@@ -381,6 +397,7 @@ export default function Cards() {
   function switchTab(i: number) {
     setActiveTabIdx(i);
     setNewForm(makeDefaultForm(TABS[i].aLang, TABS[i].defaultBLang));
+    setNewLines(null);
   }
 
   function setNew(field: keyof CardData, value: string) {
@@ -416,10 +433,13 @@ export default function Cards() {
       }
     }
     await db.transact(ops);
-    // New card jumps to the top of the line so it's the first one to learn next.
-    await enqueueTop(cardId);
+    // Add the new card to the top of each checked line (default line by default).
+    for (const lineId of selectedNewLines) {
+      await enqueueTop(lineId, cardId);
+    }
     setNewForm(makeDefaultForm(activeTab.aLang, activeTab.defaultBLang));
     setNewImageFile(null);
+    setNewLines(null);
     setNewSaving(false);
   }
 
@@ -565,6 +585,14 @@ export default function Cards() {
             />
             {newForm.audio.trim() && <PlayButton path={newForm.audio.trim()} />}
           </div>
+        </div>
+
+        <div className={audioFieldGroup}>
+          <LineCheckboxes
+            lines={lines}
+            selected={selectedNewLines}
+            onToggle={toggleNewLine}
+          />
         </div>
 
         <div className={formFooter}>

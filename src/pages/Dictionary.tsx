@@ -3,6 +3,7 @@ import { css } from "@linaria/core";
 import { id } from "@instantdb/react";
 import { db } from "../db";
 import { enqueueTop } from "../lib/queue";
+import { getDefaultLineId } from "../lib/lines";
 import {
   loadDictionary,
   searchDictionary,
@@ -227,6 +228,9 @@ function EntryCard({
   const audios = entryAudios(entry);
   const verb = entry.verb;
 
+  // - поиск по причастиям
+  // - если один перевод содержит полностью второй, то не дублируем
+
   // Translations grouped by content: identical ones (case-insensitive) merge
   // into one row that lists every source for them, in gray at the end.
   const transMap = new Map<string, { text: string; sources: string[] }>();
@@ -270,8 +274,9 @@ function EntryCard({
         ...(rawAudio ? { audio: `audio/${rawAudio}` } : {}),
       }),
     );
-    // New card jumps to the top of the line, like cards added from the Cards page.
-    await enqueueTop(cardId);
+    // New card jumps to the top of the default line, like cards added from the
+    // Cards page.
+    await enqueueTop(await getDefaultLineId(), cardId);
     setJustAdded(true);
     setSaving(false);
   }
@@ -279,9 +284,7 @@ function EntryCard({
   return (
     <div className={card}>
       <div className={head}>
-        {entry.article && (
-          <span className={article}>{entry.article}</span>
-        )}
+        {entry.article && <span className={article}>{entry.article}</span>}
         <span className={word}>{entry.word}</span>
         {entry.pos && <span className={pos}>{entry.pos}</span>}
         <button
@@ -364,7 +367,9 @@ export default function Dictionary() {
   const [query, setQuery] = useState("");
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const { data: cardsData } = db.useQuery({ cards: { $: { where: { aLang: "NL" } } } });
+  const { data: cardsData } = db.useQuery({
+    cards: { $: { where: { aLang: "NL" } } },
+  });
   const existingCards = useMemo(() => {
     const set = new Set<string>();
     for (const c of cardsData?.cards ?? []) set.add(c.aCard.toLowerCase());

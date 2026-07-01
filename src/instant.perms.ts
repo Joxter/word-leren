@@ -26,6 +26,14 @@ const rules = {
       delete: "true",
     },
   },
+  "lines": {
+    allow: {
+      view: "true",
+      create: "true",
+      update: "true",
+      delete: "true",
+    },
+  },
   "queueEntries": {
     allow: {
       view: "true",

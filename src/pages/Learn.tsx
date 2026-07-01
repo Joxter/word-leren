@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { css } from "@linaria/core";
+import { Link } from "wouter";
 import { db } from "../db";
-import { DEPTH_BUTTONS, placeAtDepth } from "../lib/queue";
+import { DEPTH_BUTTONS, placeAtDepth, sortLine } from "../lib/queue";
+import { useLines, useActiveLine } from "../lib/lines";
+import LineSelector from "../components/LineSelector";
 import MarkdocContent from "../components/MarkdocContent";
 import PlayButton from "../components/PlayButton";
 
@@ -16,6 +19,12 @@ const empty = css`
   color: #999;
   padding: 5rem 0;
   font-size: 0.9rem;
+`;
+
+const topBar = css`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
 `;
 
 const card = css`
@@ -157,40 +166,38 @@ const caption = css`
   margin-top: 0.875rem;
 `;
 
-interface QueueCard {
+interface LearnCard {
   id: string;
-  rank: string;
-  card?: {
-    id: string;
-    aLang: string;
-    bLang: string;
-    aCard: string;
-    bCard: string;
-    note?: string;
-    audio?: string;
-    image?: { url: string };
-  };
+  aLang: string;
+  bLang: string;
+  aCard: string;
+  bCard: string;
+  note?: string;
+  audio?: string;
+  image?: { url: string };
+  queues?: { [lineId: string]: { rank: string } };
 }
 
 export default function Learn() {
   const [revealed, setRevealed] = useState(false);
   const [busy, setBusy] = useState(false);
 
+  const { lines, isLoading: linesLoading } = useLines();
+  const [activeLine, setActiveLine] = useActiveLine(lines);
+
   const { data, isLoading } = db.useQuery({
-    queueEntries: {
-      card: { image: {} },
-      $: { order: { rank: "asc" }, limit: 2 },
-    },
+    cards: { image: {}, $: { limit: 5000 } },
   });
 
-  const entries = (data?.queueEntries ?? []) as QueueCard[];
-  const current = entries[0];
+  const cards = (data?.cards ?? []) as LearnCard[];
+  const members = activeLine ? sortLine(cards, activeLine) : [];
+  const current = members[0];
 
   async function handleDepth(depth: number) {
-    if (!current?.card || busy) return;
+    if (!current || !activeLine || busy) return;
     setBusy(true);
     try {
-      await placeAtDepth(current.id, current.card.id, depth);
+      await placeAtDepth(members, activeLine, depth);
       setRevealed(false);
     } finally {
       setBusy(false);
@@ -221,23 +228,41 @@ export default function Learn() {
     return () => window.removeEventListener("keydown", onKey);
   }, [revealed, current, busy]);
 
-  if (isLoading) return <div className={page} />;
+  if (isLoading || linesLoading) return <div className={page} />;
 
-  if (!current?.card) {
+  if (lines.length === 0) {
     return (
       <div className={page}>
         <div className={empty}>
-          The line is empty. Add a card, or backfill existing cards from the
-          Line page.
+          No lines yet. Create one on the <Link href="/line">Line</Link> page.
         </div>
       </div>
     );
   }
 
-  const c = current.card;
+  const selector = (
+    <div className={topBar}>
+      <LineSelector lines={lines} value={activeLine} onChange={setActiveLine} />
+    </div>
+  );
+
+  if (!current) {
+    return (
+      <div className={page}>
+        {selector}
+        <div className={empty}>
+          This line is empty. Add cards to it from the{" "}
+          <Link href="/line">Line</Link> page.
+        </div>
+      </div>
+    );
+  }
+
+  const c = current;
 
   return (
     <div className={page}>
+      {selector}
       <div className={card}>
         <div className={sideBlock}>
           <div className={langRow}>

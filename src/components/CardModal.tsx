@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useImagePaste } from "../hooks/useImagePaste";
 import { css } from "@linaria/core";
 import type { Card, CardData } from "../pages/Cards";
+import { useLines } from "../lib/lines";
+import { enqueueTop, removeFromLine } from "../lib/queue";
+import LineCheckboxes from "./LineCheckboxes";
 import MarkdocField from "./MarkdocField";
 import PlayButton from "./PlayButton";
 
@@ -316,6 +319,18 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
   const [localPreview, setLocalPreview] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
+  const { lines } = useLines();
+  const originalLines = new Set(Object.keys(card.queues ?? {}));
+  const [lineIds, setLineIds] = useState<Set<string>>(originalLines);
+
+  function toggleLine(lineId: string) {
+    setLineIds((prev) => {
+      const next = new Set(prev);
+      next.has(lineId) ? next.delete(lineId) : next.add(lineId);
+      return next;
+    });
+  }
+
   useEffect(() => {
     if (!imageFile) {
       setLocalPreview(null);
@@ -347,6 +362,14 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
     const removeImageId =
       imageRemoved || imageFile !== null ? (card?.image?.id ?? null) : null;
     try {
+      // Apply line-membership changes: add to newly-checked lines (top), remove
+      // from unchecked ones.
+      for (const lineId of lineIds) {
+        if (!originalLines.has(lineId)) await enqueueTop(lineId, card.id);
+      }
+      for (const lineId of originalLines) {
+        if (!lineIds.has(lineId)) await removeFromLine(lineId, card.id);
+      }
       await onSave(form, imageFile, removeImageId);
     } finally {
       setSaving(false);
@@ -425,6 +448,14 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
               onChange={(v) => set("note", v)}
               rows={2}
             />
+
+            <div className={fieldGroup}>
+              <LineCheckboxes
+                lines={lines}
+                selected={lineIds}
+                onToggle={toggleLine}
+              />
+            </div>
 
             <div className={fieldGroup}>
               <span className={label}>Audio (side A)</span>

@@ -12,10 +12,35 @@ const _schema = i.schema({
       note: i.string().optional(),
       // Path to an audio file under public/, e.g. "audio/dict/hond.mp3".
       audio: i.string().optional(),
+      // Learning-line membership: one rank per line the card belongs to, keyed
+      // by line id. A card can be in many lines at different positions.
+      queues: i
+        .json<{ [lineId: string]: { rank: string } }>()
+        .optional(),
+      // Append-only history of place/move actions, keyed by event id so entries
+      // can be merged in without clobbering each other.
+      log: i
+        .json<{
+          [eventId: string]: {
+            at: number;
+            lineId: string;
+            kind: string;
+            amount: number;
+          };
+        }>()
+        .optional(),
+    }),
+    // A named learning line ("the line"). Membership + per-line rank live on the
+    // cards themselves (cards.queues), so lines have no direct link to cards.
+    lines: i.entity({
+      name: i.string(),
+      createdAt: i.number().indexed(),
     }),
     lightCards: i.entity({
       text: i.string(),
     }),
+    // Legacy single-line storage. Retired in favour of cards.queues; kept only
+    // so the migration script can read existing ranks. Safe to drop afterwards.
     queueEntries: i.entity({
       rank: i.string().indexed(),
     }),
