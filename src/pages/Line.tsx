@@ -4,7 +4,7 @@ import { db } from "../db";
 import {
   MOVE_STEPS,
   enqueueBottom,
-  generateKeyBetween,
+  safeKeyBetween,
   moveToRank,
   removeFromLine,
   rankInLine,
@@ -282,7 +282,7 @@ export default function Line() {
     if (target === index) return;
     const left = arr[target - 1];
     const right = arr[target];
-    const newRank = generateKeyBetween(
+    const newRank = safeKeyBetween(
       left ? rankInLine(left, activeLine)! : null,
       right ? rankInLine(right, activeLine)! : null,
     );

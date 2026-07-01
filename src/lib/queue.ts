@@ -21,6 +21,23 @@ export const MOVE_STEPS = [1, 5, 25, 100];
 
 export { generateKeyBetween };
 
+/**
+ * Like `generateKeyBetween`, but tolerant of degenerate neighbours: if `a` and
+ * `b` are equal or out of order (which shouldn't happen, but can if duplicate
+ * ranks ever sneak in), it falls back to a key just after `a` instead of
+ * throwing. This keeps Learn/Line working and lets the order self-heal over
+ * time. Run `scripts/fix-ranks.mjs` to fully clean up duplicates.
+ */
+export function safeKeyBetween(
+  a: string | null,
+  b: string | null,
+): string {
+  if (a !== null && b !== null && a >= b) {
+    return generateKeyBetween(a, null);
+  }
+  return generateKeyBetween(a, b);
+}
+
 export type CardQueues = { [lineId: string]: { rank: string } };
 
 /** Minimal shape the queue helpers need from a card. */
@@ -97,7 +114,7 @@ export async function placeAtDepth(
     const last = members[members.length - 1];
     newRank = generateKeyBetween(rankInLine(last, lineId) ?? null, null);
   } else {
-    newRank = generateKeyBetween(
+    newRank = safeKeyBetween(
       rankInLine(before, lineId)!,
       after ? rankInLine(after, lineId)! : null,
     );
