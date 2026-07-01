@@ -5,8 +5,10 @@ import { db } from "../db";
 import { DEPTH_BUTTONS, placeAtDepth, sortLine } from "../lib/queue";
 import { useLines, useActiveLine } from "../lib/lines";
 import LineSelector from "../components/LineSelector";
+import CardModal from "../components/CardModal";
 import MarkdocContent from "../components/MarkdocContent";
 import PlayButton from "../components/PlayButton";
+import type { Card, CardData } from "./Cards";
 
 const page = css`
   max-width: 640px;
@@ -166,6 +168,23 @@ const caption = css`
   margin-top: 0.875rem;
 `;
 
+const editBtn = css`
+  align-self: flex-end;
+  background: #f4f4f4;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+
+  &:hover {
+    background: #e8e8e8;
+    border-color: #1a1a1a;
+  }
+`;
+
 interface LearnCard {
   id: string;
   aLang: string;
@@ -174,13 +193,14 @@ interface LearnCard {
   bCard: string;
   note?: string;
   audio?: string;
-  image?: { url: string };
+  image?: { id: string; url: string; path: string };
   queues?: { [lineId: string]: { rank: string } };
 }
 
 export default function Learn() {
   const [revealed, setRevealed] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [modalCard, setModalCard] = useState<Card | null>(null);
 
   const { lines, isLoading: linesLoading } = useLines();
   const [activeLine, setActiveLine] = useActiveLine(lines);
@@ -202,6 +222,38 @@ export default function Learn() {
     } finally {
       setBusy(false);
     }
+  }
+
+  async function handleUpdate(
+    formData: CardData,
+    imageFile: File | null,
+    removeImageId: string | null,
+  ): Promise<void> {
+    const cardId = (modalCard as Card).id;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const ops: any[] = [db.tx.cards[cardId].update(formData)];
+    if (removeImageId) {
+      ops.push(db.tx.cards[cardId].unlink({ image: removeImageId }));
+      ops.push(db.tx.$files[removeImageId].delete());
+    }
+    if (imageFile) {
+      const { data: fileData } = await db.storage.uploadFile(
+        `cards/${cardId}-${Date.now()}`,
+        imageFile,
+      );
+      if (fileData) {
+        ops.push(db.tx.cards[cardId].link({ image: fileData.id }));
+      }
+    }
+    await db.transact(ops);
+    setModalCard(null);
+  }
+
+  function handleDelete(cardId: string) {
+    db.transact(db.tx.cards[cardId].delete());
+    setModalCard(null);
+    // The deleted card was the top one; surface the next card face-down.
+    setRevealed(false);
   }
 
   // Keyboard: space/enter reveals; number keys pick a depth button.
@@ -292,6 +344,12 @@ export default function Learn() {
               </div>
             )}
             {c.image?.url && <img className={cardImg} src={c.image.url} alt="" />}
+            <button
+              className={editBtn}
+              onClick={() => setModalCard(current as Card)}
+            >
+              Edit card
+            </button>
           </>
         )}
       </div>
@@ -319,6 +377,15 @@ export default function Learn() {
             Drop this card to the N-th place from the top
           </div>
         </>
+      )}
+
+      {modalCard !== null && (
+        <CardModal
+          card={modalCard}
+          onSave={handleUpdate}
+          onDelete={handleDelete}
+          onClose={() => setModalCard(null)}
+        />
       )}
     </div>
   );
