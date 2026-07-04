@@ -231,6 +231,21 @@ const addImgLabel = css`
   }
 `;
 
+const formTextarea = css`
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  resize: vertical;
+  line-height: 1.4;
+
+  &:focus {
+    outline: none;
+    border-color: #999;
+  }
+`;
+
 const audioFieldGroup = css`
   display: flex;
   flex-direction: column;
@@ -494,10 +509,11 @@ export default function Cards() {
       <form className={inlineFormPanel} onSubmit={handleCreate}>
         <div className={formSides}>
           <div className={formSide}>
-            <MarkdocField
-              label="Word / Phrase"
+            <span className={formLabel}>Word / Phrase</span>
+            <textarea
+              className={formTextarea}
               value={newForm.aCard}
-              onChange={(v) => setNew("aCard", v)}
+              onChange={(e) => setNew("aCard", e.target.value)}
               rows={3}
               required
             />
@@ -519,10 +535,11 @@ export default function Cards() {
                 ))}
               </div>
             </div>
-            <MarkdocField
-              label="Translation"
+            <span className={formLabel}>Translation</span>
+            <textarea
+              className={formTextarea}
               value={newForm.bCard}
-              onChange={(v) => setNew("bCard", v)}
+              onChange={(e) => setNew("bCard", e.target.value)}
               rows={3}
               required
             />

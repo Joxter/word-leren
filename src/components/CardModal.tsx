@@ -11,7 +11,6 @@ import PlayButton from "./PlayButton";
 const A_LANGS = ["NL", "EN"] as const;
 const B_LANGS = ["EN", "RU"] as const;
 
-
 const backdrop = css`
   position: fixed;
   inset: 0;
@@ -341,7 +340,10 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
     return () => URL.revokeObjectURL(url);
   }, [imageFile]);
 
-  useImagePaste((file) => { setImageFile(file); setImageRemoved(false); });
+  useImagePaste((file) => {
+    setImageFile(file);
+    setImageRemoved(false);
+  });
 
   const previewUrl =
     localPreview ?? (!imageRemoved ? (card?.image?.url ?? null) : null);
@@ -406,10 +408,11 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
                     </div>
                   ))}
                 </div>
-                <MarkdocField
-                  label="Word / Phrase"
+                <span className={label}>Word / Phrase</span>
+                <textarea
+                  className={textarea}
                   value={form.aCard}
-                  onChange={(v) => set("aCard", v)}
+                  onChange={(e) => set("aCard", e.target.value)}
                   rows={3}
                   required
                 />
@@ -432,10 +435,11 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
                     </div>
                   ))}
                 </div>
-                <MarkdocField
-                  label="Translation"
+                <span className={label}>Translation</span>
+                <textarea
+                  className={textarea}
                   value={form.bCard}
-                  onChange={(v) => set("bCard", v)}
+                  onChange={(e) => set("bCard", e.target.value)}
                   rows={3}
                   required
                 />

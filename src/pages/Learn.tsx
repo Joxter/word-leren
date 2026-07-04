@@ -8,6 +8,7 @@ import LineSelector from "../components/LineSelector";
 import CardModal from "../components/CardModal";
 import MarkdocContent from "../components/MarkdocContent";
 import PlayButton from "../components/PlayButton";
+import HintLetters from "../components/HintLetters";
 import type { Card, CardData } from "./Cards";
 
 const page = css`
@@ -103,9 +104,14 @@ const cardImg = css`
   align-self: flex-start;
 `;
 
-const revealBtn = css`
-  width: 100%;
+const actionRow = css`
+  display: flex;
+  gap: 0.75rem;
   margin-top: 1.25rem;
+`;
+
+const revealBtn = css`
+  flex: 1;
   background: #1a1a1a;
   color: #fff;
   border: none;
@@ -117,6 +123,22 @@ const revealBtn = css`
 
   &:hover {
     background: #333;
+  }
+`;
+
+const hintBtn = css`
+  background: #fff;
+  color: #1a1a1a;
+  border: 1px solid #d5d5d5;
+  padding: 0.85rem 1.25rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #1a1a1a;
+    background: #f7f7f7;
   }
 `;
 
@@ -201,6 +223,8 @@ export default function Learn() {
   const [revealed, setRevealed] = useState(false);
   const [busy, setBusy] = useState(false);
   const [modalCard, setModalCard] = useState<Card | null>(null);
+  const [hintOpen, setHintOpen] = useState(false);
+  const [hintLetters, setHintLetters] = useState<boolean[]>([]);
 
   const { lines, isLoading: linesLoading } = useLines();
   const [activeLine, setActiveLine] = useActiveLine(lines);
@@ -216,9 +240,15 @@ export default function Learn() {
   async function handleDepth(depth: number) {
     if (!current || !activeLine || busy) return;
     setBusy(true);
+    // InstantDB applies the transaction to the local cache optimistically, so
+    // `current` can already be the next card by the time this function
+    // resumes after the await below. Flip these synchronously, before the
+    // await, so that render never shows the next card as already revealed.
+    setRevealed(false);
+    setHintOpen(false);
+    setHintLetters([]);
     try {
       await placeAtDepth(members, activeLine, depth);
-      setRevealed(false);
     } finally {
       setBusy(false);
     }
@@ -254,9 +284,12 @@ export default function Learn() {
     setModalCard(null);
     // The deleted card was the top one; surface the next card face-down.
     setRevealed(false);
+    setHintOpen(false);
+    setHintLetters([]);
   }
 
-  // Keyboard: space/enter reveals; number keys pick a depth button.
+  // Keyboard: space/enter reveals, "h" opens the hint; number keys pick a
+  // depth button once revealed.
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.target instanceof HTMLElement) {
@@ -267,6 +300,9 @@ export default function Learn() {
         if (e.code === "Space" || e.code === "Enter") {
           e.preventDefault();
           if (current) setRevealed(true);
+        } else if (e.key === "h" || e.key === "H") {
+          e.preventDefault();
+          if (current) setHintOpen(true);
         }
         return;
       }
@@ -279,6 +315,13 @@ export default function Learn() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [revealed, current, busy]);
+
+  // Hint boxes are per-card scratch state — clear them whenever the top card
+  // changes (depth placed, deleted, or swapped in from elsewhere).
+  useEffect(() => {
+    setHintOpen(false);
+    setHintLetters([]);
+  }, [current?.id]);
 
   if (isLoading || linesLoading) return <div className={page} />;
 
@@ -321,10 +364,25 @@ export default function Learn() {
             <span className={langTag}>{c.bLang}</span>
             <span className={langHint}>→ {c.aLang}</span>
           </div>
-          <div className={front}>
-            <MarkdocContent content={c.bCard} />
-          </div>
+          <div className={front}>{c.bCard}</div>
         </div>
+
+        {!revealed && hintOpen && (
+          <>
+            <hr className={divider} />
+            <HintLetters
+              text={c.aCard}
+              revealed={hintLetters}
+              onReveal={(idx) =>
+                setHintLetters((prev) => {
+                  const next = [...prev];
+                  next[idx] = true;
+                  return next;
+                })
+              }
+            />
+          </>
+        )}
 
         {revealed && (
           <>
@@ -332,9 +390,7 @@ export default function Learn() {
             <div className={sideBlock}>
               <span className={langTag}>{c.aLang}</span>
               <div className={frontRow}>
-                <div className={front}>
-                  <MarkdocContent content={c.aCard} />
-                </div>
+                <div className={front}>{c.aCard}</div>
                 {c.audio && <PlayButton path={c.audio} small />}
               </div>
             </div>
@@ -343,7 +399,9 @@ export default function Learn() {
                 <MarkdocContent content={c.note} />
               </div>
             )}
-            {c.image?.url && <img className={cardImg} src={c.image.url} alt="" />}
+            {c.image?.url && (
+              <img className={cardImg} src={c.image.url} alt="" />
+            )}
             <button
               className={editBtn}
               onClick={() => setModalCard(current as Card)}
@@ -355,9 +413,16 @@ export default function Learn() {
       </div>
 
       {!revealed ? (
-        <button className={revealBtn} onClick={() => setRevealed(true)}>
-          Reveal
-        </button>
+        <div className={actionRow}>
+          {!hintOpen && (
+            <button className={hintBtn} onClick={() => setHintOpen(true)}>
+              Hint
+            </button>
+          )}
+          <button className={revealBtn} onClick={() => setRevealed(true)}>
+            Reveal
+          </button>
+        </div>
       ) : (
         <>
           <div className={depthRow}>
