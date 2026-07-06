@@ -29,6 +29,11 @@ const playBtnSmall = css`
 // Plays an audio file stored as a path relative to public/, e.g.
 // "audio/dict/hond.mp3". encodeURI keeps "/" but escapes spaces/quotes that
 // occur in some clip filenames.
+export function playAudio(path: string) {
+  const audio = new Audio(encodeURI(`${import.meta.env.BASE_URL}${path}`));
+  audio.play().catch(() => {});
+}
+
 export default function PlayButton({
   path,
   label,
@@ -41,8 +46,7 @@ export default function PlayButton({
   function play(e: React.MouseEvent) {
     // Keep clicks from reaching a clickable parent (e.g. a card row).
     e.stopPropagation();
-    const audio = new Audio(encodeURI(`${import.meta.env.BASE_URL}${path}`));
-    audio.play().catch(() => {});
+    playAudio(path);
   }
   return (
     <button

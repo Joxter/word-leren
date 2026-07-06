@@ -7,7 +7,7 @@ import { useLines, useActiveLine } from "../lib/lines";
 import LineSelector from "../components/LineSelector";
 import CardModal from "../components/CardModal";
 import MarkdocContent from "../components/MarkdocContent";
-import PlayButton from "../components/PlayButton";
+import PlayButton, { playAudio } from "../components/PlayButton";
 import HintLetters from "../components/HintLetters";
 import type { Card, CardData } from "./Cards";
 
@@ -176,18 +176,27 @@ const depthBtn = css`
   }
 `;
 
-const depthHint = css`
-  font-size: 0.6rem;
-  font-weight: 500;
-  color: #999;
-  letter-spacing: 0.02em;
-`;
-
-const caption = css`
-  text-align: center;
+const captionRow = css`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
   font-size: 0.75rem;
   color: #aaa;
   margin-top: 0.875rem;
+`;
+
+const disperseToggle = css`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: #666;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  input {
+    cursor: pointer;
+  }
 `;
 
 const editBtn = css`
@@ -219,12 +228,25 @@ interface LearnCard {
   queues?: { [lineId: string]: { rank: string } };
 }
 
+const DISPERSE_KEY = "word-leren:disperse";
+
 export default function Learn() {
   const [revealed, setRevealed] = useState(false);
   const [busy, setBusy] = useState(false);
   const [modalCard, setModalCard] = useState<Card | null>(null);
   const [hintOpen, setHintOpen] = useState(false);
   const [hintLetters, setHintLetters] = useState<boolean[]>([]);
+  const [disperse, setDisperse] = useState(
+    () => localStorage.getItem(DISPERSE_KEY) === "1",
+  );
+
+  function toggleDisperse() {
+    setDisperse((prev) => {
+      const next = !prev;
+      localStorage.setItem(DISPERSE_KEY, next ? "1" : "0");
+      return next;
+    });
+  }
 
   const { lines, isLoading: linesLoading } = useLines();
   const [activeLine, setActiveLine] = useActiveLine(lines);
@@ -248,7 +270,7 @@ export default function Learn() {
     setHintOpen(false);
     setHintLetters([]);
     try {
-      await placeAtDepth(members, activeLine, depth);
+      await placeAtDepth(members, activeLine, depth, disperse);
     } finally {
       setBusy(false);
     }
@@ -314,7 +336,7 @@ export default function Learn() {
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [revealed, current, busy]);
+  }, [revealed, current, busy, disperse]);
 
   // Hint boxes are per-card scratch state — clear them whenever the top card
   // changes (depth placed, deleted, or swapped in from elsewhere).
@@ -322,6 +344,11 @@ export default function Learn() {
     setHintOpen(false);
     setHintLetters([]);
   }, [current?.id]);
+
+  // Auto-play the answer's audio once the card is revealed.
+  useEffect(() => {
+    if (revealed && current?.audio) playAudio(current.audio);
+  }, [revealed, current?.id]);
 
   if (isLoading || linesLoading) return <div className={page} />;
 
@@ -426,7 +453,7 @@ export default function Learn() {
       ) : (
         <>
           <div className={depthRow}>
-            {DEPTH_BUTTONS.map((d, i) => (
+            {DEPTH_BUTTONS.map((d) => (
               <button
                 key={d}
                 className={depthBtn}
@@ -434,12 +461,19 @@ export default function Learn() {
                 onClick={() => handleDepth(d)}
               >
                 {d}
-                <span className={depthHint}>{i + 1}</span>
               </button>
             ))}
           </div>
-          <div className={caption}>
-            Drop this card to the N-th place from the top
+          <div className={captionRow}>
+            <span>Drop this card to the N-th place from the top</span>
+            <label className={disperseToggle}>
+              <input
+                type="checkbox"
+                checked={disperse}
+                onChange={toggleDisperse}
+              />
+              Disperse
+            </label>
           </div>
         </>
       )}

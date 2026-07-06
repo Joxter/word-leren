@@ -1,8 +1,5 @@
 import { id } from "@instantdb/react";
-import {
-  generateKeyBetween,
-  generateNKeysBetween,
-} from "fractional-indexing";
+import { generateKeyBetween, generateNKeysBetween } from "fractional-indexing";
 import { db } from "../db";
 
 // A learning line is an ordered list of cards. Each card stores one fractional
@@ -14,12 +11,21 @@ import { db } from "../db";
 // so there is no "filter by line + order by rank" query — callers load the
 // cards they already have and sort in memory with the helpers below.
 
-export const DEPTH_BUTTONS = [5, 10, 50, 100, 500, 1000];
+export const DEPTH_BUTTONS = [8, 20, 50, 100, 500];
 
 // Nudge amounts on the Line view (used as +N / -N).
 export const MOVE_STEPS = [1, 5, 25, 100];
 
 export { generateKeyBetween };
+
+/**
+ * Jitter a target depth by up to ±4%, staying at least 1. Rounds to a whole
+ * position, so shallow depths (where 4% < half a slot) are left unchanged.
+ */
+function disperseDepth(depth: number): number {
+  const jitter = Math.round(depth * 0.04 * (Math.random() * 2 - 1));
+  return Math.max(1, depth + jitter);
+}
 
 /**
  * Like `generateKeyBetween`, but tolerant of degenerate neighbours: if `a` and
@@ -28,10 +34,7 @@ export { generateKeyBetween };
  * throwing. This keeps Learn/Line working and lets the order self-heal over
  * time. Run `scripts/fix-ranks.mjs` to fully clean up duplicates.
  */
-export function safeKeyBetween(
-  a: string | null,
-  b: string | null,
-): string {
+export function safeKeyBetween(a: string | null, b: string | null): string {
   if (a !== null && b !== null && a >= b) {
     return generateKeyBetween(a, null);
   }
@@ -94,19 +97,27 @@ function writeRank(
  * Place the top card of a line at the `depth`-th position from the top
  * (1-indexed) and log a "place" event. `members` is the line's cards already
  * sorted top -> bottom (members[0] is the card being placed).
+ *
+ * When `disperse` is true, the target depth is jittered by up to ±2% so that
+ * cards repeatedly dropped to the same depth don't pile up at the exact same
+ * spot. The jitter is negligible for shallow depths and grows with depth.
  */
 export async function placeAtDepth(
   members: QueuedCard[],
   lineId: string,
   depth: number,
+  disperse = false,
 ): Promise<void> {
   const current = members[0];
   if (!current) return;
 
-  // members[0] is this card. To land at the `depth`-th position after it's
-  // removed, we slot it between the cards currently at index depth-1 and depth.
-  const before = members[depth - 1];
-  const after = members[depth];
+  const target = disperse ? disperseDepth(depth) : depth;
+
+  // members[0] is this card. To land at the `target`-th position after it's
+  // removed, we slot it between the cards currently at index target-1 and
+  // target.
+  const before = members[target - 1];
+  const after = members[target];
 
   let newRank: string;
   if (!before) {
@@ -181,7 +192,5 @@ export async function removeFromLine(
   cardId: string,
 ): Promise<void> {
   // merge treats a null value as "delete this key".
-  await db.transact(
-    db.tx.cards[cardId].merge({ queues: { [lineId]: null } }),
-  );
+  await db.transact(db.tx.cards[cardId].merge({ queues: { [lineId]: null } }));
 }
