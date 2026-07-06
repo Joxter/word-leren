@@ -381,7 +381,11 @@ export default function Line() {
   return (
     <div className={page}>
       <div className={header}>
-        <LineSelector lines={lines} value={activeLine} onChange={setActiveLine} />
+        <LineSelector
+          lines={lines}
+          value={activeLine}
+          onChange={setActiveLine}
+        />
         <button className={smallBtn} onClick={handleNewLine}>
           + New
         </button>
@@ -442,10 +446,7 @@ export default function Line() {
               </div>
 
               {selected && (
-                <div
-                  className={toolbar}
-                  onClick={(ev) => ev.stopPropagation()}
-                >
+                <div className={toolbar} onClick={(ev) => ev.stopPropagation()}>
                   <div className={stepGroup}>
                     {[...MOVE_STEPS].reverse().map((s) => (
                       <button

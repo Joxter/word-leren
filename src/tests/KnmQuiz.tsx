@@ -67,8 +67,22 @@ export function KnmQuiz() {
   }).length;
 
   return (
-    <div style={{ maxWidth: 680, margin: "0 auto", padding: "0 16px 40px", fontFamily: "Inter, sans-serif" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
+    <div
+      style={{
+        maxWidth: 680,
+        margin: "0 auto",
+        padding: "0 16px 40px",
+        fontFamily: "Inter, sans-serif",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "baseline",
+          marginBottom: 8,
+        }}
+      >
         <span />
         {answeredTotal > 0 && (
           <span style={{ fontSize: 13, color: "#555" }}>
@@ -109,7 +123,13 @@ export function KnmQuiz() {
                 return (
                   <label
                     key={option}
-                    style={{ display: "flex", alignItems: "flex-start", gap: 8, cursor: revealed ? "default" : "pointer", color }}
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: 8,
+                      cursor: revealed ? "default" : "pointer",
+                      color,
+                    }}
                   >
                     <input
                       type="radio"
@@ -120,7 +140,11 @@ export function KnmQuiz() {
                       disabled={revealed}
                       style={{ marginTop: 3, flexShrink: 0 }}
                     />
-                    <span style={{ fontWeight: revealed && isCorrect ? 600 : 400 }}>{option}</span>
+                    <span
+                      style={{ fontWeight: revealed && isCorrect ? 600 : 400 }}
+                    >
+                      {option}
+                    </span>
                   </label>
                 );
               })}
@@ -172,12 +196,22 @@ export function KnmQuiz() {
         )}
       </div>
 
-      <div style={{ marginTop: 40, borderTop: "1px solid #e0e0e0", paddingTop: 16 }}>
-        <div style={{ fontSize: 12, color: "#888", marginBottom: 8 }}>Jump to page:</div>
+      <div
+        style={{
+          marginTop: 40,
+          borderTop: "1px solid #e0e0e0",
+          paddingTop: 16,
+        }}
+      >
+        <div style={{ fontSize: 12, color: "#888", marginBottom: 8 }}>
+          Jump to page:
+        </div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
           {Array.from({ length: TOTAL_PAGES }, (_, i) => {
             const pageItems = data.slice(i * PAGE_SIZE, (i + 1) * PAGE_SIZE);
-            const done = pageItems.every((item) => history[item.id] !== undefined);
+            const done = pageItems.every(
+              (item) => history[item.id] !== undefined,
+            );
             return (
               <button
                 key={i}
@@ -185,7 +219,8 @@ export function KnmQuiz() {
                 style={{
                   width: 32,
                   height: 32,
-                  border: i === pageIndex ? "2px solid #2563eb" : "1px solid #ccc",
+                  border:
+                    i === pageIndex ? "2px solid #2563eb" : "1px solid #ccc",
                   borderRadius: 4,
                   background: done ? "#d1fae5" : "#fff",
                   cursor: "pointer",

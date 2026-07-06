@@ -40,7 +40,8 @@ export function TestsApp() {
               style={{
                 padding: "8px 20px",
                 border: "none",
-                borderBottom: type === t ? "2px solid #2563eb" : "2px solid transparent",
+                borderBottom:
+                  type === t ? "2px solid #2563eb" : "2px solid transparent",
                 background: "none",
                 color: type === t ? "#2563eb" : "#555",
                 fontWeight: type === t ? 600 : 400,

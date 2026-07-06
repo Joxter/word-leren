@@ -259,7 +259,10 @@ export default function GrammarEdit() {
     return () => URL.revokeObjectURL(url);
   }, [imageFile]);
 
-  useImagePaste((file) => { setImageFile(file); setImageRemoved(false); });
+  useImagePaste((file) => {
+    setImageFile(file);
+    setImageRemoved(false);
+  });
 
   const imagePreviewUrl =
     localPreview ?? (!imageRemoved ? (card?.image?.url ?? null) : null);
@@ -276,7 +279,9 @@ export default function GrammarEdit() {
 
     const targetId = isNew ? stableId.current : cardId!;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const ops: any[] = [db.tx.lightCards[targetId].update({ text: text.trim() })];
+    const ops: any[] = [
+      db.tx.lightCards[targetId].update({ text: text.trim() }),
+    ];
 
     if (!isNew && (imageRemoved || imageFile !== null) && card?.image?.id) {
       ops.push(db.tx.lightCards[targetId].unlink({ image: card.image.id }));

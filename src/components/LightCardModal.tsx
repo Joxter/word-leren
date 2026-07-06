@@ -224,7 +224,10 @@ export default function LightCardModal({
     return () => URL.revokeObjectURL(url);
   }, [imageFile]);
 
-  useImagePaste((file) => { setImageFile(file); setImageRemoved(false); });
+  useImagePaste((file) => {
+    setImageFile(file);
+    setImageRemoved(false);
+  });
 
   const imagePreviewUrl =
     localPreview ?? (!imageRemoved ? (card?.image?.url ?? null) : null);

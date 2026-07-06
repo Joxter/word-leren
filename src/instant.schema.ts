@@ -14,9 +14,7 @@ const _schema = i.schema({
       audio: i.string().optional(),
       // Learning-line membership: one rank per line the card belongs to, keyed
       // by line id. A card can be in many lines at different positions.
-      queues: i
-        .json<{ [lineId: string]: { rank: string } }>()
-        .optional(),
+      queues: i.json<{ [lineId: string]: { rank: string } }>().optional(),
       // Append-only history of place/move actions, keyed by event id so entries
       // can be merged in without clobbering each other.
       log: i

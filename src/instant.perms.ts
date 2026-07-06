@@ -3,22 +3,14 @@
 import type { InstantRules } from "@instantdb/react";
 
 const rules = {
-  "$files": {
+  $files: {
     allow: {
       view: "true",
       create: "true",
       delete: "true",
     },
   },
-  "cards": {
-    allow: {
-      view: "true",
-      create: "true",
-      update: "true",
-      delete: "true",
-    },
-  },
-  "lightCards": {
+  cards: {
     allow: {
       view: "true",
       create: "true",
@@ -26,7 +18,7 @@ const rules = {
       delete: "true",
     },
   },
-  "lines": {
+  lightCards: {
     allow: {
       view: "true",
       create: "true",
@@ -34,7 +26,7 @@ const rules = {
       delete: "true",
     },
   },
-  "queueEntries": {
+  lines: {
     allow: {
       view: "true",
       create: "true",
@@ -42,7 +34,15 @@ const rules = {
       delete: "true",
     },
   },
-  "cardEvents": {
+  queueEntries: {
+    allow: {
+      view: "true",
+      create: "true",
+      update: "true",
+      delete: "true",
+    },
+  },
+  cardEvents: {
     allow: {
       view: "true",
       create: "true",

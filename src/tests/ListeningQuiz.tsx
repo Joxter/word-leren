@@ -159,13 +159,17 @@ export function ListeningQuiz() {
       <div className="audio-controls">
         <span className="audio-controls-label">Jump</span>
         {([-15, -5] as const).map((s) => (
-          <button key={s} onClick={() => seek(s)}>{s}s</button>
+          <button key={s} onClick={() => seek(s)}>
+            {s}s
+          </button>
         ))}
         <button onClick={togglePlay} className="play-pause">
           {playing ? "⏸" : "▶"}
         </button>
         {([5, 15] as const).map((s) => (
-          <button key={s} onClick={() => seek(s)}>+{s}s</button>
+          <button key={s} onClick={() => seek(s)}>
+            +{s}s
+          </button>
         ))}
       </div>
 

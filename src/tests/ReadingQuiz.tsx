@@ -92,7 +92,14 @@ export function ReadingQuiz() {
       >
         <h2 style={{ margin: 0, fontSize: 18 }}>{item.title}</h2>
         {answeredTotal > 0 && (
-          <span style={{ fontSize: 13, color: "#555", whiteSpace: "nowrap", marginLeft: 16 }}>
+          <span
+            style={{
+              fontSize: 13,
+              color: "#555",
+              whiteSpace: "nowrap",
+              marginLeft: 16,
+            }}
+          >
             {correctTotal}/{answeredTotal} correct overall
           </span>
         )}
@@ -151,7 +158,9 @@ export function ReadingQuiz() {
                       disabled={revealed}
                       style={{ marginTop: 3, flexShrink: 0 }}
                     />
-                    <span style={{ fontWeight: revealed && isCorrect ? 600 : 400 }}>
+                    <span
+                      style={{ fontWeight: revealed && isCorrect ? 600 : 400 }}
+                    >
                       {option}
                     </span>
                   </label>
@@ -164,7 +173,11 @@ export function ReadingQuiz() {
 
       <div style={{ display: "flex", gap: 12, marginTop: 8 }}>
         {!revealed && (
-          <button onClick={reveal} disabled={!allAnswered} style={btn(allAnswered)}>
+          <button
+            onClick={reveal}
+            disabled={!allAnswered}
+            style={btn(allAnswered)}
+          >
             Check answers
           </button>
         )}
@@ -174,12 +187,22 @@ export function ReadingQuiz() {
           </button>
         )}
         {revealed && pageIndex === TOTAL - 1 && (
-          <p style={{ margin: 0, alignSelf: "center", fontWeight: 500 }}>All done! 🎉</p>
+          <p style={{ margin: 0, alignSelf: "center", fontWeight: 500 }}>
+            All done! 🎉
+          </p>
         )}
       </div>
 
-      <div style={{ marginTop: 40, borderTop: "1px solid #e0e0e0", paddingTop: 16 }}>
-        <div style={{ fontSize: 12, color: "#888", marginBottom: 8 }}>Jump to text:</div>
+      <div
+        style={{
+          marginTop: 40,
+          borderTop: "1px solid #e0e0e0",
+          paddingTop: 16,
+        }}
+      >
+        <div style={{ fontSize: 12, color: "#888", marginBottom: 8 }}>
+          Jump to text:
+        </div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
           {data.map((it, i) => {
             const done = it.questions.every(

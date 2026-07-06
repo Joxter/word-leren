@@ -10,6 +10,7 @@ import {
   entryAudios,
   type DictEntry,
 } from "../lib/dictionary";
+import { mergeContained } from "../lib/translations";
 
 const page = css`
   max-width: 720px;
@@ -229,10 +230,11 @@ function EntryCard({
   const verb = entry.verb;
 
   // - поиск по причастиям
-  // - если один перевод содержит полностью второй, то не дублируем
 
   // Translations grouped by content: identical ones (case-insensitive) merge
-  // into one row that lists every source for them, in gray at the end.
+  // into one row that lists every source for them, in gray at the end. Then
+  // translations fully contained in a longer one collapse into it, so "lock"
+  // and "the lock" become just "the lock".
   const transMap = new Map<string, { text: string; sources: string[] }>();
   for (const info of entry.info) {
     const text = info.translation?.trim();
@@ -242,7 +244,7 @@ function EntryCard({
     if (existing) existing.sources.push(info.source);
     else transMap.set(key, { text, sources: [info.source] });
   }
-  const translations = [...transMap.values()];
+  const translations = mergeContained([...transMap.values()]);
 
   const examplesList = entry.info
     .filter((i) => i.examples)
@@ -262,8 +264,12 @@ function EntryCard({
     const cardId = id();
     const note = examplesList.map((e) => e.examples).join("\n\n");
     // entry.info[].audio is stored as "dict/<file>.mp3"; the card keeps the full
-    // path from public/ so it can be played directly.
-    const rawAudio = entry.info.find((i) => i.audio)?.audio;
+    // path from public/ so it can be played directly. Prefer a clip from the
+    // "common" source, falling back to the first info that has any audio.
+    const rawAudio = (
+      entry.info.find((i) => i.audio && i.source === "common") ??
+      entry.info.find((i) => i.audio)
+    )?.audio;
     await db.transact(
       db.tx.cards[cardId].update({
         aLang: "NL",

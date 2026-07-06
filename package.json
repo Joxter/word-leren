@@ -9,6 +9,7 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "test": "vitest run",
     "backup": "node scripts/backup.mjs",
     "generate": "node scripts/generate.mjs",
     "build-dictionary": "node scripts/build-dictionary.mjs"
@@ -33,6 +34,7 @@
     "@wyw-in-js/vite": "^1.0.6",
     "prettier": "^3.3.3",
     "typescript": "^5.6.2",
-    "vite": "^5.4.10"
+    "vite": "^5.4.10",
+    "vitest": "^4.1.10"
   }
 }
