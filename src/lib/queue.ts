@@ -43,6 +43,40 @@ export function safeKeyBetween(a: string | null, b: string | null): string {
 
 export type CardQueues = { [lineId: string]: { rank: string } };
 
+/** One entry in a card's `log` history. */
+export type LogEntry = {
+  at: number;
+  lineId: string;
+  kind: string;
+  amount: number;
+};
+
+export type CardLog = { [eventId: string]: LogEntry };
+
+export interface ReviewStats {
+  /** How many times the card was reviewed (a Depth button was pressed). */
+  seen: number;
+  /** The last review's amounts, most recent first (up to `limit`). */
+  recent: number[];
+}
+
+/**
+ * Summarise a card's review history from its `log`. A "review" is a `place`
+ * event from pressing a Depth button on the Learn page; the two synthetic adds
+ * (`enqueueBottom` logs amount 0, `enqueueTop` logs amount 1) and `move` events
+ * are not reviews, so we only count `place` events with amount > 1.
+ */
+export function reviewStats(log?: CardLog, limit = 2): ReviewStats {
+  const reviews = Object.values(log ?? {}).filter(
+    (e) => e.kind === "place" && e.amount > 1,
+  );
+  reviews.sort((a, b) => b.at - a.at);
+  return {
+    seen: reviews.length,
+    recent: reviews.slice(0, limit).map((e) => e.amount),
+  };
+}
+
 /** Minimal shape the queue helpers need from a card. */
 export interface QueuedCard {
   id: string;

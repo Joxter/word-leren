@@ -8,8 +8,10 @@ import {
   moveToRank,
   removeFromLine,
   rankInLine,
+  reviewStats,
   sortLine,
 } from "../lib/queue";
+import type { CardLog } from "../lib/queue";
 import {
   useLines,
   useActiveLine,
@@ -80,27 +82,62 @@ const list = css`
   gap: 0.25rem;
 `;
 
-const row = css`
+const listControls = css`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+`;
+
+const countLabel = css`
+  font-size: 0.75rem;
+  color: #999;
+`;
+
+const tableWrap = css`
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+`;
+
+// Shared grid template so the header and every row line up column-for-column.
+const cols = css`
   display: grid;
-  grid-template-columns: 2.5rem 1fr 1fr auto;
+  grid-template-columns: 2rem minmax(0, 1fr) minmax(0, 1fr) 3rem 5.5rem auto;
   gap: 0.75rem;
   align-items: center;
   padding: 0.5rem 0.75rem;
-  background: #fff;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
+`;
+
+const tableHead = css`
+  background: #fafafa;
+  border-bottom: 1px solid #eee;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #aaa;
+`;
+
+const row = css`
+  border-bottom: 1px solid #f0f0f0;
   cursor: pointer;
 
+  &:last-child {
+    border-bottom: none;
+  }
+
   &:hover {
-    border-color: #bbb;
+    background: #fafafa;
   }
 `;
 
 const rowSelected = css`
-  border-color: #1a1a1a;
+  background: #f0f0f0;
 
   &:hover {
-    border-color: #1a1a1a;
+    background: #f0f0f0;
   }
 `;
 
@@ -126,10 +163,49 @@ const aCell = css`
   min-width: 0;
 `;
 
+const hRight = css`
+  text-align: right;
+`;
+
+const seenCell = css`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.2rem;
+  font-size: 0.75rem;
+  color: #999;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+`;
+
+const ratingCell = css`
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+`;
+
+const ratingPill = css`
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  border-radius: 4px;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #666;
+  font-variant-numeric: tabular-nums;
+`;
+
+// The most recent rating, called out a touch stronger than the previous one.
+const ratingLatest = css`
+  border-color: #ccc;
+  color: #1a1a1a;
+`;
+
 const rowActions = css`
   display: flex;
   gap: 0.35rem;
   align-items: center;
+  justify-content: flex-end;
 `;
 
 const rowBtn = css`
@@ -141,6 +217,7 @@ const rowBtn = css`
   font-weight: 600;
   color: #333;
   cursor: pointer;
+  white-space: nowrap;
 
   &:hover {
     background: #e8e8e8;
@@ -148,11 +225,35 @@ const rowBtn = css`
   }
 `;
 
-const removeBtn = css`
-  color: #b91c1c;
+// The prominent "push this card back 100 places" quick action.
+const pushBtn = css`
+  background: #1a1a1a;
+  border: 1px solid #1a1a1a;
+  border-radius: 5px;
+  padding: 0.3rem 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
 
   &:hover {
-    border-color: #dc2626;
+    background: #333;
+  }
+`;
+
+// Low-emphasis "remove from line", tucked into the expanded toolbar.
+const removeLink = css`
+  background: none;
+  border: none;
+  color: #b0b0b0;
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0.3rem 0.4rem;
+
+  &:hover {
+    color: #dc2626;
+    text-decoration: underline;
   }
 `;
 
@@ -185,12 +286,6 @@ const stepBtn = css`
   &:hover {
     background: #e8e8e8;
   }
-`;
-
-const toolbarLabel = css`
-  font-size: 0.7rem;
-  color: #aaa;
-  margin-left: auto;
 `;
 
 const addPanel = css`
@@ -244,6 +339,7 @@ interface LineCard {
   audio?: string;
   image?: { id: string; url: string; path: string };
   queues?: { [lineId: string]: { rank: string } };
+  log?: CardLog;
 }
 
 export default function Line() {
@@ -252,6 +348,7 @@ export default function Line() {
   const [busy, setBusy] = useState(false);
   const [addFilter, setAddFilter] = useState("");
   const [showAdd, setShowAdd] = useState(false);
+  const [sortBy, setSortBy] = useState<"queue" | "seen">("queue");
 
   const { lines, isLoading: linesLoading } = useLines();
   const [activeLine, setActiveLine] = useActiveLine(lines);
@@ -261,7 +358,19 @@ export default function Line() {
   });
 
   const cards = (data?.cards ?? []) as LineCard[];
+  // `members` is always in queue order — the move helpers below rely on it.
   const members = activeLine ? sortLine(cards, activeLine) : [];
+  const statsById = new Map(members.map((c) => [c.id, reviewStats(c.log)]));
+  const queuePos = new Map(members.map((c, i) => [c.id, i]));
+  // Display order can differ from queue order (e.g. sorted by review count),
+  // but moves still operate on the underlying queue via each card's id.
+  const displayMembers =
+    sortBy === "seen"
+      ? [...members].sort(
+          (a, b) =>
+            (statsById.get(b.id)?.seen ?? 0) - (statsById.get(a.id)?.seen ?? 0),
+        )
+      : members;
   const notInLine = activeLine
     ? cards.filter((c) => rankInLine(c, activeLine) === undefined)
     : [];
@@ -273,8 +382,10 @@ export default function Line() {
     );
   });
 
-  async function handleMove(index: number, steps: number) {
+  async function handleMove(cardId: string, steps: number) {
     if (!activeLine) return;
+    const index = members.findIndex((c) => c.id === cardId);
+    if (index < 0) return;
     const arr = members.slice();
     const [moving] = arr.splice(index, 1);
     if (!moving) return;
@@ -287,6 +398,16 @@ export default function Line() {
       right ? rankInLine(right, activeLine)! : null,
     );
     await moveToRank(moving.id, activeLine, newRank, steps);
+  }
+
+  // Jump a card to the very top of the queue so it comes up first.
+  async function handleMoveToTop(cardId: string) {
+    if (!activeLine) return;
+    const index = members.findIndex((c) => c.id === cardId);
+    if (index <= 0) return; // not found, or already at the top
+    const top = members[0];
+    const newRank = safeKeyBetween(null, rankInLine(top, activeLine)!);
+    await moveToRank(cardId, activeLine, newRank, -index);
   }
 
   async function handleAdd(cardId: string) {
@@ -408,74 +529,142 @@ export default function Line() {
         <div className={empty}>This line is empty. Add cards below.</div>
       )}
 
-      <div className={list}>
-        {members.map((e, i) => {
-          const selected = e.id === selectedId;
-          return (
-            <div
-              key={e.id}
-              className={selected ? `${row} ${rowSelected}` : row}
-              onClick={() => setSelectedId(selected ? null : e.id)}
+      {members.length > 0 && (
+        <>
+          <div className={listControls}>
+            <span className={countLabel}>{members.length} cards</span>
+            <span className={spacer} />
+            <button
+              className={smallBtn}
+              onClick={() =>
+                setSortBy((s) => (s === "queue" ? "seen" : "queue"))
+              }
             >
-              <span className={idx}>{i + 1}</span>
-              <div className={aCell}>
-                <span className={cellText}>{e.aCard}</span>
-                {e.audio && <PlayButton path={e.audio} small />}
-              </div>
-              <span className={cellText}>{e.bCard}</span>
-              <div className={rowActions}>
-                <button
-                  className={rowBtn}
-                  onClick={(ev) => {
-                    ev.stopPropagation();
-                    setModalCard(e as Card);
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  className={`${rowBtn} ${removeBtn}`}
-                  title="Remove from this line"
-                  onClick={(ev) => {
-                    ev.stopPropagation();
-                    handleRemove(e.id);
-                  }}
-                >
-                  ✕
-                </button>
-              </div>
+              Sort: {sortBy === "queue" ? "Queue order" : "Most seen"}
+            </button>
+          </div>
 
-              {selected && (
-                <div className={toolbar} onClick={(ev) => ev.stopPropagation()}>
-                  <div className={stepGroup}>
-                    {[...MOVE_STEPS].reverse().map((s) => (
-                      <button
-                        key={`up-${s}`}
-                        className={stepBtn}
-                        onClick={() => handleMove(i, -s)}
-                      >
-                        ↑{s}
-                      </button>
-                    ))}
-                  </div>
-                  <div className={stepGroup}>
-                    {MOVE_STEPS.map((s) => (
-                      <button
-                        key={`down-${s}`}
-                        className={stepBtn}
-                        onClick={() => handleMove(i, s)}
-                      >
-                        ↓{s}
-                      </button>
-                    ))}
-                  </div>
-                  <span className={toolbarLabel}>move steps</span>
-                </div>
-              )}
+          <div className={tableWrap}>
+            <div className={`${cols} ${tableHead}`}>
+              <span className={hRight}>#</span>
+              <span>A</span>
+              <span>B</span>
+              <span className={hRight}>Seen</span>
+              <span>Last</span>
+              <span />
             </div>
-          );
-        })}
-      </div>
+            {displayMembers.map((e) => {
+              const selected = e.id === selectedId;
+              const pos = queuePos.get(e.id) ?? 0;
+              const st = statsById.get(e.id) ?? { seen: 0, recent: [] };
+              return (
+                <div
+                  key={e.id}
+                  className={
+                    selected
+                      ? `${cols} ${row} ${rowSelected}`
+                      : `${cols} ${row}`
+                  }
+                  onClick={() => setSelectedId(selected ? null : e.id)}
+                >
+                  <span className={idx}>{pos + 1}</span>
+                  <div className={aCell}>
+                    <span className={cellText}>{e.aCard}</span>
+                    {e.audio && <PlayButton path={e.audio} small />}
+                  </div>
+                  <span className={cellText}>{e.bCard}</span>
+                  <span
+                    className={seenCell}
+                    title={`Seen ${st.seen} ${st.seen === 1 ? "time" : "times"}`}
+                  >
+                    👁 {st.seen}
+                  </span>
+                  <span
+                    className={ratingCell}
+                    title="Last ratings (newest first)"
+                  >
+                    {st.recent.map((amount, j) => (
+                      <span
+                        key={j}
+                        className={
+                          j === 0 ? `${ratingPill} ${ratingLatest}` : ratingPill
+                        }
+                      >
+                        {amount}
+                      </span>
+                    ))}
+                  </span>
+                  <div className={rowActions}>
+                    <button
+                      className={rowBtn}
+                      title="Move to the front of the queue"
+                      onClick={(ev) => {
+                        ev.stopPropagation();
+                        handleMoveToTop(e.id);
+                      }}
+                    >
+                      ⤒ Top
+                    </button>
+                    <button
+                      className={pushBtn}
+                      title="Move down 100 places"
+                      onClick={(ev) => {
+                        ev.stopPropagation();
+                        handleMove(e.id, 100);
+                      }}
+                    >
+                      +100
+                    </button>
+                  </div>
+
+                  {selected && (
+                    <div
+                      className={toolbar}
+                      onClick={(ev) => ev.stopPropagation()}
+                    >
+                      <div className={stepGroup}>
+                        {[...MOVE_STEPS].reverse().map((s) => (
+                          <button
+                            key={`up-${s}`}
+                            className={stepBtn}
+                            onClick={() => handleMove(e.id, -s)}
+                          >
+                            ↑{s}
+                          </button>
+                        ))}
+                      </div>
+                      <div className={stepGroup}>
+                        {MOVE_STEPS.map((s) => (
+                          <button
+                            key={`down-${s}`}
+                            className={stepBtn}
+                            onClick={() => handleMove(e.id, s)}
+                          >
+                            ↓{s}
+                          </button>
+                        ))}
+                      </div>
+                      <button
+                        className={rowBtn}
+                        style={{ marginLeft: "auto" }}
+                        onClick={() => setModalCard(e as Card)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className={removeLink}
+                        onClick={() => handleRemove(e.id)}
+                      >
+                        Remove from line
+                      </button>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
 
       {showAdd && (
         <div className={addPanel}>
