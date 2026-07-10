@@ -11,7 +11,7 @@ import { db } from "../db";
 // so there is no "filter by line + order by rank" query — callers load the
 // cards they already have and sort in memory with the helpers below.
 
-export const DEPTH_BUTTONS = [8, 20, 50, 100, 500];
+export const DEPTH_BUTTONS = [8, 20, 50, 100, 200, 300, 500];
 
 // Nudge amounts on the Line view (used as +N / -N).
 export const MOVE_STEPS = [1, 5, 25, 100];
@@ -75,6 +75,55 @@ export function reviewStats(log?: CardLog, limit = 2): ReviewStats {
     seen: reviews.length,
     recent: reviews.slice(0, limit).map((e) => e.amount),
   };
+}
+
+export interface DayStat {
+  /** Local midnight of the day. */
+  date: Date;
+  /** Distinct cards reviewed that day. */
+  unique: number;
+  /** Total reviews that day, counting repeats of the same card. */
+  total: number;
+}
+
+/**
+ * Per-day review counts for the last `days` days, oldest first and today last.
+ * A "review" is the same `place`-with-amount>1 event `reviewStats` counts, and
+ * counts span all lines — this is an overall study-activity metric.
+ */
+export function dailyReviewStats(
+  cards: { id: string; log?: CardLog }[],
+  days = 14,
+): DayStat[] {
+  const dayKey = (d: Date) =>
+    `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+
+  const totals = new Map<string, number>();
+  const uniques = new Map<string, Set<string>>();
+  for (const c of cards) {
+    for (const e of Object.values(c.log ?? {})) {
+      if (e.kind !== "place" || e.amount <= 1) continue;
+      const k = dayKey(new Date(e.at));
+      totals.set(k, (totals.get(k) ?? 0) + 1);
+      let set = uniques.get(k);
+      if (!set) uniques.set(k, (set = new Set()));
+      set.add(c.id);
+    }
+  }
+
+  const now = new Date();
+  const base = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const out: DayStat[] = [];
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date(base.getFullYear(), base.getMonth(), base.getDate() - i);
+    const k = dayKey(d);
+    out.push({
+      date: d,
+      unique: uniques.get(k)?.size ?? 0,
+      total: totals.get(k) ?? 0,
+    });
+  }
+  return out;
 }
 
 /** Minimal shape the queue helpers need from a card. */

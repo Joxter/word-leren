@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import { css } from "@linaria/core";
 import { Link } from "wouter";
 import { db } from "../db";
-import { DEPTH_BUTTONS, placeAtDepth, sortLine } from "../lib/queue";
+import {
+  DEPTH_BUTTONS,
+  placeAtDepth,
+  reviewStats,
+  sortLine,
+} from "../lib/queue";
+import type { CardLog } from "../lib/queue";
 import { useLines, useActiveLine } from "../lib/lines";
 import LineSelector from "../components/LineSelector";
 import CardModal from "../components/CardModal";
@@ -176,6 +182,37 @@ const depthBtn = css`
   }
 `;
 
+const statsRow = css`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  color: #999;
+`;
+
+const statsPills = css`
+  display: flex;
+  gap: 0.3rem;
+`;
+
+const statsPill = css`
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  border-radius: 4px;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #666;
+  font-variant-numeric: tabular-nums;
+`;
+
+// The most recent rating, called out a touch stronger than the previous ones.
+const statsPillLatest = css`
+  border-color: #ccc;
+  color: #1a1a1a;
+`;
+
 const captionRow = css`
   display: flex;
   align-items: center;
@@ -226,6 +263,7 @@ interface LearnCard {
   audio?: string;
   image?: { id: string; url: string; path: string };
   queues?: { [lineId: string]: { rank: string } };
+  log?: CardLog;
 }
 
 const DISPERSE_KEY = "word-leren:disperse";
@@ -381,6 +419,8 @@ export default function Learn() {
   }
 
   const c = current;
+  // Past ratings for this card, to show alongside the depth buttons on reveal.
+  const st = reviewStats(c.log, 5);
 
   return (
     <div className={page}>
@@ -475,6 +515,36 @@ export default function Learn() {
               Disperse
             </label>
           </div>
+          {st.seen > 0 && (
+            <div className={statsRow}>
+              <span>
+                Seen {st.seen}
+                {st.seen === 1 ? " time" : " times"}
+              </span>
+              {st.recent.length > 0 && (
+                <>
+                  <span>·</span>
+                  <span
+                    className={statsPills}
+                    title="Last ratings (newest first)"
+                  >
+                    {st.recent.map((amount, j) => (
+                      <span
+                        key={j}
+                        className={
+                          j === 0
+                            ? `${statsPill} ${statsPillLatest}`
+                            : statsPill
+                        }
+                      >
+                        {amount}
+                      </span>
+                    ))}
+                  </span>
+                </>
+              )}
+            </div>
+          )}
         </>
       )}
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { css } from "@linaria/core";
 import { db } from "../db";
 import {
@@ -9,6 +9,7 @@ import {
   removeFromLine,
   rankInLine,
   reviewStats,
+  dailyReviewStats,
   sortLine,
 } from "../lib/queue";
 import type { CardLog } from "../lib/queue";
@@ -80,6 +81,69 @@ const list = css`
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+`;
+
+const daysHeader = css`
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+  font-size: 0.7rem;
+  color: #999;
+`;
+
+const daysLegend = css`
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+`;
+
+const daysBar = css`
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1.5rem;
+`;
+
+const dayBlock = css`
+  flex: 1 1 0;
+  min-width: 0;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 0.3rem 0.15rem 0.2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.15;
+`;
+
+// Days with no reviews are dimmed so active days stand out.
+const dayEmpty = css`
+  opacity: 0.45;
+`;
+
+// Today's block, called out with a slightly stronger frame.
+const dayToday = css`
+  border-color: #1a1a1a;
+`;
+
+const dayUnique = css`
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  font-variant-numeric: tabular-nums;
+`;
+
+const dayTotal = css`
+  font-size: 0.7rem;
+  color: #999;
+  font-variant-numeric: tabular-nums;
+`;
+
+const dayLabel = css`
+  font-size: 0.6rem;
+  color: #bbb;
+  margin-top: 0.2rem;
 `;
 
 const listControls = css`
@@ -349,6 +413,10 @@ export default function Line() {
   const [addFilter, setAddFilter] = useState("");
   const [showAdd, setShowAdd] = useState(false);
   const [sortBy, setSortBy] = useState<"queue" | "seen">("queue");
+  // Moving a card reorders the list, which otherwise resets the window scroll.
+  // We stash the scroll position on a move and restore it once the new order
+  // has committed (before paint) so the page stays put.
+  const scrollTarget = useRef<number | null>(null);
 
   const { lines, isLoading: linesLoading } = useLines();
   const [activeLine, setActiveLine] = useActiveLine(lines);
@@ -358,19 +426,32 @@ export default function Line() {
   });
 
   const cards = (data?.cards ?? []) as LineCard[];
+  // Daily study activity across all lines, for the strip near the top.
+  const days = dailyReviewStats(cards, 14);
   // `members` is always in queue order — the move helpers below rely on it.
   const members = activeLine ? sortLine(cards, activeLine) : [];
   const statsById = new Map(members.map((c) => [c.id, reviewStats(c.log)]));
   const queuePos = new Map(members.map((c, i) => [c.id, i]));
   // Display order can differ from queue order (e.g. sorted by review count),
-  // but moves still operate on the underlying queue via each card's id.
+  // but moves still operate on the underlying queue via each card's id. Sorting
+  // by "seen" puts the least-reviewed cards first, to surface neglected words.
   const displayMembers =
     sortBy === "seen"
       ? [...members].sort(
           (a, b) =>
-            (statsById.get(b.id)?.seen ?? 0) - (statsById.get(a.id)?.seen ?? 0),
+            (statsById.get(a.id)?.seen ?? 0) - (statsById.get(b.id)?.seen ?? 0),
         )
       : members;
+
+  // When the rendered order changes, restore any scroll position captured by a
+  // move so reordering doesn't jump the page.
+  const orderKey = displayMembers.map((m) => m.id).join(",");
+  useLayoutEffect(() => {
+    if (scrollTarget.current !== null) {
+      window.scrollTo(0, scrollTarget.current);
+      scrollTarget.current = null;
+    }
+  }, [orderKey]);
   const notInLine = activeLine
     ? cards.filter((c) => rankInLine(c, activeLine) === undefined)
     : [];
@@ -386,6 +467,7 @@ export default function Line() {
     if (!activeLine) return;
     const index = members.findIndex((c) => c.id === cardId);
     if (index < 0) return;
+    scrollTarget.current = window.scrollY;
     const arr = members.slice();
     const [moving] = arr.splice(index, 1);
     if (!moving) return;
@@ -405,6 +487,7 @@ export default function Line() {
     if (!activeLine) return;
     const index = members.findIndex((c) => c.id === cardId);
     if (index <= 0) return; // not found, or already at the top
+    scrollTarget.current = window.scrollY;
     const top = members[0];
     const newRank = safeKeyBetween(null, rankInLine(top, activeLine)!);
     await moveToRank(cardId, activeLine, newRank, -index);
@@ -525,6 +608,33 @@ export default function Line() {
         </button>
       </div>
 
+      <div className={daysHeader}>
+        <span>Last 14 days</span>
+        <span className={daysLegend}>
+          <span className={dayUnique}>unique</span>/
+          <span className={dayTotal}>total</span>
+        </span>
+      </div>
+      <div className={daysBar}>
+        {days.map((d, i) => {
+          const isToday = i === days.length - 1;
+          const cls = [dayBlock];
+          if (isToday) cls.push(dayToday);
+          if (d.total === 0) cls.push(dayEmpty);
+          return (
+            <div
+              key={d.date.getTime()}
+              className={cls.join(" ")}
+              title={`${d.date.toLocaleDateString()} — ${d.unique} unique, ${d.total} total`}
+            >
+              <span className={dayUnique}>{d.unique}</span>
+              <span className={dayTotal}>{d.total}</span>
+              <span className={dayLabel}>{d.date.getDate()}</span>
+            </div>
+          );
+        })}
+      </div>
+
       {!isLoading && members.length === 0 && (
         <div className={empty}>This line is empty. Add cards below.</div>
       )}
@@ -540,7 +650,7 @@ export default function Line() {
                 setSortBy((s) => (s === "queue" ? "seen" : "queue"))
               }
             >
-              Sort: {sortBy === "queue" ? "Queue order" : "Most seen"}
+              Sort: {sortBy === "queue" ? "Queue order" : "Least seen"}
             </button>
           </div>
 
