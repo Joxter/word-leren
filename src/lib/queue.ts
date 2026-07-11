@@ -49,6 +49,8 @@ export type LogEntry = {
   lineId: string;
   kind: string;
   amount: number;
+  /** What the user typed as the answer before revealing ("" if they didn't). */
+  typed?: string;
 };
 
 export type CardLog = { [eventId: string]: LogEntry };
@@ -166,12 +168,13 @@ function writeRank(
   rank: string,
   kind: string,
   amount: number,
+  typed = "",
 ) {
   const eventId = id();
   return db.transact(
     db.tx.cards[cardId].merge({
       queues: { [lineId]: { rank } },
-      log: { [eventId]: { at: Date.now(), lineId, kind, amount } },
+      log: { [eventId]: { at: Date.now(), lineId, kind, amount, typed } },
     }),
   );
 }
@@ -190,6 +193,7 @@ export async function placeAtDepth(
   lineId: string,
   depth: number,
   disperse = false,
+  typed = "",
 ): Promise<void> {
   const current = members[0];
   if (!current) return;
@@ -214,7 +218,7 @@ export async function placeAtDepth(
     );
   }
 
-  await writeRank(current.id, lineId, newRank, "place", depth);
+  await writeRank(current.id, lineId, newRank, "place", depth, typed);
 }
 
 /**

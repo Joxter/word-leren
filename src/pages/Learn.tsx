@@ -9,6 +9,7 @@ import {
   sortLine,
 } from "../lib/queue";
 import type { CardLog } from "../lib/queue";
+import { diffTyped } from "../lib/diff";
 import { useLines, useActiveLine } from "../lib/lines";
 import LineSelector from "../components/LineSelector";
 import CardModal from "../components/CardModal";
@@ -21,6 +22,10 @@ const page = css`
   max-width: 640px;
   margin: 0 auto;
   padding: 2rem 1.5rem;
+
+  @media (max-width: 540px) {
+    padding: 1rem 0.75rem;
+  }
 `;
 
 const empty = css`
@@ -45,6 +50,10 @@ const card = css`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+
+  @media (max-width: 540px) {
+    padding: 1.25rem 1rem;
+  }
 `;
 
 const sideBlock = css`
@@ -112,8 +121,13 @@ const cardImg = css`
 
 const actionRow = css`
   display: flex;
+  flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 1.25rem;
+
+  @media (max-width: 540px) {
+    gap: 0.5rem;
+  }
 `;
 
 const revealBtn = css`
@@ -146,6 +160,46 @@ const hintBtn = css`
     border-color: #1a1a1a;
     background: #f7f7f7;
   }
+`;
+
+const answerInput = css`
+  flex: 1;
+  min-width: 0;
+  border: 1px solid #d5d5d5;
+  border-radius: 8px;
+  padding: 0.85rem;
+  /* Never below 16px, or iOS zooms the page in when the input is focused. */
+  font-size: 1rem;
+  font-family: inherit;
+
+  &:focus {
+    outline: none;
+    border-color: #1a1a1a;
+  }
+
+  /* On phones the input takes a full row of its own, above the buttons. */
+  @media (max-width: 540px) {
+    flex-basis: 100%;
+    order: -1;
+  }
+`;
+
+// The typed answer shown above the correct one after reveal.
+const typedAnswer = css`
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2e7d32;
+`;
+
+const typedWrong = css`
+  color: #c62828;
+  text-decoration: underline;
+`;
+
+// A letter of the correct answer the user skipped, shown as a faded red gap.
+const typedMissing = css`
+  color: #c62828;
+  opacity: 0.45;
 `;
 
 const depthRow = css`
@@ -274,6 +328,8 @@ export default function Learn() {
   const [modalCard, setModalCard] = useState<Card | null>(null);
   const [hintOpen, setHintOpen] = useState(false);
   const [hintLetters, setHintLetters] = useState<boolean[]>([]);
+  const [typing, setTyping] = useState(false);
+  const [typed, setTyped] = useState("");
   const [disperse, setDisperse] = useState(
     () => localStorage.getItem(DISPERSE_KEY) === "1",
   );
@@ -300,6 +356,7 @@ export default function Learn() {
   async function handleDepth(depth: number) {
     if (!current || !activeLine || busy) return;
     setBusy(true);
+    const answer = typed.trim();
     // InstantDB applies the transaction to the local cache optimistically, so
     // `current` can already be the next card by the time this function
     // resumes after the await below. Flip these synchronously, before the
@@ -307,8 +364,10 @@ export default function Learn() {
     setRevealed(false);
     setHintOpen(false);
     setHintLetters([]);
+    setTyping(false);
+    setTyped("");
     try {
-      await placeAtDepth(members, activeLine, depth, disperse);
+      await placeAtDepth(members, activeLine, depth, disperse, answer);
     } finally {
       setBusy(false);
     }
@@ -346,10 +405,12 @@ export default function Learn() {
     setRevealed(false);
     setHintOpen(false);
     setHintLetters([]);
+    setTyping(false);
+    setTyped("");
   }
 
-  // Keyboard: space/enter reveals, "h" opens the hint; number keys pick a
-  // depth button once revealed.
+  // Keyboard: space/enter reveals, "h" opens the hint, "t" opens the answer
+  // input; number keys pick a depth button once revealed.
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.target instanceof HTMLElement) {
@@ -363,6 +424,9 @@ export default function Learn() {
         } else if (e.key === "h" || e.key === "H") {
           e.preventDefault();
           if (current) setHintOpen(true);
+        } else if (e.key === "t" || e.key === "T") {
+          e.preventDefault();
+          if (current) setTyping(true);
         }
         return;
       }
@@ -376,11 +440,13 @@ export default function Learn() {
     return () => window.removeEventListener("keydown", onKey);
   }, [revealed, current, busy, disperse]);
 
-  // Hint boxes are per-card scratch state — clear them whenever the top card
-  // changes (depth placed, deleted, or swapped in from elsewhere).
+  // Hint boxes and the typed answer are per-card scratch state — clear them
+  // whenever the top card changes (depth placed, deleted, or swapped in).
   useEffect(() => {
     setHintOpen(false);
     setHintLetters([]);
+    setTyping(false);
+    setTyped("");
   }, [current?.id]);
 
   // Auto-play the answer's audio once the card is revealed.
@@ -454,6 +520,27 @@ export default function Learn() {
         {revealed && (
           <>
             <hr className={divider} />
+            {typed.trim() !== "" && (
+              <div className={sideBlock}>
+                <span className={langTag}>your answer</span>
+                <div className={typedAnswer}>
+                  {diffTyped(typed.trim(), c.aCard).map((d, i) => (
+                    <span
+                      key={i}
+                      className={
+                        d.kind === "wrong"
+                          ? typedWrong
+                          : d.kind === "missing"
+                            ? typedMissing
+                            : undefined
+                      }
+                    >
+                      {d.ch}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
             <div className={sideBlock}>
               <span className={langTag}>{c.aLang}</span>
               <div className={frontRow}>
@@ -484,6 +571,29 @@ export default function Learn() {
           {!hintOpen && (
             <button className={hintBtn} onClick={() => setHintOpen(true)}>
               Hint
+            </button>
+          )}
+          {typing ? (
+            <input
+              className={answerInput}
+              autoFocus
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              enterKeyHint="go"
+              value={typed}
+              onChange={(e) => setTyped(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  setRevealed(true);
+                }
+              }}
+              placeholder={`Type the ${c.aLang} answer…`}
+            />
+          ) : (
+            <button className={hintBtn} onClick={() => setTyping(true)}>
+              Type
             </button>
           )}
           <button className={revealBtn} onClick={() => setRevealed(true)}>
