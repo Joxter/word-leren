@@ -46,6 +46,10 @@ const page = css`
   max-width: 840px;
   margin: 0 auto;
   padding: 2rem 1.5rem;
+
+  @media (max-width: 540px) {
+    padding: 1rem 0.75rem;
+  }
 `;
 
 const header = css`
@@ -320,6 +324,13 @@ const cardRow = css`
   &:hover {
     border-color: #aaa;
   }
+
+  /* On phones the two sides stack, with the thumbnail on the right. */
+  @media (max-width: 540px) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.3rem 0.75rem;
+    padding: 0.6rem 0.75rem;
+  }
 `;
 
 const rowThumb = css`
@@ -328,10 +339,21 @@ const rowThumb = css`
   object-fit: cover;
   border-radius: 4px;
   display: block;
+
+  @media (max-width: 540px) {
+    grid-column: 2;
+    grid-row: 1 / 3;
+  }
 `;
 
 const rowThumbPlaceholder = css`
   width: 40px;
+
+  @media (max-width: 540px) {
+    width: 0;
+    grid-column: 2;
+    grid-row: 1 / 3;
+  }
 `;
 
 const cardSide = css`

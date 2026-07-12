@@ -29,6 +29,10 @@ const page = css`
   max-width: 760px;
   margin: 0 auto;
   padding: 2rem 1.5rem;
+
+  @media (max-width: 540px) {
+    padding: 1rem 0.75rem;
+  }
 `;
 
 const header = css`
@@ -166,12 +170,23 @@ const tableWrap = css`
 `;
 
 // Shared grid template so the header and every row line up column-for-column.
+// On phones the six columns don't fit, so each row rearranges into a
+// three-line card via grid areas (the header is hidden there).
 const cols = css`
   display: grid;
   grid-template-columns: 2rem minmax(0, 1fr) minmax(0, 1fr) 3rem 5.5rem auto;
   gap: 0.75rem;
   align-items: center;
   padding: 0.5rem 0.75rem;
+
+  @media (max-width: 680px) {
+    grid-template-columns: 1.75rem minmax(0, 1fr) auto;
+    grid-template-areas:
+      "idx a actions"
+      "idx b actions"
+      "idx seen last";
+    gap: 0.3rem 0.5rem;
+  }
 `;
 
 const tableHead = css`
@@ -182,6 +197,10 @@ const tableHead = css`
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: #aaa;
+
+  @media (max-width: 680px) {
+    display: none;
+  }
 `;
 
 const row = css`
@@ -210,6 +229,11 @@ const idx = css`
   font-weight: 600;
   color: #aaa;
   text-align: right;
+
+  @media (max-width: 680px) {
+    grid-area: idx;
+    align-self: start;
+  }
 `;
 
 const cellText = css`
@@ -225,6 +249,17 @@ const aCell = css`
   align-items: center;
   gap: 0.4rem;
   min-width: 0;
+
+  @media (max-width: 680px) {
+    grid-area: a;
+  }
+`;
+
+// The B-side cell of a queue row (needs its own name for the mobile layout).
+const bCell = css`
+  @media (max-width: 680px) {
+    grid-area: b;
+  }
 `;
 
 const hRight = css`
@@ -240,12 +275,22 @@ const seenCell = css`
   color: #999;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+
+  @media (max-width: 680px) {
+    grid-area: seen;
+    justify-content: flex-start;
+  }
 `;
 
 const ratingCell = css`
   display: flex;
   gap: 0.25rem;
   align-items: center;
+
+  @media (max-width: 680px) {
+    grid-area: last;
+    justify-content: flex-end;
+  }
 `;
 
 const ratingPill = css`
@@ -270,6 +315,14 @@ const rowActions = css`
   gap: 0.35rem;
   align-items: center;
   justify-content: flex-end;
+
+  /* Stacked vertically on phones, to the right of the two text lines. */
+  @media (max-width: 680px) {
+    grid-area: actions;
+    flex-direction: column;
+    align-items: stretch;
+    align-self: start;
+  }
 `;
 
 const rowBtn = css`
@@ -324,6 +377,7 @@ const removeLink = css`
 const toolbar = css`
   grid-column: 1 / -1;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
   padding-top: 0.5rem;
@@ -391,6 +445,18 @@ const addRow = css`
   border: 1px solid #eee;
   border-radius: 8px;
   background: #fff;
+
+  /* On phones: A over B, with the add button on the right spanning both. */
+  @media (max-width: 540px) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.25rem 0.75rem;
+    padding: 0.5rem 0.75rem;
+
+    & > button {
+      grid-column: 2;
+      grid-row: 1 / 3;
+    }
+  }
 `;
 
 interface LineCard {
@@ -682,7 +748,7 @@ export default function Line() {
                     <span className={cellText}>{e.aCard}</span>
                     {e.audio && <PlayButton path={e.audio} small />}
                   </div>
-                  <span className={cellText}>{e.bCard}</span>
+                  <span className={`${cellText} ${bCell}`}>{e.bCard}</span>
                   <span
                     className={seenCell}
                     title={`Seen ${st.seen} ${st.seen === 1 ? "time" : "times"}`}
