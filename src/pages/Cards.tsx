@@ -235,13 +235,14 @@ const addImgLabel = css`
   }
 `;
 
-const formTextarea = css`
+const formInput = css`
   width: 100%;
+  box-sizing: border-box;
   padding: 0.5rem 0.6rem;
   border: 1px solid #e0e0e0;
   border-radius: 6px;
   font-size: 0.875rem;
-  resize: vertical;
+  font-family: inherit;
   line-height: 1.4;
 
   &:focus {
@@ -531,12 +532,11 @@ export default function Cards() {
       <form className={inlineFormPanel} onSubmit={handleCreate}>
         <div className={formSides}>
           <div className={formSide}>
-            <span className={formLabel}>Word / Phrase</span>
-            <textarea
-              className={formTextarea}
+            <span className={formLabel}>Скрытая сторона</span>
+            <input
+              className={formInput}
               value={newForm.aCard}
               onChange={(e) => setNew("aCard", e.target.value)}
-              rows={3}
               required
             />
             <div className={formSideRow}>
@@ -557,12 +557,11 @@ export default function Cards() {
                 ))}
               </div>
             </div>
-            <span className={formLabel}>Translation</span>
-            <textarea
-              className={formTextarea}
+            <span className={formLabel}>Открытая сторона</span>
+            <input
+              className={formInput}
               value={newForm.bCard}
               onChange={(e) => setNew("bCard", e.target.value)}
-              rows={3}
               required
             />
           </div>
@@ -572,7 +571,6 @@ export default function Cards() {
               label="Note"
               value={newForm.note}
               onChange={(v) => setNew("note", v)}
-              rows={2}
             />
             <div>
               <span className={formLabel}>Image</span>

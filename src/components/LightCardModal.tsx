@@ -267,7 +267,6 @@ export default function LightCardModal({
               value={text}
               onChange={setText}
               placeholder="Grammar rule or example..."
-              rows={5}
               autoFocus
               required
             />

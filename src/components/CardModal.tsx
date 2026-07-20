@@ -151,13 +151,14 @@ const segmentedItem = css`
   }
 `;
 
-const textarea = css`
+const sideInput = css`
   width: 100%;
+  box-sizing: border-box;
   padding: 0.5rem 0.6rem;
   border: 1px solid #e0e0e0;
   border-radius: 6px;
   font-size: 0.875rem;
-  resize: vertical;
+  font-family: inherit;
   line-height: 1.4;
 
   &:focus {
@@ -408,12 +409,11 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
                     </div>
                   ))}
                 </div>
-                <span className={label}>Word / Phrase</span>
-                <textarea
-                  className={textarea}
+                <span className={label}>Скрытая сторона</span>
+                <input
+                  className={sideInput}
                   value={form.aCard}
                   onChange={(e) => set("aCard", e.target.value)}
-                  rows={3}
                   required
                 />
               </div>
@@ -435,12 +435,11 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
                     </div>
                   ))}
                 </div>
-                <span className={label}>Translation</span>
-                <textarea
-                  className={textarea}
+                <span className={label}>Открытая сторона</span>
+                <input
+                  className={sideInput}
                   value={form.bCard}
                   onChange={(e) => set("bCard", e.target.value)}
-                  rows={3}
                   required
                 />
               </div>
@@ -450,7 +449,6 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
               label="Note"
               value={form.note}
               onChange={(v) => set("note", v)}
-              rows={2}
             />
 
             <div className={fieldGroup}>

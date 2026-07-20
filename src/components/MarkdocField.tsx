@@ -7,7 +7,6 @@ interface Props {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
-  rows?: number;
   autoFocus?: boolean;
   required?: boolean;
 }
@@ -79,6 +78,7 @@ const textarea = css`
   resize: none;
   line-height: 1.4;
   box-sizing: border-box;
+  min-height: 100px;
 
   &:focus {
     outline: none;
@@ -105,7 +105,6 @@ export default function MarkdocField({
   value,
   onChange,
   placeholder,
-  rows = 3,
   autoFocus,
   required,
 }: Props) {
@@ -141,7 +140,6 @@ export default function MarkdocField({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          rows={rows}
           autoFocus={autoFocus}
           required={required}
         />
