@@ -75,7 +75,8 @@ const textarea = css`
   border-radius: 6px;
   font-size: 0.875rem;
   font-family: inherit;
-  resize: vertical;
+  field-sizing: content;
+  resize: none;
   line-height: 1.4;
   box-sizing: border-box;
 

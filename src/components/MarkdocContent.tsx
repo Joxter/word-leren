@@ -15,7 +15,7 @@ const prose = css`
   }
 
   p {
-    margin: 0;
+    margin: 12px 0 0;
   }
 
   h1,
