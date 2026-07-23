@@ -16,7 +16,13 @@ import CardModal from "../components/CardModal";
 import MarkdocContent from "../components/MarkdocContent";
 import PlayButton, { playAudio } from "../components/PlayButton";
 import HintLetters from "../components/HintLetters";
+import VirtualKeyboard from "../components/VirtualKeyboard";
 import type { Card, CardData } from "./Cards";
+
+// On touch devices the "Type" mode uses our own on-screen keyboard and a fake
+// input, so the phone's keyboard (with its autocomplete) never opens.
+const COARSE_POINTER =
+  typeof matchMedia === "function" && matchMedia("(pointer: coarse)").matches;
 
 const page = css`
   max-width: 640px;
@@ -181,6 +187,39 @@ const answerInput = css`
   @media (max-width: 540px) {
     flex-basis: 100%;
     order: -1;
+  }
+`;
+
+// Div styled like the real input; shows what the virtual keyboard has typed.
+const fakeInput = css`
+  flex: 1;
+  min-width: 0;
+  border: 1px solid #1a1a1a;
+  border-radius: 8px;
+  padding: 0.85rem;
+  font-size: 1rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+
+  @media (max-width: 540px) {
+    flex-basis: 100%;
+    order: -1;
+  }
+`;
+
+const fakeCaret = css`
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  background: #1a1a1a;
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  animation: blink 1.1s step-end infinite;
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
   }
 `;
 
@@ -500,7 +539,7 @@ export default function Learn() {
           <div className={front}>{c.bCard}</div>
         </div>
 
-        {!revealed && hintOpen && (
+        {!revealed && hintOpen && !(typing && COARSE_POINTER) && (
           <>
             <hr className={divider} />
             <HintLetters
@@ -574,23 +613,30 @@ export default function Learn() {
             </button>
           )}
           {typing ? (
-            <input
-              className={answerInput}
-              autoFocus
-              autoCapitalize="none"
-              autoCorrect="off"
-              spellCheck={false}
-              enterKeyHint="go"
-              value={typed}
-              onChange={(e) => setTyped(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  setRevealed(true);
-                }
-              }}
-              placeholder={`Type the ${c.aLang} answer…`}
-            />
+            COARSE_POINTER ? (
+              <div className={fakeInput}>
+                {typed}
+                <span className={fakeCaret} />
+              </div>
+            ) : (
+              <input
+                className={answerInput}
+                autoFocus
+                autoCapitalize="none"
+                autoCorrect="off"
+                spellCheck={false}
+                enterKeyHint="go"
+                value={typed}
+                onChange={(e) => setTyped(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    setRevealed(true);
+                  }
+                }}
+                placeholder={`Type the ${c.aLang} answer…`}
+              />
+            )
           ) : (
             <button className={hintBtn} onClick={() => setTyping(true)}>
               Type
@@ -600,7 +646,28 @@ export default function Learn() {
             Reveal
           </button>
         </div>
-      ) : (
+      ) : null}
+
+      {!revealed && typing && COARSE_POINTER && (
+        <VirtualKeyboard
+          onKey={(ch) => setTyped((prev) => prev + ch)}
+          onBackspace={() => setTyped((prev) => prev.slice(0, -1))}
+          // The hint here dims the keys the answer doesn't use, instead of the
+          // letter slots. Diacritics fold to their base letter (ë → e).
+          allowed={
+            hintOpen
+              ? new Set(
+                  c.aCard
+                    .toLowerCase()
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, ""),
+                )
+              : null
+          }
+        />
+      )}
+
+      {revealed && (
         <>
           <div className={depthRow}>
             {DEPTH_BUTTONS.map((d) => (
