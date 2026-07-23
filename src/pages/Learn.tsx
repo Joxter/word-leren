@@ -51,21 +51,26 @@ const card = css`
   background: #fff;
   border: 1px solid #e5e5e5;
   border-radius: 12px;
-  padding: 2rem 1.75rem;
+  padding: 1.5rem 1.25rem;
   min-height: 220px;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1rem;
 
+  /* Full-bleed on phones: cancel the page padding, drop the side chrome. */
   @media (max-width: 540px) {
-    padding: 1.25rem 1rem;
+    margin: 0 -0.75rem;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    padding: 1rem 0.875rem;
   }
 `;
 
 const sideBlock = css`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.35rem;
 `;
 
 const langTag = css`
@@ -80,10 +85,17 @@ const langTag = css`
 `;
 
 const langRow = css`
-  align-self: flex-start;
   display: flex;
   align-items: center;
   gap: 0.4rem;
+`;
+
+// Top strip of the card: language tags on the left, "Edit card" on the right.
+const cardTop = css`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
 `;
 
 // Target language of the (hidden) answer, shown as a hint on the prompt.
@@ -111,12 +123,6 @@ const divider = css`
   margin: 0;
 `;
 
-const noteBlock = css`
-  background: #fafafa;
-  border-radius: 8px;
-  padding: 0.75rem 0.875rem;
-`;
-
 const cardImg = css`
   max-width: 100%;
   max-height: 220px;
@@ -129,7 +135,7 @@ const actionRow = css`
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 1.25rem;
+  margin-top: 1rem;
 
   @media (max-width: 540px) {
     gap: 0.5rem;
@@ -245,7 +251,7 @@ const depthRow = css`
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 1.25rem;
+  margin-top: 1rem;
 `;
 
 const depthBtn = css`
@@ -330,7 +336,6 @@ const disperseToggle = css`
 `;
 
 const editBtn = css`
-  align-self: flex-end;
   background: #f4f4f4;
   border: 1px solid #e0e0e0;
   border-radius: 5px;
@@ -532,9 +537,19 @@ export default function Learn() {
       {selector}
       <div className={card}>
         <div className={sideBlock}>
-          <div className={langRow}>
-            <span className={langTag}>{c.bLang}</span>
-            <span className={langHint}>→ {c.aLang}</span>
+          <div className={cardTop}>
+            <div className={langRow}>
+              <span className={langTag}>{c.bLang}</span>
+              <span className={langHint}>→ {c.aLang}</span>
+            </div>
+            {revealed && (
+              <button
+                className={editBtn}
+                onClick={() => setModalCard(current as Card)}
+              >
+                Edit card
+              </button>
+            )}
           </div>
           <div className={front}>{c.bCard}</div>
         </div>
@@ -580,27 +595,14 @@ export default function Learn() {
                 </div>
               </div>
             )}
-            <div className={sideBlock}>
-              <span className={langTag}>{c.aLang}</span>
-              <div className={frontRow}>
-                <div className={front}>{c.aCard}</div>
-                {c.audio && <PlayButton path={c.audio} small />}
-              </div>
+            <div className={frontRow}>
+              <div className={front}>{c.aCard}</div>
+              {c.audio && <PlayButton path={c.audio} small />}
             </div>
-            {c.note?.trim() && (
-              <div className={noteBlock}>
-                <MarkdocContent content={c.note} />
-              </div>
-            )}
+            {c.note?.trim() && <MarkdocContent content={c.note} />}
             {c.image?.url && (
               <img className={cardImg} src={c.image.url} alt="" />
             )}
-            <button
-              className={editBtn}
-              onClick={() => setModalCard(current as Card)}
-            >
-              Edit card
-            </button>
           </>
         )}
       </div>
