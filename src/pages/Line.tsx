@@ -6,6 +6,7 @@ import {
   enqueueBottom,
   safeKeyBetween,
   moveToRank,
+  moveToTop,
   removeFromLine,
   rankInLine,
   reviewStats,
@@ -548,15 +549,14 @@ export default function Line() {
     await moveToRank(moving.id, activeLine, newRank, steps);
   }
 
-  // Jump a card to the very top of the queue so it comes up first.
+  // Send a card back to the top of the queue — as high as possible without
+  // sitting next to another fresh (not-yet-studied) card.
   async function handleMoveToTop(cardId: string) {
     if (!activeLine) return;
     const index = members.findIndex((c) => c.id === cardId);
     if (index <= 0) return; // not found, or already at the top
     scrollTarget.current = window.scrollY;
-    const top = members[0];
-    const newRank = safeKeyBetween(null, rankInLine(top, activeLine)!);
-    await moveToRank(cardId, activeLine, newRank, -index);
+    await moveToTop(members, activeLine, cardId);
   }
 
   async function handleAdd(cardId: string) {

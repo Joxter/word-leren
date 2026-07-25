@@ -64,9 +64,10 @@ export interface ReviewStats {
 
 /**
  * Summarise a card's review history from its `log`. A "review" is a `place`
- * event from pressing a Depth button on the Learn page; the two synthetic adds
- * (`enqueueBottom` logs amount 0, `enqueueTop` logs amount 1) and `move` events
- * are not reviews, so we only count `place` events with amount > 1.
+ * event from pressing a Depth button on the Learn page; the synthetic adds
+ * (`enqueueBottom` logs `place` amount 0, `enqueueTop` used to log `place`
+ * amount 1 and now logs `top` events) and `move` events are not reviews, so we
+ * only count `place` events with amount > 1.
  */
 export function reviewStats(log?: CardLog, limit = 2): ReviewStats {
   const reviews = Object.values(log ?? {}).filter(
@@ -132,6 +133,59 @@ export function dailyReviewStats(
 export interface QueuedCard {
   id: string;
   queues?: CardQueues;
+}
+
+/**
+ * A card is "fresh" if it hasn't been studied or manually nudged since it was
+ * last added to a line or sent back to the top: its latest add event (`top`,
+ * or a synthetic `place` with amount <= 1) is no older than its latest review
+ * (`place` with amount > 1) or `move`. New cards with no history are fresh;
+ * re-topping a studied card makes it fresh again until it's reviewed.
+ */
+export function isFresh(log?: CardLog): boolean {
+  let lastAdd = -Infinity;
+  let lastStudy = -Infinity;
+  for (const e of Object.values(log ?? {})) {
+    if (e.kind === "top" || (e.kind === "place" && e.amount <= 1)) {
+      lastAdd = Math.max(lastAdd, e.at);
+    } else {
+      lastStudy = Math.max(lastStudy, e.at);
+    }
+  }
+  return lastStudy <= lastAdd;
+}
+
+/**
+ * Where a fresh card should enter a line: the highest slot whose neighbours
+ * (above and below) are both not fresh, so bursts of new or re-topped words
+ * interleave with known ones instead of forming a block that pushes the rest
+ * of the queue down. The very top qualifies when the current top card isn't
+ * fresh; if no slot qualifies (the whole line is fresh), falls back to the
+ * bottom. `members` is the line sorted top -> bottom and must not contain the
+ * card being placed. Returns the new rank and the 1-indexed landing position.
+ */
+export function topInsertRank(
+  members: (QueuedCard & { log?: CardLog })[],
+  lineId: string,
+): { rank: string; position: number } {
+  const fresh = members.map((c) => isFresh(c.log));
+  for (let i = 0; i <= members.length; i++) {
+    const aboveFresh = i > 0 && fresh[i - 1];
+    const belowFresh = i < members.length && fresh[i];
+    if (aboveFresh || belowFresh) continue;
+    return {
+      rank: safeKeyBetween(
+        i > 0 ? rankInLine(members[i - 1], lineId)! : null,
+        i < members.length ? rankInLine(members[i], lineId)! : null,
+      ),
+      position: i + 1,
+    };
+  }
+  const last = members[members.length - 1];
+  return {
+    rank: generateKeyBetween(last ? rankInLine(last, lineId)! : null, null),
+    position: members.length + 1,
+  };
 }
 
 /** The rank of a card within a line, or undefined if it isn't in that line. */
@@ -234,19 +288,42 @@ export async function moveToRank(
   await writeRank(cardId, lineId, newRank, "move", steps);
 }
 
-/** Add a card to the very top of a line (used when a new card is created). */
+/**
+ * Add a card near the top of a line (used when a new card is created), at the
+ * highest slot not adjacent to another fresh card — see `topInsertRank`.
+ */
 export async function enqueueTop(
   lineId: string,
   cardId: string,
 ): Promise<void> {
   const res = await db.queryOnce({ cards: {} });
-  const cards = (res.data?.cards ?? []) as QueuedCard[];
-  const top = sortLine(cards, lineId)[0];
-  const newRank = generateKeyBetween(
-    null,
-    top ? rankInLine(top, lineId)! : null,
-  );
-  await writeRank(cardId, lineId, newRank, "place", 1);
+  const cards = (res.data?.cards ?? []) as (QueuedCard & { log?: CardLog })[];
+  const members = sortLine(cards, lineId).filter((c) => c.id !== cardId);
+  const { rank, position } = topInsertRank(members, lineId);
+  await writeRank(cardId, lineId, rank, "top", position);
+}
+
+/**
+ * Send an existing card back to the top of a line — same slot choice as
+ * `enqueueTop`, and the logged `top` event makes the card count as fresh
+ * again. Pressing "top" must always move the card up, so when the smart slot
+ * lands at or below the card's current position, the card goes to the very
+ * top instead — a second press forces plain to-the-top behaviour. `members`
+ * is the line sorted top -> bottom (may include the card).
+ */
+export async function moveToTop(
+  members: (QueuedCard & { log?: CardLog })[],
+  lineId: string,
+  cardId: string,
+): Promise<void> {
+  const index = members.findIndex((c) => c.id === cardId);
+  const rest = members.filter((c) => c.id !== cardId);
+  let { rank, position } = topInsertRank(rest, lineId);
+  if (index !== -1 && position > index && rest.length > 0) {
+    rank = safeKeyBetween(null, rankInLine(rest[0], lineId)!);
+    position = 1;
+  }
+  await writeRank(cardId, lineId, rank, "top", position);
 }
 
 /**
