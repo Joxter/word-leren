@@ -10,6 +10,7 @@ import {
 } from "../lib/queue";
 import type { CardLog } from "../lib/queue";
 import { diffTyped } from "../lib/diff";
+import { saveCard, deleteCard } from "../lib/cards";
 import { useLines, useActiveLine } from "../lib/lines";
 import LineSelector from "../components/LineSelector";
 import CardModal from "../components/CardModal";
@@ -43,7 +44,9 @@ const empty = css`
 
 const topBar = css`
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
   margin-bottom: 1rem;
 `;
 
@@ -312,17 +315,7 @@ const statsPillLatest = css`
   color: #1a1a1a;
 `;
 
-const captionRow = css`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  font-size: 0.75rem;
-  color: #aaa;
-  margin-top: 0.875rem;
-`;
-
-const disperseToggle = css`
+const checkToggle = css`
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
@@ -333,6 +326,18 @@ const disperseToggle = css`
   input {
     cursor: pointer;
   }
+`;
+
+// The "Reverse" / "Disperse" pair, sized to match the line selector opposite.
+const topBarToggles = css`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+`;
+
+const invisible = css`
+  visibility: hidden;
 `;
 
 const editBtn = css`
@@ -365,6 +370,7 @@ interface LearnCard {
 }
 
 const DISPERSE_KEY = "word-leren:disperse";
+const REVERSE_KEY = "word-leren:reverse";
 
 export default function Learn() {
   const [revealed, setRevealed] = useState(false);
@@ -377,11 +383,31 @@ export default function Learn() {
   const [disperse, setDisperse] = useState(
     () => localStorage.getItem(DISPERSE_KEY) === "1",
   );
+  // "Reverse" swaps which side is the prompt: normally you see side B and
+  // recall side A (produce the Dutch word); reversed you see side A and recall
+  // its meaning, which is the direction reading actually asks of you.
+  const [reverse, setReverse] = useState(
+    () => localStorage.getItem(REVERSE_KEY) === "1",
+  );
 
   function toggleDisperse() {
     setDisperse((prev) => {
       const next = !prev;
       localStorage.setItem(DISPERSE_KEY, next ? "1" : "0");
+      return next;
+    });
+  }
+
+  function toggleReverse() {
+    setReverse((prev) => {
+      const next = !prev;
+      localStorage.setItem(REVERSE_KEY, next ? "1" : "0");
+      // The card on screen would flip mid-answer otherwise.
+      setRevealed(false);
+      setHintOpen(false);
+      setHintLetters([]);
+      setTyping(false);
+      setTyped("");
       return next;
     });
   }
@@ -422,28 +448,12 @@ export default function Learn() {
     imageFile: File | null,
     removeImageId: string | null,
   ): Promise<void> {
-    const cardId = (modalCard as Card).id;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const ops: any[] = [db.tx.cards[cardId].update(formData)];
-    if (removeImageId) {
-      ops.push(db.tx.cards[cardId].unlink({ image: removeImageId }));
-      ops.push(db.tx.$files[removeImageId].delete());
-    }
-    if (imageFile) {
-      const { data: fileData } = await db.storage.uploadFile(
-        `cards/${cardId}-${Date.now()}`,
-        imageFile,
-      );
-      if (fileData) {
-        ops.push(db.tx.cards[cardId].link({ image: fileData.id }));
-      }
-    }
-    await db.transact(ops);
+    await saveCard(modalCard!.id, formData, imageFile, removeImageId);
     setModalCard(null);
   }
 
   function handleDelete(cardId: string) {
-    db.transact(db.tx.cards[cardId].delete());
+    deleteCard(cardId);
     setModalCard(null);
     // The deleted card was the top one; surface the next card face-down.
     setRevealed(false);
@@ -468,7 +478,7 @@ export default function Learn() {
         } else if (e.key === "h" || e.key === "H") {
           e.preventDefault();
           if (current) setHintOpen(true);
-        } else if (e.key === "t" || e.key === "T") {
+        } else if ((e.key === "t" || e.key === "T") && !reverse) {
           e.preventDefault();
           if (current) setTyping(true);
         }
@@ -482,7 +492,7 @@ export default function Learn() {
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [revealed, current, busy, disperse]);
+  }, [revealed, current, busy, disperse, reverse]);
 
   // Hint boxes and the typed answer are per-card scratch state — clear them
   // whenever the top card changes (depth placed, deleted, or swapped in).
@@ -512,6 +522,22 @@ export default function Learn() {
 
   const selector = (
     <div className={topBar}>
+      <div className={topBarToggles}>
+        <label
+          className={checkToggle}
+          title="Show side A first and recall its meaning"
+        >
+          <input type="checkbox" checked={reverse} onChange={toggleReverse} />
+          Reverse
+        </label>
+        <label
+          className={checkToggle}
+          title="Jitter the chosen depth by up to ±4%, so cards dropped to the same depth don't pile up"
+        >
+          <input type="checkbox" checked={disperse} onChange={toggleDisperse} />
+          Disperse
+        </label>
+      </div>
       <LineSelector lines={lines} value={activeLine} onChange={setActiveLine} />
     </div>
   );
@@ -532,6 +558,14 @@ export default function Learn() {
   // Past ratings for this card, to show alongside the depth buttons on reveal.
   const st = reviewStats(c.log, 5);
 
+  // Which side is the prompt and which is the answer. Only side A can carry
+  // audio, so reversed it sits on the prompt — but still only appears on
+  // reveal, matching the forward direction.
+  const promptText = reverse ? c.aCard : c.bCard;
+  const promptLang = reverse ? c.aLang : c.bLang;
+  const answerText = reverse ? c.bCard : c.aCard;
+  const answerLang = reverse ? c.bLang : c.aLang;
+
   return (
     <div className={page}>
       {selector}
@@ -539,26 +573,33 @@ export default function Learn() {
         <div className={sideBlock}>
           <div className={cardTop}>
             <div className={langRow}>
-              <span className={langTag}>{c.bLang}</span>
-              <span className={langHint}>→ {c.aLang}</span>
+              <span className={langTag}>{promptLang}</span>
+              <span className={langHint}>→ {answerLang}</span>
             </div>
-            {revealed && (
-              <button
-                className={editBtn}
-                onClick={() => setModalCard(current as Card)}
-              >
-                Edit card
-              </button>
+            {/* Always in the flow, so revealing doesn't grow this row and
+                nudge the prompt down — just invisible until then. */}
+            <button
+              className={revealed ? editBtn : `${editBtn} ${invisible}`}
+              onClick={() => setModalCard(current as Card)}
+              tabIndex={revealed ? undefined : -1}
+              aria-hidden={!revealed}
+            >
+              Edit card
+            </button>
+          </div>
+          <div className={frontRow}>
+            <div className={front}>{promptText}</div>
+            {reverse && revealed && c.audio && (
+              <PlayButton path={c.audio} small />
             )}
           </div>
-          <div className={front}>{c.bCard}</div>
         </div>
 
         {!revealed && hintOpen && !(typing && COARSE_POINTER) && (
           <>
             <hr className={divider} />
             <HintLetters
-              text={c.aCard}
+              text={answerText}
               revealed={hintLetters}
               onReveal={(idx) =>
                 setHintLetters((prev) => {
@@ -578,7 +619,7 @@ export default function Learn() {
               <div className={sideBlock}>
                 <span className={langTag}>your answer</span>
                 <div className={typedAnswer}>
-                  {diffTyped(typed.trim(), c.aCard).map((d, i) => (
+                  {diffTyped(typed.trim(), answerText).map((d, i) => (
                     <span
                       key={i}
                       className={
@@ -596,8 +637,8 @@ export default function Learn() {
               </div>
             )}
             <div className={frontRow}>
-              <div className={front}>{c.aCard}</div>
-              {c.audio && <PlayButton path={c.audio} small />}
+              <div className={front}>{answerText}</div>
+              {!reverse && c.audio && <PlayButton path={c.audio} small />}
             </div>
             {c.note?.trim() && <MarkdocContent content={c.note} />}
             {c.image?.url && (
@@ -614,36 +655,40 @@ export default function Learn() {
               Hint
             </button>
           )}
-          {typing ? (
-            COARSE_POINTER ? (
-              <div className={fakeInput}>
-                {typed}
-                <span className={fakeCaret} />
-              </div>
+          {/* Typing is a production exercise, so it only makes sense in the
+              forward direction: reversed, the answer is the translation, where
+              a per-character diff would flag every equally-valid wording. */}
+          {!reverse &&
+            (typing ? (
+              COARSE_POINTER ? (
+                <div className={fakeInput}>
+                  {typed}
+                  <span className={fakeCaret} />
+                </div>
+              ) : (
+                <input
+                  className={answerInput}
+                  autoFocus
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck={false}
+                  enterKeyHint="go"
+                  value={typed}
+                  onChange={(e) => setTyped(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      setRevealed(true);
+                    }
+                  }}
+                  placeholder={`Type the ${answerLang} answer…`}
+                />
+              )
             ) : (
-              <input
-                className={answerInput}
-                autoFocus
-                autoCapitalize="none"
-                autoCorrect="off"
-                spellCheck={false}
-                enterKeyHint="go"
-                value={typed}
-                onChange={(e) => setTyped(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    setRevealed(true);
-                  }
-                }}
-                placeholder={`Type the ${c.aLang} answer…`}
-              />
-            )
-          ) : (
-            <button className={hintBtn} onClick={() => setTyping(true)}>
-              Type
-            </button>
-          )}
+              <button className={hintBtn} onClick={() => setTyping(true)}>
+                Type
+              </button>
+            ))}
           <button className={revealBtn} onClick={() => setRevealed(true)}>
             Reveal
           </button>
@@ -659,7 +704,7 @@ export default function Learn() {
           allowed={
             hintOpen
               ? new Set(
-                  c.aCard
+                  answerText
                     .toLowerCase()
                     .normalize("NFD")
                     .replace(/[\u0300-\u036f]/g, ""),
@@ -682,17 +727,6 @@ export default function Learn() {
                 {d}
               </button>
             ))}
-          </div>
-          <div className={captionRow}>
-            <span>Drop this card to the N-th place from the top</span>
-            <label className={disperseToggle}>
-              <input
-                type="checkbox"
-                checked={disperse}
-                onChange={toggleDisperse}
-              />
-              Disperse
-            </label>
           </div>
           {st.seen > 0 && (
             <div className={statsRow}>
