@@ -42,9 +42,32 @@ export function audioUrl(audio: string): string {
   return encodeURI(`${import.meta.env.BASE_URL}audio/${audio}`);
 }
 
-// Search the Dutch headword, translations, and examples.
-// Priority: exact word > word prefix > word substring > exact translation >
-//   translation prefix > translation substring > example match.
+// Score tiers, best first. The verb-form tiers are interleaved with the others
+// rather than grouped: hitting an inflected form exactly is a strong signal
+// ("gelopen" should surface "lopen" above "afgelopen"), but a substring of one
+// is a weak one ("lopen" inside "gelopen"), so it sinks below translations.
+const EXAMPLE = 9;
+const WORD_TIERS: Tiers = [0, 1, 3];
+const VERB_TIERS: Tiers = [2, 4, 8];
+const TRANS_TIERS: Tiers = [5, 6, 7];
+
+/** Scores for an exact, prefix and substring match, in that order. */
+type Tiers = [number, number, number];
+
+function tier(text: string | undefined, q: string, tiers: Tiers): number {
+  if (!text) return Infinity;
+  const t = text.toLowerCase();
+  if (t === q) return tiers[0];
+  if (t.startsWith(q)) return tiers[1];
+  if (t.includes(q)) return tiers[2];
+  return Infinity;
+}
+
+// Search the Dutch headword (bare and article-prefixed, so "de hond" works),
+// the past/participle verb forms, translations, and examples — see the tiers
+// above for priority. `article` and `pos` are deliberately not searched: they
+// are closed-class labels ("de"/"het", "noun"), so matching them would return
+// thousands of entries.
 // Within the same tier, shorter words rank higher, then alphabetical.
 export function searchDictionary(
   entries: DictEntry[],
@@ -56,19 +79,30 @@ export function searchDictionary(
 
   const scored: { entry: DictEntry; score: number }[] = [];
   for (const entry of entries) {
-    const w = entry.word.toLowerCase();
-    let score = Infinity;
-    if (w === q) score = 0;
-    else if (w.startsWith(q)) score = 1;
-    else if (w.includes(q)) score = 2;
+    let score = Math.min(
+      tier(entry.word, q, WORD_TIERS),
+      entry.article
+        ? tier(`${entry.article} ${entry.word}`, q, WORD_TIERS)
+        : Infinity,
+    );
+
+    // `past` can list several forms ("beval aan, bevalen aan"), and either
+    // field may carry a parenthesised auxiliary ("(is) gelopen") that must not
+    // block an exact match on the form itself.
+    const verbForms = [
+      ...(entry.verb?.past?.split(",") ?? []),
+      ...(entry.verb?.participle ? [entry.verb.participle] : []),
+    ];
+    for (const form of verbForms) {
+      const clean = form.replace(/\([^)]*\)/g, " ").trim();
+      score = Math.min(score, tier(clean, q, VERB_TIERS));
+    }
 
     for (const info of entry.info) {
-      const t = info.translation.toLowerCase();
-      if (t === q) score = Math.min(score, 3);
-      else if (t.startsWith(q)) score = Math.min(score, 4);
-      else if (t.includes(q)) score = Math.min(score, 5);
-
-      if (score > 6 && info.examples?.toLowerCase().includes(q)) score = 6;
+      score = Math.min(score, tier(info.translation, q, TRANS_TIERS));
+      if (score > EXAMPLE && info.examples?.toLowerCase().includes(q)) {
+        score = EXAMPLE;
+      }
     }
 
     if (score !== Infinity) scored.push({ entry, score });

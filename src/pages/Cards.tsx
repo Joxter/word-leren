@@ -7,6 +7,7 @@ import CardModal from "../components/CardModal";
 import MarkdocField from "../components/MarkdocField";
 import PlayButton from "../components/PlayButton";
 import { enqueueTop } from "../lib/queue";
+import { saveCard, deleteCard } from "../lib/cards";
 import { useLines } from "../lib/lines";
 import LineCheckboxes from "../components/LineCheckboxes";
 
@@ -486,28 +487,12 @@ export default function Cards() {
     imageFile: File | null,
     removeImageId: string | null,
   ): Promise<void> {
-    const cardId = (modalCard as Card).id;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const ops: any[] = [db.tx.cards[cardId].update(formData)];
-    if (removeImageId) {
-      ops.push(db.tx.cards[cardId].unlink({ image: removeImageId }));
-      ops.push(db.tx.$files[removeImageId].delete());
-    }
-    if (imageFile) {
-      const { data: fileData } = await db.storage.uploadFile(
-        `cards/${cardId}-${Date.now()}`,
-        imageFile,
-      );
-      if (fileData) {
-        ops.push(db.tx.cards[cardId].link({ image: fileData.id }));
-      }
-    }
-    await db.transact(ops);
+    await saveCard(modalCard!.id, formData, imageFile, removeImageId);
     setModalCard(null);
   }
 
   function handleDelete(cardId: string) {
-    db.transact(db.tx.cards[cardId].delete());
+    deleteCard(cardId);
     setModalCard(null);
   }
 

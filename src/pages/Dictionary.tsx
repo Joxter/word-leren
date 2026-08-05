@@ -2,8 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { css } from "@linaria/core";
 import { id } from "@instantdb/react";
 import { db } from "../db";
-import { enqueueTop } from "../lib/queue";
-import { getDefaultLineId } from "../lib/lines";
+import { enqueueTop, moveToTop, sortLine, type CardLog } from "../lib/queue";
+import { getDefaultLineId, useLines } from "../lib/lines";
 import {
   loadDictionary,
   searchDictionary,
@@ -11,6 +11,54 @@ import {
   type DictEntry,
 } from "../lib/dictionary";
 import { mergeContained } from "../lib/translations";
+import CardModal from "../components/CardModal";
+import PlayButton from "../components/PlayButton";
+import { saveCard, deleteCard } from "../lib/cards";
+import type { Card, CardData } from "./Cards";
+
+/** A card as loaded here — the queue helpers also want its `log`. */
+type CardWithLog = Card & { log?: CardLog };
+
+/**
+ * Search the user's own cards by both sides and the note. Same tiering as
+ * `searchDictionary`: exact > prefix > substring, side A before side B before
+ * the note; ties break on the shorter side A.
+ */
+function searchCards(
+  cards: CardWithLog[],
+  rawQuery: string,
+  limit = 20,
+): CardWithLog[] {
+  const q = rawQuery.trim().toLowerCase();
+  if (!q) return [];
+
+  const tier = (text: string | undefined, base: number) => {
+    const t = (text ?? "").toLowerCase();
+    if (!t) return Infinity;
+    if (t === q) return base;
+    if (t.startsWith(q)) return base + 1;
+    if (t.includes(q)) return base + 2;
+    return Infinity;
+  };
+
+  const scored: { card: CardWithLog; score: number }[] = [];
+  for (const card of cards) {
+    const score = Math.min(
+      tier(card.aCard, 0),
+      tier(card.bCard, 3),
+      tier(card.note, 6),
+    );
+    if (score !== Infinity) scored.push({ card, score });
+  }
+
+  scored.sort(
+    (a, b) =>
+      a.score - b.score ||
+      a.card.aCard.length - b.card.aCard.length ||
+      a.card.aCard.localeCompare(b.card.aCard, "nl"),
+  );
+  return scored.slice(0, limit).map((s) => s.card);
+}
 
 const page = css`
   max-width: 720px;
@@ -211,6 +259,99 @@ const exampleText = css`
   }
 `;
 
+// --- Matching existing cards, listed above the dictionary results ----------
+
+const hitList = css`
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin-top: 1.25rem;
+`;
+
+const hitRow = css`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+
+  @media (max-width: 540px) {
+    flex-wrap: wrap;
+    gap: 0.4rem 0.6rem;
+  }
+`;
+
+const hitSides = css`
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+`;
+
+// Side A keeps its width as long as it can; side B is the one that gives way.
+const hitA = css`
+  font-size: 0.9375rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex-shrink: 0;
+  max-width: 60%;
+`;
+
+const hitB = css`
+  font-size: 0.875rem;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+`;
+
+// Current 1-indexed position in the default line, or "not in line".
+const posTag = css`
+  flex-shrink: 0;
+  font-size: 0.6875rem;
+  color: #888;
+  background: #f4f4f4;
+  border-radius: 4px;
+  padding: 0.1rem 0.35rem;
+  white-space: nowrap;
+`;
+
+const hitActions = css`
+  display: flex;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  margin-left: auto;
+`;
+
+const hitBtn = css`
+  border: 1px solid #e5e5e5;
+  background: #fafafa;
+  border-radius: 6px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.7rem;
+  color: #555;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover {
+    border-color: #1a1a1a;
+    color: #111;
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+`;
+
 function play(audio: HTMLAudioElement | null, url: string) {
   if (!audio) return;
   audio.src = url;
@@ -220,16 +361,12 @@ function play(audio: HTMLAudioElement | null, url: string) {
 function EntryCard({
   entry,
   audioEl,
-  existingCards,
 }: {
   entry: DictEntry;
   audioEl: HTMLAudioElement | null;
-  existingCards: Set<string>;
 }) {
   const audios = entryAudios(entry);
   const verb = entry.verb;
-
-  // - поиск по причастиям
 
   // Translations grouped by content: identical ones (case-insensitive) merge
   // into one row that lists every source for them, in gray at the end. Then
@@ -250,14 +387,10 @@ function EntryCard({
     .filter((i) => i.examples)
     .map((i) => ({ examples: i.examples as string, source: i.source }));
 
-  const cardKey = (
-    entry.article ? `${entry.article} ${entry.word}` : entry.word
-  ).toLowerCase();
-  const alreadyAdded = existingCards.has(cardKey);
-
+  // Whether the word is already a card isn't checked here — matching cards show
+  // up in their own section above the dictionary results.
   const [saving, setSaving] = useState(false);
-  const [justAdded, setJustAdded] = useState(false);
-  const added = alreadyAdded || justAdded;
+  const [added, setAdded] = useState(false);
 
   async function addToCards() {
     setSaving(true);
@@ -283,7 +416,7 @@ function EntryCard({
     // New card jumps to the top of the default line, like cards added from the
     // Cards page.
     await enqueueTop(await getDefaultLineId(), cardId);
-    setJustAdded(true);
+    setAdded(true);
     setSaving(false);
   }
 
@@ -367,20 +500,101 @@ function EntryCard({
   );
 }
 
+/** One matching existing card, with shortcuts to edit it or re-top it. */
+function CardHit({
+  card,
+  position,
+  onEdit,
+  onTop,
+}: {
+  card: CardWithLog;
+  position: number | undefined;
+  onEdit: () => void;
+  onTop: () => Promise<void>;
+}) {
+  const [topping, setTopping] = useState(false);
+
+  async function handleTop() {
+    setTopping(true);
+    try {
+      await onTop();
+    } finally {
+      setTopping(false);
+    }
+  }
+
+  return (
+    <div className={hitRow}>
+      <div className={hitSides}>
+        <span className={hitA}>{card.aCard}</span>
+        {card.audio && <PlayButton path={card.audio} small />}
+        <span className={hitB}>{card.bCard}</span>
+      </div>
+      <span className={posTag}>
+        {position ? `#${position}` : "not in line"}
+      </span>
+      <div className={hitActions}>
+        <button className={hitBtn} onClick={onEdit}>
+          Edit
+        </button>
+        <button
+          className={hitBtn}
+          onClick={handleTop}
+          disabled={topping}
+          title="Move to the top of the line"
+        >
+          {topping ? "…" : "↑ Top"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function Dictionary() {
   const [entries, setEntries] = useState<DictEntry[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [query, setQuery] = useState("");
+  const [modalCard, setModalCard] = useState<CardWithLog | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const { data: cardsData } = db.useQuery({
-    cards: { $: { where: { aLang: "NL" } } },
-  });
-  const existingCards = useMemo(() => {
-    const set = new Set<string>();
-    for (const c of cardsData?.cards ?? []) set.add(c.aCard.toLowerCase());
-    return set;
-  }, [cardsData?.cards]);
+  const { lines } = useLines();
+  const lineId = lines[0]?.id ?? null;
+
+  const { data: cardsData } = db.useQuery({ cards: { image: {} } });
+  const allCards = useMemo(
+    () => (cardsData?.cards ?? []) as CardWithLog[],
+    [cardsData?.cards],
+  );
+
+  // The default line, sorted top -> bottom: used both for the position badge
+  // and as the `members` argument `moveToTop` needs.
+  const lineMembers = useMemo(
+    () => (lineId ? sortLine(allCards, lineId) : []),
+    [allCards, lineId],
+  );
+  const positions = useMemo(
+    () => new Map(lineMembers.map((c, i) => [c.id, i + 1])),
+    [lineMembers],
+  );
+
+  const cardHits = useMemo(
+    () => searchCards(allCards, query),
+    [allCards, query],
+  );
+
+  async function handleUpdate(
+    formData: CardData,
+    imageFile: File | null,
+    removeImageId: string | null,
+  ): Promise<void> {
+    await saveCard(modalCard!.id, formData, imageFile, removeImageId);
+    setModalCard(null);
+  }
+
+  function handleDelete(cardId: string) {
+    deleteCard(cardId);
+    setModalCard(null);
+  }
 
   useEffect(() => {
     audioRef.current = new Audio();
@@ -415,8 +629,27 @@ export default function Dictionary() {
           Type a word to search {entries.length.toLocaleString()} entries.
         </div>
       )}
-      {entries && trimmed !== "" && results.length === 0 && (
-        <div className={hint}>No matches for “{trimmed}”.</div>
+      {entries &&
+        trimmed !== "" &&
+        results.length === 0 &&
+        cardHits.length === 0 && (
+          <div className={hint}>No matches for “{trimmed}”.</div>
+        )}
+
+      {cardHits.length > 0 && (
+        <div className={hitList}>
+          {cardHits.map((c) => (
+            <CardHit
+              key={c.id}
+              card={c}
+              position={positions.get(c.id)}
+              onEdit={() => setModalCard(c)}
+              onTop={async () => {
+                if (lineId) await moveToTop(lineMembers, lineId, c.id);
+              }}
+            />
+          ))}
+        </div>
       )}
 
       {results.length > 0 && (
@@ -426,10 +659,18 @@ export default function Dictionary() {
               key={`${entry.word}-${i}`}
               entry={entry}
               audioEl={audioRef.current}
-              existingCards={existingCards}
             />
           ))}
         </div>
+      )}
+
+      {modalCard !== null && (
+        <CardModal
+          card={modalCard}
+          onSave={handleUpdate}
+          onDelete={handleDelete}
+          onClose={() => setModalCard(null)}
+        />
       )}
     </div>
   );
