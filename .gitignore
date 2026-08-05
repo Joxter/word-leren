@@ -14,3 +14,8 @@ dist/
 
 # backups
 backup-*/
+
+# scratch: saved exam pages and whatever the parsing scripts spit out
+leze */
+leze *.html
+out_tasks/
