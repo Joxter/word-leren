@@ -3,6 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [master]
+  # Lets the deploy be started by hand (`gh workflow run deploy.yml`, or the
+  # Run workflow button). Needed whenever a push left no usable event behind —
+  # e.g. it landed while Actions was down, so no run was ever created for it.
+  workflow_dispatch:
 
 permissions:
   contents: read
