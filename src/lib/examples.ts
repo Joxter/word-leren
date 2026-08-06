@@ -104,23 +104,11 @@ export function normalizeSpans(spans: Span[], text: string): Span[] {
   return merged.map((s) => ({ ...s, text: text.slice(s.start, s.end) }));
 }
 
-export function sameSpans(a: Span[], b: Span[]): boolean {
-  return (
-    a.length === b.length &&
-    a.every(
-      (s, i) =>
-        s.start === b[i].start && s.end === b[i].end && s.text === b[i].text,
-    )
-  );
-}
-
 export interface AnchorResult {
   /** Spans that still point at their fragment, re-anchored where needed. */
   spans: Span[];
   /** Spans whose fragment is gone from the sentence entirely. */
   broken: Span[];
-  /** Whether `spans` differs from the input and is worth writing back. */
-  changed: boolean;
 }
 
 /**
@@ -145,12 +133,7 @@ export function anchorSpans(text: string, spans: Span[]): AnchorResult {
     else broken.push(span);
   }
 
-  const normalized = normalizeSpans(found, text);
-  return {
-    spans: normalized,
-    broken,
-    changed: broken.length > 0 || !sameSpans(spans, normalized),
-  };
+  return { spans: normalizeSpans(found, text), broken };
 }
 
 function nearestOccurrence(text: string, span: Span): Span | null {
@@ -195,13 +178,6 @@ export function segmentText(text: string, spans: Span[]): Segment[] {
 /** What the user is expected to type for a cloze: the fragments, in order. */
 export function spansAnswer(spans: Span[]): string {
   return spans.map((s) => s.text).join(" ");
-}
-
-/** The sentence with every span replaced by `fill`, for plain-text previews. */
-export function blankedText(text: string, spans: Span[], fill = "___"): string {
-  return segmentText(text, spans)
-    .map((seg) => (seg.blank ? fill : seg.text))
-    .join("");
 }
 
 export interface Token {
@@ -363,17 +339,4 @@ export function deleteExample(exampleId: string): Promise<unknown> {
 /** Detach an example from one card, keeping both. */
 export function unlinkExample(linkId: string): Promise<unknown> {
   return db.transact(db.tx.exampleLinks[linkId].delete());
-}
-
-/** Attach an existing example to a card with no blanks chosen yet. */
-export function linkExample(
-  exampleId: string,
-  cardId: string,
-  spans: Span[] = [],
-): Promise<unknown> {
-  return db.transact(
-    db.tx.exampleLinks[id()]
-      .update({ spans, createdAt: Date.now() })
-      .link({ card: cardId, example: exampleId }),
-  );
 }

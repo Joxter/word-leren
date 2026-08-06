@@ -414,8 +414,23 @@ interface LearnCard {
   exampleLinks?: ExampleLink[];
 }
 
-const REVERSE_KEY = "word-leren:reverse";
-const EXAMPLES_KEY = "word-leren:examples";
+const MODE_KEY = "word-leren:mode";
+
+/**
+ * What the prompt asks for. `forward` shows side B and wants side A (produce
+ * the Dutch word); `reverse` shows side A and wants its meaning, the direction
+ * reading actually asks of you; `examples` shows one of the card's example
+ * sentences with the card's own fragments blanked out. They are one choice, not
+ * independent flags — a card is asked for in exactly one of these ways.
+ */
+type Mode = "forward" | "reverse" | "examples";
+
+const MODES: Mode[] = ["forward", "reverse", "examples"];
+
+function storedMode(): Mode {
+  const stored = localStorage.getItem(MODE_KEY);
+  return MODES.includes(stored as Mode) ? (stored as Mode) : "forward";
+}
 
 export default function Learn() {
   const [revealed, setRevealed] = useState(false);
@@ -425,18 +440,8 @@ export default function Learn() {
   const [hintLetters, setHintLetters] = useState<boolean[]>([]);
   const [typing, setTyping] = useState(false);
   const [typed, setTyped] = useState("");
-  // "Reverse" swaps which side is the prompt: normally you see side B and
-  // recall side A (produce the Dutch word); reversed you see side A and recall
-  // its meaning, which is the direction reading actually asks of you.
-  const [reverse, setReverse] = useState(
-    () => localStorage.getItem(REVERSE_KEY) === "1",
-  );
-  // "Examples" prompts with one of the card's example sentences, the fragments
-  // that belong to the card blanked out, instead of its side B. Cards with no
-  // usable example fall back to the plain prompt, so the line is unaffected.
-  const [examplesMode, setExamplesMode] = useState(
-    () => localStorage.getItem(EXAMPLES_KEY) === "1",
-  );
+  const [mode, setMode] = useState<Mode>(storedMode);
+  const reverse = mode === "reverse";
 
   // Per-card scratch state: cleared whenever the prompt changes out from under
   // the user, whether that's a new card or a mode flip.
@@ -448,33 +453,14 @@ export default function Learn() {
     setTyped("");
   }
 
-  // Reverse and Examples are opposite exercises — one asks for the meaning, the
-  // other for production — so turning either on switches the other off.
-  function toggleReverse() {
-    setReverse((prev) => {
-      const next = !prev;
-      localStorage.setItem(REVERSE_KEY, next ? "1" : "0");
-      if (next) {
-        setExamplesMode(false);
-        localStorage.setItem(EXAMPLES_KEY, "0");
-      }
-      // The card on screen would flip mid-answer otherwise.
-      resetCardState();
-      return next;
-    });
-  }
-
-  function toggleExamples() {
-    setExamplesMode((prev) => {
-      const next = !prev;
-      localStorage.setItem(EXAMPLES_KEY, next ? "1" : "0");
-      if (next) {
-        setReverse(false);
-        localStorage.setItem(REVERSE_KEY, "0");
-      }
-      resetCardState();
-      return next;
-    });
+  // The checkboxes read as toggles but behave as a three-way choice: turning
+  // one on turns the other off, and turning it off falls back to forward.
+  function toggleMode(target: Mode) {
+    const next = mode === target ? "forward" : target;
+    localStorage.setItem(MODE_KEY, next);
+    setMode(next);
+    // The card on screen would change mid-answer otherwise.
+    resetCardState();
   }
 
   const { lines, isLoading: linesLoading } = useLines();
@@ -493,7 +479,7 @@ export default function Learn() {
   // fragments have all gone missing falls back to the plain prompt rather than
   // showing a sentence with nothing blanked.
   const clozeLink =
-    examplesMode && !reverse && current
+    mode === "examples" && current
       ? pickClozeLink(current.exampleLinks ?? [], current.log)
       : undefined;
   const clozeSpans = clozeLink?.example
@@ -568,7 +554,7 @@ export default function Learn() {
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [revealed, current, busy, reverse, examplesMode, cloze?.link.id]);
+  }, [revealed, current, busy, mode, cloze?.link.id]);
 
   // Hint boxes and the typed answer are per-card scratch state — clear them
   // whenever the top card changes (depth placed, deleted, or swapped in).
@@ -603,7 +589,11 @@ export default function Learn() {
           className={checkToggle}
           title="Show side A first and recall its meaning"
         >
-          <input type="checkbox" checked={reverse} onChange={toggleReverse} />
+          <input
+            type="checkbox"
+            checked={mode === "reverse"}
+            onChange={() => toggleMode("reverse")}
+          />
           Reverse
         </label>
         <label
@@ -612,8 +602,8 @@ export default function Learn() {
         >
           <input
             type="checkbox"
-            checked={examplesMode}
-            onChange={toggleExamples}
+            checked={mode === "examples"}
+            onChange={() => toggleMode("examples")}
           />
           Examples
         </label>
@@ -675,9 +665,7 @@ export default function Learn() {
         <div className={sideBlock}>
           <div className={cardTop}>
             <div className={langRow}>
-              <span className={langTag}>
-                {cloze ? cloze.example.aLang : promptLang}
-              </span>
+              <span className={langTag}>{cloze ? answerLang : promptLang}</span>
               <span className={langHint}>
                 {cloze ? "fill the gaps" : `→ ${answerLang}`}
               </span>
@@ -699,9 +687,7 @@ export default function Learn() {
                   place rather than below it: blanks become letter boxes and
                   the rest of the sentence stays readable throughout. */}
               <div className={clozeSentence}>
-                {revealed ? (
-                  <ExampleText text={cloze.example.aText} spans={cloze.spans} />
-                ) : hintOpen && !(typing && COARSE_POINTER) ? (
+                {!revealed && hintOpen && !(typing && COARSE_POINTER) ? (
                   <HintLetters
                     text={cloze.example.aText}
                     hidden={cloze.spans}
@@ -712,7 +698,7 @@ export default function Learn() {
                   <ExampleText
                     text={cloze.example.aText}
                     spans={cloze.spans}
-                    mode="blank"
+                    mode={revealed ? "highlight" : "blank"}
                   />
                 )}
               </div>
@@ -768,20 +754,14 @@ export default function Learn() {
                 </div>
               </div>
             )}
-            {cloze ? (
-              // The sentence above already spells the answer out in place, so
-              // what this card actually is gets its own line.
-              <div className={frontRow}>
-                <div className={front}>{c.aCard}</div>
-                {c.audio && <PlayButton path={c.audio} small />}
-                <span className={cardMeaning}>{c.bCard}</span>
-              </div>
-            ) : (
-              <div className={frontRow}>
-                <div className={front}>{answerText}</div>
-                {!reverse && c.audio && <PlayButton path={c.audio} small />}
-              </div>
-            )}
+            {/* In a cloze the sentence above already spells the answer out in
+                place, so this line names the card itself instead. Reversed,
+                side A is on the prompt and already had its play button. */}
+            <div className={frontRow}>
+              <div className={front}>{cloze ? c.aCard : answerText}</div>
+              {!reverse && c.audio && <PlayButton path={c.audio} small />}
+              {cloze && <span className={cardMeaning}>{c.bCard}</span>}
+            </div>
             {cloze?.example.note?.trim() && (
               <MarkdocContent content={cloze.example.note} />
             )}

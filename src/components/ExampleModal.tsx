@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { createPortal } from "react-dom";
 import { css } from "@linaria/core";
 import { id } from "@instantdb/react";
@@ -16,6 +16,7 @@ import {
   type Span,
 } from "../lib/examples";
 import MarkdocField from "./MarkdocField";
+import SearchPicker from "./SearchPicker";
 import SpanPicker from "./SpanPicker";
 
 const A_LANGS = ["NL", "EN"] as const;
@@ -254,71 +255,6 @@ const noLinks = css`
   font-style: italic;
 `;
 
-const searchWrap = css`
-  position: relative;
-`;
-
-const searchInput = css`
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0.4rem 0.6rem;
-  border: 1px dashed #ccc;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-family: inherit;
-
-  &:focus {
-    outline: none;
-    border-style: solid;
-    border-color: #999;
-  }
-`;
-
-// An overlay, so the link rows below don't jump as you type. It only works
-// because the search sits at the top of its column: the form body scrolls and
-// would clip a dropdown hanging out of its bottom, but the left column always
-// leaves enough height below this point for the list to open into.
-const results = css`
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 5;
-  margin-top: 0.25rem;
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-  max-height: 220px;
-  overflow-y: auto;
-`;
-
-const resultItem = css`
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: none;
-  border-bottom: 1px solid #f2f2f2;
-  padding: 0.45rem 0.6rem;
-  font-size: 0.85rem;
-  font-family: inherit;
-  cursor: pointer;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  &:hover {
-    background: #f5f5f5;
-  }
-
-  small {
-    color: #888;
-    margin-left: 0.4rem;
-  }
-`;
-
 const footer = css`
   display: flex;
   align-items: center;
@@ -388,51 +324,22 @@ function CardPicker({
   exclude: Set<string>;
   onPick: (card: LinkedCard) => void;
 }) {
-  const [query, setQuery] = useState("");
   const { data } = db.useQuery({ cards: { $: { limit: 5000 } } });
 
-  const matches = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return [];
-    const cards = (data?.cards ?? []) as LinkedCard[];
-    return cards
-      .filter(
-        (c) =>
-          !exclude.has(c.id) &&
-          (c.aCard.toLowerCase().includes(q) ||
-            c.bCard.toLowerCase().includes(q)),
-      )
-      .slice(0, 8);
-  }, [query, data, exclude]);
-
   return (
-    <div className={searchWrap}>
-      <input
-        className={searchInput}
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="+ Attach a card — search by either side…"
-        autoComplete="off"
-      />
-      {matches.length > 0 && (
-        <div className={results}>
-          {matches.map((c) => (
-            <button
-              key={c.id}
-              type="button"
-              className={resultItem}
-              onClick={() => {
-                onPick(c);
-                setQuery("");
-              }}
-            >
-              {c.aCard}
-              <small>{c.bCard}</small>
-            </button>
-          ))}
-        </div>
+    <SearchPicker
+      items={(data?.cards ?? []) as LinkedCard[]}
+      exclude={exclude}
+      fields={(c) => [c.aCard, c.bCard]}
+      renderItem={(c) => (
+        <>
+          {c.aCard}
+          <small>{c.bCard}</small>
+        </>
       )}
-    </div>
+      placeholder="+ Attach a card — search by either side…"
+      onPick={onPick}
+    />
   );
 }
 

@@ -1,7 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
   anchorSpans,
-  blankedText,
   normalizeSpans,
   pickClozeLink,
   segmentText,
@@ -67,7 +66,6 @@ describe("anchorSpans", () => {
     const res = anchorSpans(SENTENCE, spans);
     expect(res.spans).toEqual(spans);
     expect(res.broken).toEqual([]);
-    expect(res.changed).toBe(false);
   });
 
   it("re-anchors after the sentence shifts", () => {
@@ -75,7 +73,6 @@ describe("anchorSpans", () => {
     const edited = "En ik sta elke dag om 7 uur op.";
     const res = anchorSpans(edited, spans);
     expect(res.spans).toEqual([at(edited, "sta")]);
-    expect(res.changed).toBe(true);
     expect(res.broken).toEqual([]);
   });
 
@@ -93,7 +90,6 @@ describe("anchorSpans", () => {
     const res = anchorSpans("Ik loop elke dag.", spans);
     expect(res.spans).toEqual([]);
     expect(res.broken).toEqual(spans);
-    expect(res.changed).toBe(true);
   });
 
   it("keeps the surviving spans when one breaks", () => {
@@ -133,18 +129,13 @@ describe("segmentText", () => {
   });
 });
 
-describe("spansAnswer / blankedText", () => {
-  const spans = normalizeSpans(
-    [at(SENTENCE, "sta"), at(SENTENCE, "op")],
-    SENTENCE,
-  );
-
+describe("spansAnswer", () => {
   it("joins the fragments in order", () => {
+    const spans = normalizeSpans(
+      [at(SENTENCE, "sta"), at(SENTENCE, "op")],
+      SENTENCE,
+    );
     expect(spansAnswer(spans)).toBe("sta op");
-  });
-
-  it("replaces the fragments with the fill", () => {
-    expect(blankedText(SENTENCE, spans)).toBe("Ik ___ elke dag om 7 uur ___.");
   });
 });
 

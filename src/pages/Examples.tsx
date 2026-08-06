@@ -3,7 +3,7 @@ import { css } from "@linaria/core";
 import { db } from "../db";
 import ExampleModal from "../components/ExampleModal";
 import ExampleText from "../components/ExampleText";
-import type { Example } from "../lib/examples";
+import { spansAnswer, type Example } from "../lib/examples";
 
 const page = css`
   max-width: 840px;
@@ -165,8 +165,9 @@ const empty = css`
 export default function Examples() {
   const [query, setQuery] = useState("");
   const [onlyLoose, setOnlyLoose] = useState(false);
-  const [editing, setEditing] = useState<Example | null>(null);
-  const [creating, setCreating] = useState(false);
+  // One state for both "new" and "edit": the editor is either closed, or open
+  // on an example — `null` inside it meaning one that doesn't exist yet.
+  const [modal, setModal] = useState<{ example: Example | null } | null>(null);
 
   const { data, isLoading } = db.useQuery({
     examples: {
@@ -202,7 +203,7 @@ export default function Examples() {
     <div className={page}>
       <div className={header}>
         <h1>Examples</h1>
-        <button className={newBtn} onClick={() => setCreating(true)}>
+        <button className={newBtn} onClick={() => setModal({ example: null })}>
           New example
         </button>
       </div>
@@ -252,11 +253,11 @@ export default function Examples() {
             <div
               key={e.id}
               className={row}
-              onClick={() => setEditing(e)}
+              onClick={() => setModal({ example: e })}
               role="button"
               tabIndex={0}
               onKeyDown={(ev) => {
-                if (ev.key === "Enter") setEditing(e);
+                if (ev.key === "Enter") setModal({ example: e });
               }}
             >
               <ExampleText
@@ -279,7 +280,7 @@ export default function Examples() {
                       }
                       title={
                         l.spans?.length
-                          ? l.spans.map((s) => s.text).join(" ")
+                          ? spansAnswer(l.spans)
                           : "No blanks picked"
                       }
                     >
@@ -293,11 +294,8 @@ export default function Examples() {
         })}
       </div>
 
-      {creating && (
-        <ExampleModal example={null} onClose={() => setCreating(false)} />
-      )}
-      {editing && (
-        <ExampleModal example={editing} onClose={() => setEditing(null)} />
+      {modal && (
+        <ExampleModal example={modal.example} onClose={() => setModal(null)} />
       )}
     </div>
   );

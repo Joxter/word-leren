@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { css } from "@linaria/core";
 import { db } from "../db";
 import {
@@ -9,6 +9,7 @@ import {
 } from "../lib/examples";
 import ExampleModal from "./ExampleModal";
 import ExampleText from "./ExampleText";
+import SearchPicker from "./SearchPicker";
 
 const section = css`
   display: flex;
@@ -90,6 +91,12 @@ const dangerBtn = css`
   }
 `;
 
+// Lets the picker share the row with the "+ New example" button.
+const pickerFill = css`
+  flex: 1;
+  min-width: 0;
+`;
+
 const emptyText = css`
   font-size: 0.8rem;
   color: #aaa;
@@ -118,64 +125,6 @@ const newBtn = css`
   }
 `;
 
-const searchWrap = css`
-  position: relative;
-  flex: 1;
-  min-width: 0;
-`;
-
-const searchInput = css`
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0.4rem 0.6rem;
-  border: 1px dashed #ccc;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-family: inherit;
-
-  &:focus {
-    outline: none;
-    border-style: solid;
-    border-color: #999;
-  }
-`;
-
-const results = css`
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 5;
-  margin-top: 0.25rem;
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-  max-height: 220px;
-  overflow-y: auto;
-`;
-
-const resultItem = css`
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: none;
-  border-bottom: 1px solid #f2f2f2;
-  padding: 0.45rem 0.6rem;
-  font-size: 0.85rem;
-  font-family: inherit;
-  cursor: pointer;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  &:hover {
-    background: #f5f5f5;
-  }
-`;
-
 /** Search box that attaches an example that already exists. */
 function ExamplePicker({
   exclude,
@@ -184,54 +133,22 @@ function ExamplePicker({
   exclude: Set<string>;
   onPick: (example: Example) => void;
 }) {
-  const [query, setQuery] = useState("");
   // Links come along so the editor opened from here knows about every card the
   // example is already attached to.
   const { data } = db.useQuery({
     examples: { links: { card: {} }, $: { limit: 2000 } },
   });
 
-  const matches = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return [];
-    const examples = (data?.examples ?? []) as Example[];
-    return examples
-      .filter(
-        (e) =>
-          !exclude.has(e.id) &&
-          (e.aText.toLowerCase().includes(q) ||
-            (e.bText ?? "").toLowerCase().includes(q)),
-      )
-      .slice(0, 8);
-  }, [query, data, exclude]);
-
   return (
-    <div className={searchWrap}>
-      <input
-        className={searchInput}
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Attach an existing example…"
-        autoComplete="off"
-      />
-      {matches.length > 0 && (
-        <div className={results}>
-          {matches.map((e) => (
-            <button
-              key={e.id}
-              type="button"
-              className={resultItem}
-              onClick={() => {
-                onPick(e);
-                setQuery("");
-              }}
-            >
-              {e.aText}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
+    <SearchPicker
+      className={pickerFill}
+      items={(data?.examples ?? []) as Example[]}
+      exclude={exclude}
+      fields={(e) => [e.aText, e.bText]}
+      renderItem={(e) => e.aText}
+      placeholder="Attach an existing example…"
+      onPick={onPick}
+    />
   );
 }
 
@@ -257,8 +174,9 @@ export default function CardExamples({ card }: Props) {
   });
   const links = (data?.cards?.[0]?.exampleLinks ?? []) as ExampleLink[];
 
-  const [editing, setEditing] = useState<Example | null>(null);
-  const [creating, setCreating] = useState(false);
+  // One state for both "new" and "edit": the editor is either closed, or open
+  // on an example — `null` inside it meaning one that doesn't exist yet.
+  const [modal, setModal] = useState<{ example: Example | null } | null>(null);
 
   const linkedExampleIds = new Set(
     links.map((l) => l.example?.id).filter((x): x is string => !!x),
@@ -293,7 +211,7 @@ export default function CardExamples({ card }: Props) {
               <button
                 type="button"
                 className={smallBtn}
-                onClick={() => setEditing(example)}
+                onClick={() => setModal({ example })}
               >
                 Edit
               </button>
@@ -313,28 +231,24 @@ export default function CardExamples({ card }: Props) {
         <button
           type="button"
           className={newBtn}
-          onClick={() => setCreating(true)}
+          onClick={() => setModal({ example: null })}
         >
           + New example
         </button>
         {/* Picking an existing example opens the editor with this card seeded
             as a new link, so the blanks get chosen before anything is written
             — an attachment with no blanks isn't a usable exercise. */}
-        <ExamplePicker exclude={linkedExampleIds} onPick={setEditing} />
+        <ExamplePicker
+          exclude={linkedExampleIds}
+          onPick={(example) => setModal({ example })}
+        />
       </div>
 
-      {creating && (
+      {modal && (
         <ExampleModal
-          example={null}
+          example={modal.example}
           card={card}
-          onClose={() => setCreating(false)}
-        />
-      )}
-      {editing && (
-        <ExampleModal
-          example={editing}
-          card={card}
-          onClose={() => setEditing(null)}
+          onClose={() => setModal(null)}
         />
       )}
     </div>

@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import { css } from "@linaria/core";
 
 const linesWrap = css`
@@ -105,49 +104,41 @@ export default function HintLetters({
                 index += word.length;
                 return null;
               }
-              // Runs of shown characters are emitted as one node rather than
-              // one per character: a whole word left visible by `hidden` has to
-              // read as a word, not as spaced-out letters.
-              const nodes: ReactNode[] = [];
-              let run = "";
-              let runStart = 0;
-
-              function flushRun() {
-                if (run === "") return;
-                nodes.push(
-                  <span key={`p${runStart}`} className={plainChar}>
-                    {run}
-                  </span>,
-                );
-                run = "";
-              }
-
+              // Consecutive shown characters merge into one part rather than
+              // staying one per character: a whole word left visible by
+              // `hidden` has to read as a word, not as spaced-out letters.
+              const parts: { text: string; at: number; box: boolean }[] = [];
               for (const ch of word) {
                 const charIndex = index++;
-                if (!isHidden(charIndex) || !HIDDEN_CHAR.test(ch)) {
-                  if (run === "") runStart = charIndex;
-                  run += ch;
-                  continue;
-                }
-                flushRun();
-                const isRevealed = revealed[charIndex] ?? false;
-                nodes.push(
-                  <button
-                    key={charIndex}
-                    type="button"
-                    className={isRevealed ? `${box} ${boxRevealed}` : box}
-                    disabled={isRevealed}
-                    onClick={() => onReveal(charIndex)}
-                  >
-                    {isRevealed ? ch : ""}
-                  </button>,
-                );
+                const boxed = isHidden(charIndex) && HIDDEN_CHAR.test(ch);
+                const last = parts[parts.length - 1];
+                if (!boxed && last && !last.box) last.text += ch;
+                else parts.push({ text: ch, at: charIndex, box: boxed });
               }
-              flushRun();
 
               return (
                 <div key={wi} className={wordGroup}>
-                  {nodes}
+                  {parts.map((part) => {
+                    if (!part.box) {
+                      return (
+                        <span key={part.at} className={plainChar}>
+                          {part.text}
+                        </span>
+                      );
+                    }
+                    const isRevealed = revealed[part.at] ?? false;
+                    return (
+                      <button
+                        key={part.at}
+                        type="button"
+                        className={isRevealed ? `${box} ${boxRevealed}` : box}
+                        disabled={isRevealed}
+                        onClick={() => onReveal(part.at)}
+                      >
+                        {isRevealed ? part.text : ""}
+                      </button>
+                    );
+                  })}
                 </div>
               );
             })}
