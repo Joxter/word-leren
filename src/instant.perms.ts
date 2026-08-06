@@ -18,6 +18,22 @@ const rules = {
       delete: "true",
     },
   },
+  examples: {
+    allow: {
+      view: "true",
+      create: "true",
+      update: "true",
+      delete: "true",
+    },
+  },
+  exampleLinks: {
+    allow: {
+      view: "true",
+      create: "true",
+      update: "true",
+      delete: "true",
+    },
+  },
   lightCards: {
     allow: {
       view: "true",

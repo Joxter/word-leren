@@ -10,12 +10,46 @@ Built for a single user — me.
 
 Bilingual flashcards for three language pairs: NL↔EN, NL↔RU, and EN↔RU. Cards support optional images (paste from clipboard or upload) and an optional side-A audio clip (a path under `public/`, e.g. a dictionary pronunciation); a play button appears wherever the side-A word is shown — the create/edit forms, the card list, the line, and during review. Text fields accept Markdoc (markdown) syntax. Cards are filtered by language pair via tabs. New cards are added to the top of the learning line.
 
+### Examples
+
+Example sentences live as their own entity rather than inside a card's note, so one
+sentence can serve many cards. What makes an attachment useful is *where* in the sentence
+the card appears: an attachment records a list of **spans** into the sentence — several of
+them for separable verbs, so "Ik **sta** elke dag om 7 uur **op**" attaches to *opstaan*
+through two fragments while the same sentence can attach to *elke* through `elke dag`.
+That is what the **Examples** mode on the Learn page blanks out; cards remain the basis of
+the learning line.
+
+- **Examples** (`/examples`) — every sentence, with each attached card's fragments
+  highlighted and a chip per card. A "Needs work" filter finds sentences that are attached
+  to nothing, or attached with no fragments picked yet.
+- **From a card** — the card editor has an Examples section that lists the sentences
+  attached to that card, creates new ones, and attaches existing ones. It writes
+  immediately, independently of the card form's Save.
+- **Picking fragments** — click the words the card covers; for a partial word or a phrase,
+  select the text and press "Blank selection".
+
+Spans are stored as `{ start, end, text }`. Because offsets go stale the moment the
+sentence is edited, the `text` copy is what really identifies a fragment: on every read the
+spans are re-anchored, taking the occurrence nearest the old offset, and only a fragment
+that no longer occurs at all is reported as broken. See `src/lib/examples.ts`.
+
 ### Learning
 
 A deliberately simple, Anki-inspired review mode built around a single global queue — "the line". No timers, days, or sessions, just one dynamic ordered list.
 
 - **Learn** (`/learn`) — see the top card's side B as the prompt, with a hint of the answer's language (e.g. `EN → NL`). Reveal shows side A — its word, audio, and note — then press a **Depth** button to drop the card to the N-th place from the top (`5 / 10 / 50 / 100 / 500 / 1000`). The next card surfaces immediately. `Space`/`Enter` reveals; number keys `1`–`6` pick a depth.
 - **Line** (`/line`) — view the whole line in order and nudge any card up or down by a number of steps, or open any card in the editor via its **Edit** button. A button backfills cards that aren't in the line yet.
+
+Two toggles change what the prompt asks for. **Reverse** shows side A and asks for its
+meaning, the direction reading actually needs. **Examples** prompts with one of the card's
+[example sentences](#examples) instead, with the fragments belonging to that card blanked
+out — Hint spells the gaps out letter by letter in place, Type checks the missing words,
+and Reveal fills them back in and names the card. They are opposite exercises, so turning
+either on switches the other off, and a card with no usable example just falls back to the
+plain prompt. Whichever example came up is recorded on the review, so a card carrying
+several sentences cycles through them least-recently-seen first rather than drilling one.
+Revealing any card also lists its other examples underneath.
 
 Positions use fractional-index ranks, so reordering is a single write — no renumbering. Every action (a `place` from Learn or a `move` from Line) is logged to a history of card events.
 

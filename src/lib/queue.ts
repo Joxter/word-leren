@@ -51,6 +51,12 @@ export type LogEntry = {
   amount: number;
   /** What the user typed as the answer before revealing ("" if they didn't). */
   typed?: string;
+  /**
+   * The `exampleLinks` id this review was answered through, when the card was
+   * shown as a cloze ("" otherwise). Drives which example comes up next — see
+   * `pickClozeLink` in lib/examples.ts.
+   */
+  linkId?: string;
 };
 
 export type CardLog = { [eventId: string]: LogEntry };
@@ -223,12 +229,15 @@ function writeRank(
   kind: string,
   amount: number,
   typed = "",
+  linkId = "",
 ) {
   const eventId = id();
   return db.transact(
     db.tx.cards[cardId].merge({
       queues: { [lineId]: { rank } },
-      log: { [eventId]: { at: Date.now(), lineId, kind, amount, typed } },
+      log: {
+        [eventId]: { at: Date.now(), lineId, kind, amount, typed, linkId },
+      },
     }),
   );
 }
@@ -238,21 +247,21 @@ function writeRank(
  * (1-indexed) and log a "place" event. `members` is the line's cards already
  * sorted top -> bottom (members[0] is the card being placed).
  *
- * When `disperse` is true, the target depth is jittered by up to ±2% so that
- * cards repeatedly dropped to the same depth don't pile up at the exact same
- * spot. The jitter is negligible for shallow depths and grows with depth.
+ * The target depth is always jittered a little, so cards repeatedly dropped to
+ * the same depth don't pile up at the exact same spot. The jitter is negligible
+ * for shallow depths and grows with depth.
  */
 export async function placeAtDepth(
   members: QueuedCard[],
   lineId: string,
   depth: number,
-  disperse = false,
   typed = "",
+  linkId = "",
 ): Promise<void> {
   const current = members[0];
   if (!current) return;
 
-  const target = disperse ? disperseDepth(depth) : depth;
+  const target = disperseDepth(depth);
 
   // members[0] is this card. To land at the `target`-th position after it's
   // removed, we slot it between the cards currently at index target-1 and
@@ -272,7 +281,7 @@ export async function placeAtDepth(
     );
   }
 
-  await writeRank(current.id, lineId, newRank, "place", depth, typed);
+  await writeRank(current.id, lineId, newRank, "place", depth, typed, linkId);
 }
 
 /**

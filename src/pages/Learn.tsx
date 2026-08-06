@@ -18,6 +18,13 @@ import MarkdocContent from "../components/MarkdocContent";
 import PlayButton, { playAudio } from "../components/PlayButton";
 import HintLetters from "../components/HintLetters";
 import VirtualKeyboard from "../components/VirtualKeyboard";
+import ExampleText from "../components/ExampleText";
+import {
+  anchorSpans,
+  pickClozeLink,
+  spansAnswer,
+  type ExampleLink,
+} from "../lib/examples";
 import type { Card, CardData } from "./Cards";
 
 // On touch devices the "Type" mode uses our own on-screen keyboard and a fake
@@ -118,6 +125,43 @@ const frontRow = css`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
+`;
+
+// The cloze prompt. Smaller than `front` because it is a whole sentence, and
+// the same size in every state so revealing doesn't reflow it.
+const clozeSentence = css`
+  font-size: 1.25rem;
+  line-height: 1.6;
+`;
+
+const clozeTranslation = css`
+  font-size: 0.95rem;
+  color: #777;
+`;
+
+// The card's own meaning, alongside its side A after a cloze is revealed.
+const cardMeaning = css`
+  font-size: 1rem;
+  color: #777;
+`;
+
+const exampleList = css`
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  border-top: 1px solid #eee;
+  padding-top: 0.75rem;
+`;
+
+const exampleItem = css`
+  font-size: 0.95rem;
+  line-height: 1.5;
+`;
+
+const exampleTranslation = css`
+  font-size: 0.85rem;
+  color: #888;
 `;
 
 const divider = css`
@@ -328,7 +372,7 @@ const checkToggle = css`
   }
 `;
 
-// The "Reverse" / "Disperse" pair, sized to match the line selector opposite.
+// The "Reverse" / "Examples" pair, sized to match the line selector opposite.
 const topBarToggles = css`
   display: flex;
   align-items: center;
@@ -367,10 +411,11 @@ interface LearnCard {
   image?: { id: string; url: string; path: string };
   queues?: { [lineId: string]: { rank: string } };
   log?: CardLog;
+  exampleLinks?: ExampleLink[];
 }
 
-const DISPERSE_KEY = "word-leren:disperse";
 const REVERSE_KEY = "word-leren:reverse";
+const EXAMPLES_KEY = "word-leren:examples";
 
 export default function Learn() {
   const [revealed, setRevealed] = useState(false);
@@ -380,34 +425,54 @@ export default function Learn() {
   const [hintLetters, setHintLetters] = useState<boolean[]>([]);
   const [typing, setTyping] = useState(false);
   const [typed, setTyped] = useState("");
-  const [disperse, setDisperse] = useState(
-    () => localStorage.getItem(DISPERSE_KEY) === "1",
-  );
   // "Reverse" swaps which side is the prompt: normally you see side B and
   // recall side A (produce the Dutch word); reversed you see side A and recall
   // its meaning, which is the direction reading actually asks of you.
   const [reverse, setReverse] = useState(
     () => localStorage.getItem(REVERSE_KEY) === "1",
   );
+  // "Examples" prompts with one of the card's example sentences, the fragments
+  // that belong to the card blanked out, instead of its side B. Cards with no
+  // usable example fall back to the plain prompt, so the line is unaffected.
+  const [examplesMode, setExamplesMode] = useState(
+    () => localStorage.getItem(EXAMPLES_KEY) === "1",
+  );
 
-  function toggleDisperse() {
-    setDisperse((prev) => {
-      const next = !prev;
-      localStorage.setItem(DISPERSE_KEY, next ? "1" : "0");
-      return next;
-    });
+  // Per-card scratch state: cleared whenever the prompt changes out from under
+  // the user, whether that's a new card or a mode flip.
+  function resetCardState() {
+    setRevealed(false);
+    setHintOpen(false);
+    setHintLetters([]);
+    setTyping(false);
+    setTyped("");
   }
 
+  // Reverse and Examples are opposite exercises — one asks for the meaning, the
+  // other for production — so turning either on switches the other off.
   function toggleReverse() {
     setReverse((prev) => {
       const next = !prev;
       localStorage.setItem(REVERSE_KEY, next ? "1" : "0");
+      if (next) {
+        setExamplesMode(false);
+        localStorage.setItem(EXAMPLES_KEY, "0");
+      }
       // The card on screen would flip mid-answer otherwise.
-      setRevealed(false);
-      setHintOpen(false);
-      setHintLetters([]);
-      setTyping(false);
-      setTyped("");
+      resetCardState();
+      return next;
+    });
+  }
+
+  function toggleExamples() {
+    setExamplesMode((prev) => {
+      const next = !prev;
+      localStorage.setItem(EXAMPLES_KEY, next ? "1" : "0");
+      if (next) {
+        setReverse(false);
+        localStorage.setItem(REVERSE_KEY, "0");
+      }
+      resetCardState();
       return next;
     });
   }
@@ -416,28 +481,43 @@ export default function Learn() {
   const [activeLine, setActiveLine] = useActiveLine(lines);
 
   const { data, isLoading } = db.useQuery({
-    cards: { image: {}, $: { limit: 5000 } },
+    cards: { image: {}, exampleLinks: { example: {} }, $: { limit: 5000 } },
   });
 
   const cards = (data?.cards ?? []) as LearnCard[];
   const members = activeLine ? sortLine(cards, activeLine) : [];
   const current = members[0];
 
+  // The cloze this card is being asked as, or null for the plain prompt. Spans
+  // are re-anchored against the sentence as it reads now, and a link whose
+  // fragments have all gone missing falls back to the plain prompt rather than
+  // showing a sentence with nothing blanked.
+  const clozeLink =
+    examplesMode && !reverse && current
+      ? pickClozeLink(current.exampleLinks ?? [], current.log)
+      : undefined;
+  const clozeSpans = clozeLink?.example
+    ? anchorSpans(clozeLink.example.aText, clozeLink.spans ?? []).spans
+    : [];
+  const cloze =
+    clozeLink?.example && clozeSpans.length > 0
+      ? { link: clozeLink, example: clozeLink.example, spans: clozeSpans }
+      : null;
+
   async function handleDepth(depth: number) {
     if (!current || !activeLine || busy) return;
     setBusy(true);
     const answer = typed.trim();
+    // Read before the reset below, so the event records the example that was
+    // actually on screen.
+    const linkId = cloze?.link.id ?? "";
     // InstantDB applies the transaction to the local cache optimistically, so
     // `current` can already be the next card by the time this function
     // resumes after the await below. Flip these synchronously, before the
     // await, so that render never shows the next card as already revealed.
-    setRevealed(false);
-    setHintOpen(false);
-    setHintLetters([]);
-    setTyping(false);
-    setTyped("");
+    resetCardState();
     try {
-      await placeAtDepth(members, activeLine, depth, disperse, answer);
+      await placeAtDepth(members, activeLine, depth, answer, linkId);
     } finally {
       setBusy(false);
     }
@@ -456,11 +536,7 @@ export default function Learn() {
     deleteCard(cardId);
     setModalCard(null);
     // The deleted card was the top one; surface the next card face-down.
-    setRevealed(false);
-    setHintOpen(false);
-    setHintLetters([]);
-    setTyping(false);
-    setTyped("");
+    resetCardState();
   }
 
   // Keyboard: space/enter reveals, "h" opens the hint, "t" opens the answer
@@ -492,7 +568,7 @@ export default function Learn() {
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [revealed, current, busy, disperse, reverse]);
+  }, [revealed, current, busy, reverse, examplesMode, cloze?.link.id]);
 
   // Hint boxes and the typed answer are per-card scratch state — clear them
   // whenever the top card changes (depth placed, deleted, or swapped in).
@@ -532,10 +608,14 @@ export default function Learn() {
         </label>
         <label
           className={checkToggle}
-          title="Jitter the chosen depth by up to ±4%, so cards dropped to the same depth don't pile up"
+          title="Prompt with an example sentence with this card's words blanked out, where there is one"
         >
-          <input type="checkbox" checked={disperse} onChange={toggleDisperse} />
-          Disperse
+          <input
+            type="checkbox"
+            checked={examplesMode}
+            onChange={toggleExamples}
+          />
+          Examples
         </label>
       </div>
       <LineSelector lines={lines} value={activeLine} onChange={setActiveLine} />
@@ -563,8 +643,30 @@ export default function Learn() {
   // reveal, matching the forward direction.
   const promptText = reverse ? c.aCard : c.bCard;
   const promptLang = reverse ? c.aLang : c.bLang;
-  const answerText = reverse ? c.bCard : c.aCard;
-  const answerLang = reverse ? c.bLang : c.aLang;
+  // In a cloze the answer is the blanked fragments, joined the way they read in
+  // the sentence — that is what Type checks and what the hint boxes spell out.
+  const answerText = cloze
+    ? spansAnswer(cloze.spans)
+    : reverse
+      ? c.bCard
+      : c.aCard;
+  const answerLang = cloze ? cloze.example.aLang : reverse ? c.bLang : c.aLang;
+
+  // Everything else attached to this card, shown on reveal as extra context.
+  // flatMap rather than filter so the example narrows to non-null.
+  const otherExamples = (c.exampleLinks ?? []).flatMap((l) =>
+    l.example && l.id !== cloze?.link.id
+      ? [{ id: l.id, example: l.example, spans: l.spans ?? [] }]
+      : [],
+  );
+
+  function revealHintLetter(idx: number) {
+    setHintLetters((prev) => {
+      const next = [...prev];
+      next[idx] = true;
+      return next;
+    });
+  }
 
   return (
     <div className={page}>
@@ -573,8 +675,12 @@ export default function Learn() {
         <div className={sideBlock}>
           <div className={cardTop}>
             <div className={langRow}>
-              <span className={langTag}>{promptLang}</span>
-              <span className={langHint}>→ {answerLang}</span>
+              <span className={langTag}>
+                {cloze ? cloze.example.aLang : promptLang}
+              </span>
+              <span className={langHint}>
+                {cloze ? "fill the gaps" : `→ ${answerLang}`}
+              </span>
             </div>
             {/* Always in the flow, so revealing doesn't grow this row and
                 nudge the prompt down — just invisible until then. */}
@@ -587,27 +693,53 @@ export default function Learn() {
               Edit card
             </button>
           </div>
-          <div className={frontRow}>
-            <div className={front}>{promptText}</div>
-            {reverse && revealed && c.audio && (
-              <PlayButton path={c.audio} small />
-            )}
-          </div>
+          {cloze ? (
+            <>
+              {/* The sentence is the prompt, so the hint has to render in
+                  place rather than below it: blanks become letter boxes and
+                  the rest of the sentence stays readable throughout. */}
+              <div className={clozeSentence}>
+                {revealed ? (
+                  <ExampleText text={cloze.example.aText} spans={cloze.spans} />
+                ) : hintOpen && !(typing && COARSE_POINTER) ? (
+                  <HintLetters
+                    text={cloze.example.aText}
+                    hidden={cloze.spans}
+                    revealed={hintLetters}
+                    onReveal={revealHintLetter}
+                  />
+                ) : (
+                  <ExampleText
+                    text={cloze.example.aText}
+                    spans={cloze.spans}
+                    mode="blank"
+                  />
+                )}
+              </div>
+              {/* Held back until reveal: the translation names the missing
+                  words often enough that showing it up front answers the
+                  exercise. */}
+              {revealed && cloze.example.bText?.trim() && (
+                <div className={clozeTranslation}>{cloze.example.bText}</div>
+              )}
+            </>
+          ) : (
+            <div className={frontRow}>
+              <div className={front}>{promptText}</div>
+              {reverse && revealed && c.audio && (
+                <PlayButton path={c.audio} small />
+              )}
+            </div>
+          )}
         </div>
 
-        {!revealed && hintOpen && !(typing && COARSE_POINTER) && (
+        {!cloze && !revealed && hintOpen && !(typing && COARSE_POINTER) && (
           <>
             <hr className={divider} />
             <HintLetters
               text={answerText}
               revealed={hintLetters}
-              onReveal={(idx) =>
-                setHintLetters((prev) => {
-                  const next = [...prev];
-                  next[idx] = true;
-                  return next;
-                })
-              }
+              onReveal={revealHintLetter}
             />
           </>
         )}
@@ -636,13 +768,40 @@ export default function Learn() {
                 </div>
               </div>
             )}
-            <div className={frontRow}>
-              <div className={front}>{answerText}</div>
-              {!reverse && c.audio && <PlayButton path={c.audio} small />}
-            </div>
+            {cloze ? (
+              // The sentence above already spells the answer out in place, so
+              // what this card actually is gets its own line.
+              <div className={frontRow}>
+                <div className={front}>{c.aCard}</div>
+                {c.audio && <PlayButton path={c.audio} small />}
+                <span className={cardMeaning}>{c.bCard}</span>
+              </div>
+            ) : (
+              <div className={frontRow}>
+                <div className={front}>{answerText}</div>
+                {!reverse && c.audio && <PlayButton path={c.audio} small />}
+              </div>
+            )}
+            {cloze?.example.note?.trim() && (
+              <MarkdocContent content={cloze.example.note} />
+            )}
             {c.note?.trim() && <MarkdocContent content={c.note} />}
             {c.image?.url && (
               <img className={cardImg} src={c.image.url} alt="" />
+            )}
+            {otherExamples.length > 0 && (
+              <div className={exampleList}>
+                {otherExamples.map((l) => (
+                  <div key={l.id} className={exampleItem}>
+                    <ExampleText text={l.example.aText} spans={l.spans} />
+                    {l.example.bText?.trim() && (
+                      <div className={exampleTranslation}>
+                        {l.example.bText}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
             )}
           </>
         )}
@@ -681,7 +840,11 @@ export default function Learn() {
                       setRevealed(true);
                     }
                   }}
-                  placeholder={`Type the ${answerLang} answer…`}
+                  placeholder={
+                    cloze
+                      ? "Type the missing words…"
+                      : `Type the ${answerLang} answer…`
+                  }
                 />
               )
             ) : (

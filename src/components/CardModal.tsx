@@ -4,6 +4,7 @@ import { css } from "@linaria/core";
 import type { Card, CardData } from "../pages/Cards";
 import { useLines } from "../lib/lines";
 import { enqueueTop, removeFromLine } from "../lib/queue";
+import CardExamples from "./CardExamples";
 import LineCheckboxes from "./LineCheckboxes";
 import MarkdocField from "./MarkdocField";
 import PlayButton from "./PlayButton";
@@ -449,6 +450,18 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
               label="Note"
               value={form.note}
               onChange={(v) => set("note", v)}
+            />
+
+            {/* Saves on its own — see CardExamples. Fed the edited sides so
+                the link rows label this card the way it currently reads. */}
+            <CardExamples
+              card={{
+                id: card.id,
+                aLang: form.aLang,
+                bLang: form.bLang,
+                aCard: form.aCard,
+                bCard: form.bCard,
+              }}
             />
 
             <div className={fieldGroup}>

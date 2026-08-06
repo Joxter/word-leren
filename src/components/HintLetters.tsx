@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { css } from "@linaria/core";
 
 const linesWrap = css`
@@ -63,16 +64,33 @@ interface Props {
   text: string;
   revealed: boolean[];
   onReveal: (index: number) => void;
+  /**
+   * Ranges of `text` to hide, as `{ start, end }` with `end` exclusive.
+   * Defaults to the whole string. Anything outside them reads as plain text,
+   * which is what turns this into a cloze: the sentence stays legible and only
+   * the fragments in `hidden` become boxes.
+   */
+  hidden?: { start: number; end: number }[];
 }
 
 /**
- * One box per letter/digit of `text`, hiding it until clicked. Spaces and
- * punctuation are shown as-is (nothing to guess there). Each character's index
- * is its position in the flattened string, so `revealed` stays valid across
- * re-renders as long as the card doesn't change.
+ * One box per letter/digit of the hidden part of `text`, revealed on click.
+ * Spaces and punctuation are shown as-is (nothing to guess there). Each
+ * character's index is its position in the flattened string, so `revealed`
+ * stays valid across re-renders as long as the card doesn't change.
  */
-export default function HintLetters({ text, revealed, onReveal }: Props) {
+export default function HintLetters({
+  text,
+  revealed,
+  onReveal,
+  hidden,
+}: Props) {
   const lines = text.split("\n");
+
+  function isHidden(charIndex: number): boolean {
+    if (!hidden) return true;
+    return hidden.some((h) => charIndex >= h.start && charIndex < h.end);
+  }
 
   let index = 0;
 
@@ -87,30 +105,49 @@ export default function HintLetters({ text, revealed, onReveal }: Props) {
                 index += word.length;
                 return null;
               }
+              // Runs of shown characters are emitted as one node rather than
+              // one per character: a whole word left visible by `hidden` has to
+              // read as a word, not as spaced-out letters.
+              const nodes: ReactNode[] = [];
+              let run = "";
+              let runStart = 0;
+
+              function flushRun() {
+                if (run === "") return;
+                nodes.push(
+                  <span key={`p${runStart}`} className={plainChar}>
+                    {run}
+                  </span>,
+                );
+                run = "";
+              }
+
+              for (const ch of word) {
+                const charIndex = index++;
+                if (!isHidden(charIndex) || !HIDDEN_CHAR.test(ch)) {
+                  if (run === "") runStart = charIndex;
+                  run += ch;
+                  continue;
+                }
+                flushRun();
+                const isRevealed = revealed[charIndex] ?? false;
+                nodes.push(
+                  <button
+                    key={charIndex}
+                    type="button"
+                    className={isRevealed ? `${box} ${boxRevealed}` : box}
+                    disabled={isRevealed}
+                    onClick={() => onReveal(charIndex)}
+                  >
+                    {isRevealed ? ch : ""}
+                  </button>,
+                );
+              }
+              flushRun();
+
               return (
                 <div key={wi} className={wordGroup}>
-                  {[...word].map((ch) => {
-                    const charIndex = index++;
-                    if (!HIDDEN_CHAR.test(ch)) {
-                      return (
-                        <span key={charIndex} className={plainChar}>
-                          {ch}
-                        </span>
-                      );
-                    }
-                    const isRevealed = revealed[charIndex] ?? false;
-                    return (
-                      <button
-                        key={charIndex}
-                        type="button"
-                        className={isRevealed ? `${box} ${boxRevealed}` : box}
-                        disabled={isRevealed}
-                        onClick={() => onReveal(charIndex)}
-                      >
-                        {isRevealed ? ch : ""}
-                      </button>
-                    );
-                  })}
+                  {nodes}
                 </div>
               );
             })}

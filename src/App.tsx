@@ -8,6 +8,7 @@ import GrammarPage from "./pages/Grammar";
 import GrammarDetailPage from "./pages/GrammarDetail";
 import GrammarEditPage from "./pages/GrammarEdit";
 import DictionaryPage from "./pages/Dictionary";
+import ExamplesPage from "./pages/Examples";
 
 // The fades must sit on a non-scrolling wrapper: overlaying the tabs requires
 // them to be painted above the content, which a background on the scroll
@@ -129,6 +130,7 @@ function Nav() {
         <NavLink href="/">Cards</NavLink>
         <NavLink href="/dictionary">Dictionary</NavLink>
         <NavLink href="/learn">Learn</NavLink>
+        <NavLink href="/examples">Examples</NavLink>
         <NavLink href="/grammar">Grammar</NavLink>
         <NavLink href="/line">Line</NavLink>
       </nav>
@@ -145,6 +147,7 @@ function Layout() {
         <Route path="/learn" component={LearnPage} />
         <Route path="/line" component={LinePage} />
         <Route path="/dictionary" component={DictionaryPage} />
+        <Route path="/examples" component={ExamplesPage} />
         <Route path="/grammar" component={GrammarPage} />
         <Route path="/grammar/new" component={GrammarEditPage} />
         <Route path="/grammar/:id/edit" component={GrammarEditPage} />

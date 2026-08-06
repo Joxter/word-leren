@@ -34,6 +34,27 @@ const _schema = i.schema({
       name: i.string(),
       createdAt: i.number().indexed(),
     }),
+    // A sentence example. Which fragments are hidden is *not* stored here: it
+    // belongs to the (example, card) pair and lives on `exampleLinks`, so one
+    // example can serve several cards with different blanks.
+    examples: i.entity({
+      aLang: i.string(),
+      bLang: i.string(),
+      aText: i.string(),
+      bText: i.string().optional(),
+      note: i.string().optional(),
+      createdAt: i.number().indexed(),
+    }),
+    // Joins one card to one example and records which fragments of the
+    // example's side A belong to that card — several of them for separable
+    // verbs ("ik STA elke dag OP"). Offsets index into `examples.aText`; the
+    // `text` copy lets a span be re-anchored after the sentence is edited (see
+    // `anchorSpans` in lib/examples.ts). A pair may be linked more than once,
+    // which gives two cloze variants of the same sentence for the same card.
+    exampleLinks: i.entity({
+      spans: i.json<{ start: number; end: number; text: string }[]>(),
+      createdAt: i.number().indexed(),
+    }),
     lightCards: i.entity({
       text: i.string(),
     }),
@@ -88,6 +109,32 @@ const _schema = i.schema({
         on: "cards",
         has: "one",
         label: "queueEntry",
+      },
+    },
+    exampleLinkCard: {
+      forward: {
+        on: "exampleLinks",
+        has: "one",
+        label: "card",
+        onDelete: "cascade",
+      },
+      reverse: {
+        on: "cards",
+        has: "many",
+        label: "exampleLinks",
+      },
+    },
+    exampleLinkExample: {
+      forward: {
+        on: "exampleLinks",
+        has: "one",
+        label: "example",
+        onDelete: "cascade",
+      },
+      reverse: {
+        on: "examples",
+        has: "many",
+        label: "links",
       },
     },
     cardEventCard: {

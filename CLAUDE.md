@@ -20,6 +20,14 @@ and the data model — this file only covers build/config gotchas that aren't ob
 - **`tsconfig.node.json`** needs `"composite": true` (not `"noEmit": true`) for project references.
 - **InstantDB** is the backend (real-time data + file storage); app ID comes from `VITE_INSTANT_APP_ID`.
 
+## Examples
+
+`examples` are sentences shared by many cards. The attachment carries data (which
+fragments of the sentence belong to that card), and **InstantDB links can't carry
+attributes** — hence the `exampleLinks` join entity instead of a plain many-to-many.
+Span offsets index into `examples.aText` and go stale on any edit, so every read runs
+`anchorSpans` (in `src/lib/examples.ts`) to re-attach them by their stored `text`.
+
 ## Learning "line"
 
 One global ordered queue, no timers/sessions. Ranks use `fractional-indexing`; all queue
