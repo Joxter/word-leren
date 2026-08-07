@@ -20,14 +20,24 @@ through two fragments while the same sentence can attach to *elke* through `elke
 That is what the **Examples** mode on the Learn page blanks out; cards remain the basis of
 the learning line.
 
-- **Examples** (`/examples`) — every sentence, with each attached card's fragments
-  highlighted and a chip per card. A "Needs work" filter finds sentences that are attached
-  to nothing, or attached with no fragments picked yet.
+- **Examples** (`/examples`) — a wide two-column page. On the left, every sentence as a
+  table of sentence and translation, with all the linked fragments highlighted; a "Needs
+  work" filter (and an amber edge on the row) finds sentences attached to nothing, or
+  attached with no fragments picked yet. On the right, an editor for whichever row is
+  selected — translation, which cards claim which words, and a note. It has no Save button:
+  the text fields are written after a short pause and every link change goes out at once.
+- **Adding in bulk** — the search box doubles as the way in. Type or paste a block of text
+  and, when nothing matches it, the page offers the sentences it found (split on `.?!…` and
+  line breaks) as one editable input each, to create as a batch. They come out bare — no
+  translation, no cards — to be filled in from the editor afterwards.
 - **From a card** — the card editor has an Examples section that lists the sentences
   attached to that card, creates new ones, and attaches existing ones. It writes
   immediately, independently of the card form's Save.
 - **Picking fragments** — click the words the card covers; for a partial word or a phrase,
-  select the text and press "Blank selection".
+  select the text and press "Blank selection". The sentence is shown once, not once per
+  card: clicks assign to the card selected in the list above it, other cards' fragments
+  stay visible in a second colour, and hovering either a fragment or a card lights up the
+  other end of the pairing.
 
 Spans are stored as `{ start, end, text }`. Because offsets go stale the moment the
 sentence is edited, the `text` copy is what really identifies a fragment: on every read the

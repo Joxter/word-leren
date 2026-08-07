@@ -180,6 +180,22 @@ export function spansAnswer(spans: Span[]): string {
   return spans.map((s) => s.text).join(" ");
 }
 
+/**
+ * Cut a pasted blob into one sentence per entry, so a page of text can be
+ * turned into examples in one go. Splits on sentence-ending punctuation (the
+ * terminator stays on the sentence it ends) and on line breaks, since pasted
+ * lists often carry no punctuation at all. Nothing here understands
+ * abbreviations — the add form is a list of editable inputs precisely so a bad
+ * split can be fixed by hand.
+ */
+export function splitSentences(text: string): string[] {
+  return text
+    .split(/\r?\n/)
+    .flatMap((line) => line.match(/[^.!?…]+[.!?…]*/gu) ?? [])
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
 export interface Token {
   start: number;
   end: number;
@@ -329,6 +345,94 @@ export async function saveExampleWithLinks(
 
   await db.transact(ops);
   return exId;
+}
+
+/**
+ * Create one bare example per sentence — no translation, no card links. The
+ * bulk entry point: the point of it is to get a page of text into the list
+ * quickly, and the translating and linking happens later, one sentence at a
+ * time. `createdAt` counts down so that under the list's newest-first order the
+ * batch reads in the order it was pasted. Returns the new ids, in that order.
+ */
+export async function createExamples(
+  texts: string[],
+  aLang: string,
+  bLang: string,
+): Promise<string[]> {
+  const now = Date.now();
+  const ids = texts.map(() => id());
+  await db.transact(
+    texts.map((aText, i) =>
+      db.tx.examples[ids[i]].update({
+        aLang,
+        bLang,
+        aText,
+        createdAt: now + (texts.length - 1 - i),
+      }),
+    ),
+  );
+  return ids;
+}
+
+/**
+ * Attach an example to a card with no fragments picked yet, returning the new
+ * link's id straight away — the caller makes it the row being edited, and
+ * InstantDB's optimistic write means it is on screen before the server answers.
+ */
+export function createExampleLink(exampleId: string, cardId: string): string {
+  const linkId = id();
+  db.transact(
+    db.tx.exampleLinks[linkId]
+      .update({ spans: [], createdAt: Date.now() })
+      .link({ card: cardId, example: exampleId }),
+  );
+  return linkId;
+}
+
+/**
+ * The ops that write `data` over `example`, or none at all if nothing changed.
+ * When the sentence itself moved, every link's spans are re-anchored in the
+ * same list — the same rule `saveExampleWithLinks` applies on the modal's path,
+ * kept here so the panel that saves as you type can't state it differently.
+ */
+export function exampleUpdateOps(example: Example, data: ExampleData): TxOp[] {
+  if (
+    data.aText === example.aText &&
+    data.bText === (example.bText ?? "") &&
+    data.note === (example.note ?? "") &&
+    data.aLang === example.aLang &&
+    data.bLang === example.bLang
+  )
+    return [];
+
+  const ops: TxOp[] = [db.tx.examples[example.id].update(data)];
+  if (data.aText !== example.aText) {
+    for (const link of example.links ?? []) {
+      ops.push(
+        db.tx.exampleLinks[link.id].update({
+          spans: anchorSpans(data.aText, link.spans ?? []).spans,
+        }),
+      );
+    }
+  }
+  return ops;
+}
+
+/**
+ * Save one link's fragments, carrying any edit to the example still sitting in
+ * the form along in the same transaction — offsets and the sentence they index
+ * into must never be written a beat apart.
+ */
+export function saveLinkSpans(
+  example: Example,
+  data: ExampleData,
+  linkId: string,
+  spans: Span[],
+): Promise<unknown> {
+  return db.transact([
+    ...exampleUpdateOps(example, data),
+    db.tx.exampleLinks[linkId].update({ spans }),
+  ]);
 }
 
 /** Delete an example. Its links go with it (`onDelete: "cascade"`). */

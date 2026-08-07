@@ -2,7 +2,6 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import { css } from "@linaria/core";
 import { id } from "@instantdb/react";
-import { db } from "../db";
 import {
   anchorSpans,
   deleteExample,
@@ -15,9 +14,9 @@ import {
   type PendingLink,
   type Span,
 } from "../lib/examples";
+import CardPicker from "./CardPicker";
 import MarkdocField from "./MarkdocField";
-import SearchPicker from "./SearchPicker";
-import SpanPicker from "./SpanPicker";
+import SpanBoard from "./SpanBoard";
 
 const A_LANGS = ["NL", "EN"] as const;
 const B_LANGS = ["EN", "RU"] as const;
@@ -316,33 +315,6 @@ const deleteBtn = css`
   }
 `;
 
-/** Search box that adds a card to the link list. */
-function CardPicker({
-  exclude,
-  onPick,
-}: {
-  exclude: Set<string>;
-  onPick: (card: LinkedCard) => void;
-}) {
-  const { data } = db.useQuery({ cards: { $: { limit: 5000 } } });
-
-  return (
-    <SearchPicker
-      items={(data?.cards ?? []) as LinkedCard[]}
-      exclude={exclude}
-      fields={(c) => [c.aCard, c.bCard]}
-      renderItem={(c) => (
-        <>
-          {c.aCard}
-          <small>{c.bCard}</small>
-        </>
-      )}
-      placeholder="+ Attach a card — search by either side…"
-      onPick={onPick}
-    />
-  );
-}
-
 interface Props {
   /** The example to edit, or null to create a new one. */
   example: Example | null;
@@ -553,9 +525,12 @@ export default function ExampleModal({
                           {anchored.broken.length === 1 ? "it" : "them"}.
                         </div>
                       )}
-                      <SpanPicker
+                      {/* One card per row here, so the board carries a single
+                          link and there is no pairing to highlight. */}
+                      <SpanBoard
                         text={form.aText}
-                        spans={anchored.spans}
+                        links={[{ id: link.id, spans: anchored.spans }]}
+                        activeId={link.id}
                         onChange={(spans) => setSpans(link.id, spans)}
                       />
                     </div>
