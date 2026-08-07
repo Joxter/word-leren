@@ -10,6 +10,17 @@ Built for a single user — me.
 
 Bilingual flashcards for three language pairs: NL↔EN, NL↔RU, and EN↔RU. Cards support optional images (paste from clipboard or upload) and an optional side-A audio clip (a path under `public/`, e.g. a dictionary pronunciation); a play button appears wherever the side-A word is shown — the create/edit forms, the card list, the line, and during review. Text fields accept Markdoc (markdown) syntax. Cards are filtered by language pair via tabs. New cards are added to the top of the learning line.
 
+### Search
+
+Every box that looks something up — the dictionary, the card list, and the pickers that
+attach a card or an example — ranks rather than merely filters, because only the first
+handful of results are ever on screen. Two rules, in order: a hit in a more important
+field beats a hit in a less important one (a card's own word, then its translation, then
+its note), and within a field exact beats prefix beats substring. Ties go to the shorter
+word, then alphabetically, so "lopen" comes up before "lopendeband". `src/lib/search.ts`
+holds it; `searchDictionary` picks its own tiers on top of the same primitive so that an
+exactly-matched verb form can outrank a translation.
+
 ### Examples
 
 Example sentences live as their own entity rather than inside a card's note, so one
@@ -49,7 +60,7 @@ that no longer occurs at all is reported as broken. See `src/lib/examples.ts`.
 A deliberately simple, Anki-inspired review mode built around a single global queue — "the line". No timers, days, or sessions, just one dynamic ordered list.
 
 - **Learn** (`/learn`) — see the top card's side B as the prompt, with a hint of the answer's language (e.g. `EN → NL`). Reveal shows side A — its word, audio, and note — then press a **Depth** button to drop the card to the N-th place from the top (`5 / 10 / 50 / 100 / 500 / 1000`). The next card surfaces immediately. `Space`/`Enter` reveals; number keys `1`–`6` pick a depth.
-- **Line** (`/line`) — view the whole line in order and nudge any card up or down by a number of steps, or open any card in the editor via its **Edit** button. A button backfills cards that aren't in the line yet.
+- **Line** (`/line`) — view the whole line in order and nudge any card up or down by a number of steps, or open any card in the editor via its **Edit** button. Cards join a line when they are created, not from here.
 
 Two toggles change what the prompt asks for. **Reverse** shows side A and asks for its
 meaning, the direction reading actually needs. **Examples** prompts with one of the card's

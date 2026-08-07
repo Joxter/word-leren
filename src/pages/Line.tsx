@@ -3,7 +3,6 @@ import { css } from "@linaria/core";
 import { db } from "../db";
 import {
   MOVE_STEPS,
-  enqueueBottom,
   safeKeyBetween,
   moveToRank,
   moveToTop,
@@ -407,59 +406,6 @@ const stepBtn = css`
   }
 `;
 
-const addPanel = css`
-  margin-top: 1.5rem;
-  border-top: 1px solid #eee;
-  padding-top: 1rem;
-`;
-
-const addPanelTitle = css`
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #555;
-  margin-bottom: 0.75rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-const search = css`
-  width: 100%;
-  padding: 0.5rem 0.6rem;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  margin-bottom: 0.5rem;
-
-  &:focus {
-    outline: none;
-    border-color: #999;
-  }
-`;
-
-const addRow = css`
-  display: grid;
-  grid-template-columns: 1fr 1fr auto;
-  gap: 0.75rem;
-  align-items: center;
-  padding: 0.4rem 0.75rem;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  background: #fff;
-
-  /* On phones: A over B, with the add button on the right spanning both. */
-  @media (max-width: 540px) {
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 0.25rem 0.75rem;
-    padding: 0.5rem 0.75rem;
-
-    & > button {
-      grid-column: 2;
-      grid-row: 1 / 3;
-    }
-  }
-`;
-
 interface LineCard {
   id: string;
   aLang: string;
@@ -476,9 +422,6 @@ interface LineCard {
 export default function Line() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [modalCard, setModalCard] = useState<Card | null>(null);
-  const [busy, setBusy] = useState(false);
-  const [addFilter, setAddFilter] = useState("");
-  const [showAdd, setShowAdd] = useState(false);
   const [sortBy, setSortBy] = useState<"queue" | "seen">("queue");
   // Moving a card reorders the list, which otherwise resets the window scroll.
   // We stash the scroll position on a move and restore it once the new order
@@ -519,17 +462,6 @@ export default function Line() {
       scrollTarget.current = null;
     }
   }, [orderKey]);
-  const notInLine = activeLine
-    ? cards.filter((c) => rankInLine(c, activeLine) === undefined)
-    : [];
-  const filteredNotIn = notInLine.filter((c) => {
-    if (!addFilter.trim()) return true;
-    const q = addFilter.toLowerCase();
-    return (
-      c.aCard.toLowerCase().includes(q) || c.bCard.toLowerCase().includes(q)
-    );
-  });
-
   async function handleMove(cardId: string, steps: number) {
     if (!activeLine) return;
     const index = members.findIndex((c) => c.id === cardId);
@@ -557,18 +489,6 @@ export default function Line() {
     if (index <= 0) return; // not found, or already at the top
     scrollTarget.current = window.scrollY;
     await moveToTop(members, activeLine, cardId);
-  }
-
-  async function handleAdd(cardId: string) {
-    if (!activeLine || busy) return;
-    setBusy(true);
-    try {
-      const bottom = members[members.length - 1];
-      const bottomRank = bottom ? rankInLine(bottom, activeLine)! : null;
-      await enqueueBottom(activeLine, [cardId], bottomRank);
-    } finally {
-      setBusy(false);
-    }
   }
 
   async function handleRemove(cardId: string) {
@@ -667,10 +587,6 @@ export default function Line() {
           onClick={handleDeleteLine}
         >
           Delete
-        </button>
-        <span className={spacer} />
-        <button className={smallBtn} onClick={() => setShowAdd((s) => !s)}>
-          {showAdd ? "Done adding" : "Add cards"}
         </button>
       </div>
 
@@ -840,41 +756,6 @@ export default function Line() {
             })}
           </div>
         </>
-      )}
-
-      {showAdd && (
-        <div className={addPanel}>
-          <div className={addPanelTitle}>
-            Add cards to this line
-            <span style={{ color: "#aaa", fontWeight: 400 }}>
-              ({notInLine.length} not in line)
-            </span>
-          </div>
-          <input
-            className={search}
-            placeholder="Filter cards…"
-            value={addFilter}
-            onChange={(ev) => setAddFilter(ev.target.value)}
-          />
-          <div className={list}>
-            {filteredNotIn.slice(0, 100).map((c) => (
-              <div key={c.id} className={addRow}>
-                <div className={aCell}>
-                  <span className={cellText}>{c.aCard}</span>
-                  {c.audio && <PlayButton path={c.audio} small />}
-                </div>
-                <span className={cellText}>{c.bCard}</span>
-                <button
-                  className={rowBtn}
-                  disabled={busy}
-                  onClick={() => handleAdd(c.id)}
-                >
-                  + Add
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
       )}
 
       {modalCard !== null && (

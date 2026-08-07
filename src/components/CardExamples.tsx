@@ -144,7 +144,7 @@ function ExamplePicker({
       className={pickerFill}
       items={(data?.examples ?? []) as Example[]}
       exclude={exclude}
-      fields={(e) => [e.aText, e.bText]}
+      fields={(e) => [e.aText, e.bText, e.note]}
       renderItem={(e) => e.aText}
       placeholder="Attach an existing example…"
       onPick={onPick}

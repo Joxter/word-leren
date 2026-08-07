@@ -11,6 +11,7 @@ import {
   type DictEntry,
 } from "../lib/dictionary";
 import { mergeContained } from "../lib/translations";
+import { rankMatches } from "../lib/search";
 import CardModal from "../components/CardModal";
 import PlayButton from "../components/PlayButton";
 import { saveCard, deleteCard } from "../lib/cards";
@@ -19,45 +20,17 @@ import type { Card, CardData } from "./Cards";
 /** A card as loaded here — the queue helpers also want its `log`. */
 type CardWithLog = Card & { log?: CardLog };
 
-/**
- * Search the user's own cards by both sides and the note. Same tiering as
- * `searchDictionary`: exact > prefix > substring, side A before side B before
- * the note; ties break on the shorter side A.
- */
+/** Search the user's own cards: side A, then side B, then the note. */
 function searchCards(
   cards: CardWithLog[],
   rawQuery: string,
   limit = 20,
 ): CardWithLog[] {
-  const q = rawQuery.trim().toLowerCase();
-  if (!q) return [];
-
-  const tier = (text: string | undefined, base: number) => {
-    const t = (text ?? "").toLowerCase();
-    if (!t) return Infinity;
-    if (t === q) return base;
-    if (t.startsWith(q)) return base + 1;
-    if (t.includes(q)) return base + 2;
-    return Infinity;
-  };
-
-  const scored: { card: CardWithLog; score: number }[] = [];
-  for (const card of cards) {
-    const score = Math.min(
-      tier(card.aCard, 0),
-      tier(card.bCard, 3),
-      tier(card.note, 6),
-    );
-    if (score !== Infinity) scored.push({ card, score });
-  }
-
-  scored.sort(
-    (a, b) =>
-      a.score - b.score ||
-      a.card.aCard.length - b.card.aCard.length ||
-      a.card.aCard.localeCompare(b.card.aCard, "nl"),
-  );
-  return scored.slice(0, limit).map((s) => s.card);
+  return rankMatches(cards, rawQuery, {
+    fields: (c) => [c.aCard, c.bCard, c.note],
+    label: (c) => c.aCard,
+    limit,
+  });
 }
 
 const page = css`

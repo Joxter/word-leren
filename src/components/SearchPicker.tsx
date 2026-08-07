@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { css } from "@linaria/core";
+import { rankMatches } from "../lib/search";
 
 const wrap = css`
   position: relative;
@@ -70,7 +71,10 @@ interface Props<T extends { id: string }> {
   items: T[];
   /** Ids to leave out, e.g. things already attached. */
   exclude: Set<string>;
-  /** The text of an item that the query is matched against, case-insensitively. */
+  /**
+   * The texts of an item the query is matched against, **most important
+   * first** — see `rankMatches` for what that ordering buys.
+   */
   fields: (item: T) => (string | undefined)[];
   /** One row of the dropdown. */
   renderItem: (item: T) => React.ReactNode;
@@ -83,6 +87,8 @@ interface Props<T extends { id: string }> {
 /**
  * A search box that drops down matching items and hands the chosen one back.
  * Nothing shows until something is typed, so the list stays out of the way.
+ * Results are ranked, not merely filtered: the best few are all that fit under
+ * `limit`, so the one you meant has to be among them.
  */
 export default function SearchPicker<T extends { id: string }>({
   items,
@@ -96,17 +102,18 @@ export default function SearchPicker<T extends { id: string }>({
 }: Props<T>) {
   const [query, setQuery] = useState("");
 
-  const matches = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return [];
-    return items
-      .filter(
-        (item) =>
-          !exclude.has(item.id) &&
-          fields(item).some((f) => f?.toLowerCase().includes(q)),
-      )
-      .slice(0, limit);
-  }, [query, items, exclude, limit]);
+  // `fields` is deliberately not a dependency: every call site passes a fresh
+  // inline lambda that closes over nothing, so listing it would rebuild the
+  // list on every render of the parent.
+  const matches = useMemo(
+    () =>
+      rankMatches(
+        items.filter((item) => !exclude.has(item.id)),
+        query,
+        { fields, label: (item) => fields(item)[0] ?? "", limit },
+      ),
+    [query, items, exclude, limit],
+  );
 
   return (
     <div className={className ? `${wrap} ${className}` : wrap}>

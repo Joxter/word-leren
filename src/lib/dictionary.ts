@@ -1,6 +1,8 @@
 // Loads and searches the merged Dutch dictionary built by
 // scripts/build-dictionary.mjs (served from public/data/dictionary.json).
 
+import { matchTier, type Tiers } from "./search";
+
 export type DictInfo = {
   source: string;
   translation: string;
@@ -42,26 +44,16 @@ export function audioUrl(audio: string): string {
   return encodeURI(`${import.meta.env.BASE_URL}audio/${audio}`);
 }
 
-// Score tiers, best first. The verb-form tiers are interleaved with the others
-// rather than grouped: hitting an inflected form exactly is a strong signal
-// ("gelopen" should surface "lopen" above "afgelopen"), but a substring of one
-// is a weak one ("lopen" inside "gelopen"), so it sinks below translations.
+// Score tiers, best first — hand-picked rather than `rankMatches`' uniform
+// per-field bands, because the verb-form tiers have to interleave with the
+// others rather than group: hitting an inflected form exactly is a strong
+// signal ("gelopen" should surface "lopen" above "afgelopen"), but a substring
+// of one is a weak one ("lopen" inside "gelopen"), so it sinks below
+// translations.
 const EXAMPLE = 9;
 const WORD_TIERS: Tiers = [0, 1, 3];
 const VERB_TIERS: Tiers = [2, 4, 8];
 const TRANS_TIERS: Tiers = [5, 6, 7];
-
-/** Scores for an exact, prefix and substring match, in that order. */
-type Tiers = [number, number, number];
-
-function tier(text: string | undefined, q: string, tiers: Tiers): number {
-  if (!text) return Infinity;
-  const t = text.toLowerCase();
-  if (t === q) return tiers[0];
-  if (t.startsWith(q)) return tiers[1];
-  if (t.includes(q)) return tiers[2];
-  return Infinity;
-}
 
 // Search the Dutch headword (bare and article-prefixed, so "de hond" works),
 // the past/participle verb forms, translations, and examples — see the tiers
@@ -80,9 +72,9 @@ export function searchDictionary(
   const scored: { entry: DictEntry; score: number }[] = [];
   for (const entry of entries) {
     let score = Math.min(
-      tier(entry.word, q, WORD_TIERS),
+      matchTier(entry.word, q, WORD_TIERS),
       entry.article
-        ? tier(`${entry.article} ${entry.word}`, q, WORD_TIERS)
+        ? matchTier(`${entry.article} ${entry.word}`, q, WORD_TIERS)
         : Infinity,
     );
 
@@ -95,11 +87,11 @@ export function searchDictionary(
     ];
     for (const form of verbForms) {
       const clean = form.replace(/\([^)]*\)/g, " ").trim();
-      score = Math.min(score, tier(clean, q, VERB_TIERS));
+      score = Math.min(score, matchTier(clean, q, VERB_TIERS));
     }
 
     for (const info of entry.info) {
-      score = Math.min(score, tier(info.translation, q, TRANS_TIERS));
+      score = Math.min(score, matchTier(info.translation, q, TRANS_TIERS));
       if (score > EXAMPLE && info.examples?.toLowerCase().includes(q)) {
         score = EXAMPLE;
       }
