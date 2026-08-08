@@ -20,6 +20,7 @@ import {
   renameLine,
   deleteLine,
 } from "../lib/lines";
+import { mine, ownedPath, ownerId } from "../lib/session";
 import LineSelector from "../components/LineSelector";
 import PlayButton from "../components/PlayButton";
 import CardModal from "../components/CardModal";
@@ -432,7 +433,7 @@ export default function Line() {
   const [activeLine, setActiveLine] = useActiveLine(lines);
 
   const { data, isLoading } = db.useQuery({
-    cards: { image: {}, $: { limit: 5000 } },
+    cards: { image: {}, $: { where: mine(), limit: 5000 } },
   });
 
   const cards = (data?.cards ?? []) as LineCard[];
@@ -536,10 +537,11 @@ export default function Line() {
     }
     if (imageFile) {
       const { data: fileData } = await db.storage.uploadFile(
-        `cards/${cardId}-${Date.now()}`,
+        ownedPath(`cards/${cardId}-${Date.now()}`),
         imageFile,
       );
       if (fileData) {
+        ops.push(db.tx.$files[fileData.id].link({ owner: ownerId() }));
         ops.push(db.tx.cards[cardId].link({ image: fileData.id }));
       }
     }

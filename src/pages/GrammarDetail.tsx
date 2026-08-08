@@ -1,6 +1,7 @@
 import { css } from "@linaria/core";
 import { Link, useParams } from "wouter";
 import { db } from "../db";
+import { mine } from "../lib/session";
 import MarkdocContent from "../components/MarkdocContent";
 import type { LightCard } from "../components/LightCardModal";
 
@@ -116,6 +117,7 @@ export default function GrammarDetail() {
   const { data: allData } = db.useQuery({
     lightCards: {
       $: {
+        where: mine(),
         limit: 500,
         order: { serverCreatedAt: "desc" },
       },

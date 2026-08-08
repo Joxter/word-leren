@@ -5,6 +5,7 @@ import { id as genId } from "@instantdb/react";
 import { Link, useLocation, useParams } from "wouter";
 import { db } from "../db";
 import MarkdocContent from "../components/MarkdocContent";
+import { ownedPath, ownerId } from "../lib/session";
 import type { LightCard } from "../components/LightCardModal";
 
 const page = css`
@@ -280,7 +281,11 @@ export default function GrammarEdit() {
     const targetId = isNew ? stableId.current : cardId!;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const ops: any[] = [
-      db.tx.lightCards[targetId].update({ text: text.trim() }),
+      isNew
+        ? db.tx.lightCards[targetId]
+            .update({ text: text.trim() })
+            .link({ owner: ownerId() })
+        : db.tx.lightCards[targetId].update({ text: text.trim() }),
     ];
 
     if (!isNew && (imageRemoved || imageFile !== null) && card?.image?.id) {
@@ -290,10 +295,11 @@ export default function GrammarEdit() {
 
     if (imageFile) {
       const { data: fileData } = await db.storage.uploadFile(
-        `lightCards/${targetId}-${Date.now()}`,
+        ownedPath(`lightCards/${targetId}-${Date.now()}`),
         imageFile,
       );
       if (fileData) {
+        ops.push(db.tx.$files[fileData.id].link({ owner: ownerId() }));
         ops.push(db.tx.lightCards[targetId].link({ image: fileData.id }));
       }
     }

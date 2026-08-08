@@ -3,6 +3,7 @@
 // applies that itself via the queue helpers.
 
 import { db } from "../db";
+import { ownedPath, ownerId } from "./session";
 import type { CardData } from "../pages/Cards";
 
 /**
@@ -30,10 +31,11 @@ export async function saveCard(
   }
   if (imageFile) {
     const { data: fileData } = await db.storage.uploadFile(
-      `cards/${cardId}-${Date.now()}`,
+      ownedPath(`cards/${cardId}-${Date.now()}`),
       imageFile,
     );
     if (fileData) {
+      ops.push(db.tx.$files[fileData.id].link({ owner: ownerId() }));
       ops.push(db.tx.cards[cardId].link({ image: fileData.id }));
     }
   }

@@ -1,5 +1,6 @@
 import { db } from "../db";
 import type { LinkedCard } from "../lib/examples";
+import { mine } from "../lib/session";
 import SearchPicker from "./SearchPicker";
 
 /** A card as the picker searches it — the note is matched, but never shown. */
@@ -13,7 +14,9 @@ interface Props {
 
 /** Search box that picks a card to attach an example to. */
 export default function CardPicker({ exclude, onPick }: Props) {
-  const { data } = db.useQuery({ cards: { $: { limit: 5000 } } });
+  const { data } = db.useQuery({
+    cards: { $: { where: mine(), limit: 5000 } },
+  });
 
   return (
     <SearchPicker

@@ -1,6 +1,7 @@
 import { css } from "@linaria/core";
 import { Link } from "wouter";
 import { db } from "../db";
+import { mine } from "../lib/session";
 import MarkdocContent from "../components/MarkdocContent";
 import type { LightCard } from "../components/LightCardModal";
 
@@ -91,6 +92,7 @@ export default function Grammar() {
     lightCards: {
       image: {},
       $: {
+        where: mine(),
         limit: 500,
         order: { serverCreatedAt: "desc" },
       },

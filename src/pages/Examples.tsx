@@ -4,6 +4,7 @@ import { db } from "../db";
 import ExampleEditor from "../components/ExampleEditor";
 import ExampleText from "../components/ExampleText";
 import { createExamples, splitSentences, type Example } from "../lib/examples";
+import { mine } from "../lib/session";
 
 const A_LANGS = ["NL", "EN"] as const;
 
@@ -364,7 +365,7 @@ export default function Examples() {
   const { data, isLoading } = db.useQuery({
     examples: {
       links: { card: {} },
-      $: { limit: 2000, order: { createdAt: "desc" } },
+      $: { where: mine(), limit: 2000, order: { createdAt: "desc" } },
     },
   });
 

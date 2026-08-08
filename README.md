@@ -2,9 +2,27 @@
 
 A personal Dutch language learning tool. The name means "learning words" in Dutch.
 
-Built for a single user — me.
+Multi-user, but not social: anyone can sign in, and everyone gets their own
+private set of cards, examples and lines. The only thing shared is the
+dictionary, which is a static file rather than a table.
 
 ## Features
+
+### Accounts
+
+Sign-in is by magic code — you type an email, InstantDB mails a six-digit code,
+and that becomes a long-lived session. There are no passwords anywhere in the
+system, and nothing renders until a user is signed in (`src/components/AuthGate.tsx`).
+
+Every row a user creates carries an `owner` link to `$users`, and the permission
+rules in `src/instant.perms.ts` allow reading and writing only your own rows.
+Because InstantDB enforces `view` rules on the server, an unfiltered query can
+never leak someone else's data — but queries still pass `where: mine()` from
+`src/lib/session.ts`, since `limit` is applied before the rules get to reject
+anything and an unfiltered `limit` would otherwise come back short.
+
+Uploaded images are the exception: a file exists before any transaction can link
+it, so `$files` create permission goes by a `<userId>/…` path prefix instead.
 
 ### Vocabulary Cards
 
@@ -110,10 +128,11 @@ npm install
 npm run dev
 ```
 
-Schema changes:
+Schema and permission changes:
 
 ```bash
 npx instant-cli@latest push schema
+npx instant-cli@latest push perms
 ```
 
 ### Dictionary data

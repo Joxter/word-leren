@@ -10,6 +10,7 @@
 
 import { id } from "@instantdb/react";
 import { db } from "../db";
+import { ownerId } from "./session";
 import type { CardLog } from "./queue";
 
 /** A hidden fragment of an example's side A. `end` is exclusive. */
@@ -321,9 +322,11 @@ export async function saveExampleWithLinks(
 ): Promise<string> {
   const exId = exampleId ?? id();
   const ops: TxOp[] = [
-    db.tx.examples[exId].update(
-      exampleId ? data : { ...data, createdAt: Date.now() },
-    ),
+    exampleId
+      ? db.tx.examples[exId].update(data)
+      : db.tx.examples[exId]
+          .update({ ...data, createdAt: Date.now() })
+          .link({ owner: ownerId() }),
   ];
 
   for (const linkId of removedLinkIds) {
@@ -338,7 +341,7 @@ export async function saveExampleWithLinks(
       ops.push(
         db.tx.exampleLinks[link.id]
           .update({ spans, createdAt: Date.now() })
-          .link({ card: link.card.id, example: exId }),
+          .link({ card: link.card.id, example: exId, owner: ownerId() }),
       );
     }
   }
@@ -361,14 +364,17 @@ export async function createExamples(
 ): Promise<string[]> {
   const now = Date.now();
   const ids = texts.map(() => id());
+  const owner = ownerId();
   await db.transact(
     texts.map((aText, i) =>
-      db.tx.examples[ids[i]].update({
-        aLang,
-        bLang,
-        aText,
-        createdAt: now + (texts.length - 1 - i),
-      }),
+      db.tx.examples[ids[i]]
+        .update({
+          aLang,
+          bLang,
+          aText,
+          createdAt: now + (texts.length - 1 - i),
+        })
+        .link({ owner }),
     ),
   );
   return ids;
@@ -384,7 +390,7 @@ export function createExampleLink(exampleId: string, cardId: string): string {
   db.transact(
     db.tx.exampleLinks[linkId]
       .update({ spans: [], createdAt: Date.now() })
-      .link({ card: cardId, example: exampleId }),
+      .link({ card: cardId, example: exampleId, owner: ownerId() }),
   );
   return linkId;
 }

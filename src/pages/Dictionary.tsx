@@ -20,6 +20,7 @@ import type { Example } from "../lib/examples";
 import CardModal from "../components/CardModal";
 import PlayButton from "../components/PlayButton";
 import { saveCard, deleteCard } from "../lib/cards";
+import { mine, ownerId } from "../lib/session";
 import type { Card, CardData } from "./Cards";
 
 /** A card as loaded here — the queue helpers also want its `log`. */
@@ -688,14 +689,16 @@ function EntryCard({
       entry.info.find((i) => i.audio)
     )?.audio;
     await db.transact(
-      db.tx.cards[cardId].update({
-        aLang: "NL",
-        bLang: "EN",
-        aCard: entry.article ? `${entry.article} ${entry.word}` : entry.word,
-        bCard: cardBack,
-        note,
-        ...(rawAudio ? { audio: `audio/${rawAudio}` } : {}),
-      }),
+      db.tx.cards[cardId]
+        .update({
+          aLang: "NL",
+          bLang: "EN",
+          aCard: entry.article ? `${entry.article} ${entry.word}` : entry.word,
+          bCard: cardBack,
+          note,
+          ...(rawAudio ? { audio: `audio/${rawAudio}` } : {}),
+        })
+        .link({ owner: ownerId() }),
     );
     // New card jumps to the top of the default line, like cards added from the
     // Cards page.
@@ -901,8 +904,8 @@ export default function Dictionary() {
   const lineId = lines[0]?.id ?? null;
 
   const { data: cardsData } = db.useQuery({
-    cards: { image: {} },
-    examples: { links: { card: {} }, $: { limit: 2000 } },
+    cards: { image: {}, $: { where: mine() } },
+    examples: { links: { card: {} }, $: { where: mine(), limit: 2000 } },
   });
   const allCards = useMemo(
     () => (cardsData?.cards ?? []) as CardWithLog[],

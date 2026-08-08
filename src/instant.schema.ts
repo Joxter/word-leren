@@ -1,4 +1,10 @@
 // Docs: https://www.instantdb.com/docs/modeling-data
+//
+// Every entity a user creates carries an `owner` link to `$users`, and the
+// permission rules key off it — see `instant.perms.ts`. That link is what keeps
+// accounts apart: nothing here is shared between users (the dictionary is a
+// static file under public/, not a table), so a missing owner means a row no
+// one can read.
 
 import { i } from "@instantdb/react";
 
@@ -58,16 +64,6 @@ const _schema = i.schema({
     lightCards: i.entity({
       text: i.string(),
     }),
-    // Legacy single-line storage. Retired in favour of cards.queues; kept only
-    // so the migration script can read existing ranks. Safe to drop afterwards.
-    queueEntries: i.entity({
-      rank: i.string().indexed(),
-    }),
-    cardEvents: i.entity({
-      at: i.number().indexed(),
-      kind: i.string(),
-      amount: i.number(),
-    }),
     $files: i.entity({
       path: i.string().unique().indexed(),
       url: i.string(),
@@ -85,6 +81,54 @@ const _schema = i.schema({
     }),
   },
   links: {
+    // Ownership. `onDelete: "cascade"` sits on the owned side, so deleting an
+    // account takes its data with it. Even the join rows carry their own owner
+    // rather than inheriting one through `card` — a permission rule that has to
+    // walk a link is a rule that breaks the day the link is missing.
+    cardOwner: {
+      forward: { on: "cards", has: "one", label: "owner", onDelete: "cascade" },
+      reverse: { on: "$users", has: "many", label: "cards" },
+    },
+    lineOwner: {
+      forward: { on: "lines", has: "one", label: "owner", onDelete: "cascade" },
+      reverse: { on: "$users", has: "many", label: "lines" },
+    },
+    exampleOwner: {
+      forward: {
+        on: "examples",
+        has: "one",
+        label: "owner",
+        onDelete: "cascade",
+      },
+      reverse: { on: "$users", has: "many", label: "examples" },
+    },
+    exampleLinkOwner: {
+      forward: {
+        on: "exampleLinks",
+        has: "one",
+        label: "owner",
+        onDelete: "cascade",
+      },
+      reverse: { on: "$users", has: "many", label: "exampleLinks" },
+    },
+    lightCardOwner: {
+      forward: {
+        on: "lightCards",
+        has: "one",
+        label: "owner",
+        onDelete: "cascade",
+      },
+      reverse: { on: "$users", has: "many", label: "lightCards" },
+    },
+    fileOwner: {
+      forward: {
+        on: "$files",
+        has: "one",
+        label: "owner",
+        onDelete: "cascade",
+      },
+      reverse: { on: "$users", has: "many", label: "files" },
+    },
     cardImage: {
       forward: {
         on: "cards",
@@ -96,19 +140,6 @@ const _schema = i.schema({
         has: "one",
         label: "card",
         onDelete: "cascade",
-      },
-    },
-    queueEntryCard: {
-      forward: {
-        on: "queueEntries",
-        has: "one",
-        label: "card",
-        onDelete: "cascade",
-      },
-      reverse: {
-        on: "cards",
-        has: "one",
-        label: "queueEntry",
       },
     },
     exampleLinkCard: {
@@ -135,19 +166,6 @@ const _schema = i.schema({
         on: "examples",
         has: "many",
         label: "links",
-      },
-    },
-    cardEventCard: {
-      forward: {
-        on: "cardEvents",
-        has: "one",
-        label: "card",
-        onDelete: "cascade",
-      },
-      reverse: {
-        on: "cards",
-        has: "many",
-        label: "events",
       },
     },
     lightCardImage: {

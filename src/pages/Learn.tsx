@@ -12,6 +12,7 @@ import type { CardLog } from "../lib/queue";
 import { diffTyped } from "../lib/diff";
 import { saveCard, deleteCard } from "../lib/cards";
 import { useLines, useActiveLine } from "../lib/lines";
+import { mine } from "../lib/session";
 import LineSelector from "../components/LineSelector";
 import CardModal from "../components/CardModal";
 import MarkdocContent from "../components/MarkdocContent";
@@ -467,7 +468,11 @@ export default function Learn() {
   const [activeLine, setActiveLine] = useActiveLine(lines);
 
   const { data, isLoading } = db.useQuery({
-    cards: { image: {}, exampleLinks: { example: {} }, $: { limit: 5000 } },
+    cards: {
+      image: {},
+      exampleLinks: { example: {} },
+      $: { where: mine(), limit: 5000 },
+    },
   });
 
   const cards = (data?.cards ?? []) as LearnCard[];

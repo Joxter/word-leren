@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import { Router, Route, Switch, Link, useRoute } from "wouter";
 import { css } from "@linaria/core";
+import { db } from "./db";
+import AuthGate from "./components/AuthGate";
 import CardsPage from "./pages/Cards";
 import LearnPage from "./pages/Learn";
 import LinePage from "./pages/Line";
@@ -10,13 +12,22 @@ import GrammarEditPage from "./pages/GrammarEdit";
 import DictionaryPage from "./pages/Dictionary";
 import ExamplesPage from "./pages/Examples";
 
+// The tabs scroll; the account corner beside them doesn't. The rule under both
+// belongs to the bar, so it runs the full width whatever the tabs are doing.
+const bar = css`
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e5e5e5;
+  background: #fff;
+`;
+
 // The fades must sit on a non-scrolling wrapper: overlaying the tabs requires
 // them to be painted above the content, which a background on the scroll
 // container itself can't do.
 const navWrap = css`
   position: relative;
-  border-bottom: 1px solid #e5e5e5;
-  background: #fff;
+  flex: 1;
+  min-width: 0;
 
   /* White fade-outs over the edges, shown only when that side is scrollable. */
   &::before,
@@ -83,6 +94,58 @@ const navLinkActive = css`
   border-bottom-color: #1a1a1a;
 `;
 
+const account = css`
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  flex-shrink: 0;
+  padding: 0 1.5rem 0 0.75rem;
+  font-size: 0.8125rem;
+`;
+
+const accountEmail = css`
+  color: #888;
+  max-width: 14rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  /* On a narrow screen the tabs need every pixel. */
+  @media (max-width: 640px) {
+    display: none;
+  }
+`;
+
+const signOut = css`
+  background: none;
+  border: none;
+  padding: 0;
+  color: #666;
+  font-size: 0.8125rem;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+
+  &:hover {
+    color: #111;
+  }
+`;
+
+function Account() {
+  const { user } = db.useAuth();
+  if (!user) return null;
+  return (
+    <div className={account}>
+      <span className={accountEmail} title={user.email}>
+        {user.email}
+      </span>
+      <button className={signOut} onClick={() => db.auth.signOut()}>
+        Sign out
+      </button>
+    </div>
+  );
+}
+
 function NavLink({ href, children }: { href: string; children: string }) {
   const [isActive] = useRoute(href === "/" ? "/" : `${href}*`);
   return (
@@ -125,15 +188,18 @@ function Nav() {
   }, []);
 
   return (
-    <div ref={wrapRef} className={navWrap}>
-      <nav ref={scrollRef} className={nav}>
-        <NavLink href="/">Cards</NavLink>
-        <NavLink href="/dictionary">Dictionary</NavLink>
-        <NavLink href="/learn">Learn</NavLink>
-        <NavLink href="/examples">Examples</NavLink>
-        <NavLink href="/grammar">Grammar</NavLink>
-        <NavLink href="/line">Line</NavLink>
-      </nav>
+    <div className={bar}>
+      <div ref={wrapRef} className={navWrap}>
+        <nav ref={scrollRef} className={nav}>
+          <NavLink href="/">Cards</NavLink>
+          <NavLink href="/dictionary">Dictionary</NavLink>
+          <NavLink href="/learn">Learn</NavLink>
+          <NavLink href="/examples">Examples</NavLink>
+          <NavLink href="/grammar">Grammar</NavLink>
+          <NavLink href="/line">Line</NavLink>
+        </nav>
+      </div>
+      <Account />
     </div>
   );
 }
@@ -160,7 +226,9 @@ function Layout() {
 export default function App() {
   return (
     <Router base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-      <Layout />
+      <AuthGate>
+        <Layout />
+      </AuthGate>
     </Router>
   );
 }

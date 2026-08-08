@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { css } from "@linaria/core";
 import { db } from "../db";
+import { mine } from "../lib/session";
 import {
   unlinkExample,
   type Example,
@@ -136,7 +137,7 @@ function ExamplePicker({
   // Links come along so the editor opened from here knows about every card the
   // example is already attached to.
   const { data } = db.useQuery({
-    examples: { links: { card: {} }, $: { limit: 2000 } },
+    examples: { links: { card: {} }, $: { where: mine(), limit: 2000 } },
   });
 
   return (

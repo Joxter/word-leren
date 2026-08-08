@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { id } from "@instantdb/react";
 import { db } from "../db";
+import { mine, ownerId } from "./session";
 import { sortLine, type QueuedCard } from "./queue";
 
 // A "line" is a named learning queue. Membership + per-line rank live on the
@@ -16,7 +17,7 @@ export interface Line {
 /** All lines, oldest first. The oldest line is treated as the default. */
 export function useLines(): { lines: Line[]; isLoading: boolean } {
   const { data, isLoading } = db.useQuery({
-    lines: { $: { order: { createdAt: "asc" } } },
+    lines: { $: { where: mine(), order: { createdAt: "asc" } } },
   });
   return { lines: (data?.lines ?? []) as Line[], isLoading };
 }
@@ -24,7 +25,9 @@ export function useLines(): { lines: Line[]; isLoading: boolean } {
 export async function createLine(name: string): Promise<string> {
   const lineId = id();
   await db.transact(
-    db.tx.lines[lineId].update({ name, createdAt: Date.now() }),
+    db.tx.lines[lineId]
+      .update({ name, createdAt: Date.now() })
+      .link({ owner: ownerId() }),
   );
   return lineId;
 }
@@ -38,7 +41,7 @@ export async function renameLine(lineId: string, name: string): Promise<void> {
  * themselves are kept — a line is just one way to organise them).
  */
 export async function deleteLine(lineId: string): Promise<void> {
-  const res = await db.queryOnce({ cards: {} });
+  const res = await db.queryOnce({ cards: { $: { where: mine() } } });
   const members = sortLine((res.data?.cards ?? []) as QueuedCard[], lineId);
   await db.transact([
     ...members.map((c) =>
@@ -54,7 +57,7 @@ export async function deleteLine(lineId: string): Promise<void> {
  */
 export async function getDefaultLineId(): Promise<string> {
   const res = await db.queryOnce({
-    lines: { $: { order: { createdAt: "asc" }, limit: 1 } },
+    lines: { $: { where: mine(), order: { createdAt: "asc" }, limit: 1 } },
   });
   const first = (res.data?.lines ?? [])[0] as Line | undefined;
   if (first) return first.id;

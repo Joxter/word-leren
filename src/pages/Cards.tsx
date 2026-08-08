@@ -9,6 +9,7 @@ import PlayButton from "../components/PlayButton";
 import { enqueueTop } from "../lib/queue";
 import { saveCard, deleteCard } from "../lib/cards";
 import { useLines } from "../lib/lines";
+import { ownedPath, ownerId } from "../lib/session";
 import LineCheckboxes from "../components/LineCheckboxes";
 
 export type Lang = "EN" | "RU" | "NL";
@@ -461,13 +462,16 @@ export default function Cards() {
     setNewSaving(true);
     const cardId = id();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const ops: any[] = [db.tx.cards[cardId].update(newForm)];
+    const ops: any[] = [
+      db.tx.cards[cardId].update(newForm).link({ owner: ownerId() }),
+    ];
     if (newImageFile) {
       const { data: fileData } = await db.storage.uploadFile(
-        `cards/${cardId}-${Date.now()}`,
+        ownedPath(`cards/${cardId}-${Date.now()}`),
         newImageFile,
       );
       if (fileData) {
+        ops.push(db.tx.$files[fileData.id].link({ owner: ownerId() }));
         ops.push(db.tx.cards[cardId].link({ image: fileData.id }));
       }
     }
