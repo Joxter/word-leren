@@ -6,19 +6,83 @@ import { matchTier, type Tiers } from "./search";
 export type DictInfo = {
   source: string;
   translation: string;
+  /** Wiktionary's part of speech for this *sense* ("noun", "verb", "prep"…). */
+  pos?: string;
   audio?: string;
   examples?: string;
+  synonyms?: string[];
 };
 
 export type DictEntry = {
   word: string;
   pos?: string;
   article?: "de" | "het";
-  verb?: { past?: string; participle?: string; separable?: boolean };
+  verb?: {
+    past?: string;
+    pastPl?: string;
+    participle?: string;
+    separable?: boolean;
+  };
   info: DictInfo[];
 };
 
-// Module-level cache so navigating away and back doesn't refetch the 1.7 MB file.
+/** The source name build-dictionary tags Wiktionary senses with. */
+export const WIKTIONARY = "kaikki";
+
+/**
+ * The decks' translations — short, learner-facing, and what a new card's side B
+ * is made of. Kept apart from the Wiktionary senses, which are full definitions
+ * ("indicates an approximate number") and read as an article, not as an answer.
+ */
+export function deckInfo(entry: DictEntry): DictInfo[] {
+  return entry.info.filter((i) => i.source !== WIKTIONARY);
+}
+
+/**
+ * The dictionary is keyed by the bare lemma, but a card writes the article into
+ * side A ("het huis") and sometimes lists variants ("groot, grote"). This is the
+ * same normalisation scripts/build-dictionary.mjs merges its sources by.
+ */
+function lemmaKey(raw: string): string {
+  let word = raw.trim().toLowerCase();
+  let prev = "";
+  while (word !== prev) {
+    prev = word;
+    word = word.replace(/^(de|het|een)[\s,/]+/, "");
+  }
+  return word.split(/[,/]/)[0].trim();
+}
+
+/** The entry a card's side A names, if the dictionary has one. */
+export function findEntry(
+  entries: DictEntry[],
+  rawWord: string,
+): DictEntry | undefined {
+  const key = lemmaKey(rawWord);
+  if (!key) return undefined;
+  return entries.find((e) => e.word.toLowerCase() === key);
+}
+
+/**
+ * Wiktionary senses, grouped by part of speech in the order they appear. One
+ * word is often several things at once — `punt` is two unrelated nouns, `staan`
+ * a verb — and numbering all of that as one flat list reads as nonsense.
+ */
+export function senseGroups(
+  entry: DictEntry,
+): { pos?: string; senses: DictInfo[] }[] {
+  const groups = new Map<string, { pos?: string; senses: DictInfo[] }>();
+  for (const info of entry.info) {
+    if (info.source !== WIKTIONARY) continue;
+    const key = info.pos ?? "";
+    let group = groups.get(key);
+    if (!group) groups.set(key, (group = { pos: info.pos, senses: [] }));
+    group.senses.push(info);
+  }
+  return [...groups.values()];
+}
+
+// Module-level cache so navigating away and back doesn't refetch the 3.4 MB file.
 let cache: DictEntry[] | null = null;
 let inflight: Promise<DictEntry[]> | null = null;
 
@@ -78,11 +142,13 @@ export function searchDictionary(
         : Infinity,
     );
 
-    // `past` can list several forms ("beval aan, bevalen aan"), and either
-    // field may carry a parenthesised auxiliary ("(is) gelopen") that must not
-    // block an exact match on the form itself.
+    // `past` can list several forms ("beval aan, bevalen aan"), and any of
+    // these may carry a parenthesised auxiliary ("(is) gelopen") that must not
+    // block an exact match on the form itself. `pastPl` is its own field only
+    // for Wiktionary-sourced verbs; the decks packed both into `past`.
     const verbForms = [
       ...(entry.verb?.past?.split(",") ?? []),
+      ...(entry.verb?.pastPl?.split(",") ?? []),
       ...(entry.verb?.participle ? [entry.verb.participle] : []),
     ];
     for (const form of verbForms) {

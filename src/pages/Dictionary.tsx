@@ -8,8 +8,12 @@ import {
   loadDictionary,
   searchDictionary,
   entryAudios,
+  deckInfo,
+  senseGroups,
+  WIKTIONARY,
   type DictEntry,
 } from "../lib/dictionary";
+import { buildDictBlock, withDictBlock } from "../lib/dictNote";
 import { mergeContained } from "../lib/translations";
 import { rankMatches } from "../lib/search";
 import CardModal from "../components/CardModal";
@@ -206,6 +210,102 @@ const addBtn = css`
   }
 `;
 
+// --- Wiktionary senses ------------------------------------------------------
+
+// One part of speech and its numbered meanings.
+const senseGroup = css`
+  & + & {
+    margin-top: 0.7rem;
+  }
+`;
+
+// The heading carries the source label, so the senses under it don't each have
+// to repeat it.
+const senseHead = css`
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.3rem;
+`;
+
+const sensePos = css`
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #999;
+  font-weight: 600;
+`;
+
+const senseList = css`
+  margin: 0;
+  padding-left: 1.15rem;
+  font-size: 0.9375rem;
+  color: #1a1a1a;
+
+  li {
+    margin: 0;
+  }
+
+  li + li {
+    margin-top: 0.35rem;
+  }
+
+  li::marker {
+    color: #bbb;
+    font-size: 0.8125rem;
+  }
+`;
+
+// A sense's own example sentences, indented under the meaning they belong to.
+// Second line of an example is its translation, dimmed like the deck examples.
+const senseExample = css`
+  font-size: 0.8125rem;
+  color: #666;
+  line-height: 1.45;
+  margin-top: 0.15rem;
+
+  p {
+    margin: 0;
+    white-space: pre-line;
+  }
+
+  p + p {
+    color: #9a9a9a;
+  }
+`;
+
+const synRow = css`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.2rem;
+`;
+
+const synChip = css`
+  font-size: 0.75rem;
+  color: #4a6b52;
+  background: #f1f7f2;
+  border: 1px solid #e0ece2;
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+`;
+
+const moreBtn = css`
+  margin-top: 0.5rem;
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 0.75rem;
+  color: #888;
+  cursor: pointer;
+  text-decoration: underline;
+
+  &:hover {
+    color: #1a1a1a;
+  }
+`;
+
 const exampleRow = css`
   display: flex;
   align-items: baseline;
@@ -331,6 +431,9 @@ function play(audio: HTMLAudioElement | null, url: string) {
   audio.play().catch(() => {});
 }
 
+/** How many Wiktionary senses an entry shows before "show all". */
+const SENSE_LIMIT = 4;
+
 function EntryCard({
   entry,
   audioEl,
@@ -340,13 +443,18 @@ function EntryCard({
 }) {
   const audios = entryAudios(entry);
   const verb = entry.verb;
+  const decks = deckInfo(entry);
 
   // Translations grouped by content: identical ones (case-insensitive) merge
   // into one row that lists every source for them, in gray at the end. Then
   // translations fully contained in a longer one collapse into it, so "lock"
   // and "the lock" become just "the lock".
+  //
+  // Only the decks feed this. Wiktionary's definitions are whole sentences, and
+  // merging them in would both bury the short answer and swallow it whole —
+  // "on" is contained in "on (positioned at the outer surface of)".
   const transMap = new Map<string, { text: string; sources: string[] }>();
-  for (const info of entry.info) {
+  for (const info of decks) {
     const text = info.translation?.trim();
     if (!text) continue;
     const key = text.toLowerCase();
@@ -356,19 +464,50 @@ function EntryCard({
   }
   const translations = mergeContained([...transMap.values()]);
 
-  const examplesList = entry.info
+  const examplesList = decks
     .filter((i) => i.examples)
     .map((i) => ({ examples: i.examples as string, source: i.source }));
+
+  // Wiktionary senses, capped until asked for: a preposition like "aan" has 17
+  // of them, which is a page of reading in front of everything else.
+  const [allSenses, setAllSenses] = useState(false);
+  const groups = senseGroups(entry);
+  const senseCount = groups.reduce((n, g) => n + g.senses.length, 0);
+  const shownGroups: typeof groups = [];
+  let budget = allSenses ? Infinity : SENSE_LIMIT;
+  for (const g of groups) {
+    if (budget <= 0) break;
+    const senses = g.senses.slice(0, budget);
+    budget -= senses.length;
+    shownGroups.push({ ...g, senses });
+  }
 
   // Whether the word is already a card isn't checked here — matching cards show
   // up in their own section above the dictionary results.
   const [saving, setSaving] = useState(false);
   const [added, setAdded] = useState(false);
 
+  // Side B is the decks' short translations. Words that only Wiktionary knows
+  // (the ERK-A2 additions) have none, so they fall back to its first couple of
+  // definitions — long, but a card you can fix beats a button you can't press.
+  const cardBack =
+    translations.length > 0
+      ? translations.map((t) => t.text).join(", ")
+      : (groups[0]?.senses
+          .slice(0, 2)
+          .map((s) => s.translation)
+          .join("; ") ?? "");
+
   async function addToCards() {
     setSaving(true);
     const cardId = id();
-    const note = examplesList.map((e) => e.examples).join("\n\n");
+    // Deck examples go in as the note's own text; the whole Wiktionary entry
+    // follows in a `{% dict %}` block, which renders collapsed and can be
+    // deleted or refilled in one stroke later.
+    const note = withDictBlock(
+      examplesList.map((e) => e.examples).join("\n\n"),
+      buildDictBlock(entry),
+    );
     // entry.info[].audio is stored as "dict/<file>.mp3"; the card keeps the full
     // path from public/ so it can be played directly. Prefer a clip from the
     // "common" source, falling back to the first info that has any audio.
@@ -381,7 +520,7 @@ function EntryCard({
         aLang: "NL",
         bLang: "EN",
         aCard: entry.article ? `${entry.article} ${entry.word}` : entry.word,
-        bCard: translations.map((t) => t.text).join(", "),
+        bCard: cardBack,
         note,
         ...(rawAudio ? { audio: `audio/${rawAudio}` } : {}),
       }),
@@ -402,7 +541,7 @@ function EntryCard({
         <button
           className={addBtn}
           onClick={addToCards}
-          disabled={added || saving || translations.length === 0}
+          disabled={added || saving || cardBack === ""}
           title="Add to cards (NL → EN)"
         >
           {added ? "✓ Added" : saving ? "Adding…" : "+ Add to cards"}
@@ -420,6 +559,53 @@ function EntryCard({
         </div>
       )}
 
+      {shownGroups.length > 0 && (
+        <div className={section}>
+          {shownGroups.map((group, gi) => (
+            <div className={senseGroup} key={group.pos ?? gi}>
+              <div className={senseHead}>
+                <span className={sensePos}>{group.pos ?? "meanings"}</span>
+                {gi === 0 && <span className={srcEnd}>{WIKTIONARY}</span>}
+              </div>
+              <ol className={senseList}>
+                {group.senses.map((sense, si) => (
+                  <li key={si}>
+                    {sense.translation}
+                    {/* Examples are separated by a blank line; the second
+                        line of one, when there is one, is its translation. */}
+                    {sense.examples?.split("\n\n").map((ex, ei) => (
+                      <div className={senseExample} key={ei}>
+                        {ex.split("\n").map((line, li) => (
+                          <p key={li}>{line}</p>
+                        ))}
+                      </div>
+                    ))}
+                    {sense.synonyms && sense.synonyms.length > 0 && (
+                      <div className={synRow}>
+                        {sense.synonyms.map((s) => (
+                          <span className={synChip} key={s}>
+                            {s}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </div>
+          ))}
+          {senseCount > SENSE_LIMIT && (
+            <button
+              className={moreBtn}
+              onClick={() => setAllSenses((v) => !v)}
+              type="button"
+            >
+              {allSenses ? "Show fewer" : `Show all ${senseCount} meanings`}
+            </button>
+          )}
+        </div>
+      )}
+
       {verb && (verb.past || verb.participle || verb.separable) && (
         <div className={section}>
           <div className={verbLine}>
@@ -428,6 +614,12 @@ function EntryCard({
               <span>
                 <span className={verbLabel}>past</span>
                 {verb.past}
+              </span>
+            )}
+            {verb.pastPl && (
+              <span>
+                <span className={verbLabel}>past pl</span>
+                {verb.pastPl}
               </span>
             )}
             {verb.participle && (

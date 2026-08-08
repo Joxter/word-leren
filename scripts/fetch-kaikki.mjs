@@ -130,10 +130,21 @@ function verbForms(entry) {
 
 function senses(entry) {
   const out = [];
+  const seen = new Set();
   for (const s of entry.senses ?? []) {
-    const gloss = s.glosses?.[0];
-    if (!gloss) continue;
-    const examples = (s.examples ?? []).map((x) => x.text).filter(Boolean);
+    // A nested sense carries its parent heading first and the meaning itself
+    // last: ["in compounds with verbs:", "Denoting growth or restoration."].
+    // Taking [0] gives three senses that all read "in compounds with verbs:".
+    const gloss = s.glosses?.[s.glosses.length - 1];
+    if (!gloss || seen.has(gloss)) continue;
+    seen.add(gloss);
+
+    // Wiktionary tags its literary citations as `quotation` — those run to a
+    // paragraph of 1917 newspaper Dutch and teach nothing. Keep the sentences
+    // written as examples, each with its English on a second line.
+    const examples = (s.examples ?? [])
+      .filter((x) => x.text && x.type !== "quotation")
+      .map((x) => (x.english ? `${x.text}\n${x.english}` : x.text));
     const synonyms = (s.synonyms ?? []).map((x) => x.word).filter(Boolean);
     out.push({
       pos: entry.pos,

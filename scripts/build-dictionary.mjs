@@ -343,7 +343,9 @@ function buildKaikki() {
           source: "kaikki",
           translation: s.gloss,
           ...(s.pos ? { pos: s.pos } : {}),
-          ...(s.examples ? { examples: s.examples.join("\n") } : {}),
+          // A blank line separates one example from the next; within an
+          // example, the second line is its English translation.
+          ...(s.examples ? { examples: s.examples.join("\n\n") } : {}),
           ...(s.synonyms ? { synonyms: s.synonyms } : {}),
         });
       }

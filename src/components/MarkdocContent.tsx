@@ -1,4 +1,4 @@
-import Markdoc, { type Tag } from "@markdoc/markdoc";
+import Markdoc, { type Config, type Node, type Tag } from "@markdoc/markdoc";
 import React from "react";
 import { css } from "@linaria/core";
 import { expandBlankLines } from "../lib/markdoc";
@@ -153,6 +153,7 @@ const prose = css`
   table {
     border-collapse: collapse;
   }
+
   th,
   td {
     padding: 0 20px 0 0;
@@ -163,7 +164,57 @@ const prose = css`
     font-weight: 600;
     color: #444;
   }
+
+  /* The dict block. Closed by default, so a long entry costs one line. */
+  details {
+    margin: 0 0 ${BLOCK_GAP};
+  }
+
+  summary {
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #999;
+    user-select: none;
+  }
+
+  summary:hover {
+    color: #1a1a1a;
+  }
+
+  details[open] > summary {
+    margin-bottom: 8px;
+  }
+
+  /* Opened, the entry sits indented under its summary. */
+  details > *:not(summary) {
+    margin-left: 12px;
+  }
 `;
+
+// `{% dict %}` — the block scripts fill from the dictionary (see lib/dictNote).
+// It renders collapsed, because a full entry is long enough to bury the card it
+// belongs to, and closed is the right default for reference material.
+//
+// Spread over Markdoc's own tags rather than replacing them: `{% table %}` is
+// one of those, and notes already use it.
+const config = {
+  tags: {
+    ...Markdoc.tags,
+    dict: {
+      render: "details",
+      children: ["paragraph", "list", "heading", "hr", "fence", "table"],
+      transform(node: Node, cfg: Config) {
+        return new Markdoc.Tag("details", {}, [
+          new Markdoc.Tag("summary", {}, ["Dictionary"]),
+          ...node.transformChildren(cfg),
+        ]);
+      },
+    },
+  },
+};
 
 export default function MarkdocContent({ content }: { content: string }) {
   if (!content.trim()) return null;
@@ -173,7 +224,7 @@ export default function MarkdocContent({ content }: { content: string }) {
   // children instead: the first/last-child rules in `prose` are the one place
   // the styles still reach for a direct child, and through a wrapper they
   // would match only the wrapper — leaving a trailing margin under the note.
-  const { children } = Markdoc.transform(ast) as Tag;
+  const { children } = Markdoc.transform(ast, config) as Tag;
 
   return (
     <div className={prose}>

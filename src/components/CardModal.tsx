@@ -3,6 +3,8 @@ import { useImagePaste } from "../hooks/useImagePaste";
 import { css } from "@linaria/core";
 import type { Card, CardData } from "../pages/Cards";
 import { useLines } from "../lib/lines";
+import { findEntry, loadDictionary } from "../lib/dictionary";
+import { buildDictBlock, withDictBlock } from "../lib/dictNote";
 import { enqueueTop, removeFromLine } from "../lib/queue";
 import CardExamples from "./CardExamples";
 import LineCheckboxes from "./LineCheckboxes";
@@ -95,6 +97,39 @@ const label = css`
   color: #555;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+`;
+
+// Sits under the note field: fills the `{% dict %}` block from the dictionary.
+const dictRow = css`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: -0.5rem 0 1rem;
+`;
+
+const dictBtn = css`
+  border: 1px solid #e5e5e5;
+  background: #fafafa;
+  border-radius: 6px;
+  padding: 0.25rem 0.55rem;
+  font-size: 0.75rem;
+  color: #555;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    border-color: #1a1a1a;
+    color: #111;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+`;
+
+const dictNote = css`
+  font-size: 0.75rem;
+  color: #999;
 `;
 
 const segmented = css`
@@ -350,6 +385,31 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
   const previewUrl =
     localPreview ?? (!imageRemoved ? (card?.image?.url ?? null) : null);
 
+  // The dictionary is a 3.5 MB file the rest of this modal has no use for, so
+  // it is fetched on the first click rather than on open. `loadDictionary`
+  // caches it, so the Dictionary page having been visited makes this instant.
+  const [dictState, setDictState] = useState<
+    "idle" | "loading" | "missing" | "empty" | "filled"
+  >("idle");
+
+  async function fillFromDictionary() {
+    setDictState("loading");
+    const entries = await loadDictionary();
+    const entry = findEntry(entries, form.aCard);
+    if (!entry) {
+      setDictState("missing");
+      return;
+    }
+    const block = buildDictBlock(entry);
+    if (!block) {
+      setDictState("empty");
+      return;
+    }
+    // Replaces an earlier block rather than stacking, so this is repeatable.
+    setForm((f) => ({ ...f, note: withDictBlock(f.note, block) }));
+    setDictState("filled");
+  }
+
   function set(field: keyof CardData, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
   }
@@ -451,6 +511,33 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
               value={form.note}
               onChange={(v) => set("note", v)}
             />
+
+            <div className={dictRow}>
+              <button
+                type="button"
+                className={dictBtn}
+                onClick={fillFromDictionary}
+                disabled={dictState === "loading" || !form.aCard.trim()}
+                title="Append this word's dictionary entry to the note"
+              >
+                {dictState === "loading"
+                  ? "Looking up…"
+                  : "Fill from dictionary"}
+              </button>
+              {dictState === "missing" && (
+                <span className={dictNote}>
+                  Not in the dictionary — nothing to fill in
+                </span>
+              )}
+              {dictState === "empty" && (
+                <span className={dictNote}>
+                  No Wiktionary data for this word
+                </span>
+              )}
+              {dictState === "filled" && (
+                <span className={dictNote}>Added to the note</span>
+              )}
+            </div>
 
             {/* Saves on its own — see CardExamples. Fed the edited sides so
                 the link rows label this card the way it currently reads. */}
