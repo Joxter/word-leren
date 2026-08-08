@@ -7,7 +7,7 @@
  *
  * Requires in .env.local:
  *   VITE_INSTANT_APP_ID=...
- *   INSTANT_ADMIN_TOKEN=...  ← get from instantdb.com/dash → App Settings
+ *   INSTANT_APP_ADMIN_TOKEN=...  ← get from instantdb.com/dash → App Settings
  */
 
 import { readFileSync, mkdirSync, writeFileSync, existsSync } from "fs";
@@ -38,7 +38,7 @@ if (!APP_ID) {
   process.exit(1);
 }
 if (!ADMIN_TOKEN) {
-  console.error("❌  INSTANT_ADMIN_TOKEN not found in .env.local");
+  console.error("❌  INSTANT_APP_ADMIN_TOKEN not found in .env.local");
   console.error(
     "    Get it at: https://instantdb.com/dash → your app → App Settings → Admin Token",
   );
@@ -65,6 +65,11 @@ const data = await db.query({
   cards: { image: {} },
   lightCards: { image: {} },
   lines: {},
+  // Example sentences, and the join that attaches one to a card. The join
+  // carries the span data, so it has to be dumped in its own right — see the
+  // `exampleLinks` note in src/instant.schema.ts.
+  examples: {},
+  exampleLinks: { card: {}, example: {} },
   // Legacy single-line tables — still dumped so pre-migration state is captured.
   queueEntries: { card: {} },
   cardEvents: {},
@@ -73,12 +78,29 @@ const data = await db.query({
 const cards = data?.cards ?? [];
 const lightCards = data?.lightCards ?? [];
 const lines = data?.lines ?? [];
+const examples = data?.examples ?? [];
+// The admin client is initialised without the schema (it lives in TypeScript,
+// which this script can't import), so InstantDB doesn't know a link's
+// cardinality and hands back even a `has: "one"` side as an array.
+const one = (v) => (Array.isArray(v) ? (v[0] ?? null) : (v ?? null));
+
+const exampleLinks = (data?.exampleLinks ?? []).map(
+  // Both sides come back embedded, which would repeat every card and sentence
+  // once per link. The ids are all a restore needs.
+  ({ card, example, ...link }) => ({
+    ...link,
+    cardId: one(card)?.id ?? null,
+    exampleId: one(example)?.id ?? null,
+  }),
+);
 const queueEntries = data?.queueEntries ?? [];
 const cardEvents = data?.cardEvents ?? [];
 
 console.log(`    cards:        ${cards.length}`);
 console.log(`    lightCards:   ${lightCards.length}`);
 console.log(`    lines:        ${lines.length}`);
+console.log(`    examples:     ${examples.length}`);
+console.log(`    exampleLinks: ${exampleLinks.length}`);
 console.log(`    queueEntries: ${queueEntries.length}`);
 console.log(`    cardEvents:   ${cardEvents.length}\n`);
 
@@ -145,6 +167,8 @@ const backup = {
   cards,
   lightCards,
   lines,
+  examples,
+  exampleLinks,
   queueEntries,
   cardEvents,
 };
@@ -158,6 +182,8 @@ const totalRecords =
   cards.length +
   lightCards.length +
   lines.length +
+  examples.length +
+  exampleLinks.length +
   queueEntries.length +
   cardEvents.length;
 console.log("✅  Done!");

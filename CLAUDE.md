@@ -9,6 +9,7 @@ and the data model — this file only covers build/config gotchas that aren't ob
 - `npm run build` — `tsc -b && vite build`
 - `npm run format` — Prettier (there is no linter)
 - `npm run build-dictionary` — regenerate `public/data/dictionary.json` + audio from `sources/`
+- `node scripts/fetch-kaikki.mjs` — refresh `sources/kaikki-nl.jsonl` from Wiktionary (rarely; needs network)
 - `npx instant-cli@latest push schema` — after editing `src/instant.schema.ts` or `src/instant.perms.ts`
 
 ## Gotchas
@@ -19,6 +20,15 @@ and the data model — this file only covers build/config gotchas that aren't ob
   statically extracted at build. In `vite.config`, the wyw plugin must come **before** the react plugin.
 - **`tsconfig.node.json`** needs `"composite": true` (not `"noEmit": true`) for project references.
 - **InstantDB** is the backend (real-time data + file storage); app ID comes from `VITE_INSTANT_APP_ID`.
+
+## Dictionary sources
+
+`sources/kaikki-nl.jsonl` is a slimmed Wiktionary extract (the full one is 236 MB;
+`scripts/fetch-kaikki.mjs` cuts it to the headwords the dictionary has). It **replaces**
+`verb` — it has full conjugation tables — but only **fills in** `article`, because its
+gender tags are noisier than the hand-made decks (it calls "het casino" a de-word).
+Wiktionary is case-sensitive where `lemmaKey` is not, so `buildKaikki` prefers the
+spelling the dictionary already uses — otherwise `Chili` inherits `chili` the pepper.
 
 ## Examples
 

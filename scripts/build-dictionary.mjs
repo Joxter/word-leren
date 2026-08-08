@@ -1,19 +1,23 @@
 // Build a merged Dutch dictionary from the source decks in /sources.
 //
-// Reads 5 Anki .apkg decks + 1 CSV, normalizes each Dutch headword to a lemma,
-// and merges them into one entry per word:
+// Reads 4 Anki .apkg decks, 1 CSV and the Wiktionary extract, normalizes each
+// Dutch headword to a lemma, and merges them into one entry per word:
 //
 //   type DictEntry = {
 //     word: string;
 //     pos?: string;
 //     article?: "de" | "het";
-//     verb?: { past?: string; participle?: string; separable?: boolean };
-//     info: { source: string; translation: string; audio?: string; examples?: string }[];
+//     verb?: { past?: string; pastPl?: string; participle?: string; separable?: boolean };
+//     info: {
+//       source: string; translation: string;
+//       pos?: string; audio?: string; examples?: string; synonyms?: string[];
+//     }[];
 //   };
 //
 // Word-level facts (article, verb, pos) come from specific sources; everything
 // generic (translation/audio/examples) is kept per-source in `info[]` so the
-// quality of each source stays visible.
+// quality of each source stays visible. Wiktionary contributes one `info` entry
+// per *sense*, which is why a common word has several rows tagged "kaikki".
 //
 // Outputs:
 //   public/data/dictionary.json     merged entries
@@ -284,24 +288,71 @@ function buildDeHet() {
   console.log(`  de/het:    ${n} notes (article only)`);
 }
 
-function buildIrregular() {
-  const deck = loadDeck("Dutch_Irregular_Verbs.apkg");
+// Wiktionary, via the slim extract that scripts/fetch-kaikki.mjs writes.
+//
+// It *replaces* `verb`: it is the only source with a full conjugation table, and
+// on a spot check of 15 irregular verbs it agreed with the retired Anki deck on
+// 14 and was right about the 15th (the deck had "press" for prijzen's past, not
+// "prees"). It only *fills in* `article`, because there the same check went the
+// other way — of 15 words where Wiktionary contradicted the decks, roughly half
+// the overwrites were wrong (it makes "het casino" and "het insekt" de-words).
+// The decks were curated for learners; Wiktionary's gender tags are noisier.
+// Disagreements are counted and reported rather than silently applied.
+function buildKaikki() {
+  const path = join(SOURCES, "kaikki-nl.jsonl");
+  if (!existsSync(path)) {
+    console.log("  kaikki:    skipped — run scripts/fetch-kaikki.mjs first");
+    return;
+  }
+
+  // Wiktionary is case-sensitive where our lemma key is not: "Chili" the
+  // country and "chili" the pepper collapse onto one entry, as do "Ram" (the
+  // zodiac sign) and "RAM". Group by key first, then keep only the spelling the
+  // dictionary already uses — otherwise the country inherits the pepper's
+  // gender and glosses.
+  const byKey = new Map();
+  for (const line of readFileSync(path, "utf-8").split("\n")) {
+    if (!line.trim()) continue;
+    const rec = JSON.parse(line);
+    const key = lemmaKey(rec.word);
+    if (!key) continue;
+    if (!byKey.has(key)) byKey.set(key, []);
+    byKey.get(key).push(rec);
+  }
+
   let n = 0;
-  for (const [front, back] of deck.notes) {
-    const e = entryFor(front);
+  let added = 0;
+  let conflicts = 0;
+  for (const [key, all] of byKey) {
+    const existing = dict.get(key);
+    const exact = existing && all.filter((r) => r.word === existing.word);
+    const recs = exact && exact.length > 0 ? exact : all;
+
+    const e = entryFor(recs[0].word);
     if (!e) continue;
-    // back = "past, pastpl<div>participle</div>"
-    const lines = cleanHtml(back).split("\n").filter(Boolean);
-    const past = lines[0]?.trim();
-    const participle = lines.slice(1).join(" ").trim();
-    e.verb = {
-      ...(e.verb || {}),
-      ...(past ? { past } : {}),
-      ...(participle ? { participle } : {}),
-    };
+    if (!existing) added++;
+
+    for (const rec of recs) {
+      if (rec.article) {
+        if (e.article && e.article !== rec.article) conflicts++;
+        setArticle(e, rec.article);
+      }
+      if (rec.verb) e.verb = { ...(e.verb || {}), ...rec.verb };
+      for (const s of rec.senses) {
+        e.info.push({
+          source: "kaikki",
+          translation: s.gloss,
+          ...(s.pos ? { pos: s.pos } : {}),
+          ...(s.examples ? { examples: s.examples.join("\n") } : {}),
+          ...(s.synonyms ? { synonyms: s.synonyms } : {}),
+        });
+      }
+    }
     n++;
   }
-  console.log(`  irregular: ${n} notes (verb forms only)`);
+  console.log(
+    `  kaikki:    ${n} words (${added} new, ${conflicts} article conflicts kept as-is)`,
+  );
 }
 
 // ------------------------------------------------------------------- main
@@ -317,7 +368,7 @@ buildCommon();
 buildVocab();
 buildCsv();
 buildDeHet();
-buildIrregular();
+buildKaikki();
 
 // Sort entries alphabetically by lemma.
 const entries = [...dict.entries()]

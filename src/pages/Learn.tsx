@@ -3,7 +3,7 @@ import { css } from "@linaria/core";
 import { Link } from "wouter";
 import { db } from "../db";
 import {
-  DEPTH_BUTTONS,
+  depthButtons,
   placeAtDepth,
   reviewStats,
   sortLine,
@@ -473,6 +473,9 @@ export default function Learn() {
   const cards = (data?.cards ?? []) as LearnCard[];
   const members = activeLine ? sortLine(cards, activeLine) : [];
   const current = members[0];
+  // The deep end of the scale is only offered once the line is long enough for
+  // it to mean anything — see `depthButtons`.
+  const depths = depthButtons(members.length);
 
   // The cloze this card is being asked as, or null for the plain prompt. Spans
   // are re-anchored against the sentence as it reads now, and a link whose
@@ -547,14 +550,14 @@ export default function Learn() {
         return;
       }
       const n = parseInt(e.key, 10);
-      if (!Number.isNaN(n) && n >= 1 && n <= DEPTH_BUTTONS.length) {
+      if (!Number.isNaN(n) && n >= 1 && n <= depths.length) {
         e.preventDefault();
-        handleDepth(DEPTH_BUTTONS[n - 1]);
+        handleDepth(depths[n - 1]);
       }
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [revealed, current, busy, mode, cloze?.link.id]);
+  }, [revealed, current, busy, mode, cloze?.link.id, depths.length]);
 
   // Hint boxes and the typed answer are per-card scratch state — clear them
   // whenever the top card changes (depth placed, deleted, or swapped in).
@@ -862,7 +865,7 @@ export default function Learn() {
       {revealed && (
         <>
           <div className={depthRow}>
-            {DEPTH_BUTTONS.map((d) => (
+            {depths.map((d) => (
               <button
                 key={d}
                 className={depthBtn}

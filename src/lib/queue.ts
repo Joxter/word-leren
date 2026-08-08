@@ -11,7 +11,20 @@ import { db } from "../db";
 // so there is no "filter by line + order by rank" query — callers load the
 // cards they already have and sort in memory with the helpers below.
 
-export const DEPTH_BUTTONS = [8, 20, 50, 100, 200, 300, 500];
+export const DEPTH_BUTTONS = [
+  8, 20, 50, 100, 200, 300, 500, 700, 1000, 1500, 2500,
+];
+
+/**
+ * The depth buttons worth offering for a line of `size` cards: the ones that
+ * land inside the line, plus the first one that reaches past its bottom.
+ * Everything deeper than that would put the card in the same place — the very
+ * bottom — so offering it is a choice without a difference.
+ */
+export function depthButtons(size: number): number[] {
+  const past = DEPTH_BUTTONS.findIndex((d) => d >= size);
+  return past === -1 ? DEPTH_BUTTONS : DEPTH_BUTTONS.slice(0, past + 1);
+}
 
 // Nudge amounts on the Line view (used as +N / -N).
 export const MOVE_STEPS = [1, 5, 25, 100];
