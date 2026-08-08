@@ -689,6 +689,7 @@ export default function Learn() {
               <div className={clozeSentence}>
                 {!revealed && hintOpen && !(typing && COARSE_POINTER) ? (
                   <HintLetters
+                    inline
                     text={cloze.example.aText}
                     hidden={cloze.spans}
                     revealed={hintLetters}
@@ -702,10 +703,11 @@ export default function Learn() {
                   />
                 )}
               </div>
-              {/* Held back until reveal: the translation names the missing
-                  words often enough that showing it up front answers the
-                  exercise. */}
-              {revealed && cloze.example.bText?.trim() && (
+              {/* Held back from the bare prompt: the translation names the
+                  missing words often enough that showing it up front answers
+                  the exercise. That is exactly what makes it a hint, so it
+                  comes with the letter boxes. */}
+              {(revealed || hintOpen) && cloze.example.bText?.trim() && (
                 <div className={clozeTranslation}>{cloze.example.bText}</div>
               )}
             </>

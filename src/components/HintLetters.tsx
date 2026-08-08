@@ -19,6 +19,21 @@ const wordGroup = css`
   margin-bottom: 0.2rem;
 `;
 
+// Inline layout: the boxes sit inside a sentence that still has to read as a
+// sentence, so the text around them keeps whatever type it was rendered with
+// and only the boxed words get a group of their own.
+const inlineWrap = css`
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+`;
+
+const inlineGroup = css`
+  display: inline-flex;
+  gap: 0.2rem;
+  margin: 0 0.1rem;
+  vertical-align: middle;
+`;
+
 const box = css`
   width: 1.6rem;
   height: 1.9rem;
@@ -70,6 +85,12 @@ interface Props {
    * the fragments in `hidden` become boxes.
    */
   hidden?: { start: number; end: number }[];
+  /**
+   * Render the untouched text as ordinary inline text, inheriting the type of
+   * whatever it sits in, instead of as its own block of spaced-out characters.
+   * For a cloze prompt, where the sentence itself is what the user reads.
+   */
+  inline?: boolean;
 }
 
 /**
@@ -83,6 +104,7 @@ export default function HintLetters({
   revealed,
   onReveal,
   hidden,
+  inline = false,
 }: Props) {
   const lines = text.split("\n");
 
@@ -93,58 +115,90 @@ export default function HintLetters({
 
   let index = 0;
 
+  function renderWord(word: string, key: number) {
+    // Consecutive shown characters merge into one part rather than staying one
+    // per character: a whole word left visible by `hidden` has to read as a
+    // word, not as spaced-out letters.
+    const parts: { text: string; at: number; box: boolean }[] = [];
+    for (const ch of word) {
+      const charIndex = index++;
+      const boxed = isHidden(charIndex) && HIDDEN_CHAR.test(ch);
+      const last = parts[parts.length - 1];
+      if (!boxed && last && !last.box) last.text += ch;
+      else parts.push({ text: ch, at: charIndex, box: boxed });
+    }
+
+    // A word with nothing to guess stays a plain run of text, so the sentence
+    // around the gaps flows exactly as it did before the hint was opened.
+    if (inline && parts.every((p) => !p.box)) {
+      return <span key={key}>{word}</span>;
+    }
+
+    return (
+      <span key={key} className={inline ? inlineGroup : wordGroup}>
+        {parts.map((part) => {
+          if (!part.box) {
+            return inline ? (
+              <span key={part.at}>{part.text}</span>
+            ) : (
+              <span key={part.at} className={plainChar}>
+                {part.text}
+              </span>
+            );
+          }
+          const isRevealed = revealed[part.at] ?? false;
+          return (
+            <button
+              key={part.at}
+              type="button"
+              className={isRevealed ? `${box} ${boxRevealed}` : box}
+              disabled={isRevealed}
+              onClick={() => onReveal(part.at)}
+            >
+              {isRevealed ? part.text : ""}
+            </button>
+          );
+        })}
+      </span>
+    );
+  }
+
+  function renderLine(line: string, li: number) {
+    // The newline `split` consumed is a character of `text` too, so it has to
+    // be counted or every index after the first line drifts out of `hidden`.
+    if (li > 0) index += 1;
+    const words = line.split(/(\s+)/).filter((w) => w.length > 0);
+    return words.map((word, wi) => {
+      if (/^\s+$/.test(word)) {
+        index += word.length;
+        // Block layout spaces words itself; inline keeps the real whitespace.
+        return inline ? <span key={wi}>{word}</span> : null;
+      }
+      return renderWord(word, wi);
+    });
+  }
+
+  if (inline) {
+    return (
+      <span className={inlineWrap}>
+        {lines.map((line, li) => (
+          // The wrapper preserves whitespace, so the line break is text here.
+          <span key={li}>
+            {li > 0 ? "\n" : ""}
+            {renderLine(line, li)}
+          </span>
+        ))}
+      </span>
+    );
+  }
+
   return (
     <div className={linesWrap}>
-      {lines.map((line, li) => {
-        const words = line.split(/(\s+)/).filter((w) => w.length > 0);
-        return (
-          <div key={li} className={lineRow}>
-            {words.map((word, wi) => {
-              if (/^\s+$/.test(word)) {
-                index += word.length;
-                return null;
-              }
-              // Consecutive shown characters merge into one part rather than
-              // staying one per character: a whole word left visible by
-              // `hidden` has to read as a word, not as spaced-out letters.
-              const parts: { text: string; at: number; box: boolean }[] = [];
-              for (const ch of word) {
-                const charIndex = index++;
-                const boxed = isHidden(charIndex) && HIDDEN_CHAR.test(ch);
-                const last = parts[parts.length - 1];
-                if (!boxed && last && !last.box) last.text += ch;
-                else parts.push({ text: ch, at: charIndex, box: boxed });
-              }
-
-              return (
-                <div key={wi} className={wordGroup}>
-                  {parts.map((part) => {
-                    if (!part.box) {
-                      return (
-                        <span key={part.at} className={plainChar}>
-                          {part.text}
-                        </span>
-                      );
-                    }
-                    const isRevealed = revealed[part.at] ?? false;
-                    return (
-                      <button
-                        key={part.at}
-                        type="button"
-                        className={isRevealed ? `${box} ${boxRevealed}` : box}
-                        disabled={isRevealed}
-                        onClick={() => onReveal(part.at)}
-                      >
-                        {isRevealed ? part.text : ""}
-                      </button>
-                    );
-                  })}
-                </div>
-              );
-            })}
-          </div>
-        );
-      })}
+      {lines.map((line, li) => (
+        <div key={li} className={lineRow}>
+          {renderLine(line, li)}
+        </div>
+      ))}
     </div>
   );
 }
