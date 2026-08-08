@@ -16,6 +16,7 @@ import {
 import { buildDictBlock, withDictBlock } from "../lib/dictNote";
 import { mergeContained } from "../lib/translations";
 import { rankMatches } from "../lib/search";
+import type { Example } from "../lib/examples";
 import CardModal from "../components/CardModal";
 import PlayButton from "../components/PlayButton";
 import { saveCard, deleteCard } from "../lib/cards";
@@ -24,23 +25,105 @@ import type { Card, CardData } from "./Cards";
 /** A card as loaded here — the queue helpers also want its `log`. */
 type CardWithLog = Card & { log?: CardLog };
 
-/** Search the user's own cards: side A, then side B, then the note. */
-function searchCards(
-  cards: CardWithLog[],
-  rawQuery: string,
-  limit = 20,
-): CardWithLog[] {
+/**
+ * Search the user's own cards: side A, then side B, then the note. Unlimited —
+ * the section header counts every hit, and the list caps what it renders.
+ */
+function searchCards(cards: CardWithLog[], rawQuery: string): CardWithLog[] {
   return rankMatches(cards, rawQuery, {
     fields: (c) => [c.aCard, c.bCard, c.note],
     label: (c) => c.aCard,
-    limit,
   });
 }
+
+/** The words an example is attached to, for both its search text and its row. */
+function exampleCards(example: Example): string[] {
+  return (example.links ?? []).flatMap((l) => (l.card ? [l.card.aCard] : []));
+}
+
+/** Search shared example sentences: the Dutch, then the translation, then the
+ *  cards they hang off — searching for a word should find its sentences. */
+function searchExamples(examples: Example[], rawQuery: string): Example[] {
+  return rankMatches(examples, rawQuery, {
+    fields: (e) => [e.aText, e.bText, exampleCards(e).join(" ")],
+    label: (e) => e.aText,
+  });
+}
+
+type Tab = "dictionary" | "cards" | "examples";
+
+/** How many hits a section renders at once, however many it found. */
+const RENDER_LIMIT = 60;
 
 const page = css`
   max-width: 720px;
   margin: 0 auto;
   padding: 2rem 1.5rem;
+
+  @media (max-width: 540px) {
+    padding: 1rem 0.75rem;
+  }
+`;
+
+// --- Result sections -------------------------------------------------------
+
+// One row of tabs, each carrying its own count so the sections that aren't
+// open still say whether they have anything. Scrolls sideways rather than
+// wrapping on a narrow phone, which would push the results down a line.
+const tabs = css`
+  display: flex;
+  gap: 0.375rem;
+  margin-top: 1rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const tabBtn = css`
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.8125rem;
+  color: #666;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover {
+    border-color: #bbb;
+    color: #1a1a1a;
+  }
+`;
+
+const tabActive = css`
+  border-color: #1a1a1a;
+  background: #1a1a1a;
+  color: #fff;
+
+  &:hover {
+    border-color: #1a1a1a;
+    color: #fff;
+  }
+`;
+
+const tabCount = css`
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.65;
+`;
+
+// "Showing 60 of 214" under a section that renders only its first page.
+const moreHint = css`
+  margin-top: 0.75rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #aaa;
 `;
 
 const search = css`
@@ -341,6 +424,9 @@ const hitList = css`
   margin-top: 1.25rem;
 `;
 
+// One line on a desktop. On a phone it becomes a two-row grid — sides and
+// position badge across the top, buttons under them — because squeezing all
+// four onto one line left both sides of the card as ellipses.
 const hitRow = css`
   display: flex;
   align-items: center;
@@ -351,7 +437,9 @@ const hitRow = css`
   padding: 0.5rem 0.75rem;
 
   @media (max-width: 540px) {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
     gap: 0.4rem 0.6rem;
   }
 `;
@@ -363,9 +451,39 @@ const hitSides = css`
   flex: 1;
   min-width: 0;
   overflow: hidden;
+
+  /* Stacked, and free to wrap: on a phone the point is to read the card. */
+  @media (max-width: 540px) {
+    flex-direction: column;
+    gap: 0.15rem;
+    overflow: visible;
+  }
 `;
 
-// Side A keeps its width as long as it can; side B is the one that gives way.
+// Side A and its play button stay together when the sides stack. The cap lives
+// here rather than on side A itself: as a percentage of a shrink-to-fit inline
+// flex box it would resolve against the word's own width and clip it at any
+// row width at all.
+const hitTop = css`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  flex-shrink: 0;
+  max-width: 60%;
+
+  /* The play button is not what should give way inside the group. */
+  & > button {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 540px) {
+    max-width: 100%;
+  }
+`;
+
+// Side A keeps its width as long as it can; side B is the one that gives way,
+// and side A only ellipsises once the group above hits its cap.
 const hitA = css`
   font-size: 0.9375rem;
   font-weight: 600;
@@ -373,8 +491,12 @@ const hitA = css`
   overflow: hidden;
   text-overflow: ellipsis;
   min-width: 0;
-  flex-shrink: 0;
-  max-width: 60%;
+
+  @media (max-width: 540px) {
+    white-space: normal;
+    overflow: visible;
+    overflow-wrap: anywhere;
+  }
 `;
 
 const hitB = css`
@@ -384,6 +506,12 @@ const hitB = css`
   overflow: hidden;
   text-overflow: ellipsis;
   min-width: 0;
+
+  @media (max-width: 540px) {
+    white-space: normal;
+    overflow: visible;
+    overflow-wrap: anywhere;
+  }
 `;
 
 // Current 1-indexed position in the default line, or "not in line".
@@ -395,6 +523,10 @@ const posTag = css`
   border-radius: 4px;
   padding: 0.1rem 0.35rem;
   white-space: nowrap;
+
+  @media (max-width: 540px) {
+    justify-self: end;
+  }
 `;
 
 const hitActions = css`
@@ -402,6 +534,46 @@ const hitActions = css`
   gap: 0.35rem;
   flex-shrink: 0;
   margin-left: auto;
+
+  @media (max-width: 540px) {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+    margin-left: 0;
+  }
+`;
+
+// --- Matching examples -----------------------------------------------------
+
+const exHit = css`
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+`;
+
+const exTrans = css`
+  font-size: 0.875rem;
+  color: #777;
+  margin-top: 0.1rem;
+`;
+
+// The cards this sentence is attached to — the reason it is worth finding.
+const exCards = css`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.35rem;
+`;
+
+const exCard = css`
+  font-size: 0.75rem;
+  color: #555;
+  background: #f4f4f4;
+  border-radius: 4px;
+  padding: 0.1rem 0.35rem;
 `;
 
 const hitBtn = css`
@@ -691,8 +863,10 @@ function CardHit({
   return (
     <div className={hitRow}>
       <div className={hitSides}>
-        <span className={hitA}>{card.aCard}</span>
-        {card.audio && <PlayButton path={card.audio} small />}
+        <span className={hitTop}>
+          <span className={hitA}>{card.aCard}</span>
+          {card.audio && <PlayButton path={card.audio} small />}
+        </span>
         <span className={hitB}>{card.bCard}</span>
       </div>
       <span className={posTag}>
@@ -719,16 +893,24 @@ export default function Dictionary() {
   const [entries, setEntries] = useState<DictEntry[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [query, setQuery] = useState("");
+  const [tab, setTab] = useState<Tab>("dictionary");
   const [modalCard, setModalCard] = useState<CardWithLog | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const { lines } = useLines();
   const lineId = lines[0]?.id ?? null;
 
-  const { data: cardsData } = db.useQuery({ cards: { image: {} } });
+  const { data: cardsData } = db.useQuery({
+    cards: { image: {} },
+    examples: { links: { card: {} }, $: { limit: 2000 } },
+  });
   const allCards = useMemo(
     () => (cardsData?.cards ?? []) as CardWithLog[],
     [cardsData?.cards],
+  );
+  const allExamples = useMemo(
+    () => (cardsData?.examples ?? []) as Example[],
+    [cardsData?.examples],
   );
 
   // The default line, sorted top -> bottom: used both for the position badge
@@ -745,6 +927,10 @@ export default function Dictionary() {
   const cardHits = useMemo(
     () => searchCards(allCards, query),
     [allCards, query],
+  );
+  const exampleHits = useMemo(
+    () => searchExamples(allExamples, query),
+    [allExamples, query],
   );
 
   async function handleUpdate(
@@ -768,12 +954,26 @@ export default function Dictionary() {
       .catch((e) => setError(String(e)));
   }, []);
 
+  // Unlimited, like the other two: the tab counts every hit and the list caps
+  // what it renders. Left at the default, the count would read a flat "60".
   const results = useMemo(
-    () => (entries ? searchDictionary(entries, query) : []),
+    () => (entries ? searchDictionary(entries, query, Infinity) : []),
     [entries, query],
   );
 
   const trimmed = query.trim();
+
+  // What the open section has, and what all three have between them — the
+  // second is what tells "nothing anywhere" apart from "nothing under this tab".
+  const shown = {
+    count:
+      tab === "dictionary"
+        ? results.length
+        : tab === "cards"
+          ? cardHits.length
+          : exampleHits.length,
+    total: results.length + cardHits.length + exampleHits.length,
+  };
 
   return (
     <div className={page}>
@@ -788,45 +988,119 @@ export default function Dictionary() {
       />
 
       {error && <div className={hint}>{error}</div>}
-      {!entries && !error && <div className={hint}>Loading dictionary…</div>}
+      {!entries && !error && trimmed === "" && (
+        <div className={hint}>Loading dictionary…</div>
+      )}
       {entries && trimmed === "" && (
         <div className={hint}>
           Type a word to search {entries.length.toLocaleString()} entries.
         </div>
       )}
-      {entries &&
-        trimmed !== "" &&
-        results.length === 0 &&
-        cardHits.length === 0 && (
-          <div className={hint}>No matches for “{trimmed}”.</div>
-        )}
 
-      {cardHits.length > 0 && (
-        <div className={hitList}>
-          {cardHits.map((c) => (
-            <CardHit
-              key={c.id}
-              card={c}
-              position={positions.get(c.id)}
-              onEdit={() => setModalCard(c)}
-              onTop={async () => {
-                if (lineId) await moveToTop(lineMembers, lineId, c.id);
-              }}
-            />
-          ))}
-        </div>
-      )}
+      {/* All three sections are offered with their counts whichever is open: a
+          query that misses the dictionary often hits the cards, and the count
+          is what says so without a click. They appear as soon as anything is
+          typed rather than once the dictionary has downloaded — cards and
+          examples are already in memory, and on a phone that 3.5 MB fetch is
+          long enough to matter. */}
+      {trimmed !== "" && (
+        <>
+          <div className={tabs}>
+            {(
+              [
+                ["dictionary", "Dictionary", entries ? results.length : "…"],
+                ["cards", "Cards", cardHits.length],
+                ["examples", "Examples", exampleHits.length],
+              ] as const
+            ).map(([key, title, count]) => (
+              <button
+                key={key}
+                type="button"
+                className={tab === key ? `${tabBtn} ${tabActive}` : tabBtn}
+                onClick={() => setTab(key)}
+                aria-pressed={tab === key}
+              >
+                {title}
+                <span className={tabCount}>{count}</span>
+              </button>
+            ))}
+          </div>
 
-      {results.length > 0 && (
-        <div className={list}>
-          {results.map((entry, i) => (
-            <EntryCard
-              key={`${entry.word}-${i}`}
-              entry={entry}
-              audioEl={audioRef.current}
-            />
-          ))}
-        </div>
+          {tab === "dictionary" && !entries && !error && (
+            <div className={hint}>Loading dictionary…</div>
+          )}
+
+          {shown.count === 0 && (entries || tab !== "dictionary") && (
+            <div className={hint}>
+              {shown.total === 0
+                ? `No matches for “${trimmed}”.`
+                : `Nothing here for “${trimmed}”.`}
+            </div>
+          )}
+
+          {
+            <>
+              {tab === "cards" && (
+                <div className={hitList}>
+                  {cardHits.slice(0, RENDER_LIMIT).map((c) => (
+                    <CardHit
+                      key={c.id}
+                      card={c}
+                      position={positions.get(c.id)}
+                      onEdit={() => setModalCard(c)}
+                      onTop={async () => {
+                        if (lineId) await moveToTop(lineMembers, lineId, c.id);
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {tab === "dictionary" && (
+                <div className={list}>
+                  {results.slice(0, RENDER_LIMIT).map((entry, i) => (
+                    <EntryCard
+                      key={`${entry.word}-${i}`}
+                      entry={entry}
+                      audioEl={audioRef.current}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {tab === "examples" && (
+                <div className={hitList}>
+                  {exampleHits.slice(0, RENDER_LIMIT).map((e) => {
+                    const words = exampleCards(e);
+                    return (
+                      <div className={exHit} key={e.id}>
+                        <div>{e.aText}</div>
+                        {e.bText?.trim() && (
+                          <div className={exTrans}>{e.bText}</div>
+                        )}
+                        {words.length > 0 && (
+                          <div className={exCards}>
+                            {words.map((word, i) => (
+                              <span className={exCard} key={i}>
+                                {word}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {shown.count > RENDER_LIMIT && (
+                <div className={moreHint}>
+                  Showing {RENDER_LIMIT} of {shown.count}
+                </div>
+              )}
+            </>
+          }
+        </>
       )}
 
       {modalCard !== null && (
