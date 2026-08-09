@@ -37,6 +37,33 @@ function searchCards(cards: CardWithLog[], rawQuery: string): CardWithLog[] {
   });
 }
 
+/**
+ * Side A of a card, reduced to a padded run of lowercase words: "De hond!" ->
+ * " de hond ". Containment on that is a whole-word test, which is what the
+ * "already a card" badge needs — a plain substring would call every short word
+ * taken, since Dutch builds compounds out of them ("hond" is inside
+ * "hondenhok"). The padding is what makes the ends count as boundaries too.
+ */
+function wordRun(text: string): string {
+  return ` ${text
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim()} `;
+}
+
+/**
+ * The user's own card for this dictionary word, if there is one. Cards are
+ * stored with the article on side A ("de hond") and sometimes carry more than
+ * that, so the word only has to occur in side A, not be all of it.
+ */
+function findOwnCard(
+  cards: { run: string; card: CardWithLog }[],
+  word: string,
+): CardWithLog | null {
+  const run = wordRun(word);
+  return cards.find((c) => c.run.includes(run))?.card ?? null;
+}
+
 /** The words an example is attached to, for both its search text and its row. */
 function exampleCards(example: Example): string[] {
   return (example.links ?? []).flatMap((l) => (l.card ? [l.card.aCard] : []));
@@ -270,8 +297,30 @@ const verbLabel = css`
   margin-right: 0.25rem;
 `;
 
-const addBtn = css`
+// The badge and the button travel together at the end of the header row.
+const headEnd = css`
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+`;
+
+// "You already have this one." Not a disabled state: a second card for the same
+// word is sometimes the point (a different sense, a fixed expression).
+const haveBadge = css`
+  border: 1px solid #cfe8d4;
+  background: #f0f9f1;
+  border-radius: 6px;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #2c7a3f;
+  white-space: nowrap;
+  cursor: default;
+`;
+
+const addBtn = css`
   border: 1px solid #e5e5e5;
   background: #fafafa;
   border-radius: 6px;
@@ -610,9 +659,12 @@ const SENSE_LIMIT = 4;
 function EntryCard({
   entry,
   audioEl,
+  ownCard,
 }: {
   entry: DictEntry;
   audioEl: HTMLAudioElement | null;
+  // A card the user already has for this word, if any.
+  ownCard: CardWithLog | null;
 }) {
   const audios = entryAudios(entry);
   const verb = entry.verb;
@@ -655,8 +707,6 @@ function EntryCard({
     shownGroups.push({ ...g, senses });
   }
 
-  // Whether the word is already a card isn't checked here — matching cards show
-  // up in their own section above the dictionary results.
   const [saving, setSaving] = useState(false);
   const [added, setAdded] = useState(false);
 
@@ -713,14 +763,24 @@ function EntryCard({
         {entry.article && <span className={article}>{entry.article}</span>}
         <span className={word}>{entry.word}</span>
         {entry.pos && <span className={pos}>{entry.pos}</span>}
-        <button
-          className={addBtn}
-          onClick={addToCards}
-          disabled={added || saving || cardBack === ""}
-          title="Add to cards (NL → EN)"
-        >
-          {added ? "✓ Added" : saving ? "Adding…" : "+ Add to cards"}
-        </button>
+        <span className={headEnd}>
+          {ownCard && !added && (
+            <span
+              className={haveBadge}
+              title={`Already a card: ${ownCard.aCard}`}
+            >
+              ✓ in cards
+            </span>
+          )}
+          <button
+            className={addBtn}
+            onClick={addToCards}
+            disabled={added || saving || cardBack === ""}
+            title="Add to cards (NL → EN)"
+          >
+            {added ? "✓ Added" : saving ? "Adding…" : "+ Add to cards"}
+          </button>
+        </span>
       </div>
 
       {translations.length > 0 && (
@@ -927,6 +987,13 @@ export default function Dictionary() {
     [lineMembers],
   );
 
+  // Side A of every card, prepared once, so each dictionary result can ask
+  // whether it is already one of them.
+  const cardRuns = useMemo(
+    () => allCards.map((card) => ({ run: wordRun(card.aCard ?? ""), card })),
+    [allCards],
+  );
+
   const cardHits = useMemo(
     () => searchCards(allCards, query),
     [allCards, query],
@@ -1066,6 +1133,7 @@ export default function Dictionary() {
                       key={`${entry.word}-${i}`}
                       entry={entry}
                       audioEl={audioRef.current}
+                      ownCard={findOwnCard(cardRuns, entry.word)}
                     />
                   ))}
                 </div>
