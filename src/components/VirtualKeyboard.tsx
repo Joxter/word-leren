@@ -47,11 +47,27 @@ const sideKey = css`
   font-size: 0.85rem;
 `;
 
+// The accent row sits a little below the letters, like a phone's symbol strip.
+const accentRow = css`
+  margin-top: 0.5rem;
+`;
+
+// Too few keys to stretch across the row, so they keep the top row's key width
+// (ten keys and the nine 0.25rem gaps between them) and the row centers them.
+const accentKey = css`
+  flex: 0 0 calc((100% - 2.25rem) / 10);
+`;
+
 const ROWS = [
   ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
   ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
   ["z", "x", "c", "v", "b", "n", "m"],
 ];
+
+// The four accents that carry nearly every accented word in the dictionary:
+// België, naïef, één/café, carrière. The rarer ones (ö ü ê á ó à, one or two
+// words each) are left out to keep the row readable.
+const ACCENTS = ["ë", "ï", "é", "è"];
 
 interface Props {
   onKey: (ch: string) => void;
@@ -65,7 +81,10 @@ export default function VirtualKeyboard({
   onBackspace,
   allowed,
 }: Props) {
-  const off = (ch: string) => allowed != null && !allowed.has(ch);
+  // `allowed` holds base letters only, so ë is judged by the e it folds to.
+  const off = (ch: string) =>
+    allowed != null &&
+    !allowed.has(ch.normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
   // pointerdown instead of click: fires immediately and, with preventDefault,
   // never moves focus or triggers double-tap zoom on phones.
   const press = (fn: () => void) => (e: React.PointerEvent) => {
@@ -113,6 +132,18 @@ export default function VirtualKeyboard({
           </div>
         );
       })}
+      <div className={`${row} ${accentRow}`}>
+        {ACCENTS.map((ch) => (
+          <button
+            key={ch}
+            className={`${key} ${accentKey}`}
+            disabled={off(ch)}
+            onPointerDown={press(() => onKey(ch))}
+          >
+            {ch}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
