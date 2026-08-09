@@ -529,7 +529,6 @@ export default function Line() {
     removeImageId: string | null,
   ): Promise<void> {
     const cardId = (modalCard as Card).id;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const ops: any[] = [db.tx.cards[cardId].update(formData)];
     if (removeImageId) {
       ops.push(db.tx.cards[cardId].unlink({ image: removeImageId }));

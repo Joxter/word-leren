@@ -279,7 +279,6 @@ export default function GrammarEdit() {
     setSaving(true);
 
     const targetId = isNew ? stableId.current : cardId!;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const ops: any[] = [
       isNew
         ? db.tx.lightCards[targetId]

@@ -461,7 +461,6 @@ export default function Cards() {
     e.preventDefault();
     setNewSaving(true);
     const cardId = id();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const ops: any[] = [
       db.tx.cards[cardId].update(newForm).link({ owner: ownerId() }),
     ];

@@ -1,10 +1,8 @@
 // Docs: https://www.instantdb.com/docs/modeling-data
 //
-// Every entity a user creates carries an `owner` link to `$users`, and the
-// permission rules key off it — see `instant.perms.ts`. That link is what keeps
-// accounts apart: nothing here is shared between users (the dictionary is a
-// static file under public/, not a table), so a missing owner means a row no
-// one can read.
+// Every entity carries an `owner` link to `$users`, which is the only thing
+// keeping accounts apart — nothing here is shared, so a row without one is a row
+// nobody can read. See `instant.perms.ts`.
 
 import { i } from "@instantdb/react";
 

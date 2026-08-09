@@ -1,8 +1,6 @@
-// Sign-in wall. Nothing in the app renders without a user, because nothing in
-// the app can be read or written without one — see `instant.perms.ts`.
-//
-// Auth is magic-code only: Instant mails a six-digit code and swaps it for a
-// long-lived session, so there is no password to store, leak or reset.
+// Sign-in wall. Nothing renders without a user, because nothing can be read or
+// written without one — see `instant.perms.ts`. Magic code only: Instant mails
+// six digits and swaps them for a long-lived session.
 
 import { useState } from "react";
 import { css } from "@linaria/core";

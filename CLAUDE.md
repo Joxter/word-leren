@@ -1,25 +1,27 @@
 # CLAUDE.md
 
-Personal single-user Dutch-learning app. See `README.md` for architecture, features,
-and the data model — this file only covers build/config gotchas that aren't obvious.
+Personal Dutch-learning app; multi-user since accounts landed, but not social.
+See `README.md` for architecture, features, and the data model — this file only
+covers build/config gotchas that aren't obvious.
 
 ## Commands
 
 - `npm run dev` — dev server
 - `npm run build` — `tsc -b && vite build`
 - `npm run format` — Prettier (there is no linter)
+- `npm test` — Vitest
 - `npm run build-dictionary` — regenerate `public/data/dictionary.json` + audio from `sources/`
 - `node scripts/fetch-kaikki.mjs` — refresh `sources/kaikki-nl.jsonl` from Wiktionary (rarely; needs network)
 - `npx instant-cli@latest push schema` / `push perms` — after editing `src/instant.schema.ts`
   or `src/instant.perms.ts`. Push schema **before** perms: a rule that mentions a link the
   backend doesn't have yet locks everyone out of that namespace.
 - `node scripts/migrate-owner.mjs <email>` — give ownerless rows an owner (one-off; see below)
-- `node scripts/backup.mjs` — dump every table + every uploaded image to a local folder
+- `npm run backup` — dump every table + every uploaded image to a local folder
 
 ## Gotchas
 
 - **No linter.** TypeScript strict is on, but `noUnusedLocals/Parameters` are off.
-  Tests are Vitest (`npx vitest run`) and cover `src/lib/` only.
+  Tests (`npm test`) cover `src/lib/` only.
 - **Prettier config:** printWidth 80, trailing commas, `arrowParens: always`, **double quotes**.
 - **Linaria CSS-in-JS:** `css` from `@linaria/core`, `styled` from `@linaria/react`; CSS is
   statically extracted at build. In `vite.config`, the wyw plugin must come **before** the react plugin.

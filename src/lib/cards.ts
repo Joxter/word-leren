@@ -1,6 +1,6 @@
-// Card mutations shared by every page that can edit a card through CardModal
-// (Cards and Dictionary). Line membership is not touched here — CardModal
-// applies that itself via the queue helpers.
+// Card mutations shared by every page that edits a card through CardModal.
+// Line membership is not touched here — CardModal applies that itself via the
+// queue helpers.
 
 import { db } from "../db";
 import { ownedPath, ownerId } from "./session";
