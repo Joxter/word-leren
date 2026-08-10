@@ -83,10 +83,11 @@ A deliberately simple, Anki-inspired review mode built around a single global qu
 Two toggles change what the prompt asks for. **Reverse** shows side A and asks for its
 meaning, the direction reading actually needs. **Examples** prompts with one of the card's
 [example sentences](#examples) instead, with the fragments belonging to that card blanked
-out — Hint spells the gaps out letter by letter in place, Type checks the missing words,
-and Reveal fills them back in and names the card. They are opposite exercises, so turning
-either on switches the other off, and a card with no usable example just falls back to the
-plain prompt. Whichever example came up is recorded on the review, so a card carrying
+out, and its translation underneath — Hint spells the gaps out letter by letter in place,
+Type checks the missing words, and Reveal fills them back in and names the card. A card
+with no usable example falls back to the plain prompt. The two can be on together: a
+sentence is always asked in its own direction, so **Reverse** then applies to exactly
+those cards that fall back. Whichever example came up is recorded on the review, so a card carrying
 several sentences cycles through them least-recently-seen first rather than drilling one.
 Revealing any card also lists its other examples underneath.
 

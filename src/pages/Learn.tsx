@@ -415,22 +415,27 @@ interface LearnCard {
   exampleLinks?: ExampleLink[];
 }
 
-const MODE_KEY = "word-leren:mode";
-
 /**
- * What the prompt asks for. `forward` shows side B and wants side A (produce
- * the Dutch word); `reverse` shows side A and wants its meaning, the direction
- * reading actually asks of you; `examples` shows one of the card's example
- * sentences with the card's own fragments blanked out. They are one choice, not
- * independent flags — a card is asked for in exactly one of these ways.
+ * The two toggles that decide what the prompt asks for. `examples` shows one of
+ * the card's example sentences with the card's own fragments blanked out;
+ * `reverse` shows side A and wants its meaning, the direction reading actually
+ * asks of you. Default (neither) shows side B and wants side A — produce the
+ * Dutch word.
+ *
+ * They are independent, but a card can only be asked one way at a time, so with
+ * both on the example wins and `reverse` applies to the cards that have no
+ * example to blank out.
  */
-type Mode = "forward" | "reverse" | "examples";
+const REVERSE_KEY = "word-leren:reverse";
+const EXAMPLES_KEY = "word-leren:examples";
+// Superseded by the two keys above, which used to be one three-way choice.
+// Read once, so an existing preference survives the change.
+const LEGACY_MODE_KEY = "word-leren:mode";
 
-const MODES: Mode[] = ["forward", "reverse", "examples"];
-
-function storedMode(): Mode {
-  const stored = localStorage.getItem(MODE_KEY);
-  return MODES.includes(stored as Mode) ? (stored as Mode) : "forward";
+function storedFlag(key: string, legacyMode: string): boolean {
+  const stored = localStorage.getItem(key);
+  if (stored !== null) return stored === "1";
+  return localStorage.getItem(LEGACY_MODE_KEY) === legacyMode;
 }
 
 export default function Learn() {
@@ -441,8 +446,12 @@ export default function Learn() {
   const [hintLetters, setHintLetters] = useState<boolean[]>([]);
   const [typing, setTyping] = useState(false);
   const [typed, setTyped] = useState("");
-  const [mode, setMode] = useState<Mode>(storedMode);
-  const reverse = mode === "reverse";
+  const [reverseOn, setReverseOn] = useState(() =>
+    storedFlag(REVERSE_KEY, "reverse"),
+  );
+  const [examplesOn, setExamplesOn] = useState(() =>
+    storedFlag(EXAMPLES_KEY, "examples"),
+  );
 
   // Per-card scratch state: cleared whenever the prompt changes out from under
   // the user, whether that's a new card or a mode flip.
@@ -454,12 +463,13 @@ export default function Learn() {
     setTyped("");
   }
 
-  // The checkboxes read as toggles but behave as a three-way choice: turning
-  // one on turns the other off, and turning it off falls back to forward.
-  function toggleMode(target: Mode) {
-    const next = mode === target ? "forward" : target;
-    localStorage.setItem(MODE_KEY, next);
-    setMode(next);
+  function toggleFlag(
+    key: string,
+    next: boolean,
+    set: (v: boolean) => void,
+  ): void {
+    localStorage.setItem(key, next ? "1" : "0");
+    set(next);
     // The card on screen would change mid-answer otherwise.
     resetCardState();
   }
@@ -487,7 +497,7 @@ export default function Learn() {
   // fragments have all gone missing falls back to the plain prompt rather than
   // showing a sentence with nothing blanked.
   const clozeLink =
-    mode === "examples" && current
+    examplesOn && current
       ? pickClozeLink(current.exampleLinks ?? [], current.log)
       : undefined;
   const clozeSpans = clozeLink?.example
@@ -497,6 +507,10 @@ export default function Learn() {
     clozeLink?.example && clozeSpans.length > 0
       ? { link: clozeLink, example: clozeLink.example, spans: clozeSpans }
       : null;
+
+  // A sentence is asked in its own direction, so with both toggles on the
+  // reverse prompt is what the cards without a usable example fall back to.
+  const reverse = reverseOn && !cloze;
 
   async function handleDepth(depth: number) {
     if (!current || !activeLine || busy) return;
@@ -562,7 +576,7 @@ export default function Learn() {
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [revealed, current, busy, mode, cloze?.link.id, depths.length]);
+  }, [revealed, current, busy, reverse, cloze?.link.id, depths.length]);
 
   // Hint boxes and the typed answer are per-card scratch state — clear them
   // whenever the top card changes (depth placed, deleted, or swapped in).
@@ -595,12 +609,14 @@ export default function Learn() {
       <div className={topBarToggles}>
         <label
           className={checkToggle}
-          title="Show side A first and recall its meaning"
+          title="Show side A first and recall its meaning — on cards that aren't asked as an example sentence"
         >
           <input
             type="checkbox"
-            checked={mode === "reverse"}
-            onChange={() => toggleMode("reverse")}
+            checked={reverseOn}
+            onChange={(e) =>
+              toggleFlag(REVERSE_KEY, e.target.checked, setReverseOn)
+            }
           />
           Reverse
         </label>
@@ -610,8 +626,10 @@ export default function Learn() {
         >
           <input
             type="checkbox"
-            checked={mode === "examples"}
-            onChange={() => toggleMode("examples")}
+            checked={examplesOn}
+            onChange={(e) =>
+              toggleFlag(EXAMPLES_KEY, e.target.checked, setExamplesOn)
+            }
           />
           Examples
         </label>
@@ -711,11 +729,11 @@ export default function Learn() {
                   />
                 )}
               </div>
-              {/* Held back from the bare prompt: the translation names the
-                  missing words often enough that showing it up front answers
-                  the exercise. That is exactly what makes it a hint, so it
-                  comes with the letter boxes. */}
-              {(revealed || hintOpen) && cloze.example.bText?.trim() && (
+              {/* Part of the prompt, not a hint. It does name the missing
+                  words fairly often, but without it a blanked sentence is
+                  frequently ambiguous — the exercise is to produce the Dutch,
+                  not to guess which meaning was intended. */}
+              {cloze.example.bText?.trim() && (
                 <div className={clozeTranslation}>{cloze.example.bText}</div>
               )}
             </>
