@@ -7,11 +7,11 @@ import { DEPTH_BUTTONS, depthButtons } from "./queue";
 
 describe("depthButtons", () => {
   it("offers one button past the end of the line", () => {
-    expect(depthButtons(560)).toEqual([8, 20, 50, 100, 200, 300, 500, 700]);
+    expect(depthButtons(560)).toEqual([8, 20, 50, 100, 250, 500, 750]);
   });
 
   it("counts a button that lands exactly on the bottom as the last one", () => {
-    expect(depthButtons(500)).toEqual([8, 20, 50, 100, 200, 300, 500]);
+    expect(depthButtons(500)).toEqual([8, 20, 50, 100, 250, 500]);
   });
 
   it("offers everything when the line is deeper than the scale", () => {
