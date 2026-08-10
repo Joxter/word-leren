@@ -42,10 +42,10 @@ exactly-matched verb form can outrank a translation.
 ### Examples
 
 Example sentences live as their own entity rather than inside a card's note, so one
-sentence can serve many cards. What makes an attachment useful is *where* in the sentence
+sentence can serve many cards. What makes an attachment useful is _where_ in the sentence
 the card appears: an attachment records a list of **spans** into the sentence — several of
-them for separable verbs, so "Ik **sta** elke dag om 7 uur **op**" attaches to *opstaan*
-through two fragments while the same sentence can attach to *elke* through `elke dag`.
+them for separable verbs, so "Ik **sta** elke dag om 7 uur **op**" attaches to _opstaan_
+through two fragments while the same sentence can attach to _elke_ through `elke dag`.
 That is what the **Examples** mode on the Learn page blanks out; cards remain the basis of
 the learning line.
 
@@ -156,7 +156,12 @@ type DictEntry = {
   pos?: string;
   article?: "de" | "het";
   verb?: { past?: string; participle?: string; separable?: boolean };
-  info: { source: string; translation: string; audio?: string; examples?: string }[];
+  info: {
+    source: string;
+    translation: string;
+    audio?: string;
+    examples?: string;
+  }[];
 };
 ```
 

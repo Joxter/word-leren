@@ -11,9 +11,7 @@ import { db } from "../db";
 // so there is no "filter by line + order by rank" query — callers load the
 // cards they already have and sort in memory with the helpers below.
 
-export const DEPTH_BUTTONS = [
-  8, 20, 50, 100, 200, 300, 500, 700, 1000, 1500, 2500,
-];
+export const DEPTH_BUTTONS = [8, 20, 50, 100, 250, 500, 750, 1000, 1500, 2500];
 
 /**
  * The depth buttons worth offering for a line of `size` cards: the ones that
@@ -32,11 +30,12 @@ export const MOVE_STEPS = [1, 5, 25, 100];
 export { generateKeyBetween };
 
 /**
- * Jitter a target depth by up to ±4%, staying at least 1. Rounds to a whole
- * position, so shallow depths (where 4% < half a slot) are left unchanged.
+ * Jitter a target depth by up to ±k%, staying at least 1. Rounds to a whole
+ * position, so shallow depths (where k% < half a slot) are left unchanged.
  */
 function disperseDepth(depth: number): number {
-  const jitter = Math.round(depth * 0.04 * (Math.random() * 2 - 1));
+  const k = 0.1;
+  const jitter = Math.round(depth * k * (Math.random() * 2 - 1));
   return Math.max(1, depth + jitter);
 }
 
