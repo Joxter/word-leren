@@ -7,7 +7,7 @@ import CardModal from "../components/CardModal";
 import MarkdocField from "../components/MarkdocField";
 import PlayButton from "../components/PlayButton";
 import { enqueueTop } from "../lib/queue";
-import { saveCard, deleteCard } from "../lib/cards";
+import { saveCard, deleteCard, trimCardText } from "../lib/cards";
 import { useLines } from "../lib/lines";
 import { ownedPath, ownerId } from "../lib/session";
 import LineCheckboxes from "../components/LineCheckboxes";
@@ -462,7 +462,9 @@ export default function Cards() {
     setNewSaving(true);
     const cardId = id();
     const ops: any[] = [
-      db.tx.cards[cardId].update(newForm).link({ owner: ownerId() }),
+      db.tx.cards[cardId]
+        .update(trimCardText(newForm))
+        .link({ owner: ownerId() }),
     ];
     if (newImageFile) {
       const { data: fileData } = await db.storage.uploadFile(

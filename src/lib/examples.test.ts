@@ -5,7 +5,6 @@ import {
   pickClozeLink,
   segmentText,
   spansAnswer,
-  splitSentences,
   toggleSpan,
   tokenize,
   type Example,
@@ -245,35 +244,5 @@ describe("toggleSpan", () => {
   it("clears every blank a wide range touches", () => {
     const spans = [at(SENTENCE, "sta"), at(SENTENCE, "elke")];
     expect(toggleSpan(spans, 0, SENTENCE.length, SENTENCE)).toEqual([]);
-  });
-});
-
-describe("splitSentences", () => {
-  it("keeps the terminator on the sentence it ends", () => {
-    expect(splitSentences("Ik sta op. Hij ook.")).toEqual([
-      "Ik sta op.",
-      "Hij ook.",
-    ]);
-  });
-
-  it("splits on line breaks, punctuation or not", () => {
-    expect(splitSentences("een\ntwee\n\ndrie")).toEqual([
-      "een",
-      "twee",
-      "drie",
-    ]);
-  });
-
-  it("takes a run of terminators as one", () => {
-    expect(splitSentences("Wat?! Ja…")).toEqual(["Wat?!", "Ja…"]);
-  });
-
-  it("drops blanks and trims", () => {
-    expect(splitSentences("  ")).toEqual([]);
-    expect(splitSentences("  Hallo.  ")).toEqual(["Hallo."]);
-  });
-
-  it("leaves an unterminated tail as its own sentence", () => {
-    expect(splitSentences("Eerst. En dan")).toEqual(["Eerst.", "En dan"]);
   });
 });

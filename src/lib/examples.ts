@@ -181,22 +181,6 @@ export function spansAnswer(spans: Span[]): string {
   return spans.map((s) => s.text).join(" ");
 }
 
-/**
- * Cut a pasted blob into one sentence per entry, so a page of text can be
- * turned into examples in one go. Splits on sentence-ending punctuation (the
- * terminator stays on the sentence it ends) and on line breaks, since pasted
- * lists often carry no punctuation at all. Nothing here understands
- * abbreviations — the add form is a list of editable inputs precisely so a bad
- * split can be fixed by hand.
- */
-export function splitSentences(text: string): string[] {
-  return text
-    .split(/\r?\n/)
-    .flatMap((line) => line.match(/[^.!?…]+[.!?…]*/gu) ?? [])
-    .map((s) => s.trim())
-    .filter(Boolean);
-}
-
 export interface Token {
   start: number;
   end: number;
@@ -351,33 +335,22 @@ export async function saveExampleWithLinks(
 }
 
 /**
- * Create one bare example per sentence — no translation, no card links. The
- * bulk entry point: the point of it is to get a page of text into the list
- * quickly, and the translating and linking happens later, one sentence at a
- * time. `createdAt` counts down so that under the list's newest-first order the
- * batch reads in the order it was pasted. Returns the new ids, in that order.
+ * Create one bare example — no translation, no card links. Whatever was typed
+ * goes in as it stands; the translating and linking happens later. Returns the
+ * new id, so the caller can select the row it just made.
  */
-export async function createExamples(
-  texts: string[],
+export async function createExample(
+  aText: string,
   aLang: string,
   bLang: string,
-): Promise<string[]> {
-  const now = Date.now();
-  const ids = texts.map(() => id());
-  const owner = ownerId();
+): Promise<string> {
+  const exampleId = id();
   await db.transact(
-    texts.map((aText, i) =>
-      db.tx.examples[ids[i]]
-        .update({
-          aLang,
-          bLang,
-          aText,
-          createdAt: now + (texts.length - 1 - i),
-        })
-        .link({ owner }),
-    ),
+    db.tx.examples[exampleId]
+      .update({ aLang, bLang, aText, createdAt: Date.now() })
+      .link({ owner: ownerId() }),
   );
-  return ids;
+  return exampleId;
 }
 
 /**

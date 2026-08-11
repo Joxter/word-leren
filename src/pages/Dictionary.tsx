@@ -19,7 +19,7 @@ import { rankMatches } from "../lib/search";
 import type { Example } from "../lib/examples";
 import CardModal from "../components/CardModal";
 import PlayButton from "../components/PlayButton";
-import { saveCard, deleteCard } from "../lib/cards";
+import { saveCard, deleteCard, trimCardText } from "../lib/cards";
 import { mine, ownerId } from "../lib/session";
 import type { Card, CardData } from "./Cards";
 
@@ -743,9 +743,13 @@ function EntryCard({
         .update({
           aLang: "NL",
           bLang: "EN",
-          aCard: entry.article ? `${entry.article} ${entry.word}` : entry.word,
-          bCard: cardBack,
-          note,
+          ...trimCardText({
+            aCard: entry.article
+              ? `${entry.article} ${entry.word}`
+              : entry.word,
+            bCard: cardBack,
+            note,
+          }),
           ...(rawAudio ? { audio: `audio/${rawAudio}` } : {}),
         })
         .link({ owner: ownerId() }),

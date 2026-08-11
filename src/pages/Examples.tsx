@@ -3,7 +3,8 @@ import { css } from "@linaria/core";
 import { db } from "../db";
 import ExampleEditor from "../components/ExampleEditor";
 import ExampleText from "../components/ExampleText";
-import { createExamples, splitSentences, type Example } from "../lib/examples";
+import { Textarea } from "../components/Textarea";
+import { createExample, type Example } from "../lib/examples";
 import { mine } from "../lib/session";
 
 const A_LANGS = ["NL", "EN"] as const;
@@ -80,9 +81,6 @@ const search = css`
   font-size: 0.9rem;
   font-family: inherit;
   line-height: 1.5;
-  resize: vertical;
-  /* Grows with what is pasted in — the same box is the bulk-add input. */
-  field-sizing: content;
   min-height: 2.4rem;
 
   &:focus {
@@ -150,40 +148,17 @@ const addHead = css`
   }
 `;
 
-const addRow = css`
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-`;
-
-const addInput = css`
-  flex: 1;
-  min-width: 0;
-  padding: 0.35rem 0.5rem;
+// What the Add button would create, so the box isn't a bare button.
+const addPreview = css`
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #333;
+  background: #fff;
   border: 1px solid #e0e0e0;
   border-radius: 6px;
-  font-size: 0.875rem;
-  font-family: inherit;
-  background: #fff;
-
-  &:focus {
-    outline: none;
-    border-color: #999;
-  }
-`;
-
-const dropBtn = css`
-  background: none;
-  border: none;
-  color: #bbb;
-  font-size: 0.85rem;
-  cursor: pointer;
-  padding: 0.2rem;
-  line-height: 1;
-
-  &:hover {
-    color: #dc2626;
-  }
+  padding: 0.35rem 0.5rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 `;
 
 const addActions = css`
@@ -342,21 +317,14 @@ function needsWork(e: Example): boolean {
 /**
  * Every example sentence, as a table of sentence and translation with the
  * linked fragments highlighted, next to an editor for whichever row is
- * selected. The search box doubles as the way in: type — or paste a page of
- * text — and when nothing matches it offers the sentences it found as a batch
- * to create, one editable input each.
+ * selected. The search box doubles as the way in: type, and when nothing
+ * matches it offers what was typed as a new example — whole, exactly as it
+ * stands, since only the writer knows where one example ends.
  */
 export default function Examples() {
   const [query, setQuery] = useState("");
   const [onlyLoose, setOnlyLoose] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  // Rows the user has edited by hand, tagged with the query they were split
-  // from — a new query simply stops matching, which re-splits from scratch
-  // without an effect that wipes them a render late.
-  const [drafts, setDrafts] = useState<{
-    query: string;
-    rows: string[];
-  } | null>(null);
   // The query for which the add form was opened by hand, even though it matched.
   const [addFor, setAddFor] = useState<string | null>(null);
   const [newLang, setNewLang] = useState<string>("NL");
@@ -389,25 +357,19 @@ export default function Examples() {
     });
   }, [examples, query, onlyLoose]);
 
-  const split = useMemo(() => splitSentences(query), [query]);
-  const rows = drafts?.query === query ? drafts.rows : split;
-  // What goes in if Add is pressed — also what the button counts and labels.
-  const texts = rows.map((r) => r.trim()).filter(Boolean);
+  // What goes in if Add is pressed: the box as written, minus the whitespace
+  // around it. Line breaks and full stops inside it are the author's business.
+  const text = query.trim();
   // Nothing matched, so what was typed was probably not a search at all.
-  const showAdd =
-    query.trim() !== "" && (shown.length === 0 || addFor === query);
+  const showAdd = text !== "" && (shown.length === 0 || addFor === query);
 
-  function editRows(next: string[]) {
-    setDrafts({ query, rows: next });
-  }
-
-  async function addAll() {
-    if (texts.length === 0) return;
+  async function add() {
+    if (text === "") return;
     setAdding(true);
     try {
-      const ids = await createExamples(texts, newLang, "EN");
+      const newId = await createExample(text, newLang, "EN");
       setQuery("");
-      setSelectedId(ids[0] ?? null);
+      setSelectedId(newId);
     } finally {
       setAdding(false);
     }
@@ -424,12 +386,12 @@ export default function Examples() {
           </span>
         </div>
 
-        <textarea
+        <Textarea
           className={search}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           rows={1}
-          placeholder="Search sentences, translations or attached cards — or paste new sentences to add them…"
+          placeholder="Search sentences, translations or attached cards — or type a new sentence to add it…"
         />
 
         <div className={controls}>
@@ -458,10 +420,7 @@ export default function Examples() {
         {showAdd && (
           <div className={addBox}>
             <div className={addHead}>
-              <span>
-                New{" "}
-                {rows.length === 1 ? "sentence" : `sentences · ${rows.length}`}
-              </span>
+              <span>New sentence</span>
               <div className={segmented}>
                 {A_LANGS.map((l) => (
                   <div key={l} className={segmentedItem}>
@@ -479,38 +438,18 @@ export default function Examples() {
               </div>
             </div>
 
-            {rows.map((row, i) => (
-              <div key={i} className={addRow}>
-                <input
-                  className={addInput}
-                  value={row}
-                  onChange={(e) =>
-                    editRows(rows.map((r, j) => (j === i ? e.target.value : r)))
-                  }
-                />
-                <button
-                  type="button"
-                  className={dropBtn}
-                  title="Drop this one"
-                  onClick={() => editRows(rows.filter((_, j) => j !== i))}
-                >
-                  ✕
-                </button>
-              </div>
-            ))}
+            {/* Edits go in the box above — this only shows what will be
+                stored, whitespace already off both ends. */}
+            <div className={addPreview}>{text}</div>
 
             <div className={addActions}>
               <button
                 type="button"
                 className={addBtn}
-                onClick={addAll}
-                disabled={adding || texts.length === 0}
+                onClick={add}
+                disabled={adding}
               >
-                {adding
-                  ? "Adding…"
-                  : `Add ${texts.length} example${
-                      texts.length === 1 ? "" : "s"
-                    }`}
+                {adding ? "Adding…" : "Add example"}
               </button>
               <button
                 type="button"

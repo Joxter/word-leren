@@ -20,7 +20,8 @@ import {
   renameLine,
   deleteLine,
 } from "../lib/lines";
-import { mine, ownedPath, ownerId } from "../lib/session";
+import { mine } from "../lib/session";
+import { saveCard } from "../lib/cards";
 import LineSelector from "../components/LineSelector";
 import PlayButton from "../components/PlayButton";
 import CardModal from "../components/CardModal";
@@ -528,23 +529,7 @@ export default function Line() {
     imageFile: File | null,
     removeImageId: string | null,
   ): Promise<void> {
-    const cardId = (modalCard as Card).id;
-    const ops: any[] = [db.tx.cards[cardId].update(formData)];
-    if (removeImageId) {
-      ops.push(db.tx.cards[cardId].unlink({ image: removeImageId }));
-      ops.push(db.tx.$files[removeImageId].delete());
-    }
-    if (imageFile) {
-      const { data: fileData } = await db.storage.uploadFile(
-        ownedPath(`cards/${cardId}-${Date.now()}`),
-        imageFile,
-      );
-      if (fileData) {
-        ops.push(db.tx.$files[fileData.id].link({ owner: ownerId() }));
-        ops.push(db.tx.cards[cardId].link({ image: fileData.id }));
-      }
-    }
-    await db.transact(ops);
+    await saveCard((modalCard as Card).id, formData, imageFile, removeImageId);
     setModalCard(null);
   }
 

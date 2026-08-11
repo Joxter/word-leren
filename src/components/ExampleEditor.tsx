@@ -17,6 +17,7 @@ import {
 import CardPicker from "./CardPicker";
 import MarkdocField from "./MarkdocField";
 import SpanBoard from "./SpanBoard";
+import { Textarea } from "./Textarea";
 
 const A_LANGS = ["NL", "EN"] as const;
 const B_LANGS = ["EN", "RU"] as const;
@@ -113,7 +114,6 @@ const textarea = css`
   font-size: 0.9rem;
   font-family: inherit;
   line-height: 1.5;
-  resize: vertical;
   min-height: 3.2rem;
 
   &:focus {
@@ -331,7 +331,7 @@ export default function ExampleEditor({ example, onDeleted }: Props) {
             ))}
           </div>
         </div>
-        <textarea
+        <Textarea
           className={textarea}
           value={form.aText}
           onChange={(e) => set("aText", e.target.value)}
@@ -358,7 +358,7 @@ export default function ExampleEditor({ example, onDeleted }: Props) {
             ))}
           </div>
         </div>
-        <textarea
+        <Textarea
           className={textarea}
           value={form.bText}
           onChange={(e) => set("bText", e.target.value)}
