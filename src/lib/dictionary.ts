@@ -2,6 +2,7 @@
 // scripts/build-dictionary.mjs (served from public/data/dictionary.json).
 
 import { matchTier, type Tiers } from "./search";
+import { mergeContained, type Translation } from "./translations";
 
 export type DictInfo = {
   source: string;
@@ -188,4 +189,88 @@ export function entryAudios(
     }
   }
   return out;
+}
+
+/**
+ * The decks' translations for an entry, merged the way a reader wants them:
+ * identical texts (case-insensitive) collapse into one row listing every source
+ * for them, then a translation fully contained in a longer one is folded into
+ * it, so "lock" and "the lock" become just "the lock".
+ *
+ * Only the decks feed this. Wiktionary's definitions are whole sentences, and
+ * merging them in would both bury the short answer and swallow it whole — "on"
+ * is contained in "on (positioned at the outer surface of)".
+ */
+export function entryTranslations(entry: DictEntry): Translation[] {
+  const byText = new Map<string, Translation>();
+  for (const info of deckInfo(entry)) {
+    const text = info.translation?.trim();
+    if (!text) continue;
+    const key = text.toLowerCase();
+    const existing = byText.get(key);
+    if (existing) existing.sources.push(info.source);
+    else byText.set(key, { text, sources: [info.source] });
+  }
+  return mergeContained([...byText.values()]);
+}
+
+/**
+ * Side A of a card made from this entry: the word with its article, the way
+ * the decks write it ("de hond").
+ */
+export function entryCardFront(entry: DictEntry): string {
+  return entry.article ? `${entry.article} ${entry.word}` : entry.word;
+}
+
+/**
+ * Side B of a card made from this entry: the decks' short translations. Words
+ * that only Wiktionary knows (the ERK-A2 additions) have none, so they fall
+ * back to its first couple of definitions — long, but a card you can fix beats
+ * a button you can't press. Empty when the entry has no meaning at all, which
+ * is what the "add" affordances disable themselves on.
+ */
+export function entryCardBack(entry: DictEntry): string {
+  const translations = entryTranslations(entry);
+  if (translations.length > 0)
+    return translations.map((t) => t.text).join(", ");
+  return (
+    senseGroups(entry)[0]
+      ?.senses.slice(0, 2)
+      .map((s) => s.translation)
+      .join("; ") ?? ""
+  );
+}
+
+/**
+ * Side A of a card, reduced to a padded run of lowercase words: "De hond!" ->
+ * " de hond ". Containment on that is a whole-word test, which is what the
+ * "already a card" checks need — a plain substring would call every short word
+ * taken, since Dutch builds compounds out of them ("hond" is inside
+ * "hondenhok"). The padding is what makes the ends count as boundaries too.
+ */
+export function wordRun(text: string): string {
+  return ` ${text
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim()} `;
+}
+
+/** Every card's `wordRun`, computed once so a whole result list can ask. */
+export function cardRuns<T extends { aCard?: string }>(
+  cards: T[],
+): { run: string; card: T }[] {
+  return cards.map((card) => ({ run: wordRun(card.aCard ?? ""), card }));
+}
+
+/**
+ * The user's own card for a dictionary word, if there is one. Cards are stored
+ * with the article on side A ("de hond") and sometimes carry more than that, so
+ * the word only has to occur in side A, not be all of it.
+ */
+export function findOwnCard<T>(
+  runs: { run: string; card: T }[],
+  word: string,
+): T | null {
+  const run = wordRun(word);
+  return runs.find((c) => c.run.includes(run))?.card ?? null;
 }

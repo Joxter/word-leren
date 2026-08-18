@@ -1,6 +1,10 @@
 import { describe, it, expect } from "vitest";
 import {
+  cardRuns,
   deckInfo,
+  entryCardBack,
+  entryCardFront,
+  findOwnCard,
   senseGroups,
   searchDictionary,
   WIKTIONARY,
@@ -91,5 +95,62 @@ describe("searchDictionary", () => {
       "small button",
     );
     expect(found.map((e) => e.word)).toEqual(["knopje"]);
+  });
+});
+
+// Making a card out of an entry: what its two sides say, and whether the user
+// already has a card for the word (a whole-word test — Dutch compounds).
+
+describe("entryCardFront", () => {
+  it("writes the article in, the way the decks do", () => {
+    expect(entryCardFront(entry({ word: "hond", article: "de" }))).toBe(
+      "de hond",
+    );
+    expect(entryCardFront(entry({ word: "lopen" }))).toBe("lopen");
+  });
+});
+
+describe("entryCardBack", () => {
+  it("joins the decks' translations, merged", () => {
+    const e = entry({ info: [deck("lock"), deck("the lock", "csv")] });
+    expect(entryCardBack(e)).toBe("the lock");
+  });
+
+  it("falls back to the first two Wiktionary senses", () => {
+    const e = entry({
+      info: [
+        sense("a house, home", "noun"),
+        sense("a building", "noun"),
+        sense("a third one", "noun"),
+      ],
+    });
+    expect(entryCardBack(e)).toBe("a house, home; a building");
+  });
+
+  it("is empty when the entry means nothing at all", () => {
+    expect(entryCardBack(entry())).toBe("");
+  });
+});
+
+describe("findOwnCard", () => {
+  const runs = cardRuns([
+    { id: "1", aCard: "de hond" },
+    { id: "2", aCard: "hondenhok" },
+    { id: "3", aCard: "groot, grote" },
+  ]);
+
+  it("finds the word inside a card that carries more than it", () => {
+    expect(findOwnCard(runs, "hond")?.id).toBe("1");
+    expect(findOwnCard(runs, "grote")?.id).toBe("3");
+  });
+
+  it("does not count a word buried in a compound", () => {
+    expect(
+      findOwnCard(cardRuns([{ id: "2", aCard: "hondenhok" }]), "hond"),
+    ).toBeNull();
+  });
+
+  it("is null when no card has the word", () => {
+    expect(findOwnCard(runs, "kat")).toBeNull();
   });
 });

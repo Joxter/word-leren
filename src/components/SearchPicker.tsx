@@ -40,7 +40,11 @@ const results = css`
   overflow-y: auto;
 `;
 
-const resultItem = css`
+/**
+ * One row of the dropdown, exported so a `footer` section can look like the
+ * matches above it rather than reinvent them.
+ */
+export const pickerRow = css`
   display: block;
   width: 100%;
   text-align: left;
@@ -60,10 +64,26 @@ const resultItem = css`
     background: #f5f5f5;
   }
 
+  &:disabled {
+    cursor: default;
+    opacity: 0.55;
+  }
+
+  &:disabled:hover {
+    background: none;
+  }
+
   small {
     color: #888;
     margin-left: 0.4rem;
   }
+`;
+
+/** A line of prose in the dropdown — "nothing matched", "still loading". */
+export const pickerNote = css`
+  padding: 0.45rem 0.6rem;
+  font-size: 0.8rem;
+  color: #999;
 `;
 
 interface Props<T extends { id: string }> {
@@ -82,6 +102,17 @@ interface Props<T extends { id: string }> {
   onPick: (item: T) => void;
   limit?: number;
   className?: string;
+  /**
+   * A second section under the matches: what is typed, a way to clear the box
+   * once it has picked something, and how many matches it is sitting under —
+   * enough to tell "nothing anywhere" from "nothing else". Having a footer at
+   * all opens the dropdown on a query that matches nothing here, so the footer
+   * is expected to say so itself rather than leave an empty panel.
+   */
+  footer?: (
+    query: string,
+    ctx: { clear: () => void; matches: number },
+  ) => React.ReactNode;
 }
 
 /**
@@ -99,6 +130,7 @@ export default function SearchPicker<T extends { id: string }>({
   onPick,
   limit = 8,
   className,
+  footer,
 }: Props<T>) {
   const [query, setQuery] = useState("");
 
@@ -115,6 +147,12 @@ export default function SearchPicker<T extends { id: string }>({
     [query, items, exclude, limit],
   );
 
+  const extra = footer?.(query, {
+    clear: () => setQuery(""),
+    matches: matches.length,
+  });
+  const open = matches.length > 0 || (extra != null && query.trim() !== "");
+
   return (
     <div className={className ? `${wrap} ${className}` : wrap}>
       <input
@@ -124,13 +162,13 @@ export default function SearchPicker<T extends { id: string }>({
         placeholder={placeholder}
         autoComplete="off"
       />
-      {matches.length > 0 && (
+      {open && (
         <div className={results}>
           {matches.map((item) => (
             <button
               key={item.id}
               type="button"
-              className={resultItem}
+              className={pickerRow}
               onClick={() => {
                 onPick(item);
                 setQuery("");
@@ -139,6 +177,7 @@ export default function SearchPicker<T extends { id: string }>({
               {renderItem(item)}
             </button>
           ))}
+          {extra}
         </div>
       )}
     </div>

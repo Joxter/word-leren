@@ -55,13 +55,19 @@ the learning line.
   attached with no fragments picked yet. On the right, an editor for whichever row is
   selected — translation, which cards claim which words, and a note. It has no Save button:
   the text fields are written after a short pause and every link change goes out at once.
-- **Adding in bulk** — the search box doubles as the way in. Type or paste a block of text
-  and, when nothing matches it, the page offers the sentences it found (split on `.?!…` and
-  line breaks) as one editable input each, to create as a batch. They come out bare — no
-  translation, no cards — to be filled in from the editor afterwards.
+- **Adding** — the search box doubles as the way in. Type a sentence and, when nothing
+  matches it, the page offers it as a new example, exactly as it stands — only the writer
+  knows where one example ends. It comes out bare — no translation, no cards — to be
+  filled in from the editor afterwards.
 - **From a card** — the card editor has an Examples section that lists the sentences
   attached to that card, creates new ones, and attaches existing ones. It writes
   immediately, independently of the card form's Save.
+- **Attaching a word** — the attach box searches your cards first and the
+  [dictionary](#dictionary) underneath: picking a dictionary entry makes the card for it
+  (the same one "Add to cards" makes, top of the line) and attaches it in one go. Words you
+  already have a card for are left out of the dictionary half — that card is in the matches
+  above. Each attached card shows where it stands in the line ("#12"), can be sent back to
+  the top of it, and opens in the full card editor from the row.
 - **Picking fragments** — click the words the card covers; for a partial word or a phrase,
   select the text and press "Blank selection". The sentence is shown once, not once per
   card: clicks assign to the card selected in the list above it, other cards' fragments

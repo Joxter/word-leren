@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { css } from "@linaria/core";
 import { db } from "../db";
 import {
@@ -14,7 +15,14 @@ import {
   type ExampleData,
   type ExampleLink,
 } from "../lib/examples";
+import { deleteCard, saveCard } from "../lib/cards";
+import { useActiveLine, useLinePositions, useLines } from "../lib/lines";
+import { moveToTop, sortLine, type CardLog } from "../lib/queue";
+import { mine } from "../lib/session";
+import type { Card, CardData } from "../pages/Cards";
+import CardModal from "./CardModal";
 import CardPicker from "./CardPicker";
+import LinePos from "./LinePos";
 import MarkdocField from "./MarkdocField";
 import SpanBoard from "./SpanBoard";
 import { Textarea } from "./Textarea";
@@ -160,6 +168,8 @@ const cardRowHot = css`
 `;
 
 const cardName = css`
+  flex: 1 1 auto;
+  min-width: 0;
   font-weight: 600;
   color: #1a1a1a;
   white-space: nowrap;
@@ -173,18 +183,50 @@ const cardName = css`
   }
 `;
 
+// Both of these give way before the name does: which words are picked reads
+// fine cut short, the card it belongs to does not.
 const cardSpans = css`
-  margin-left: auto;
+  flex: 0 1 auto;
+  min-width: 0;
   font-size: 0.75rem;
   color: #666;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const cardSpansEmpty = css`
-  margin-left: auto;
+  flex: 0 1 auto;
+  min-width: 0;
   font-size: 0.75rem;
   color: #b45309;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const rowBtn = css`
+  background: none;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  color: #555;
+  font-family: inherit;
+  font-size: 0.7rem;
+  padding: 0.05rem 0.3rem;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  &:hover {
+    border-color: #999;
+    color: #1a1a1a;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+    border-color: #e0e0e0;
+    color: #555;
+  }
 `;
 
 const detachBtn = css`
@@ -253,6 +295,29 @@ export default function ExampleEditor({ example, onDeleted }: Props) {
   const [form, setForm] = useState<ExampleData>(() => toExampleData(example));
   const [activeId, setActiveId] = useState<string | null>(null);
   const [hovered, setHovered] = useState<string[]>([]);
+  const [modalCard, setModalCard] = useState<Card | null>(null);
+  const [topping, setTopping] = useState<string | null>(null);
+
+  // The whole card table: the picker searches it, the rows read their place in
+  // the line off it, and Edit opens the card itself — one subscription for all
+  // three rather than one each.
+  const { data } = db.useQuery({
+    cards: { image: {}, $: { where: mine(), limit: 5000 } },
+  });
+  const cards = useMemo(
+    () => (data?.cards ?? []) as (Card & { log?: CardLog })[],
+    [data?.cards],
+  );
+  const positions = useLinePositions(cards);
+
+  // "Top" acts on the line being studied, the one Learn and Line are pointed
+  // at — the same button, the same queue.
+  const { lines } = useLines();
+  const [activeLine] = useActiveLine(lines);
+  const members = useMemo(
+    () => (activeLine ? sortLine(cards, activeLine) : []),
+    [cards, activeLine],
+  );
 
   const links = (example.links ?? []).filter(
     (l): l is ExampleLink & { card: NonNullable<ExampleLink["card"]> } =>
@@ -300,6 +365,33 @@ export default function ExampleEditor({ example, onDeleted }: Props) {
    */
   function handleHover(ids: string[]) {
     setHovered((prev) => (prev.join() === ids.join() ? prev : ids));
+  }
+
+  /**
+   * Send a card back to the top of the line: as high as it goes without landing
+   * next to another fresh card, and a second press (the smart slot being no
+   * better than where it sits) takes it to the very top — the Line page's
+   * button. A card that is in no line joins it, the way the Dictionary page's
+   * "↑ Top" adds one; a card already at the top has nowhere to go.
+   */
+  async function handleTop(cardId: string) {
+    if (!activeLine) return;
+    if (members[0]?.id === cardId) return;
+    setTopping(cardId);
+    try {
+      await moveToTop(members, activeLine, cardId);
+    } finally {
+      setTopping(null);
+    }
+  }
+
+  async function handleUpdate(
+    formData: CardData,
+    imageFile: File | null,
+    removeImageId: string | null,
+  ): Promise<void> {
+    await saveCard(modalCard!.id, formData, imageFile, removeImageId);
+    setModalCard(null);
   }
 
   async function handleDelete() {
@@ -374,6 +466,7 @@ export default function ExampleEditor({ example, onDeleted }: Props) {
       {/* Search first, so its dropdown never has to open near the bottom of
           the column. */}
       <CardPicker
+        cards={cards}
         exclude={attachedIds}
         onPick={(card) => setActiveId(createExampleLink(example.id, card.id))}
       />
@@ -403,6 +496,33 @@ export default function ExampleEditor({ example, onDeleted }: Props) {
                 <span className={spans.length ? cardSpans : cardSpansEmpty}>
                   {spans.length ? spansAnswer(spans) : "no words picked"}
                 </span>
+                <LinePos positions={positions.get(link.card.id)} />
+                <button
+                  type="button"
+                  className={rowBtn}
+                  title="Move this card to the top of the line"
+                  disabled={!activeLine || topping !== null}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleTop(link.card.id);
+                  }}
+                >
+                  {topping === link.card.id ? "…" : "↑ Top"}
+                </button>
+                <button
+                  type="button"
+                  className={rowBtn}
+                  title="Edit this card"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    // The link only carries the card's two sides; the modal
+                    // wants the whole row, image and line membership included.
+                    const full = cards.find((c) => c.id === link.card.id);
+                    if (full) setModalCard(full);
+                  }}
+                >
+                  Edit
+                </button>
                 <button
                   type="button"
                   className={detachBtn}
@@ -451,6 +571,22 @@ export default function ExampleEditor({ example, onDeleted }: Props) {
           Delete example
         </button>
       </div>
+
+      {/* Out to the body: this panel is a sticky, scrolling column, and a
+          sticky box makes a stacking context the modal would sit inside. */}
+      {modalCard &&
+        createPortal(
+          <CardModal
+            card={modalCard}
+            onSave={handleUpdate}
+            onDelete={(cardId) => {
+              deleteCard(cardId);
+              setModalCard(null);
+            }}
+            onClose={() => setModalCard(null)}
+          />,
+          document.body,
+        )}
     </div>
   );
 }

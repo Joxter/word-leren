@@ -2,7 +2,18 @@
 // Line membership is not touched here — CardModal applies that itself via the
 // queue helpers.
 
+import { id } from "@instantdb/react";
 import { db } from "../db";
+import { buildDictBlock, withDictBlock } from "./dictNote";
+import {
+  deckInfo,
+  entryCardBack,
+  entryCardFront,
+  type DictEntry,
+} from "./dictionary";
+import type { LinkedCard } from "./examples";
+import { getDefaultLineId } from "./lines";
+import { enqueueTop } from "./queue";
 import { ownedPath, ownerId } from "./session";
 import type { CardData } from "../pages/Cards";
 
@@ -67,4 +78,56 @@ export async function saveCard(
 
 export function deleteCard(cardId: string): Promise<unknown> {
   return db.transact(db.tx.cards[cardId].delete());
+}
+
+/**
+ * Create a card from a dictionary entry and put it at the top of the default
+ * line, the same card the Dictionary page's "+ Add to cards" makes. Returns it
+ * in the shape the example editors label a link with, so the caller can attach
+ * it to a sentence straight away.
+ *
+ * Deck examples go in as the note's own text; the whole Wiktionary entry
+ * follows in a `{% dict %}` block, which renders collapsed and can be deleted
+ * or refilled in one stroke later.
+ */
+export async function createCardFromEntry(
+  entry: DictEntry,
+): Promise<LinkedCard> {
+  const cardId = id();
+  const note = withDictBlock(
+    deckInfo(entry)
+      .flatMap((i) => (i.examples ? [i.examples] : []))
+      .join("\n\n"),
+    buildDictBlock(entry),
+  );
+  // entry.info[].audio is stored as "dict/<file>.mp3"; the card keeps the full
+  // path from public/ so it can be played directly. Prefer a clip from the
+  // "common" source, falling back to the first info that has any audio.
+  const rawAudio = (
+    entry.info.find((i) => i.audio && i.source === "common") ??
+    entry.info.find((i) => i.audio)
+  )?.audio;
+
+  const card = {
+    aLang: "NL",
+    bLang: "EN",
+    ...trimCardText({
+      aCard: entryCardFront(entry),
+      bCard: entryCardBack(entry),
+      note,
+    }),
+  };
+  await db.transact(
+    db.tx.cards[cardId]
+      .update({ ...card, ...(rawAudio ? { audio: `audio/${rawAudio}` } : {}) })
+      .link({ owner: ownerId() }),
+  );
+  await enqueueTop(await getDefaultLineId(), cardId);
+  return {
+    id: cardId,
+    aLang: card.aLang,
+    bLang: card.bLang,
+    aCard: card.aCard,
+    bCard: card.bCard,
+  };
 }

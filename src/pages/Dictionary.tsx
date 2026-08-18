@@ -1,26 +1,27 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { css } from "@linaria/core";
-import { id } from "@instantdb/react";
 import { db } from "../db";
-import { enqueueTop, moveToTop, sortLine, type CardLog } from "../lib/queue";
-import { getDefaultLineId, useLines } from "../lib/lines";
+import { moveToTop, sortLine, type CardLog } from "../lib/queue";
+import { useLines } from "../lib/lines";
 import {
   loadDictionary,
   searchDictionary,
+  cardRuns,
   entryAudios,
+  entryCardBack,
+  entryTranslations,
   deckInfo,
+  findOwnCard,
   senseGroups,
   WIKTIONARY,
   type DictEntry,
 } from "../lib/dictionary";
-import { buildDictBlock, withDictBlock } from "../lib/dictNote";
-import { mergeContained } from "../lib/translations";
 import { rankMatches } from "../lib/search";
 import type { Example } from "../lib/examples";
 import CardModal from "../components/CardModal";
 import PlayButton from "../components/PlayButton";
-import { saveCard, deleteCard, trimCardText } from "../lib/cards";
-import { mine, ownerId } from "../lib/session";
+import { createCardFromEntry, saveCard, deleteCard } from "../lib/cards";
+import { mine } from "../lib/session";
 import type { Card, CardData } from "./Cards";
 
 /** A card as loaded here — the queue helpers also want its `log`. */
@@ -35,33 +36,6 @@ function searchCards(cards: CardWithLog[], rawQuery: string): CardWithLog[] {
     fields: (c) => [c.aCard, c.bCard, c.note],
     label: (c) => c.aCard,
   });
-}
-
-/**
- * Side A of a card, reduced to a padded run of lowercase words: "De hond!" ->
- * " de hond ". Containment on that is a whole-word test, which is what the
- * "already a card" badge needs — a plain substring would call every short word
- * taken, since Dutch builds compounds out of them ("hond" is inside
- * "hondenhok"). The padding is what makes the ends count as boundaries too.
- */
-function wordRun(text: string): string {
-  return ` ${text
-    .toLowerCase()
-    .replace(/[^\p{L}\p{N}]+/gu, " ")
-    .trim()} `;
-}
-
-/**
- * The user's own card for this dictionary word, if there is one. Cards are
- * stored with the article on side A ("de hond") and sometimes carry more than
- * that, so the word only has to occur in side A, not be all of it.
- */
-function findOwnCard(
-  cards: { run: string; card: CardWithLog }[],
-  word: string,
-): CardWithLog | null {
-  const run = wordRun(word);
-  return cards.find((c) => c.run.includes(run))?.card ?? null;
 }
 
 /** The words an example is attached to, for both its search text and its row. */
@@ -670,24 +644,9 @@ function EntryCard({
   const verb = entry.verb;
   const decks = deckInfo(entry);
 
-  // Translations grouped by content: identical ones (case-insensitive) merge
-  // into one row that lists every source for them, in gray at the end. Then
-  // translations fully contained in a longer one collapse into it, so "lock"
-  // and "the lock" become just "the lock".
-  //
-  // Only the decks feed this. Wiktionary's definitions are whole sentences, and
-  // merging them in would both bury the short answer and swallow it whole —
-  // "on" is contained in "on (positioned at the outer surface of)".
-  const transMap = new Map<string, { text: string; sources: string[] }>();
-  for (const info of decks) {
-    const text = info.translation?.trim();
-    if (!text) continue;
-    const key = text.toLowerCase();
-    const existing = transMap.get(key);
-    if (existing) existing.sources.push(info.source);
-    else transMap.set(key, { text, sources: [info.source] });
-  }
-  const translations = mergeContained([...transMap.values()]);
+  // Merged for reading: identical translations collapse into one row that
+  // lists every source for them, in gray at the end.
+  const translations = entryTranslations(entry);
 
   const examplesList = decks
     .filter((i) => i.examples)
@@ -710,55 +669,18 @@ function EntryCard({
   const [saving, setSaving] = useState(false);
   const [added, setAdded] = useState(false);
 
-  // Side B is the decks' short translations. Words that only Wiktionary knows
-  // (the ERK-A2 additions) have none, so they fall back to its first couple of
-  // definitions — long, but a card you can fix beats a button you can't press.
-  const cardBack =
-    translations.length > 0
-      ? translations.map((t) => t.text).join(", ")
-      : (groups[0]?.senses
-          .slice(0, 2)
-          .map((s) => s.translation)
-          .join("; ") ?? "");
+  // What side B of the card would say — empty means there is nothing to put on
+  // it, which is what the Add button refuses on.
+  const cardBack = entryCardBack(entry);
 
   async function addToCards() {
     setSaving(true);
-    const cardId = id();
-    // Deck examples go in as the note's own text; the whole Wiktionary entry
-    // follows in a `{% dict %}` block, which renders collapsed and can be
-    // deleted or refilled in one stroke later.
-    const note = withDictBlock(
-      examplesList.map((e) => e.examples).join("\n\n"),
-      buildDictBlock(entry),
-    );
-    // entry.info[].audio is stored as "dict/<file>.mp3"; the card keeps the full
-    // path from public/ so it can be played directly. Prefer a clip from the
-    // "common" source, falling back to the first info that has any audio.
-    const rawAudio = (
-      entry.info.find((i) => i.audio && i.source === "common") ??
-      entry.info.find((i) => i.audio)
-    )?.audio;
-    await db.transact(
-      db.tx.cards[cardId]
-        .update({
-          aLang: "NL",
-          bLang: "EN",
-          ...trimCardText({
-            aCard: entry.article
-              ? `${entry.article} ${entry.word}`
-              : entry.word,
-            bCard: cardBack,
-            note,
-          }),
-          ...(rawAudio ? { audio: `audio/${rawAudio}` } : {}),
-        })
-        .link({ owner: ownerId() }),
-    );
-    // New card jumps to the top of the default line, like cards added from the
-    // Cards page.
-    await enqueueTop(await getDefaultLineId(), cardId);
-    setAdded(true);
-    setSaving(false);
+    try {
+      await createCardFromEntry(entry);
+      setAdded(true);
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
@@ -993,10 +915,7 @@ export default function Dictionary() {
 
   // Side A of every card, prepared once, so each dictionary result can ask
   // whether it is already one of them.
-  const cardRuns = useMemo(
-    () => allCards.map((card) => ({ run: wordRun(card.aCard ?? ""), card })),
-    [allCards],
-  );
+  const runs = useMemo(() => cardRuns(allCards), [allCards]);
 
   const cardHits = useMemo(
     () => searchCards(allCards, query),
@@ -1137,7 +1056,7 @@ export default function Dictionary() {
                       key={`${entry.word}-${i}`}
                       entry={entry}
                       audioEl={audioRef.current}
-                      ownCard={findOwnCard(cardRuns, entry.word)}
+                      ownCard={findOwnCard(runs, entry.word)}
                     />
                   ))}
                 </div>

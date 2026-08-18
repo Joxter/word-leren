@@ -379,3 +379,39 @@ export async function removeFromLine(
   // merge treats a null value as "delete this key".
   await db.transact(db.tx.cards[cardId].merge({ queues: { [lineId]: null } }));
 }
+
+/** Where a card sits in one line, as the badges print it. */
+export interface LinePosition {
+  lineId: string;
+  name: string;
+  /** 1-indexed, counting from the top of the line. */
+  position: number;
+  /** How many cards that line holds, so "#12" can say what of. */
+  size: number;
+}
+
+/**
+ * Every card's position in every line it belongs to, keyed by card id. Cards
+ * in no line at all are absent from the map. One pass per line, so a list of
+ * cards can each show where they stand without re-sorting the line per row.
+ */
+export function linePositions(
+  cards: QueuedCard[],
+  lines: { id: string; name: string }[],
+): Map<string, LinePosition[]> {
+  const out = new Map<string, LinePosition[]>();
+  for (const line of lines) {
+    const members = sortLine(cards, line.id);
+    members.forEach((card, i) => {
+      const at = out.get(card.id) ?? [];
+      at.push({
+        lineId: line.id,
+        name: line.name,
+        position: i + 1,
+        size: members.length,
+      });
+      out.set(card.id, at);
+    });
+  }
+  return out;
+}

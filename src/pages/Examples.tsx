@@ -14,13 +14,13 @@ const page = css`
   margin: 0 auto;
   padding: 2rem 1.5rem;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(360px, 460px);
+  grid-template-columns: minmax(0, 1fr) minmax(420px, 560px);
   gap: 1.5rem;
   align-items: start;
 
   /* The two columns only pay off on a wide screen; below that the editor goes
      back under the list. */
-  @media (max-width: 1080px) {
+  @media (max-width: 1160px) {
     grid-template-columns: 1fr;
   }
 
@@ -47,7 +47,7 @@ const rightCol = css`
   max-height: calc(100vh - 2rem);
   overflow-y: auto;
 
-  @media (max-width: 1080px) {
+  @media (max-width: 1160px) {
     position: static;
     max-height: none;
   }

@@ -1,8 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { id } from "@instantdb/react";
 import { db } from "../db";
 import { mine, ownerId } from "./session";
-import { sortLine, type QueuedCard } from "./queue";
+import {
+  linePositions,
+  sortLine,
+  type LinePosition,
+  type QueuedCard,
+} from "./queue";
 
 // A "line" is a named learning queue. Membership + per-line rank live on the
 // cards (see queue.ts); this module just manages the line records themselves
@@ -94,4 +99,16 @@ export function useActiveLine(
   }
 
   return [active, setActive];
+}
+
+/**
+ * `linePositions` over every line there is — what the "#12" badges next to a
+ * card are made of. The caller brings the cards it is already showing; only
+ * the lines are fetched here.
+ */
+export function useLinePositions(
+  cards: QueuedCard[],
+): Map<string, LinePosition[]> {
+  const { lines } = useLines();
+  return useMemo(() => linePositions(cards, lines), [cards, lines]);
 }
