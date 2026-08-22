@@ -308,6 +308,21 @@ def slugify(text: str, max_len: int = 40) -> str:
     return text[:max_len].rstrip("-") or "task"
 
 
+def answer_line(q: dict) -> str:
+    """One line per question: the right answer and the one that was picked.
+
+    Kept at the very bottom of the file so the questions above can be
+    answered without the answers in sight.
+    """
+    correct = [o["label"] for o in q["options"] if o["is_correct"]]
+    picked = [o["label"] for o in q["options"] if o["is_user_choice"]]
+    ok = correct and picked and correct == picked
+    parts = [f"**{q['title']}** — goed: {', '.join(correct) or '?'}"]
+    if picked and not ok:
+        parts.append(f"gekozen: {', '.join(picked)}")
+    return f"- {' · '.join(parts)} {'✅' if ok else '❌'}"
+
+
 def render_markdown(opgave: dict) -> str:
     lines = [f"# Opgave {opgave['index']}", ""]
 
@@ -325,15 +340,15 @@ def render_markdown(opgave: dict) -> str:
             lines.append("")
 
         for opt in q["options"]:
-            marks = []
-            if opt["is_correct"]:
-                marks.append("correct")
-            if opt["is_user_choice"]:
-                marks.append("user")
-            mark_str = f"  _({', '.join(marks)})_" if marks else ""
-            prefix = "- [x]" if opt["is_user_choice"] else "- [ ]"
-            lines.append(f"{prefix} {opt['label']} {opt['text']}{mark_str}")
+            lines.append(f"- {opt['label']} {opt['text']}")
         lines.append("")
+
+    lines.append("---")
+    lines.append("")
+    lines.append("## Antwoorden")
+    lines.append("")
+    for q in opgave["questions"]:
+        lines.append(answer_line(q))
 
     return "\n".join(lines).rstrip() + "\n"
 

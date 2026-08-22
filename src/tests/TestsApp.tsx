@@ -23,15 +23,7 @@ export function TestsApp() {
 
   return (
     <div style={{ fontFamily: "Inter, sans-serif" }}>
-      <div
-        style={{
-          borderBottom: "1px solid #e0e0e0",
-          marginBottom: 24,
-          padding: "16px 16px 0",
-          maxWidth: 680,
-          margin: "0 auto",
-        }}
-      >
+      <div className={`tests-tabs${type === "reading" ? " split" : ""}`}>
         <div style={{ display: "flex", gap: 4, paddingBottom: 0 }}>
           {(["knm", "reading", "listening"] as TestType[]).map((t) => (
             <button

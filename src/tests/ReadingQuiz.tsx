@@ -75,12 +75,8 @@ export function ReadingQuiz() {
 
   return (
     <div
-      style={{
-        maxWidth: 680,
-        margin: "0 auto",
-        padding: "0 16px 40px",
-        fontFamily: "Inter, sans-serif",
-      }}
+      className="quiz-page split"
+      style={{ fontFamily: "Inter, sans-serif" }}
     >
       <div
         style={{
@@ -109,88 +105,98 @@ export function ReadingQuiz() {
         {pageIndex + 1} / {TOTAL}
       </div>
 
-      <div
-        className="transcript"
-        dangerouslySetInnerHTML={{ __html: item.transcript }}
-      />
-
-      {item.questions.map((q, i) => {
-        const chosen = answers[i];
-        return (
+      <div className="quiz-split">
+        <div className="quiz-split-text">
           <div
-            key={i}
-            style={{
-              marginBottom: 20,
-              padding: "16px 20px",
-              border: "1px solid #e0e0e0",
-              borderRadius: 8,
-            }}
-          >
-            <p style={{ margin: "0 0 12px", fontWeight: 500 }}>
-              {i + 1}. {q.question}
-            </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {q.options.map((option) => {
-                const isChosen = chosen === option;
-                const isCorrect = option === q.correctAnswer;
-                let color = "inherit";
-                if (revealed) {
-                  if (isCorrect) color = "#1a7f1a";
-                  else if (isChosen) color = "#c0392b";
-                }
-                return (
-                  <label
-                    key={option}
-                    style={{
-                      display: "flex",
-                      alignItems: "flex-start",
-                      gap: 8,
-                      cursor: revealed ? "default" : "pointer",
-                      color,
-                    }}
-                  >
-                    <input
-                      type="radio"
-                      name={`${item.id}-${i}`}
-                      value={option}
-                      checked={isChosen}
-                      onChange={() => pick(i, option)}
-                      disabled={revealed}
-                      style={{ marginTop: 3, flexShrink: 0 }}
-                    />
-                    <span
-                      style={{ fontWeight: revealed && isCorrect ? 600 : 400 }}
-                    >
-                      {option}
-                    </span>
-                  </label>
-                );
-              })}
-            </div>
-          </div>
-        );
-      })}
+            className="transcript"
+            dangerouslySetInnerHTML={{ __html: item.transcript }}
+          />
+        </div>
 
-      <div style={{ display: "flex", gap: 12, marginTop: 8 }}>
-        {!revealed && (
-          <button
-            onClick={reveal}
-            disabled={!allAnswered}
-            style={btn(allAnswered)}
-          >
-            Check answers
-          </button>
-        )}
-        {revealed && pageIndex < TOTAL - 1 && (
-          <button onClick={() => goTo(pageIndex + 1)} style={btn(true)}>
-            Next →
-          </button>
-        )}
-        {revealed && pageIndex === TOTAL - 1 && (
-          <p style={{ margin: 0, alignSelf: "center", fontWeight: 500 }}>
-            All done! 🎉
-          </p>
-        )}
+        <div>
+          {item.questions.map((q, i) => {
+            const chosen = answers[i];
+            return (
+              <div
+                key={i}
+                style={{
+                  marginBottom: 20,
+                  padding: "16px 20px",
+                  border: "1px solid #e0e0e0",
+                  borderRadius: 8,
+                }}
+              >
+                <p style={{ margin: "0 0 12px", fontWeight: 500 }}>
+                  {i + 1}. {q.question}
+                </p>
+                <div
+                  style={{ display: "flex", flexDirection: "column", gap: 8 }}
+                >
+                  {q.options.map((option) => {
+                    const isChosen = chosen === option;
+                    const isCorrect = option === q.correctAnswer;
+                    let color = "inherit";
+                    if (revealed) {
+                      if (isCorrect) color = "#1a7f1a";
+                      else if (isChosen) color = "#c0392b";
+                    }
+                    return (
+                      <label
+                        key={option}
+                        style={{
+                          display: "flex",
+                          alignItems: "flex-start",
+                          gap: 8,
+                          cursor: revealed ? "default" : "pointer",
+                          color,
+                        }}
+                      >
+                        <input
+                          type="radio"
+                          name={`${item.id}-${i}`}
+                          value={option}
+                          checked={isChosen}
+                          onChange={() => pick(i, option)}
+                          disabled={revealed}
+                          style={{ marginTop: 3, flexShrink: 0 }}
+                        />
+                        <span
+                          style={{
+                            fontWeight: revealed && isCorrect ? 600 : 400,
+                          }}
+                        >
+                          {option}
+                        </span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+
+          <div style={{ display: "flex", gap: 12, marginTop: 8 }}>
+            {!revealed && (
+              <button
+                onClick={reveal}
+                disabled={!allAnswered}
+                style={btn(allAnswered)}
+              >
+                Check answers
+              </button>
+            )}
+            {revealed && pageIndex < TOTAL - 1 && (
+              <button onClick={() => goTo(pageIndex + 1)} style={btn(true)}>
+                Next →
+              </button>
+            )}
+            {revealed && pageIndex === TOTAL - 1 && (
+              <p style={{ margin: 0, alignSelf: "center", fontWeight: 500 }}>
+                All done! 🎉
+              </p>
+            )}
+          </div>
+        </div>
       </div>
 
       <div

@@ -18,4 +18,8 @@ backup-*/
 # scratch: saved exam pages and whatever the parsing scripts spit out
 leze */
 leze *.html
-out_tasks/
+*Assessment Result*.html
+*Assessment Result*_files/
+out_tasks*/
+pdf/
+экзамены/
