@@ -165,6 +165,28 @@ const exampleTranslation = css`
   color: #888;
 `;
 
+// The peeked example: context to recall the word by, before the answer.
+const peekBox = css`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+`;
+
+const peekBtn = css`
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.8rem;
+  color: #2563eb;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 const divider = css`
   border: none;
   border-top: 1px solid #eee;
@@ -446,6 +468,9 @@ export default function Learn() {
   const [hintLetters, setHintLetters] = useState<boolean[]>([]);
   const [typing, setTyping] = useState(false);
   const [typed, setTyped] = useState("");
+  // Which of the card's examples is being peeked at, counted up rather than
+  // wrapped so the button can just increment — see `peeked` below.
+  const [peek, setPeek] = useState<number | null>(null);
   const [reverseOn, setReverseOn] = useState(() =>
     storedFlag(REVERSE_KEY, "reverse"),
   );
@@ -461,6 +486,7 @@ export default function Learn() {
     setHintLetters([]);
     setTyping(false);
     setTyped("");
+    setPeek(null);
   }
 
   function toggleFlag(
@@ -531,6 +557,11 @@ export default function Learn() {
     }
   }
 
+  /** Open the example peek, or step to the next one. */
+  function nextExample() {
+    setPeek((prev) => (prev === null ? 0 : prev + 1));
+  }
+
   async function handleUpdate(
     formData: CardData,
     imageFile: File | null,
@@ -565,6 +596,9 @@ export default function Learn() {
         } else if ((e.key === "t" || e.key === "T") && !reverse) {
           e.preventDefault();
           if (current) setTyping(true);
+        } else if (e.key === "e" || e.key === "E") {
+          e.preventDefault();
+          if (current) nextExample();
         }
         return;
       }
@@ -585,6 +619,7 @@ export default function Learn() {
     setHintLetters([]);
     setTyping(false);
     setTyped("");
+    setPeek(null);
   }, [current?.id]);
 
   // Auto-play the answer's audio once the card is revealed.
@@ -676,6 +711,24 @@ export default function Learn() {
       : [],
   );
 
+  // The examples this card can be recalled through before the answer, offered
+  // in turn. They need fragments that still anchor: with nothing blanked out
+  // the sentence would spell the answer. A cloze prompt is already one of
+  // these, so it offers none.
+  const peekable = cloze
+    ? []
+    : (c.exampleLinks ?? []).flatMap((l) => {
+        if (!l.example) return [];
+        const spans = anchorSpans(l.example.aText, l.spans ?? []).spans;
+        return spans.length > 0
+          ? [{ id: l.id, example: l.example, spans }]
+          : [];
+      });
+  const peeked =
+    peek !== null && peekable.length > 0
+      ? peekable[peek % peekable.length]
+      : null;
+
   function revealHintLetter(idx: number) {
     setHintLetters((prev) => {
       const next = [...prev];
@@ -746,6 +799,40 @@ export default function Learn() {
             </div>
           )}
         </div>
+
+        {/* Context to place the word by, on demand — the card's own examples,
+            one at a time. On reveal they are all listed below anyway. */}
+        {!revealed && peekable.length > 0 && (
+          <>
+            <hr className={divider} />
+            <div className={peekBox}>
+              {peeked && (
+                <div className={exampleItem}>
+                  {/* Reversed, side A is on the prompt already and the sentence
+                      can show it; forwards it is the answer, so it stays
+                      blanked and the translation — which would name it — off. */}
+                  <ExampleText
+                    text={peeked.example.aText}
+                    spans={peeked.spans}
+                    mode={reverse ? "highlight" : "blank"}
+                  />
+                  {!reverse && peeked.example.bText?.trim() && (
+                    <div className={exampleTranslation}>
+                      {peeked.example.bText}
+                    </div>
+                  )}
+                </div>
+              )}
+              {(peek === null || peekable.length > 1) && (
+                <button className={peekBtn} onClick={nextExample}>
+                  {peek === null
+                    ? "Show example"
+                    : `Another example (${(peek % peekable.length) + 1}/${peekable.length})`}
+                </button>
+              )}
+            </div>
+          </>
+        )}
 
         {!cloze && !revealed && hintOpen && !(typing && COARSE_POINTER) && (
           <>

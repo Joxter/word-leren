@@ -161,7 +161,7 @@ const cardRowActive = css`
   background: #fffbeb;
 `;
 
-/** The other end of the hover pairing with the sentence below. */
+/** The other end of the hover pairing with the sentence above. */
 const cardRowHot = css`
   outline: 2px solid #1a1a1a;
   outline-offset: -1px;
@@ -463,8 +463,29 @@ export default function ExampleEditor({ example, onDeleted }: Props) {
         <span className={savedNote}>saved as you type</span>
       </div>
 
-      {/* Search first, so its dropdown never has to open near the bottom of
-          the column. */}
+      {broken.length > 0 && (
+        <div className={warning}>
+          No longer in the sentence:{" "}
+          {broken.map((s) => `“${s.text}”`).join(", ")} —{" "}
+          {broken.length === 1 ? "it has" : "they have"} been dropped.
+        </div>
+      )}
+
+      {/* The board first: picking the fragments is the work here, and it reads
+          against the sentence right above it. */}
+      <SpanBoard
+        text={form.aText}
+        links={anchored.map((a) => ({ id: a.link.id, spans: a.spans }))}
+        activeId={activeLinkId}
+        hovered={hovered}
+        onHover={handleHover}
+        onChange={(spans) =>
+          activeLinkId && saveLinkSpans(example, form, activeLinkId, spans)
+        }
+      />
+
+      {/* Above the rows it adds to, so a pick lands where the eye already is
+          and the dropdown still has the list under it to open over. */}
       <CardPicker
         cards={cards}
         exclude={attachedIds}
@@ -540,26 +561,7 @@ export default function ExampleEditor({ example, onDeleted }: Props) {
         </div>
       )}
 
-      {broken.length > 0 && (
-        <div className={warning}>
-          No longer in the sentence:{" "}
-          {broken.map((s) => `“${s.text}”`).join(", ")} —{" "}
-          {broken.length === 1 ? "it has" : "they have"} been dropped.
-        </div>
-      )}
-
-      <SpanBoard
-        text={form.aText}
-        links={anchored.map((a) => ({ id: a.link.id, spans: a.spans }))}
-        activeId={activeLinkId}
-        hovered={hovered}
-        onHover={handleHover}
-        onChange={(spans) =>
-          activeLinkId && saveLinkSpans(example, form, activeLinkId, spans)
-        }
-      />
-
-      {/* Last, under the linking board — the note is the least-used field here. */}
+      {/* Last, under the cards — the note is the least-used field here. */}
       <MarkdocField
         label="Note"
         value={form.note}
