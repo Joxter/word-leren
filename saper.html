@@ -1,0 +1,1477 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Сапёр</title>
+    <style>
+      :root {
+        --cs: 24px;
+        --face: #c0c0c0;
+        --shadow: #808080;
+        --dark: #0a0a0a;
+        --light: #dfdfdf;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+      }
+      body {
+        min-height: 100%;
+        background: #008080;
+        font-family: "MS Sans Serif", Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 12px;
+        color: #000;
+        -webkit-font-smoothing: none;
+        user-select: none;
+        -webkit-user-select: none;
+        padding: 16px 8px 40px;
+        overflow-x: auto;
+      }
+      /* shrink-wraps the window so the field never gets stretched by the
+         page around it; the hint below sizes itself independently */
+      .page {
+        width: max-content;
+        margin: 0 auto;
+      }
+
+      /* ---------- Win95 chrome ---------- */
+      .raised {
+        box-shadow:
+          inset -1px -1px var(--dark),
+          inset 1px 1px #fff,
+          inset -2px -2px var(--shadow),
+          inset 2px 2px var(--light);
+      }
+      .sunken {
+        box-shadow:
+          inset -1px -1px #fff,
+          inset 1px 1px var(--dark),
+          inset -2px -2px var(--light),
+          inset 2px 2px var(--shadow);
+      }
+
+      .window {
+        background: var(--face);
+        padding: 3px;
+        box-shadow:
+          inset -1px -1px var(--dark),
+          inset 1px 1px #fff,
+          inset -2px -2px var(--shadow),
+          inset 2px 2px var(--light);
+      }
+
+      .titlebar {
+        height: 20px;
+        background: linear-gradient(90deg, #000080, #1084d0);
+        display: flex;
+        align-items: center;
+        padding: 0 2px 0 3px;
+        color: #fff;
+        font-weight: bold;
+        letter-spacing: 0.02em;
+      }
+      .titlebar .ttl {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .tbtn {
+        width: 17px;
+        height: 15px;
+        margin-left: 2px;
+        background: var(--face);
+        border: 0;
+        padding: 0;
+        font-family: inherit;
+        font-size: 9px;
+        font-weight: bold;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow:
+          inset -1px -1px var(--dark),
+          inset 1px 1px #fff,
+          inset -2px -2px var(--shadow),
+          inset 2px 2px var(--light);
+      }
+      .tbtn:active {
+        box-shadow: inset 1px 1px var(--shadow);
+        padding: 1px 0 0 1px;
+      }
+      .tbtn:first-of-type {
+        margin-left: 0;
+      }
+      .tbtn.close {
+        margin-left: 4px;
+      }
+
+      /* ---------- menu ---------- */
+      .menubar {
+        display: flex;
+        padding: 1px 0 2px;
+        position: relative;
+      }
+      .menubar > .mi {
+        padding: 2px 6px 3px;
+        cursor: default;
+      }
+      .menubar > .mi.open,
+      .menubar > .mi:hover {
+        background: #000080;
+        color: #fff;
+      }
+      .menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        min-width: 172px;
+        background: var(--face);
+        padding: 2px;
+        z-index: 20;
+        box-shadow:
+          inset -1px -1px var(--dark),
+          inset 1px 1px #fff,
+          inset -2px -2px var(--shadow),
+          inset 2px 2px var(--light);
+      }
+      .menu .item {
+        display: flex;
+        align-items: center;
+        padding: 3px 18px 3px 20px;
+        white-space: nowrap;
+        cursor: default;
+        position: relative;
+      }
+      .menu .item:hover {
+        background: #000080;
+        color: #fff;
+      }
+      .menu .item .key {
+        margin-left: auto;
+        padding-left: 24px;
+      }
+      .menu .item .tick {
+        position: absolute;
+        left: 6px;
+        font-size: 11px;
+      }
+      .menu .sep {
+        height: 0;
+        margin: 3px 2px;
+        border-top: 1px solid var(--shadow);
+        border-bottom: 1px solid #fff;
+      }
+
+      /* ---------- panel ---------- */
+      .panel {
+        margin-top: 1px;
+        padding: 5px;
+        background: var(--face);
+        box-shadow:
+          inset -1px -1px #fff,
+          inset 1px 1px var(--dark),
+          inset -2px -2px var(--light),
+          inset 2px 2px var(--shadow);
+      }
+      .head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 4px;
+        margin-bottom: 5px;
+        box-shadow:
+          inset -1px -1px #fff,
+          inset 1px 1px var(--dark),
+          inset -2px -2px var(--light),
+          inset 2px 2px var(--shadow);
+      }
+
+      /* ---------- 7-segment ---------- */
+      .led {
+        display: flex;
+        gap: 1px;
+        background: #000;
+        padding: 1px;
+        border: 1px solid;
+        border-color: var(--shadow) #fff #fff var(--shadow);
+      }
+      .dg {
+        position: relative;
+        width: 13px;
+        height: 23px;
+      }
+      .dg i {
+        position: absolute;
+        background: #3b0000;
+      }
+      .dg i.on {
+        background: #f00;
+      }
+      .dg .a,
+      .dg .g,
+      .dg .d {
+        left: 2px;
+        width: 9px;
+        height: 3px;
+        clip-path: polygon(0 50%, 22% 0, 78% 0, 100% 50%, 78% 100%, 22% 100%);
+      }
+      .dg .f,
+      .dg .b,
+      .dg .e,
+      .dg .c {
+        width: 3px;
+        height: 8px;
+        clip-path: polygon(50% 0, 100% 18%, 100% 82%, 50% 100%, 0 82%, 0 18%);
+      }
+      .dg .a {
+        top: 0;
+      }
+      .dg .g {
+        top: 10px;
+      }
+      .dg .d {
+        top: 20px;
+      }
+      .dg .f {
+        left: 0;
+        top: 2px;
+      }
+      .dg .b {
+        left: 10px;
+        top: 2px;
+      }
+      .dg .e {
+        left: 0;
+        top: 13px;
+      }
+      .dg .c {
+        left: 10px;
+        top: 13px;
+      }
+
+      /* ---------- face ---------- */
+      .facebtn {
+        width: 27px;
+        height: 27px;
+        padding: 0;
+        border: 0;
+        background: var(--face);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow:
+          inset -1px -1px var(--dark),
+          inset 1px 1px #fff,
+          inset -2px -2px var(--shadow),
+          inset 2px 2px var(--light);
+      }
+      .facebtn.down {
+        box-shadow:
+          inset 1px 1px var(--shadow),
+          inset 2px 2px var(--light);
+      }
+      .facebtn svg {
+        width: 17px;
+        height: 17px;
+        display: block;
+      }
+      .facebtn.down svg {
+        margin: 1px 0 0 1px;
+      }
+
+      /* ---------- field ---------- */
+      .field {
+        display: grid;
+        background: var(--face);
+        box-shadow:
+          inset -1px -1px #fff,
+          inset 1px 1px var(--shadow),
+          inset -2px -2px #fff,
+          inset 2px 2px var(--shadow),
+          inset -3px -3px #fff,
+          inset 3px 3px var(--shadow);
+        padding: 3px;
+        touch-action: manipulation;
+      }
+      .c {
+        width: var(--cs);
+        height: var(--cs);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-family: Tahoma, Verdana, sans-serif;
+        font-size: calc(var(--cs) * 0.62);
+        line-height: 1;
+        overflow: hidden;
+      }
+      .c.hid {
+        background: var(--face);
+        border: 3px solid;
+        border-color: #fff #7b7b7b #7b7b7b #fff;
+      }
+      .c.open {
+        background: var(--face);
+        border: 1px solid #7b7b7b;
+        border-width: 1px 0 0 1px;
+      }
+      .c.press {
+        background: var(--face);
+        border: 1px solid #7b7b7b;
+        border-width: 1px 0 0 1px;
+      }
+      .c.boom {
+        background: #f00;
+      }
+      .c svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .c .q {
+        color: #000;
+      }
+      .c.n1 {
+        color: #0000ff;
+      }
+      .c.n2 {
+        color: #008000;
+      }
+      .c.n3 {
+        color: #ff0000;
+      }
+      .c.n4 {
+        color: #000080;
+      }
+      .c.n5 {
+        color: #800000;
+      }
+      .c.n6 {
+        color: #008080;
+      }
+      .c.n7 {
+        color: #000000;
+      }
+      .c.n8 {
+        color: #808080;
+      }
+
+      /* ---------- flag mode ---------- */
+      .toolbar {
+        display: none;
+        margin-top: 5px;
+      }
+      body.hasflag .toolbar {
+        display: flex;
+      }
+      .tool {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 7px 10px 8px;
+        font-family: inherit;
+        font-size: 12px;
+        background: var(--face);
+        border: 0;
+        touch-action: manipulation;
+        box-shadow:
+          inset -1px -1px var(--dark),
+          inset 1px 1px #fff,
+          inset -2px -2px var(--shadow),
+          inset 2px 2px var(--light);
+      }
+      .tool svg {
+        width: 15px;
+        height: 15px;
+        display: block;
+      }
+      .tool.on {
+        background-image: repeating-conic-gradient(
+          #fff 0 25%,
+          transparent 0 50%
+        );
+        background-size: 4px 4px;
+        padding: 8px 9px 7px 11px;
+        box-shadow:
+          inset -1px -1px #fff,
+          inset 1px 1px var(--shadow),
+          inset -2px -2px var(--light),
+          inset 2px 2px var(--dark);
+      }
+
+      /* thinner bevels once the cells get small, or they eat the whole cell */
+      body.tiny .c.hid {
+        border-width: 2px;
+      }
+
+      /* ---------- dialogs ---------- */
+      .overlay {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 50;
+      }
+      .dialog {
+        min-width: 240px;
+        max-width: calc(100vw - 16px);
+        background: var(--face);
+        padding: 3px;
+        box-shadow:
+          inset -1px -1px var(--dark),
+          inset 1px 1px #fff,
+          inset -2px -2px var(--shadow),
+          inset 2px 2px var(--light),
+          4px 4px 10px rgba(0, 0, 0, 0.35);
+      }
+      .dialog .body {
+        padding: 12px 10px 10px;
+      }
+      .dialog .row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 7px;
+      }
+      .dialog .row label {
+        width: 74px;
+      }
+      .dialog input[type="text"],
+      .dialog input[type="number"] {
+        width: 62px;
+        font-family: inherit;
+        font-size: 12px;
+        padding: 2px 3px;
+        background: #fff;
+        border: 0;
+        box-shadow:
+          inset -1px -1px #fff,
+          inset 1px 1px var(--shadow),
+          inset -2px -2px var(--light),
+          inset 2px 2px var(--dark);
+      }
+      .dialog .btns {
+        display: flex;
+        gap: 6px;
+        justify-content: center;
+        padding: 4px 10px 10px;
+      }
+      .btn {
+        min-width: 76px;
+        padding: 5px 10px;
+        font-family: inherit;
+        font-size: 12px;
+        background: var(--face);
+        border: 0;
+        box-shadow:
+          inset -1px -1px var(--dark),
+          inset 1px 1px #fff,
+          inset -2px -2px var(--shadow),
+          inset 2px 2px var(--light);
+      }
+      .btn:active {
+        box-shadow:
+          inset 1px 1px var(--shadow),
+          inset 2px 2px var(--light);
+        padding: 6px 9px 4px 11px;
+      }
+      .scores {
+        margin: 0 0 4px;
+        border-collapse: collapse;
+      }
+      .scores td {
+        padding: 3px 10px 3px 0;
+      }
+      .hint {
+        max-width: 46em;
+        margin: 14px auto 0;
+        color: #dfffff;
+        text-align: center;
+        font-size: 11px;
+        line-height: 1.6;
+        text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="window" id="win">
+        <div class="titlebar">
+          <span class="ttl">
+            <svg width="16" height="16" viewBox="0 0 16 16">
+              <rect x="1" y="1" width="14" height="14" fill="#c0c0c0" />
+              <path d="M1 1h14v1H1z M1 1v14h1V1z" fill="#fff" />
+              <path d="M1 15h14v-1H1z M15 1v14h-1V1z" fill="#7b7b7b" />
+              <rect x="6" y="3" width="2" height="10" fill="#000" />
+              <path d="M6 3 L6 8 L2 5.5 Z" fill="#f00" />
+              <rect x="3" y="12" width="8" height="2" fill="#000" />
+            </svg>
+            Сапёр
+          </span>
+          <button class="tbtn" title="Свернуть">_</button>
+          <button class="tbtn" title="Развернуть">❒</button>
+          <button class="tbtn close" title="Закрыть">✕</button>
+        </div>
+
+        <div class="menubar" id="menubar">
+          <div class="mi" data-menu="game">Игра</div>
+          <div class="mi" data-menu="help">Справка</div>
+        </div>
+
+        <div class="panel">
+          <div class="head">
+            <div class="led" id="mines"></div>
+            <button class="facebtn" id="face"></button>
+            <div class="led" id="clock"></div>
+          </div>
+          <div class="field" id="field"></div>
+          <div class="toolbar">
+            <button class="tool" id="flagmode" type="button"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hint">
+      ЛКМ — открыть &nbsp;•&nbsp; ПКМ — флажок &nbsp;•&nbsp; обе кнопки или СКМ
+      на числе — раскрыть соседей<br />
+      Тач: тап — открыть, долгий тап — флажок, тап по числу — раскрыть
+      соседей<br />
+      F2 — новая игра
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        var MINE =
+          '<svg viewBox="0 0 16 16">' +
+          '<rect x="7" y="1" width="2" height="14"/>' +
+          '<rect x="1" y="7" width="14" height="2"/>' +
+          '<path d="M3.5 3.5 L12.5 12.5 M12.5 3.5 L3.5 12.5" stroke="#000" stroke-width="2"/>' +
+          '<circle cx="8" cy="8" r="5"/>' +
+          '<rect x="5" y="5" width="2" height="2" fill="#fff"/></svg>';
+        var MINE_X =
+          '<svg viewBox="0 0 16 16">' +
+          '<rect x="7" y="1" width="2" height="14"/>' +
+          '<rect x="1" y="7" width="14" height="2"/>' +
+          '<path d="M3.5 3.5 L12.5 12.5 M12.5 3.5 L3.5 12.5" stroke="#000" stroke-width="2"/>' +
+          '<circle cx="8" cy="8" r="5"/>' +
+          '<rect x="5" y="5" width="2" height="2" fill="#fff"/>' +
+          '<path d="M1.5 1.5 L14.5 14.5 M14.5 1.5 L1.5 14.5" stroke="#f00" stroke-width="2.2"/></svg>';
+        var FLAG =
+          '<svg viewBox="0 0 16 16">' +
+          '<rect x="7" y="2" width="2" height="9" fill="#000"/>' +
+          '<path d="M7 2 L7 7.5 L2 4.75 Z" fill="#f00"/>' +
+          '<rect x="5" y="11" width="6" height="1.6" fill="#000"/>' +
+          '<rect x="3" y="12.6" width="10" height="2" fill="#000"/></svg>';
+
+        function faceSvg(kind) {
+          var head =
+            '<svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#ff0" stroke="#000" stroke-width="1.4"/>';
+          if (kind === "win") {
+            return (
+              head +
+              '<path d="M3 8 L8 8 L8 11 Q8 12.5 5.5 12.5 Q3 12.5 3 10.5 Z" fill="#000"/>' +
+              '<path d="M12 8 L17 8 L17 10.5 Q17 12.5 14.5 12.5 Q12 12.5 12 11 Z" fill="#000"/>' +
+              '<rect x="8" y="8" width="4" height="1.4" fill="#000"/>' +
+              '<path d="M6 14 Q10 17.5 14 14" stroke="#000" stroke-width="1.4" fill="none"/></svg>'
+            );
+          }
+          if (kind === "dead") {
+            return (
+              head +
+              '<path d="M4.5 5.5 L8.5 9.5 M8.5 5.5 L4.5 9.5" stroke="#000" stroke-width="1.5"/>' +
+              '<path d="M11.5 5.5 L15.5 9.5 M15.5 5.5 L11.5 9.5" stroke="#000" stroke-width="1.5"/>' +
+              '<path d="M6 15.5 Q10 11.5 14 15.5" stroke="#000" stroke-width="1.5" fill="none"/></svg>'
+            );
+          }
+          if (kind === "oh") {
+            return (
+              head +
+              '<circle cx="6.8" cy="7.5" r="1.5"/><circle cx="13.2" cy="7.5" r="1.5"/>' +
+              '<ellipse cx="10" cy="13.5" rx="2.4" ry="2.8" fill="#000"/></svg>'
+            );
+          }
+          return (
+            head +
+            '<circle cx="6.8" cy="7.5" r="1.5"/><circle cx="13.2" cy="7.5" r="1.5"/>' +
+            '<path d="M5 12 Q10 16.5 15 12" stroke="#000" stroke-width="1.5" fill="none"/></svg>'
+          );
+        }
+
+        var LEVELS = {
+          beginner: { w: 9, h: 9, m: 10, name: "Новичок" },
+          intermediate: { w: 16, h: 16, m: 40, name: "Любитель" },
+          expert: { w: 30, h: 16, m: 99, name: "Профессионал" },
+        };
+        var SEG = {
+          0: "abcdef",
+          1: "bc",
+          2: "abdeg",
+          3: "abcdg",
+          4: "bcfg",
+          5: "acdfg",
+          6: "acdefg",
+          7: "abc",
+          8: "abcdefg",
+          9: "abcdfg",
+          "-": "g",
+          " ": "",
+        };
+
+        var el = {
+          field: document.getElementById("field"),
+          mines: document.getElementById("mines"),
+          clock: document.getElementById("clock"),
+          face: document.getElementById("face"),
+          menubar: document.getElementById("menubar"),
+          tool: document.getElementById("flagmode"),
+        };
+
+        /* ------------ storage ------------ */
+        function load(key, def) {
+          try {
+            var v = localStorage.getItem(key);
+            return v == null ? def : JSON.parse(v);
+          } catch (e) {
+            return def;
+          }
+        }
+        function save(key, val) {
+          try {
+            localStorage.setItem(key, JSON.stringify(val));
+          } catch (e) {}
+        }
+
+        var level = load("saper.level", "beginner");
+        var custom = load("saper.custom", { w: 9, h: 9, m: 10 });
+        var marks = load("saper.marks", true);
+        var best = load("saper.best", {});
+        var coarse =
+          (window.matchMedia &&
+            window.matchMedia("(pointer: coarse)").matches) ||
+          "ontouchstart" in window;
+        var flagBtn = load("saper.flagbtn", coarse);
+        var flagMode = false;
+        var BASE_CS = coarse ? 28 : 24;
+        /* body padding + window/panel/field bevels around the grid */
+        var CHROME = 16 + 22;
+        if (!LEVELS[level] && level !== "custom") level = "beginner";
+
+        /* ------------ state ------------ */
+        var W, H, M, board, cells, started, over, won, opened, flags;
+        var boom = -1;
+        var time = 0,
+          timerId = null;
+
+        function cfg() {
+          return level === "custom" ? custom : LEVELS[level];
+        }
+
+        /* ------------ LED ------------ */
+        function buildLed(node) {
+          node.innerHTML = "";
+          for (var d = 0; d < 3; d++) {
+            var dg = document.createElement("div");
+            dg.className = "dg";
+            dg.innerHTML =
+              '<i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i>' +
+              '<i class="e"></i><i class="f"></i><i class="g"></i>';
+            node.appendChild(dg);
+          }
+        }
+        function setLed(node, value) {
+          var chars;
+          if (value < 0) {
+            var a = Math.min(99, -value);
+            chars = ("-" + (a < 10 ? "0" + a : a)).split("");
+          } else {
+            var v = Math.min(999, value);
+            chars = ("00" + v).slice(-3).split("");
+          }
+          for (var d = 0; d < 3; d++) {
+            var on = SEG[chars[d]] || "";
+            var segs = node.children[d].children;
+            for (var s = 0; s < 7; s++) {
+              var name = "abcdefg"[s];
+              segs[s].className = name + (on.indexOf(name) >= 0 ? " on" : "");
+            }
+          }
+        }
+
+        function setFace(kind) {
+          el.face.innerHTML = faceSvg(kind);
+        }
+
+        function setFlagBtn(on) {
+          flagBtn = on;
+          save("saper.flagbtn", flagBtn);
+          document.body.classList.toggle("hasflag", flagBtn);
+          if (!flagBtn) setFlagMode(false);
+        }
+        function setFlagMode(on) {
+          flagMode = on;
+          el.tool.classList.toggle("on", flagMode);
+        }
+
+        /* ------------ new game ------------ */
+        function newGame() {
+          var c = cfg();
+          W = c.w;
+          H = c.h;
+          M = Math.min(c.m, W * H - 1);
+          board = [];
+          for (var i = 0; i < W * H; i++)
+            board.push({ mine: 0, adj: 0, st: 0 });
+          started = false;
+          over = false;
+          won = false;
+          opened = 0;
+          flags = 0;
+          boom = -1;
+          stopTimer();
+          time = 0;
+          setLed(el.clock, 0);
+          setLed(el.mines, M);
+          setFace("smile");
+
+          fitCells();
+          el.field.style.gridTemplateColumns = "repeat(" + W + ", var(--cs))";
+          el.field.innerHTML = "";
+          cells = [];
+          var frag = document.createDocumentFragment();
+          for (var j = 0; j < W * H; j++) {
+            var d = document.createElement("div");
+            d.className = "c hid";
+            d.dataset.i = j;
+            cells.push(d);
+            frag.appendChild(d);
+          }
+          el.field.appendChild(frag);
+        }
+
+        /* shrink the cells so a wide board still fits a narrow screen */
+        function fitCells() {
+          if (!W) return;
+          var avail = document.documentElement.clientWidth - CHROME;
+          var cs =
+            avail > 0
+              ? Math.min(BASE_CS, Math.max(16, Math.floor(avail / W)))
+              : BASE_CS;
+          document.documentElement.style.setProperty("--cs", cs + "px");
+          document.body.classList.toggle("tiny", cs < 18);
+        }
+        window.addEventListener("resize", fitCells);
+        window.addEventListener("orientationchange", fitCells);
+
+        function neighbours(i) {
+          var x = i % W,
+            y = (i / W) | 0,
+            out = [];
+          for (var dy = -1; dy <= 1; dy++)
+            for (var dx = -1; dx <= 1; dx++) {
+              if (!dx && !dy) continue;
+              var nx = x + dx,
+                ny = y + dy;
+              if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
+              out.push(ny * W + nx);
+            }
+          return out;
+        }
+
+        function plant(safe) {
+          var forbidden = {};
+          forbidden[safe] = 1;
+          if (M <= W * H - 9)
+            neighbours(safe).forEach(function (n) {
+              forbidden[n] = 1;
+            });
+          var pool = [];
+          for (var i = 0; i < W * H; i++) if (!forbidden[i]) pool.push(i);
+          for (var k = pool.length - 1; k > 0; k--) {
+            var r = (Math.random() * (k + 1)) | 0;
+            var t = pool[k];
+            pool[k] = pool[r];
+            pool[r] = t;
+          }
+          for (var m = 0; m < M; m++) board[pool[m]].mine = 1;
+          for (var c = 0; c < W * H; c++) {
+            if (board[c].mine) continue;
+            var n = 0;
+            neighbours(c).forEach(function (x) {
+              if (board[x].mine) n++;
+            });
+            board[c].adj = n;
+          }
+        }
+
+        /* ------------ paint ------------ */
+        function paint(i) {
+          var c = board[i],
+            node = cells[i],
+            cls = "c",
+            html = "";
+          if (c.st === 1) {
+            cls += " open";
+            if (c.mine) {
+              html = MINE;
+              if (i === boom) cls += " boom";
+            } else if (c.adj) {
+              cls += " n" + c.adj;
+              html = String(c.adj);
+            }
+          } else if (c.st === 4) {
+            cls += " open";
+            html = MINE_X;
+          } else {
+            cls += " hid";
+            if (c.st === 2) html = FLAG;
+            else if (c.st === 3) html = '<span class="q">?</span>';
+          }
+          node.className = cls;
+          node.innerHTML = html;
+        }
+
+        /* ------------ timer ------------ */
+        function startTimer() {
+          if (timerId) return;
+          timerId = setInterval(function () {
+            time++;
+            setLed(el.clock, time);
+            if (time >= 999) stopTimer();
+          }, 1000);
+        }
+        function stopTimer() {
+          if (timerId) clearInterval(timerId);
+          timerId = null;
+        }
+
+        /* ------------ actions ------------ */
+        function reveal(i) {
+          var c = board[i];
+          if (over || c.st === 1 || c.st === 2) return;
+          if (!started) {
+            plant(i);
+            started = true;
+            startTimer();
+          }
+          var stack = [i];
+          while (stack.length) {
+            var k = stack.pop(),
+              cell = board[k];
+            if (cell.st === 1 || cell.st === 2) continue;
+            cell.st = 1;
+            if (cell.mine) {
+              boom = k;
+              paint(k);
+              lose();
+              return;
+            }
+            opened++;
+            paint(k);
+            if (cell.adj === 0)
+              neighbours(k).forEach(function (n) {
+                if (board[n].st !== 1 && board[n].st !== 2) stack.push(n);
+              });
+          }
+          checkWin();
+        }
+
+        function toggleFlag(i) {
+          var c = board[i];
+          if (over || c.st === 1 || c.st === 4) return;
+          if (c.st === 0) {
+            c.st = 2;
+            flags++;
+          } else if (c.st === 2) {
+            c.st = marks ? 3 : 0;
+            flags--;
+          } else {
+            c.st = 0;
+          }
+          paint(i);
+          setLed(el.mines, M - flags);
+        }
+
+        function chord(i) {
+          var c = board[i];
+          if (over || c.st !== 1 || !c.adj) return;
+          var ns = neighbours(i),
+            f = 0;
+          ns.forEach(function (n) {
+            if (board[n].st === 2) f++;
+          });
+          if (f !== c.adj) return;
+          ns.forEach(function (n) {
+            if (board[n].st === 0 || board[n].st === 3) reveal(n);
+          });
+        }
+
+        /* tap on an open number chords, anywhere else digs */
+        function primary(i) {
+          if (board[i].st === 1) chord(i);
+          else reveal(i);
+        }
+
+        function lose() {
+          over = true;
+          stopTimer();
+          setFace("dead");
+          for (var i = 0; i < W * H; i++) {
+            var c = board[i];
+            if (c.mine && c.st !== 2 && c.st !== 1) c.st = 1;
+            else if (!c.mine && c.st === 2) c.st = 4;
+            else continue;
+            paint(i);
+          }
+        }
+
+        function checkWin() {
+          if (opened !== W * H - M) return;
+          over = true;
+          won = true;
+          stopTimer();
+          setFace("win");
+          for (var i = 0; i < W * H; i++)
+            if (board[i].mine && board[i].st !== 2) {
+              board[i].st = 2;
+              paint(i);
+            }
+          flags = M;
+          setLed(el.mines, 0);
+          recordBest();
+        }
+
+        function recordBest() {
+          if (level === "custom") return;
+          var prev = best[level];
+          if (prev && prev.time <= time) return;
+          askName(function (name) {
+            best[level] = { time: time, name: name || "Аноним" };
+            save("saper.best", best);
+            showBest();
+          });
+        }
+
+        /* ------------ mouse ------------ */
+        var touchGuard = 0;
+        var lb = false,
+          rb = false,
+          chording = false,
+          suppress = false,
+          cur = -1,
+          pressed = [];
+
+        function idxFrom(target) {
+          if (!target || !target.closest) return -1;
+          var n = target.closest(".c");
+          return n ? +n.dataset.i : -1;
+        }
+        function clearPress() {
+          pressed.forEach(function (i) {
+            if (cells[i]) cells[i].classList.remove("press");
+          });
+          pressed = [];
+        }
+        function applyPress() {
+          clearPress();
+          if (over || cur < 0) return;
+          if (flagMode && !chording) return;
+          var list = chording ? neighbours(cur).concat([cur]) : [cur];
+          list.forEach(function (i) {
+            var s = board[i].st;
+            if (s === 0 || s === 3) {
+              cells[i].classList.add("press");
+              pressed.push(i);
+            }
+          });
+        }
+
+        el.field.addEventListener("contextmenu", function (e) {
+          e.preventDefault();
+        });
+
+        el.field.addEventListener("mousedown", function (e) {
+          if (Date.now() - touchGuard < 800) return;
+          var i = idxFrom(e.target);
+          if (i < 0) return;
+          e.preventDefault();
+          cur = i;
+          if (e.button === 0) lb = true;
+          else if (e.button === 2) rb = true;
+          else if (e.button === 1) chording = true;
+          if (lb && rb) chording = true;
+          if (over) return;
+          if (e.button === 2 && !lb && !chording) {
+            toggleFlag(i);
+            return;
+          }
+          setFace("oh");
+          applyPress();
+        });
+
+        document.addEventListener("mousemove", function (e) {
+          if (!lb && !rb && !chording) return;
+          var i = idxFrom(e.target);
+          if (i === cur) return;
+          cur = i;
+          applyPress();
+        });
+
+        document.addEventListener("mouseup", function (e) {
+          if (!lb && !rb && !chording) return;
+          var wasChording = chording,
+            i = cur;
+          if (e.button === 0) lb = false;
+          else if (e.button === 2) rb = false;
+          clearPress();
+          if (!over && i >= 0 && !suppress) {
+            if (wasChording) {
+              chord(i);
+              suppress = true;
+            } else if (e.button === 0) {
+              if (flagMode) toggleFlag(i);
+              else reveal(i);
+            }
+          }
+          if (e.button === 1 || (!lb && !rb)) {
+            chording = false;
+            suppress = false;
+            cur = -1;
+          }
+          if (!over) setFace("smile");
+        });
+
+        el.face.addEventListener("mousedown", function () {
+          el.face.classList.add("down");
+        });
+        document.addEventListener("mouseup", function () {
+          el.face.classList.remove("down");
+        });
+        el.face.addEventListener("click", function () {
+          newGame();
+        });
+
+        el.tool.addEventListener("click", function () {
+          setFlagMode(!flagMode);
+        });
+
+        /* ------------ touch ------------ */
+        var tId = null,
+          tCell = -1,
+          tTimer = null,
+          tHandled = false,
+          tX = 0,
+          tY = 0;
+
+        function endTouch() {
+          if (tTimer) clearTimeout(tTimer);
+          tTimer = null;
+          tId = null;
+          tCell = -1;
+          clearPress();
+          chording = false;
+          cur = -1;
+          touchGuard = Date.now();
+          if (!over) setFace("smile");
+        }
+
+        function buzz() {
+          if (navigator.vibrate) navigator.vibrate(12);
+        }
+
+        function touchIn(list) {
+          for (var k = 0; k < list.length; k++)
+            if (list[k].identifier === tId) return list[k];
+          return null;
+        }
+
+        el.field.addEventListener(
+          "touchstart",
+          function (e) {
+            touchGuard = Date.now();
+            if (tId !== null || e.touches.length > 1) {
+              tHandled = true;
+              endTouch();
+              return;
+            }
+            var t = e.changedTouches[0],
+              i = idxFrom(t.target);
+            if (i < 0) return;
+            tId = t.identifier;
+            tCell = i;
+            tHandled = false;
+            tX = t.clientX;
+            tY = t.clientY;
+            if (over) return;
+            cur = i;
+            chording = board[i].st === 1 && !!board[i].adj;
+            setFace("oh");
+            applyPress();
+            /* long press does the opposite of the current mode */
+            tTimer = setTimeout(function () {
+              tTimer = null;
+              tHandled = true;
+              clearPress();
+              chording = false;
+              if (!over) {
+                if (flagMode) primary(tCell);
+                else toggleFlag(tCell);
+                buzz();
+              }
+              if (!over) setFace("smile");
+            }, 450);
+          },
+          { passive: true },
+        );
+
+        el.field.addEventListener(
+          "touchmove",
+          function (e) {
+            if (tId === null) return;
+            touchGuard = Date.now();
+            var t = touchIn(e.changedTouches);
+            if (!t) return;
+            if (
+              Math.abs(t.clientX - tX) > 12 ||
+              Math.abs(t.clientY - tY) > 12
+            ) {
+              tHandled = true;
+              endTouch();
+            }
+          },
+          { passive: true },
+        );
+
+        el.field.addEventListener(
+          "touchend",
+          function (e) {
+            touchGuard = Date.now();
+            if (tId === null) return;
+            if (!touchIn(e.changedTouches)) return;
+            var i = tCell,
+              done = tHandled;
+            if (tTimer) clearTimeout(tTimer);
+            tTimer = null;
+            tId = null;
+            tCell = -1;
+            clearPress();
+            chording = false;
+            cur = -1;
+            if (!over && !done && i >= 0) {
+              if (flagMode) toggleFlag(i);
+              else primary(i);
+            }
+            if (!over) setFace("smile");
+            e.preventDefault();
+          },
+          { passive: false },
+        );
+
+        el.field.addEventListener("touchcancel", function () {
+          tHandled = true;
+          endTouch();
+        });
+
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "F2") {
+            e.preventDefault();
+            newGame();
+          }
+        });
+
+        /* ------------ dialogs ------------ */
+        function dialog(title, bodyHTML, buttons) {
+          var ov = document.createElement("div");
+          ov.className = "overlay";
+          var btns = (buttons || [{ label: "OK" }])
+            .map(function (b, i) {
+              return (
+                '<button class="btn" data-b="' +
+                i +
+                '">' +
+                b.label +
+                "</button>"
+              );
+            })
+            .join("");
+          ov.innerHTML =
+            '<div class="dialog">' +
+            '<div class="titlebar"><span class="ttl">' +
+            title +
+            '</span><button class="tbtn close" data-close="1">✕</button></div>' +
+            '<div class="body">' +
+            bodyHTML +
+            "</div>" +
+            '<div class="btns">' +
+            btns +
+            "</div></div>";
+          document.body.appendChild(ov);
+          function close() {
+            if (ov.parentNode) ov.parentNode.removeChild(ov);
+          }
+          ov.querySelector("[data-close]").addEventListener("click", close);
+          ov.querySelectorAll(".btn").forEach(function (b) {
+            b.addEventListener("click", function () {
+              var h = (buttons || [])[+b.dataset.b];
+              if (h && h.onClick && h.onClick(ov) === false) return;
+              close();
+            });
+          });
+          ov.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") close();
+          });
+          var inp = ov.querySelector("input");
+          if (inp) {
+            inp.focus();
+            inp.select();
+          }
+          return ov;
+        }
+
+        function customDialog() {
+          var c = cfg();
+          dialog(
+            "Особый вариант",
+            '<div class="row"><label>Высота:</label><input type="number" id="f-h" value="' +
+              c.h +
+              '" min="9" max="24"></div>' +
+              '<div class="row"><label>Ширина:</label><input type="number" id="f-w" value="' +
+              c.w +
+              '" min="9" max="30"></div>' +
+              '<div class="row"><label>Мины:</label><input type="number" id="f-m" value="' +
+              c.m +
+              '" min="1"></div>' +
+              '<div style="color:#404040">Максимум: 24 × 30</div>',
+            [
+              {
+                label: "OK",
+                onClick: function (ov) {
+                  var h = clamp(+ov.querySelector("#f-h").value, 9, 24);
+                  var w = clamp(+ov.querySelector("#f-w").value, 9, 30);
+                  var m = clamp(+ov.querySelector("#f-m").value, 1, w * h - 9);
+                  custom = { w: w, h: h, m: m };
+                  level = "custom";
+                  save("saper.custom", custom);
+                  save("saper.level", level);
+                  newGame();
+                },
+              },
+              { label: "Отмена" },
+            ],
+          );
+        }
+
+        function clamp(v, lo, hi) {
+          if (!isFinite(v)) v = lo;
+          return Math.max(lo, Math.min(hi, Math.round(v)));
+        }
+
+        function askName(cb) {
+          dialog(
+            "Рекорд",
+            "<div>Вы попали в список лучших игроков<br>уровня «" +
+              LEVELS[level].name +
+              "»!</div>" +
+              '<div class="row" style="margin-top:12px"><label>Имя:</label>' +
+              '<input type="text" id="f-n" style="width:130px" value="' +
+              ((best[level] && best[level].name) || "Аноним") +
+              '"></div>',
+            [
+              {
+                label: "OK",
+                onClick: function (ov) {
+                  cb(ov.querySelector("#f-n").value.trim().slice(0, 20));
+                },
+              },
+            ],
+          );
+        }
+
+        function showBest() {
+          var rows = Object.keys(LEVELS)
+            .map(function (k) {
+              var b = best[k];
+              return (
+                "<tr><td>" +
+                LEVELS[k].name +
+                ":</td><td>" +
+                (b ? b.time + " сек." : "999 сек.") +
+                "</td><td>" +
+                (b ? b.name : "Аноним") +
+                "</td></tr>"
+              );
+            })
+            .join("");
+          dialog(
+            "Лучшие результаты",
+            '<table class="scores">' + rows + "</table>",
+            [
+              {
+                label: "Сброс",
+                onClick: function () {
+                  best = {};
+                  save("saper.best", best);
+                  return false;
+                },
+              },
+              { label: "OK" },
+            ],
+          );
+        }
+
+        /* ------------ menu ------------ */
+        var openMenu = null;
+        function closeMenu() {
+          if (openMenu) openMenu.remove();
+          openMenu = null;
+          Array.prototype.forEach.call(
+            el.menubar.querySelectorAll(".mi"),
+            function (m) {
+              m.classList.remove("open");
+            },
+          );
+        }
+
+        function menuItems(which) {
+          if (which === "help")
+            return [
+              { label: "Лучшие результаты…", act: showBest },
+              { sep: 1 },
+              {
+                label: "О программе",
+                act: function () {
+                  dialog(
+                    "О программе",
+                    "<div style='line-height:1.7'><b>Сапёр</b><br>Пауза в изучении голландского.<br>" +
+                      "Классические правила, классические лица.</div>",
+                  );
+                },
+              },
+            ];
+          return [
+            { label: "Новая", key: "F2", act: newGame },
+            { sep: 1 },
+            {
+              label: "Новичок",
+              tick: level === "beginner",
+              act: function () {
+                setLevel("beginner");
+              },
+            },
+            {
+              label: "Любитель",
+              tick: level === "intermediate",
+              act: function () {
+                setLevel("intermediate");
+              },
+            },
+            {
+              label: "Профессионал",
+              tick: level === "expert",
+              act: function () {
+                setLevel("expert");
+              },
+            },
+            {
+              label: "Особый…",
+              tick: level === "custom",
+              act: customDialog,
+            },
+            { sep: 1 },
+            {
+              label: "Вопросительные знаки",
+              tick: marks,
+              act: function () {
+                marks = !marks;
+                save("saper.marks", marks);
+              },
+            },
+            {
+              label: "Кнопка флажка",
+              tick: flagBtn,
+              act: function () {
+                setFlagBtn(!flagBtn);
+              },
+            },
+            { sep: 1 },
+            { label: "Лучшие результаты…", act: showBest },
+          ];
+        }
+
+        function setLevel(l) {
+          level = l;
+          save("saper.level", level);
+          newGame();
+        }
+
+        function openMenuFor(mi) {
+          closeMenu();
+          mi.classList.add("open");
+          var items = menuItems(mi.dataset.menu);
+          var m = document.createElement("div");
+          m.className = "menu";
+          m.style.left = mi.offsetLeft + "px";
+          m.innerHTML = items
+            .map(function (it, i) {
+              if (it.sep) return '<div class="sep"></div>';
+              return (
+                '<div class="item" data-i="' +
+                i +
+                '">' +
+                (it.tick ? '<span class="tick">✓</span>' : "") +
+                it.label +
+                (it.key ? '<span class="key">' + it.key + "</span>" : "") +
+                "</div>"
+              );
+            })
+            .join("");
+          m.addEventListener("mousedown", function (e) {
+            e.stopPropagation();
+          });
+          m.addEventListener("click", function (e) {
+            var t = e.target.closest(".item");
+            if (!t) return;
+            var it = items[+t.dataset.i];
+            closeMenu();
+            if (it && it.act) it.act();
+          });
+          el.menubar.appendChild(m);
+          openMenu = m;
+        }
+
+        Array.prototype.forEach.call(
+          el.menubar.querySelectorAll(".mi"),
+          function (mi) {
+            mi.addEventListener("mousedown", function (e) {
+              e.stopPropagation();
+              if (openMenu && mi.classList.contains("open")) closeMenu();
+              else openMenuFor(mi);
+            });
+            mi.addEventListener("mouseenter", function () {
+              if (openMenu) openMenuFor(mi);
+            });
+          },
+        );
+        document.addEventListener("mousedown", closeMenu);
+
+        /* ------------ boot ------------ */
+        el.tool.innerHTML = FLAG + "<span>Режим флажков</span>";
+        setFlagBtn(flagBtn);
+        buildLed(el.mines);
+        buildLed(el.clock);
+        newGame();
+      })();
+    </script>
+  </body>
+</html>

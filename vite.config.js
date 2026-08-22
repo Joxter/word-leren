@@ -9,6 +9,7 @@ export default defineConfig({
       input: {
         main: "index.html",
         tests: "tests.html",
+        saper: "saper.html",
       },
     },
   },
