@@ -6,12 +6,50 @@
     <title>Сапёр</title>
     <style>
       :root {
-        --cs: 24px;
-        --ui: 1;
+        /* board shape — the only layout input JS still writes */
+        --cols: 9;
+        --rows: 9;
+
+        --min-cs: 16px;
+        --max-cs: 24px;
+        --ui: 1; /* scale of the counters / smiley, driven by the viewport */
+        --vh: 100vh;
+
+        --page-pad-x: 8px;
+        --page-pad-t: 16px;
+        --page-pad-b: 40px;
+
         --face: #c0c0c0;
         --shadow: #808080;
         --dark: #0a0a0a;
         --light: #dfdfdf;
+      }
+      @supports (height: 100dvh) {
+        :root {
+          /* the part of the screen actually visible right now: on a tablet
+             100vh includes the strip under a retracted browser toolbar */
+          --vh: 100dvh;
+        }
+      }
+      @media (pointer: coarse) {
+        :root {
+          --max-cs: 28px;
+        }
+      }
+      body.big {
+        --max-cs: 72px;
+        --page-pad-b: 8px;
+        --ui: 1.5;
+      }
+      @media (min-width: 720px) and (min-height: 700px) {
+        body.big {
+          --ui: 2;
+        }
+      }
+      @media (min-width: 1000px) and (min-height: 880px) {
+        body.big {
+          --ui: 2.5;
+        }
       }
       * {
         box-sizing: border-box;
@@ -29,7 +67,7 @@
         -webkit-font-smoothing: none;
         user-select: none;
         -webkit-user-select: none;
-        padding: 16px 8px 40px;
+        padding: var(--page-pad-t) var(--page-pad-x) var(--page-pad-b);
         overflow-x: auto;
       }
       /* shrink-wraps the window so the field never gets stretched by the
@@ -37,6 +75,67 @@
       .page {
         width: max-content;
         margin: 0 auto;
+
+        /* Every fixed piece of the window, declared once here and applied by
+           the rules below — so the sum in --frame-y is true by construction
+           instead of being a guess about how tall things rendered. */
+        --win-pad: 3px;
+        --panel-pad: 5px;
+        --field-pad: 3px;
+        --title-h: 20px;
+        --menu-h: 23px;
+        --head-item-h: 27px; /* the smiley button and the LED are both 27px */
+        --head-pad: 4px;
+        --head-gap: 5px;
+        --tool-gap: 5px;
+        --tool-btn-h: calc(24px * var(--ui) + 12px);
+        --tool-h: 0px; /* only the flag button costs height, when shown */
+        --head-h: calc(var(--head-item-h) * var(--ui) + 2 * var(--head-pad));
+
+        /* everything the window spends around the grid itself */
+        --frame-x: calc(
+          2 * (var(--win-pad) + var(--panel-pad) + var(--field-pad))
+        );
+        --frame-y: calc(
+          var(--page-pad-t) + var(--page-pad-b) + 2 * var(--win-pad) +
+            var(--title-h) + var(--menu-h) + 2 * var(--panel-pad) +
+            var(--head-h) + var(--head-gap) + 2 * var(--field-pad) +
+            var(--tool-h)
+        );
+
+        --fit-w: calc(
+          (100vw - 2 * var(--page-pad-x) - var(--frame-x)) / var(--cols)
+        );
+        --fit-h: calc((var(--vh) - var(--frame-y)) / var(--rows));
+
+        /* normal mode: only ever shrink, and let the page scroll if a wide
+           board still does not fit at the smallest readable cell */
+        --cs: max(var(--min-cs), min(var(--max-cs), var(--fit-w)));
+      }
+      body.hasflag .page {
+        --tool-h: calc(var(--tool-btn-h) + var(--tool-gap));
+      }
+      /* big mode: grow too, but never past what the screen can show */
+      body.big .page {
+        --cs: max(
+          var(--min-cs),
+          min(var(--max-cs), var(--fit-w), var(--fit-h))
+        );
+      }
+      /* whole pixels keep the bevels crisp; older engines just get fractions */
+      @supports (width: round(down, 3px, 2px)) {
+        .page {
+          --cs: max(
+            var(--min-cs),
+            round(down, min(var(--max-cs), var(--fit-w)), 1px)
+          );
+        }
+        body.big .page {
+          --cs: max(
+            var(--min-cs),
+            round(down, min(var(--max-cs), var(--fit-w), var(--fit-h)), 1px)
+          );
+        }
       }
 
       /* ---------- Win95 chrome ---------- */
@@ -57,7 +156,7 @@
 
       .window {
         background: var(--face);
-        padding: 3px;
+        padding: var(--win-pad);
         box-shadow:
           inset -1px -1px var(--dark),
           inset 1px 1px #fff,
@@ -66,7 +165,7 @@
       }
 
       .titlebar {
-        height: 20px;
+        height: var(--title-h, 20px);
         background: linear-gradient(90deg, #000080, #1084d0);
         display: flex;
         align-items: center;
@@ -115,7 +214,9 @@
       /* ---------- menu ---------- */
       .menubar {
         display: flex;
-        padding: 1px 0 2px;
+        align-items: center;
+        height: var(--menu-h);
+        padding: 0;
         position: relative;
       }
       .menubar > .mi {
@@ -172,7 +273,7 @@
       /* ---------- panel ---------- */
       .panel {
         margin-top: 1px;
-        padding: 5px;
+        padding: var(--panel-pad);
         background: var(--face);
         box-shadow:
           inset -1px -1px #fff,
@@ -184,8 +285,9 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 4px;
-        margin-bottom: 5px;
+        height: var(--head-h);
+        padding: var(--head-pad);
+        margin-bottom: var(--head-gap);
         box-shadow:
           inset -1px -1px #fff,
           inset 1px 1px var(--dark),
@@ -291,6 +393,8 @@
       /* ---------- field ---------- */
       .field {
         display: grid;
+        grid-template-columns: repeat(var(--cols), var(--cs));
+        padding: var(--field-pad);
         background: var(--face);
         box-shadow:
           inset -1px -1px #fff,
@@ -299,7 +403,6 @@
           inset 2px 2px var(--shadow),
           inset -3px -3px #fff,
           inset 3px 3px var(--shadow);
-        padding: 3px;
         touch-action: manipulation;
       }
       .c {
@@ -366,7 +469,8 @@
       /* ---------- flag mode ---------- */
       .toolbar {
         display: none;
-        margin-top: 5px;
+        height: var(--tool-btn-h);
+        margin-top: var(--tool-gap);
       }
       body.hasflag .toolbar {
         display: flex;
@@ -377,7 +481,8 @@
         align-items: center;
         justify-content: center;
         gap: 7px;
-        padding: calc(7px * var(--ui)) 10px calc(8px * var(--ui));
+        height: 100%;
+        padding: 0 10px;
         font-family: inherit;
         font-size: calc(12px * var(--ui));
         background: var(--face);
@@ -400,7 +505,7 @@
           transparent 0 50%
         );
         background-size: 4px 4px;
-        padding: calc(8px * var(--ui)) 9px calc(7px * var(--ui)) 11px;
+        padding: 2px 9px 0 11px;
         box-shadow:
           inset -1px -1px #fff,
           inset 1px 1px var(--shadow),
@@ -409,6 +514,9 @@
       }
 
       /* in "big cells" mode the board owns the screen; the hint is just noise */
+      body.big {
+        padding-bottom: 8px;
+      }
       body.big .hint {
         display: none;
       }
@@ -637,7 +745,6 @@
           face: document.getElementById("face"),
           menubar: document.getElementById("menubar"),
           tool: document.getElementById("flagmode"),
-          win: document.getElementById("win"),
         };
 
         /* ------------ storage ------------ */
@@ -666,9 +773,6 @@
         var flagBtn = load("saper.flagbtn", coarse);
         var flagMode = false;
         var big = load("saper.big", false);
-        var BASE_CS = coarse ? 28 : 24;
-        /* body padding + window/panel/field bevels around the grid */
-        var CHROME = 16 + 22;
         if (!LEVELS[level] && level !== "custom") level = "beginner";
 
         /* ------------ state ------------ */
@@ -730,7 +834,6 @@
           big = on;
           save("saper.big", big);
           document.body.classList.toggle("big", big);
-          fitCells();
         }
 
         /* ------------ new game ------------ */
@@ -754,7 +857,7 @@
           setLed(el.mines, M);
           setFace("smile");
 
-          el.field.style.gridTemplateColumns = "repeat(" + W + ", var(--cs))";
+          setBoardVars();
           el.field.innerHTML = "";
           cells = [];
           var frag = document.createDocumentFragment();
@@ -766,35 +869,15 @@
             frag.appendChild(d);
           }
           el.field.appendChild(frag);
-          fitCells();
         }
 
-        /* fit the grid to the viewport: always shrink a wide board down to a
-           narrow screen, and in "big cells" mode grow it to fill the screen */
-        function fitCells() {
-          if (!W) return;
-          var root = document.documentElement;
-          var availW = root.clientWidth - CHROME;
-          var cs = availW > 0 ? Math.floor(availW / W) : BASE_CS;
-          if (big) {
-            /* everything in the window that is not the grid itself */
-            var chromeH = el.win.offsetHeight - el.field.offsetHeight;
-            var availH = root.clientHeight - chromeH - 24;
-            if (availH > 0) cs = Math.min(cs, Math.floor(availH / H));
-            cs = Math.min(72, cs);
-          } else {
-            cs = Math.min(BASE_CS, cs);
-          }
-          cs = Math.max(16, cs);
-          root.style.setProperty("--cs", cs + "px");
-          /* scale the counters and the smiley along with the cells */
-          root.style.setProperty(
-            "--ui",
-            Math.min(2.5, Math.max(1, Math.round((cs / BASE_CS) * 4) / 4)),
-          );
+        /* the board shape is the only layout input; the size of a cell is
+           worked out from it entirely in CSS (see --fit-w / --fit-h) */
+        function setBoardVars() {
+          var st = document.documentElement.style;
+          st.setProperty("--cols", W);
+          st.setProperty("--rows", H);
         }
-        window.addEventListener("resize", fitCells);
-        window.addEventListener("orientationchange", fitCells);
 
         function neighbours(i) {
           var x = i % W,
