@@ -7,6 +7,7 @@
     <style>
       :root {
         --cs: 24px;
+        --ui: 1;
         --face: #c0c0c0;
         --shadow: #808080;
         --dark: #0a0a0a;
@@ -194,6 +195,7 @@
 
       /* ---------- 7-segment ---------- */
       .led {
+        zoom: var(--ui);
         display: flex;
         gap: 1px;
         background: #000;
@@ -257,6 +259,7 @@
 
       /* ---------- face ---------- */
       .facebtn {
+        zoom: var(--ui);
         width: 27px;
         height: 27px;
         padding: 0;
@@ -311,20 +314,18 @@
         line-height: 1;
         overflow: hidden;
       }
+      /* bevels grow and shrink with the cells */
       .c.hid {
         background: var(--face);
-        border: 3px solid;
+        border: clamp(2px, calc(var(--cs) / 8), 8px) solid;
         border-color: #fff #7b7b7b #7b7b7b #fff;
       }
-      .c.open {
-        background: var(--face);
-        border: 1px solid #7b7b7b;
-        border-width: 1px 0 0 1px;
-      }
+      .c.open,
       .c.press {
         background: var(--face);
-        border: 1px solid #7b7b7b;
-        border-width: 1px 0 0 1px;
+        border: clamp(1px, calc(var(--cs) / 24), 3px) solid #7b7b7b;
+        border-right-width: 0;
+        border-bottom-width: 0;
       }
       .c.boom {
         background: #f00;
@@ -376,9 +377,9 @@
         align-items: center;
         justify-content: center;
         gap: 7px;
-        padding: 7px 10px 8px;
+        padding: calc(7px * var(--ui)) 10px calc(8px * var(--ui));
         font-family: inherit;
-        font-size: 12px;
+        font-size: calc(12px * var(--ui));
         background: var(--face);
         border: 0;
         touch-action: manipulation;
@@ -389,8 +390,8 @@
           inset 2px 2px var(--light);
       }
       .tool svg {
-        width: 15px;
-        height: 15px;
+        width: calc(15px * var(--ui));
+        height: calc(15px * var(--ui));
         display: block;
       }
       .tool.on {
@@ -399,7 +400,7 @@
           transparent 0 50%
         );
         background-size: 4px 4px;
-        padding: 8px 9px 7px 11px;
+        padding: calc(8px * var(--ui)) 9px calc(7px * var(--ui)) 11px;
         box-shadow:
           inset -1px -1px #fff,
           inset 1px 1px var(--shadow),
@@ -407,9 +408,9 @@
           inset 2px 2px var(--dark);
       }
 
-      /* thinner bevels once the cells get small, or they eat the whole cell */
-      body.tiny .c.hid {
-        border-width: 2px;
+      /* in "big cells" mode the board owns the screen; the hint is just noise */
+      body.big .hint {
+        display: none;
       }
 
       /* ---------- dialogs ---------- */
@@ -636,6 +637,7 @@
           face: document.getElementById("face"),
           menubar: document.getElementById("menubar"),
           tool: document.getElementById("flagmode"),
+          win: document.getElementById("win"),
         };
 
         /* ------------ storage ------------ */
@@ -663,6 +665,7 @@
           "ontouchstart" in window;
         var flagBtn = load("saper.flagbtn", coarse);
         var flagMode = false;
+        var big = load("saper.big", false);
         var BASE_CS = coarse ? 28 : 24;
         /* body padding + window/panel/field bevels around the grid */
         var CHROME = 16 + 22;
@@ -723,6 +726,12 @@
           flagMode = on;
           el.tool.classList.toggle("on", flagMode);
         }
+        function setBig(on) {
+          big = on;
+          save("saper.big", big);
+          document.body.classList.toggle("big", big);
+          fitCells();
+        }
 
         /* ------------ new game ------------ */
         function newGame() {
@@ -745,7 +754,6 @@
           setLed(el.mines, M);
           setFace("smile");
 
-          fitCells();
           el.field.style.gridTemplateColumns = "repeat(" + W + ", var(--cs))";
           el.field.innerHTML = "";
           cells = [];
@@ -758,18 +766,32 @@
             frag.appendChild(d);
           }
           el.field.appendChild(frag);
+          fitCells();
         }
 
-        /* shrink the cells so a wide board still fits a narrow screen */
+        /* fit the grid to the viewport: always shrink a wide board down to a
+           narrow screen, and in "big cells" mode grow it to fill the screen */
         function fitCells() {
           if (!W) return;
-          var avail = document.documentElement.clientWidth - CHROME;
-          var cs =
-            avail > 0
-              ? Math.min(BASE_CS, Math.max(16, Math.floor(avail / W)))
-              : BASE_CS;
-          document.documentElement.style.setProperty("--cs", cs + "px");
-          document.body.classList.toggle("tiny", cs < 18);
+          var root = document.documentElement;
+          var availW = root.clientWidth - CHROME;
+          var cs = availW > 0 ? Math.floor(availW / W) : BASE_CS;
+          if (big) {
+            /* everything in the window that is not the grid itself */
+            var chromeH = el.win.offsetHeight - el.field.offsetHeight;
+            var availH = root.clientHeight - chromeH - 24;
+            if (availH > 0) cs = Math.min(cs, Math.floor(availH / H));
+            cs = Math.min(72, cs);
+          } else {
+            cs = Math.min(BASE_CS, cs);
+          }
+          cs = Math.max(16, cs);
+          root.style.setProperty("--cs", cs + "px");
+          /* scale the counters and the smiley along with the cells */
+          root.style.setProperty(
+            "--ui",
+            Math.min(2.5, Math.max(1, Math.round((cs / BASE_CS) * 4) / 4)),
+          );
         }
         window.addEventListener("resize", fitCells);
         window.addEventListener("orientationchange", fitCells);
@@ -1404,6 +1426,13 @@
                 setFlagBtn(!flagBtn);
               },
             },
+            {
+              label: "Крупные клетки",
+              tick: big,
+              act: function () {
+                setBig(!big);
+              },
+            },
             { sep: 1 },
             { label: "Лучшие результаты…", act: showBest },
           ];
@@ -1468,6 +1497,7 @@
         /* ------------ boot ------------ */
         el.tool.innerHTML = FLAG + "<span>Режим флажков</span>";
         setFlagBtn(flagBtn);
+        document.body.classList.toggle("big", big);
         buildLed(el.mines);
         buildLed(el.clock);
         newGame();
