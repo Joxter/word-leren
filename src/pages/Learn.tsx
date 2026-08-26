@@ -680,7 +680,7 @@ export default function Learn() {
         {selector}
         <div className={empty}>
           This line is empty. Add cards to it from the{" "}
-          <Link href="/line">Line</Link> page.
+          <Link href="/">Cards</Link> page.
         </div>
       </div>
     );

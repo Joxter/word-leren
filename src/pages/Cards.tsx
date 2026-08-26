@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Link } from "wouter";
 import { useImagePaste } from "../hooks/useImagePaste";
 import { css } from "@linaria/core";
 import { id } from "@instantdb/react";
@@ -6,10 +7,21 @@ import { db } from "../db";
 import CardModal from "../components/CardModal";
 import MarkdocField from "../components/MarkdocField";
 import PlayButton from "../components/PlayButton";
-import { enqueueTop } from "../lib/queue";
+import {
+  MOVE_STEPS,
+  safeKeyBetween,
+  moveToRank,
+  moveToTop,
+  removeFromLine,
+  rankInLine,
+  reviewStats,
+  sortLine,
+  enqueueTop,
+} from "../lib/queue";
+import type { CardLog } from "../lib/queue";
 import { saveCard, deleteCard, trimCardText } from "../lib/cards";
-import { useLines } from "../lib/lines";
-import { ownedPath, ownerId } from "../lib/session";
+import { useLines, useActiveLine } from "../lib/lines";
+import { mine, ownedPath, ownerId } from "../lib/session";
 import LineCheckboxes from "../components/LineCheckboxes";
 
 export type Lang = "EN" | "RU" | "NL";
@@ -30,17 +42,6 @@ export interface Card extends CardData {
   queues?: { [lineId: string]: { rank: string } };
 }
 
-interface TabDef {
-  label: string;
-  aLang: string;
-  defaultBLang: string;
-}
-
-const TABS: TabDef[] = [
-  { label: "Dutch cards", aLang: "NL", defaultBLang: "EN" },
-  { label: "English cards", aLang: "EN", defaultBLang: "RU" },
-];
-
 const A_LANGS = ["NL", "EN"] as const;
 const B_LANGS = ["EN", "RU"] as const;
 
@@ -51,49 +52,6 @@ const page = css`
 
   @media (max-width: 540px) {
     padding: 1rem 0.75rem;
-  }
-`;
-
-const header = css`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.25rem;
-
-  h1 {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: 600;
-  }
-`;
-
-const tabBar = css`
-  display: flex;
-  gap: 0.25rem;
-  margin-bottom: 1.5rem;
-`;
-
-const tab = css`
-  padding: 0.4rem 0.875rem;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  background: #e8e8e8;
-  color: #555;
-
-  &:hover {
-    background: #ddd;
-  }
-`;
-
-const tabActive = css`
-  background: #1a1a1a;
-  color: #fff;
-
-  &:hover {
-    background: #333;
   }
 `;
 
@@ -307,84 +265,6 @@ const createBtn = css`
   }
 `;
 
-const list = css`
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-`;
-
-const cardRow = css`
-  display: grid;
-  grid-template-columns: 1fr 1fr auto;
-  gap: 1rem;
-  padding: 0.75rem 1rem;
-  background: #fff;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
-  cursor: pointer;
-  align-items: center;
-
-  &:hover {
-    border-color: #aaa;
-  }
-
-  /* On phones the two sides stack, with the thumbnail on the right. */
-  @media (max-width: 540px) {
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 0.3rem 0.75rem;
-    padding: 0.6rem 0.75rem;
-  }
-`;
-
-const rowThumb = css`
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-  border-radius: 4px;
-  display: block;
-
-  @media (max-width: 540px) {
-    grid-column: 2;
-    grid-row: 1 / 3;
-  }
-`;
-
-const rowThumbPlaceholder = css`
-  width: 40px;
-
-  @media (max-width: 540px) {
-    width: 0;
-    grid-column: 2;
-    grid-row: 1 / 3;
-  }
-`;
-
-const cardSide = css`
-  display: flex;
-  gap: 0.5rem;
-  align-items: baseline;
-  min-width: 0;
-`;
-
-const langTag = css`
-  flex-shrink: 0;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  color: #666;
-  background: #f0f0f0;
-  padding: 0.15rem 0.35rem;
-  border-radius: 3px;
-`;
-
-const cardText = css`
-  font-size: 0.9rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 0;
-`;
-
 const empty = css`
   text-align: center;
   color: #999;
@@ -392,27 +272,303 @@ const empty = css`
   font-size: 0.875rem;
 `;
 
+const spacer = css`
+  margin-left: auto;
+`;
+
+const listControls = css`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+`;
+
+// A quiet control: this picks a view of the list, not what the page is about.
+const sortSelect = css`
+  appearance: none;
+  background: #fff;
+  border: 1px solid #d5d5d5;
+  border-radius: 6px;
+  padding: 0.4rem 1.7rem 0.4rem 0.6rem;
+  font-size: 0.8rem;
+  font-family: inherit;
+  color: #333;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23888' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.6rem center;
+
+  &:hover {
+    border-color: #1a1a1a;
+  }
+`;
+
+const countLabel = css`
+  font-size: 0.75rem;
+  color: #999;
+`;
+
+const tableWrap = css`
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+`;
+
+// Shared grid template so the header and every row line up column-for-column.
+// On phones the six columns don't fit, so each row rearranges into a
+// three-line card via grid areas (the header is hidden there).
+const cols = css`
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) minmax(0, 1fr) 3rem 5.5rem auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+
+  @media (max-width: 680px) {
+    grid-template-columns: 1.75rem minmax(0, 1fr) auto;
+    grid-template-areas:
+      "idx a actions"
+      "idx b actions"
+      "idx seen last";
+    gap: 0.3rem 0.5rem;
+  }
+`;
+
+const row = css`
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background: #fafafa;
+  }
+`;
+
+const rowSelected = css`
+  background: #f0f0f0;
+
+  &:hover {
+    background: #f0f0f0;
+  }
+`;
+
+const idx = css`
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #aaa;
+  text-align: right;
+
+  @media (max-width: 680px) {
+    grid-area: idx;
+    align-self: start;
+  }
+`;
+
+const cellText = css`
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+`;
+
+const aCell = css`
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+
+  @media (max-width: 680px) {
+    grid-area: a;
+  }
+`;
+
+// The B-side cell of a queue row (needs its own name for the mobile layout).
+const bCell = css`
+  @media (max-width: 680px) {
+    grid-area: b;
+  }
+`;
+
+const seenCell = css`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.2rem;
+  font-size: 0.75rem;
+  color: #999;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+
+  @media (max-width: 680px) {
+    grid-area: seen;
+    justify-content: flex-start;
+  }
+`;
+
+const ratingCell = css`
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+
+  @media (max-width: 680px) {
+    grid-area: last;
+    justify-content: flex-end;
+  }
+`;
+
+const ratingPill = css`
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  border-radius: 4px;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #666;
+  font-variant-numeric: tabular-nums;
+`;
+
+// The most recent rating, called out a touch stronger than the previous one.
+const ratingLatest = css`
+  border-color: #ccc;
+  color: #1a1a1a;
+`;
+
+const rowActions = css`
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+  justify-content: flex-end;
+
+  /* Stacked vertically on phones, to the right of the two text lines. */
+  @media (max-width: 680px) {
+    grid-area: actions;
+    flex-direction: column;
+    align-items: stretch;
+    align-self: start;
+  }
+`;
+
+const rowBtn = css`
+  background: #f4f4f4;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 0.3rem 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover {
+    background: #e8e8e8;
+    border-color: #1a1a1a;
+  }
+`;
+
+// Low-emphasis "remove from line", tucked into the expanded toolbar.
+const removeLink = css`
+  background: none;
+  border: none;
+  color: #b0b0b0;
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0.3rem 0.4rem;
+
+  &:hover {
+    color: #dc2626;
+    text-decoration: underline;
+  }
+`;
+
+const toolbar = css`
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+  margin-top: 0.25rem;
+  border-top: 1px solid #f0f0f0;
+`;
+
+const stepGroup = css`
+  display: flex;
+  gap: 0.25rem;
+`;
+
+const stepBtn = css`
+  background: #f4f4f4;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 0.3rem 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+
+  &:hover {
+    background: #e8e8e8;
+  }
+`;
+
+// The orders the list can be shown in. "queue" is the line itself; the other
+// two are read-only views of the same cards.
+const SORTS = ["queue", "seen", "created"] as const;
+type SortBy = (typeof SORTS)[number];
+
+const SORT_LABELS: Record<SortBy, string> = {
+  queue: "Queue order",
+  seen: "Least seen",
+  created: "Newest first",
+};
+
+interface LineCard {
+  id: string;
+  aLang: string;
+  bLang: string;
+  aCard: string;
+  bCard: string;
+  note?: string;
+  audio?: string;
+  image?: { id: string; url: string; path: string };
+  queues?: { [lineId: string]: { rank: string } };
+  log?: CardLog;
+}
+
 function makeDefaultForm(aLang: string, bLang: string): CardData {
   return { aLang, bLang, aCard: "", bCard: "", note: "", audio: "" };
 }
 
 export default function Cards() {
-  const [activeTabIdx, setActiveTabIdx] = useState(0);
   const [modalCard, setModalCard] = useState<Card | null>(null);
-
-  const activeTab = TABS[activeTabIdx];
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState<SortBy>("queue");
+  // Moving a card reorders the list, which otherwise resets the window scroll.
+  // We stash the scroll position on a move and restore it once the new order
+  // has committed (before paint) so the page stays put.
+  const scrollTarget = useRef<number | null>(null);
 
   const [newForm, setNewForm] = useState<CardData>(
-    makeDefaultForm(activeTab.aLang, activeTab.defaultBLang),
+    makeDefaultForm(A_LANGS[0], B_LANGS[0]),
   );
   const [newImageFile, setNewImageFile] = useState<File | null>(null);
   const [newImagePreview, setNewImagePreview] = useState<string | null>(null);
   const [newSaving, setNewSaving] = useState(false);
-  // null means "untouched" → defaults to the default (first) line pre-checked.
+  // null means "untouched" → defaults to the line the list below shows.
   const [newLines, setNewLines] = useState<Set<string> | null>(null);
 
-  const { lines } = useLines();
-  const defaultLineId = lines[0]?.id;
+  const { lines, isLoading: linesLoading } = useLines();
+  // The page shows one line — whichever is active. There is no selector here;
+  // the Learn page owns that choice and this follows it.
+  const [activeLine] = useActiveLine(lines);
+  // Pre-check the shown line, so a new card lands where the user can see it.
+  const defaultLineId = activeLine ?? lines[0]?.id;
   const selectedNewLines =
     newLines ?? new Set(defaultLineId ? [defaultLineId] : []);
 
@@ -434,28 +590,49 @@ export default function Cards() {
 
   useImagePaste((file) => setNewImageFile(file));
 
-  function switchTab(i: number) {
-    setActiveTabIdx(i);
-    setNewForm(makeDefaultForm(TABS[i].aLang, TABS[i].defaultBLang));
-    setNewLines(null);
-  }
-
   function setNew(field: keyof CardData, value: string) {
     setNewForm((prev) => ({ ...prev, [field]: value }));
   }
 
+  // Newest first — cards carry no createdAt of their own, so their position in
+  // this result *is* their age.
   const { data, isLoading } = db.useQuery({
     cards: {
       image: {},
-      $: {
-        limit: 500,
-        order: { serverCreatedAt: "desc" },
-      },
+      $: { where: mine(), limit: 5000, order: { serverCreatedAt: "desc" } },
     },
   });
 
-  const allCards = (data?.cards ?? []) as Card[];
-  const cards = allCards.filter((c) => c.aLang === activeTab.aLang);
+  const cards = (data?.cards ?? []) as LineCard[];
+  const ageRank = new Map(cards.map((c, i) => [c.id, i]));
+  // `members` is always in queue order — the move helpers below rely on it.
+  const members = activeLine ? sortLine(cards, activeLine) : [];
+  const statsById = new Map(members.map((c) => [c.id, reviewStats(c.log)]));
+  const queuePos = new Map(members.map((c, i) => [c.id, i]));
+  // Display order can differ from queue order (e.g. sorted by review count),
+  // but moves still operate on the underlying queue via each card's id. Sorting
+  // by "seen" puts the least-reviewed cards first, to surface neglected words.
+  const displayMembers =
+    sortBy === "seen"
+      ? [...members].sort(
+          (a, b) =>
+            (statsById.get(a.id)?.seen ?? 0) - (statsById.get(b.id)?.seen ?? 0),
+        )
+      : sortBy === "created"
+        ? [...members].sort(
+            (a, b) => (ageRank.get(a.id) ?? 0) - (ageRank.get(b.id) ?? 0),
+          )
+        : members;
+
+  // When the rendered order changes, restore any scroll position captured by a
+  // move so reordering doesn't jump the page.
+  const orderKey = displayMembers.map((m) => m.id).join(",");
+  useLayoutEffect(() => {
+    if (scrollTarget.current !== null) {
+      window.scrollTo(0, scrollTarget.current);
+      scrollTarget.current = null;
+    }
+  }, [orderKey]);
 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault();
@@ -481,10 +658,49 @@ export default function Cards() {
     for (const lineId of selectedNewLines) {
       await enqueueTop(lineId, cardId);
     }
-    setNewForm(makeDefaultForm(activeTab.aLang, activeTab.defaultBLang));
+    // Keep the language pair — entering cards comes in runs of the same kind.
+    setNewForm(makeDefaultForm(newForm.aLang, newForm.bLang));
     setNewImageFile(null);
     setNewLines(null);
     setNewSaving(false);
+  }
+
+  async function handleMove(cardId: string, steps: number) {
+    if (!activeLine) return;
+    const index = members.findIndex((c) => c.id === cardId);
+    if (index < 0) return;
+    const arr = members.slice();
+    const [moving] = arr.splice(index, 1);
+    if (!moving) return;
+    const target = Math.max(0, Math.min(arr.length, index + steps));
+    if (target === index) return;
+    // Only now that the move is certain — a stashed position left behind by a
+    // no-op would fire on the next reorder (or on adding a card) and scroll
+    // the page somewhere the user did not ask to go.
+    scrollTarget.current = window.scrollY;
+    const left = arr[target - 1];
+    const right = arr[target];
+    const newRank = safeKeyBetween(
+      left ? rankInLine(left, activeLine)! : null,
+      right ? rankInLine(right, activeLine)! : null,
+    );
+    await moveToRank(moving.id, activeLine, newRank, steps);
+  }
+
+  // Send a card back to the top of the queue — as high as possible without
+  // sitting next to another fresh (not-yet-studied) card.
+  async function handleMoveToTop(cardId: string) {
+    if (!activeLine) return;
+    const index = members.findIndex((c) => c.id === cardId);
+    if (index <= 0) return; // not found, or already at the top
+    scrollTarget.current = window.scrollY;
+    await moveToTop(members, activeLine, cardId);
+  }
+
+  async function handleRemove(cardId: string) {
+    if (!activeLine) return;
+    await removeFromLine(activeLine, cardId);
+    if (selectedId === cardId) setSelectedId(null);
   }
 
   async function handleUpdate(
@@ -503,25 +719,27 @@ export default function Cards() {
 
   return (
     <div className={page}>
-      <div className={header}>
-        <h1>Cards test GH</h1>
-      </div>
-
-      <div className={tabBar}>
-        {TABS.map((t, i) => (
-          <button
-            key={t.label}
-            className={i === activeTabIdx ? `${tab} ${tabActive}` : tab}
-            onClick={() => switchTab(i)}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
-
       <form className={inlineFormPanel} onSubmit={handleCreate}>
         <div className={formSides}>
           <div className={formSide}>
+            <div className={formSideRow}>
+              <span className={formLabel}>Card language</span>
+              <div className={segmented}>
+                {A_LANGS.map((l) => (
+                  <div key={l} className={segmentedItem}>
+                    <input
+                      type="radio"
+                      id={`new-aLang-${l}`}
+                      name="new-aLang"
+                      value={l}
+                      checked={newForm.aLang === l}
+                      onChange={() => setNew("aLang", l)}
+                    />
+                    <label htmlFor={`new-aLang-${l}`}>{l}</label>
+                  </div>
+                ))}
+              </div>
+            </div>
             <span className={formLabel}>Скрытая сторона</span>
             <input
               className={formInput}
@@ -629,35 +847,138 @@ export default function Cards() {
         </div>
       </form>
 
-      {!isLoading && cards.length === 0 && (
-        <div className={empty}>No cards yet.</div>
+      {!linesLoading && lines.length === 0 && (
+        <div className={empty}>
+          No lines yet. Create one on the{" "}
+          <Link href="/account">Account page</Link> to start building a queue.
+        </div>
       )}
 
-      {cards.length > 0 && (
-        <div className={list}>
-          {cards.map((card) => (
-            <div
-              key={card.id}
-              className={cardRow}
-              onClick={() => setModalCard(card)}
+      {lines.length > 0 && !isLoading && members.length === 0 && (
+        <div className={empty}>This line is empty. Add cards above.</div>
+      )}
+
+      {members.length > 0 && (
+        <>
+          <div className={listControls}>
+            <span className={countLabel}>{members.length} cards</span>
+            <span className={spacer} />
+            <select
+              className={sortSelect}
+              value={sortBy}
+              title="Sort order"
+              onChange={(ev) => setSortBy(ev.target.value as SortBy)}
             >
-              <div className={cardSide}>
-                <span className={langTag}>{card.aLang}</span>
-                <span className={cardText}>{card.aCard}</span>
-                {card.audio && <PlayButton path={card.audio} small />}
-              </div>
-              <div className={cardSide}>
-                <span className={langTag}>{card.bLang}</span>
-                <span className={cardText}>{card.bCard}</span>
-              </div>
-              {card.image ? (
-                <img src={card.image.url} className={rowThumb} alt="" />
-              ) : (
-                <div className={rowThumbPlaceholder} />
-              )}
-            </div>
-          ))}
-        </div>
+              {SORTS.map((s) => (
+                <option key={s} value={s}>
+                  {SORT_LABELS[s]}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className={tableWrap}>
+            {displayMembers.map((e) => {
+              const selected = e.id === selectedId;
+              const pos = queuePos.get(e.id) ?? 0;
+              const st = statsById.get(e.id) ?? { seen: 0, recent: [] };
+              return (
+                <div
+                  key={e.id}
+                  className={
+                    selected
+                      ? `${cols} ${row} ${rowSelected}`
+                      : `${cols} ${row}`
+                  }
+                  onClick={() => setSelectedId(selected ? null : e.id)}
+                >
+                  <span className={idx}>{pos + 1}</span>
+                  <div className={aCell}>
+                    <span className={cellText}>{e.aCard}</span>
+                    {e.audio && <PlayButton path={e.audio} small />}
+                  </div>
+                  <span className={`${cellText} ${bCell}`}>{e.bCard}</span>
+                  <span
+                    className={seenCell}
+                    title={`Seen ${st.seen} ${st.seen === 1 ? "time" : "times"}`}
+                  >
+                    👁 {st.seen}
+                  </span>
+                  <span
+                    className={ratingCell}
+                    title="Last ratings (newest first)"
+                  >
+                    {st.recent.map((amount, j) => (
+                      <span
+                        key={j}
+                        className={
+                          j === 0 ? `${ratingPill} ${ratingLatest}` : ratingPill
+                        }
+                      >
+                        {amount}
+                      </span>
+                    ))}
+                  </span>
+                  <div className={rowActions}>
+                    <button
+                      className={rowBtn}
+                      title="Move to the front of the queue"
+                      onClick={(ev) => {
+                        ev.stopPropagation();
+                        handleMoveToTop(e.id);
+                      }}
+                    >
+                      ⤒ Top
+                    </button>
+                  </div>
+
+                  {selected && (
+                    <div
+                      className={toolbar}
+                      onClick={(ev) => ev.stopPropagation()}
+                    >
+                      <div className={stepGroup}>
+                        {[...MOVE_STEPS].reverse().map((s) => (
+                          <button
+                            key={`up-${s}`}
+                            className={stepBtn}
+                            onClick={() => handleMove(e.id, -s)}
+                          >
+                            ↑{s}
+                          </button>
+                        ))}
+                      </div>
+                      <div className={stepGroup}>
+                        {MOVE_STEPS.map((s) => (
+                          <button
+                            key={`down-${s}`}
+                            className={stepBtn}
+                            onClick={() => handleMove(e.id, s)}
+                          >
+                            ↓{s}
+                          </button>
+                        ))}
+                      </div>
+                      <button
+                        className={rowBtn}
+                        style={{ marginLeft: "auto" }}
+                        onClick={() => setModalCard(e as Card)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className={removeLink}
+                        onClick={() => handleRemove(e.id)}
+                      >
+                        Remove from line
+                      </button>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </>
       )}
 
       {modalCard !== null && (

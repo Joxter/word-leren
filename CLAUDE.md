@@ -68,4 +68,5 @@ Span offsets index into `examples.aText` and go stale on any edit, so every read
 
 One global ordered queue, no timers/sessions. Ranks use `fractional-indexing`; all queue
 mutations live in `src/lib/queue.ts`. New cards prepend to the top. Every action is logged
-to the card's own `log` JSON. Pages: `src/pages/Learn.tsx`, `src/pages/Line.tsx`.
+to the card's own `log` JSON. Pages: `src/pages/Learn.tsx`, `src/pages/Cards.tsx` (create form + the active
+line's list; there is no line selector there — it follows Learn's choice).
