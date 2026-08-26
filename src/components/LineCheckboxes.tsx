@@ -67,7 +67,7 @@ export default function LineCheckboxes({ lines, selected, onToggle }: Props) {
       <span className={label}>Lines</span>
       {lines.length === 0 ? (
         <span className={emptyHint}>
-          No lines yet — create one on the Line page.
+          No lines yet — create one on the Account page.
         </span>
       ) : (
         <div className={options}>

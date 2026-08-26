@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
+import { Link } from "wouter";
 import { css } from "@linaria/core";
 import { db } from "../db";
 import {
@@ -9,17 +10,10 @@ import {
   removeFromLine,
   rankInLine,
   reviewStats,
-  dailyReviewStats,
   sortLine,
 } from "../lib/queue";
 import type { CardLog } from "../lib/queue";
-import {
-  useLines,
-  useActiveLine,
-  createLine,
-  renameLine,
-  deleteLine,
-} from "../lib/lines";
+import { useLines, useActiveLine } from "../lib/lines";
 import { mine } from "../lib/session";
 import { saveCard } from "../lib/cards";
 import LineSelector from "../components/LineSelector";
@@ -49,33 +43,6 @@ const spacer = css`
   margin-left: auto;
 `;
 
-const smallBtn = css`
-  background: #fff;
-  border: 1px solid #d5d5d5;
-  border-radius: 6px;
-  padding: 0.45rem 0.8rem;
-  font-size: 0.8rem;
-  cursor: pointer;
-  color: #333;
-
-  &:hover {
-    border-color: #1a1a1a;
-  }
-
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-`;
-
-const dangerBtn = css`
-  color: #dc2626;
-
-  &:hover {
-    border-color: #dc2626;
-  }
-`;
-
 const empty = css`
   text-align: center;
   color: #999;
@@ -83,80 +50,32 @@ const empty = css`
   font-size: 0.875rem;
 `;
 
-const list = css`
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-`;
-
-const daysHeader = css`
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 0.4rem;
-  font-size: 0.7rem;
-  color: #999;
-`;
-
-const daysLegend = css`
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-`;
-
-const daysBar = css`
-  display: flex;
-  gap: 0.25rem;
-  margin-bottom: 1.5rem;
-`;
-
-const dayBlock = css`
-  flex: 1 1 0;
-  min-width: 0;
-  border: 1px solid #eee;
-  border-radius: 6px;
-  padding: 0.3rem 0.15rem 0.2rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  line-height: 1.15;
-`;
-
-// Days with no reviews are dimmed so active days stand out.
-const dayEmpty = css`
-  opacity: 0.45;
-`;
-
-// Today's block, called out with a slightly stronger frame.
-const dayToday = css`
-  border-color: #1a1a1a;
-`;
-
-const dayUnique = css`
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  font-variant-numeric: tabular-nums;
-`;
-
-const dayTotal = css`
-  font-size: 0.7rem;
-  color: #999;
-  font-variant-numeric: tabular-nums;
-`;
-
-const dayLabel = css`
-  font-size: 0.6rem;
-  color: #bbb;
-  margin-top: 0.2rem;
-`;
-
 const listControls = css`
   display: flex;
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
+`;
+
+// Same shape as the line selector in the header, one step quieter — this picks
+// a view of the list, not what the page is about.
+const sortSelect = css`
+  appearance: none;
+  background: #fff;
+  border: 1px solid #d5d5d5;
+  border-radius: 6px;
+  padding: 0.4rem 1.7rem 0.4rem 0.6rem;
+  font-size: 0.8rem;
+  font-family: inherit;
+  color: #333;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23888' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.6rem center;
+
+  &:hover {
+    border-color: #1a1a1a;
+  }
 `;
 
 const countLabel = css`
@@ -188,20 +107,6 @@ const cols = css`
       "idx b actions"
       "idx seen last";
     gap: 0.3rem 0.5rem;
-  }
-`;
-
-const tableHead = css`
-  background: #fafafa;
-  border-bottom: 1px solid #eee;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #aaa;
-
-  @media (max-width: 680px) {
-    display: none;
   }
 `;
 
@@ -262,10 +167,6 @@ const bCell = css`
   @media (max-width: 680px) {
     grid-area: b;
   }
-`;
-
-const hRight = css`
-  text-align: right;
 `;
 
 const seenCell = css`
@@ -344,23 +245,6 @@ const rowBtn = css`
   }
 `;
 
-// The prominent "push this card back 100 places" quick action.
-const pushBtn = css`
-  background: #1a1a1a;
-  border: 1px solid #1a1a1a;
-  border-radius: 5px;
-  padding: 0.3rem 0.55rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #fff;
-  cursor: pointer;
-  font-variant-numeric: tabular-nums;
-
-  &:hover {
-    background: #333;
-  }
-`;
-
 // Low-emphasis "remove from line", tucked into the expanded toolbar.
 const removeLink = css`
   background: none;
@@ -408,6 +292,17 @@ const stepBtn = css`
   }
 `;
 
+// The orders the list can be shown in. "queue" is the line itself; the other
+// two are read-only views of the same cards.
+const SORTS = ["queue", "seen", "created"] as const;
+type SortBy = (typeof SORTS)[number];
+
+const SORT_LABELS: Record<SortBy, string> = {
+  queue: "Queue order",
+  seen: "Least seen",
+  created: "Newest first",
+};
+
 interface LineCard {
   id: string;
   aLang: string;
@@ -424,7 +319,7 @@ interface LineCard {
 export default function Line() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [modalCard, setModalCard] = useState<Card | null>(null);
-  const [sortBy, setSortBy] = useState<"queue" | "seen">("queue");
+  const [sortBy, setSortBy] = useState<SortBy>("queue");
   // Moving a card reorders the list, which otherwise resets the window scroll.
   // We stash the scroll position on a move and restore it once the new order
   // has committed (before paint) so the page stays put.
@@ -433,13 +328,17 @@ export default function Line() {
   const { lines, isLoading: linesLoading } = useLines();
   const [activeLine, setActiveLine] = useActiveLine(lines);
 
+  // Newest first, the same order the Cards page lists in — cards carry no
+  // createdAt of their own, so their position in this result *is* their age.
   const { data, isLoading } = db.useQuery({
-    cards: { image: {}, $: { where: mine(), limit: 5000 } },
+    cards: {
+      image: {},
+      $: { where: mine(), limit: 5000, order: { serverCreatedAt: "desc" } },
+    },
   });
 
   const cards = (data?.cards ?? []) as LineCard[];
-  // Daily study activity across all lines, for the strip near the top.
-  const days = dailyReviewStats(cards, 14);
+  const ageRank = new Map(cards.map((c, i) => [c.id, i]));
   // `members` is always in queue order — the move helpers below rely on it.
   const members = activeLine ? sortLine(cards, activeLine) : [];
   const statsById = new Map(members.map((c) => [c.id, reviewStats(c.log)]));
@@ -453,7 +352,11 @@ export default function Line() {
           (a, b) =>
             (statsById.get(a.id)?.seen ?? 0) - (statsById.get(b.id)?.seen ?? 0),
         )
-      : members;
+      : sortBy === "created"
+        ? [...members].sort(
+            (a, b) => (ageRank.get(a.id) ?? 0) - (ageRank.get(b.id) ?? 0),
+          )
+        : members;
 
   // When the rendered order changes, restore any scroll position captured by a
   // move so reordering doesn't jump the page.
@@ -499,31 +402,6 @@ export default function Line() {
     if (selectedId === cardId) setSelectedId(null);
   }
 
-  async function handleNewLine() {
-    const name = window.prompt("New line name:")?.trim();
-    if (!name) return;
-    const lineId = await createLine(name);
-    setActiveLine(lineId);
-  }
-
-  async function handleRename() {
-    if (!activeLine) return;
-    const current = lines.find((l) => l.id === activeLine);
-    const name = window.prompt("Rename line:", current?.name)?.trim();
-    if (!name) return;
-    await renameLine(activeLine, name);
-  }
-
-  async function handleDeleteLine() {
-    if (!activeLine) return;
-    const current = lines.find((l) => l.id === activeLine);
-    const ok = window.confirm(
-      `Delete line "${current?.name}"? Cards stay, but their place in this line is lost.`,
-    );
-    if (!ok) return;
-    await deleteLine(activeLine);
-  }
-
   async function handleUpdate(
     formData: CardData,
     imageFile: File | null,
@@ -541,14 +419,9 @@ export default function Line() {
   if (!linesLoading && lines.length === 0) {
     return (
       <div className={page}>
-        <div className={header}>
-          <h1 style={{ margin: 0, fontSize: "1.5rem" }}>Lines</h1>
-          <button className={smallBtn} onClick={handleNewLine}>
-            + New line
-          </button>
-        </div>
         <div className={empty}>
-          No lines yet. Create one to start building a queue.
+          No lines yet. Create one on the{" "}
+          <Link href="/account">Account page</Link> to start building a queue.
         </div>
       </div>
     );
@@ -562,45 +435,6 @@ export default function Line() {
           value={activeLine}
           onChange={setActiveLine}
         />
-        <button className={smallBtn} onClick={handleNewLine}>
-          + New
-        </button>
-        <button className={smallBtn} onClick={handleRename}>
-          Rename
-        </button>
-        <button
-          className={`${smallBtn} ${dangerBtn}`}
-          onClick={handleDeleteLine}
-        >
-          Delete
-        </button>
-      </div>
-
-      <div className={daysHeader}>
-        <span>Last 14 days</span>
-        <span className={daysLegend}>
-          <span className={dayUnique}>unique</span>/
-          <span className={dayTotal}>total</span>
-        </span>
-      </div>
-      <div className={daysBar}>
-        {days.map((d, i) => {
-          const isToday = i === days.length - 1;
-          const cls = [dayBlock];
-          if (isToday) cls.push(dayToday);
-          if (d.total === 0) cls.push(dayEmpty);
-          return (
-            <div
-              key={d.date.getTime()}
-              className={cls.join(" ")}
-              title={`${d.date.toLocaleDateString()} — ${d.unique} unique, ${d.total} total`}
-            >
-              <span className={dayUnique}>{d.unique}</span>
-              <span className={dayTotal}>{d.total}</span>
-              <span className={dayLabel}>{d.date.getDate()}</span>
-            </div>
-          );
-        })}
       </div>
 
       {!isLoading && members.length === 0 && (
@@ -612,25 +446,21 @@ export default function Line() {
           <div className={listControls}>
             <span className={countLabel}>{members.length} cards</span>
             <span className={spacer} />
-            <button
-              className={smallBtn}
-              onClick={() =>
-                setSortBy((s) => (s === "queue" ? "seen" : "queue"))
-              }
+            <select
+              className={sortSelect}
+              value={sortBy}
+              title="Sort order"
+              onChange={(ev) => setSortBy(ev.target.value as SortBy)}
             >
-              Sort: {sortBy === "queue" ? "Queue order" : "Least seen"}
-            </button>
+              {SORTS.map((s) => (
+                <option key={s} value={s}>
+                  {SORT_LABELS[s]}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className={tableWrap}>
-            <div className={`${cols} ${tableHead}`}>
-              <span className={hRight}>#</span>
-              <span>A</span>
-              <span>B</span>
-              <span className={hRight}>Seen</span>
-              <span>Last</span>
-              <span />
-            </div>
             {displayMembers.map((e) => {
               const selected = e.id === selectedId;
               const pos = queuePos.get(e.id) ?? 0;
@@ -682,16 +512,6 @@ export default function Line() {
                       }}
                     >
                       ⤒ Top
-                    </button>
-                    <button
-                      className={pushBtn}
-                      title="Move down 100 places"
-                      onClick={(ev) => {
-                        ev.stopPropagation();
-                        handleMove(e.id, 100);
-                      }}
-                    >
-                      +100
                     </button>
                   </div>
 

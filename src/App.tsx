@@ -11,6 +11,7 @@ import GrammarDetailPage from "./pages/GrammarDetail";
 import GrammarEditPage from "./pages/GrammarEdit";
 import DictionaryPage from "./pages/Dictionary";
 import ExamplesPage from "./pages/Examples";
+import AccountPage from "./pages/Account";
 
 // The tabs scroll; the account corner beside them doesn't. The rule under both
 // belongs to the bar, so it runs the full width whatever the tabs are doing.
@@ -97,51 +98,60 @@ const navLinkActive = css`
 const account = css`
   display: flex;
   align-items: center;
-  gap: 0.625rem;
   flex-shrink: 0;
-  padding: 0 1.5rem 0 0.75rem;
-  font-size: 0.8125rem;
+  padding: 0 1.25rem 0 0.75rem;
 `;
 
-const accountEmail = css`
+// The only way into the personal cabinet — signing out and everything else
+// about the account lives on that page now, so the corner is just an icon.
+const accountLink = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  border-radius: 50%;
   color: #888;
-  max-width: 14rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-
-  /* On a narrow screen the tabs need every pixel. */
-  @media (max-width: 640px) {
-    display: none;
-  }
-`;
-
-const signOut = css`
-  background: none;
-  border: none;
-  padding: 0;
-  color: #666;
-  font-size: 0.8125rem;
-  font-family: inherit;
-  cursor: pointer;
-  text-decoration: underline;
 
   &:hover {
     color: #111;
+    background: #f2f2f2;
   }
+`;
+
+const accountLinkActive = css`
+  color: #111;
+  background: #f0f0f0;
 `;
 
 function Account() {
   const { user } = db.useAuth();
+  const [isActive] = useRoute("/account");
   if (!user) return null;
   return (
     <div className={account}>
-      <span className={accountEmail} title={user.email}>
-        {user.email}
-      </span>
-      <button className={signOut} onClick={() => db.auth.signOut()}>
-        Sign out
-      </button>
+      <Link
+        href="/account"
+        className={
+          isActive ? `${accountLink} ${accountLinkActive}` : accountLink
+        }
+        title={user.email}
+        aria-label="Account"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4 21c0-4 3.6-6 8-6s8 2 8 6" />
+        </svg>
+      </Link>
     </div>
   );
 }
@@ -214,6 +224,7 @@ function Layout() {
         <Route path="/line" component={LinePage} />
         <Route path="/dictionary" component={DictionaryPage} />
         <Route path="/examples" component={ExamplesPage} />
+        <Route path="/account" component={AccountPage} />
         <Route path="/grammar" component={GrammarPage} />
         <Route path="/grammar/new" component={GrammarEditPage} />
         <Route path="/grammar/:id/edit" component={GrammarEditPage} />

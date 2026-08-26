@@ -24,6 +24,18 @@ anything and an unfiltered `limit` would otherwise come back short.
 Uploaded images are the exception: a file exists before any transaction can link
 it, so `$files` create permission goes by a `<userId>/…` path prefix instead.
 
+### Personal cabinet
+
+`/account` is the personal cabinet, reached from the user icon in the top-right
+corner — the only account control in the nav bar, since signing out lives on the
+page itself. It holds the signed-in address and a sign-out button, counts of
+what you have (cards, examples, grammar notes, lines), and the
+bookkeeping for [lines](#learning) — create, rename, delete, and pick the one
+Learn and Line open on, each shown with how many cards it holds and how many of
+those are still new. The 14-day study strip (reviews per day, unique and total,
+across every line) lives here too. It is also where later settings will go. Line _contents_ stay on the
+Line page; only the lines themselves are managed here.
+
 ### Vocabulary Cards
 
 Bilingual flashcards for three language pairs: NL↔EN, NL↔RU, and EN↔RU. Cards support optional images (paste from clipboard or upload) and an optional side-A audio clip (a path under `public/`, e.g. a dictionary pronunciation); a play button appears wherever the side-A word is shown — the create/edit forms, the card list, the line, and during review. Text fields accept Markdoc (markdown) syntax. Cards are filtered by language pair via tabs. New cards are added to the top of the learning line.
@@ -84,7 +96,7 @@ that no longer occurs at all is reported as broken. See `src/lib/examples.ts`.
 A deliberately simple, Anki-inspired review mode built around a single global queue — "the line". No timers, days, or sessions, just one dynamic ordered list.
 
 - **Learn** (`/learn`) — see the top card's side B as the prompt, with a hint of the answer's language (e.g. `EN → NL`). Reveal shows side A — its word, audio, and note — then press a **Depth** button to drop the card to the N-th place from the top (`5 / 10 / 50 / 100 / 500 / 1000`). The next card surfaces immediately. `Space`/`Enter` reveals; number keys `1`–`6` pick a depth.
-- **Line** (`/line`) — view the whole line in order and nudge any card up or down by a number of steps, or open any card in the editor via its **Edit** button. Cards join a line when they are created, not from here.
+- **Line** (`/line`) — view the whole line in order and nudge any card up or down by a number of steps, send one back to the top, or open any card in the editor via its **Edit** button. A Sort select picks between three views of the same cards — queue order, least seen first, and newest first (the order the Cards page lists in) — while the leading number always stays the card's place in the queue, so a move means the same thing in any of them. Cards join a line when they are created, not from here; the lines themselves are created and deleted on the [personal cabinet](#personal-cabinet).
 
 Two toggles change what the prompt asks for. **Reverse** shows side A and asks for its
 meaning, the direction reading actually needs. **Examples** prompts with one of the card's

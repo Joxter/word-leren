@@ -633,7 +633,8 @@ export default function Learn() {
     return (
       <div className={page}>
         <div className={empty}>
-          No lines yet. Create one on the <Link href="/line">Line</Link> page.
+          No lines yet. Create one on the <Link href="/account">Account</Link>{" "}
+          page.
         </div>
       </div>
     );
