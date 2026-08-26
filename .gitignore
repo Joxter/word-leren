@@ -23,3 +23,6 @@ leze *.html
 out_tasks*/
 pdf/
 экзамены/
+
+# python
+__pycache__/
