@@ -5,6 +5,7 @@ import { db } from "./db";
 import AuthGate from "./components/AuthGate";
 import CardsPage from "./pages/Cards";
 import LearnPage from "./pages/Learn";
+import DeckPage from "./pages/Deck";
 import GrammarPage from "./pages/Grammar";
 import GrammarDetailPage from "./pages/GrammarDetail";
 import GrammarEditPage from "./pages/GrammarEdit";
@@ -203,6 +204,7 @@ function Nav() {
           <NavLink href="/">Cards</NavLink>
           <NavLink href="/dictionary">Dictionary</NavLink>
           <NavLink href="/learn">Learn</NavLink>
+          <NavLink href="/deck">Deck</NavLink>
           <NavLink href="/examples">Examples</NavLink>
           <NavLink href="/grammar">Grammar</NavLink>
         </nav>
@@ -219,6 +221,7 @@ function Layout() {
       <Switch>
         <Route path="/" component={CardsPage} />
         <Route path="/learn" component={LearnPage} />
+        <Route path="/deck" component={DeckPage} />
         <Route path="/dictionary" component={DictionaryPage} />
         <Route path="/examples" component={ExamplesPage} />
         <Route path="/account" component={AccountPage} />

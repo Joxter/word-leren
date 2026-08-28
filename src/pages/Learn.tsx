@@ -2,14 +2,19 @@ import { useEffect, useState } from "react";
 import { css } from "@linaria/core";
 import { Link } from "wouter";
 import { db } from "../db";
-import {
-  depthButtons,
-  placeAtDepth,
-  reviewStats,
-  sortLine,
-} from "../lib/queue";
+import { reviewStats } from "../lib/queue";
 import type { CardLog } from "../lib/queue";
-import { sortByR, rateCard, retrievability, RATINGS } from "../lib/fsrs";
+import {
+  dueCards,
+  dueSoon,
+  nextDueAt,
+  newPool,
+  rateCard,
+  previewIntervals,
+  formatGap,
+  RATINGS,
+  type SrsState,
+} from "../lib/srs";
 import { diffTyped } from "../lib/diff";
 import { saveCard, deleteCard } from "../lib/cards";
 import { useLines, useActiveLine } from "../lib/lines";
@@ -408,14 +413,33 @@ const invisible = css`
   visibility: hidden;
 `;
 
-const caughtUpBanner = css`
+const doneBox = css`
   background: #f0faf0;
   border: 1px solid #cde8cd;
+  border-radius: 12px;
+  padding: 2rem 1.25rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+const doneTitle = css`
+  font-size: 1.2rem;
+  font-weight: 600;
   color: #2e7d32;
-  border-radius: 8px;
-  padding: 0.6rem 0.9rem;
-  font-size: 0.85rem;
-  margin-bottom: 1rem;
+`;
+
+const doneLine = css`
+  font-size: 0.9rem;
+  color: #555;
+`;
+
+// The interval each button would schedule, printed under its label.
+const btnHint = css`
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #888;
 `;
 
 const editBtn = css`
@@ -442,9 +466,7 @@ interface LearnCard {
   bCard: string;
   note?: string;
   audio?: string;
-  stability?: number;
-  difficulty?: number;
-  lastReviewedAt?: number;
+  srs?: SrsState;
   image?: { id: string; url: string; path: string };
   queues?: { [lineId: string]: { rank: string } };
   log?: CardLog;
@@ -464,13 +486,17 @@ interface LearnCard {
  */
 const REVERSE_KEY = "word-leren:reverse";
 const EXAMPLES_KEY = "word-leren:examples";
-// FSRS mode: the line is ordered by recall probability instead of its manual
-// ranks, and reviews are rated Again..Easy instead of placed at a depth. The
-// ranks are untouched, so flipping back restores the manual order.
-const FSRS_KEY = "word-leren:fsrs";
 // Superseded by the two keys above, which used to be one three-way choice.
 // Read once, so an existing preference survives the change.
 const LEGACY_MODE_KEY = "word-leren:mode";
+
+function plural(n: number, one: string, few: string, many: string): string {
+  const mod10 = n % 10;
+  const mod100 = n % 100;
+  if (mod10 === 1 && mod100 !== 11) return one;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return few;
+  return many;
+}
 
 function storedFlag(key: string, legacyMode: string): boolean {
   const stored = localStorage.getItem(key);
@@ -494,9 +520,6 @@ export default function Learn() {
   );
   const [examplesOn, setExamplesOn] = useState(() =>
     storedFlag(EXAMPLES_KEY, "examples"),
-  );
-  const [fsrsOn, setFsrsOn] = useState(
-    () => localStorage.getItem(FSRS_KEY) === "1",
   );
 
   // Per-card scratch state: cleared whenever the prompt changes out from under
@@ -533,18 +556,12 @@ export default function Learn() {
   });
 
   const cards = (data?.cards ?? []) as LearnCard[];
-  const members = activeLine
-    ? fsrsOn
-      ? sortByR(cards, activeLine)
-      : sortLine(cards, activeLine)
-    : [];
+  const members = activeLine ? dueCards(cards, activeLine) : [];
   const current = members[0];
-  // FSRS's "no debt" signal: even the most-forgotten card is likely still
-  // remembered. Shown as a banner, not a wall — reviewing ahead is allowed.
-  const caughtUp = fsrsOn && current && retrievability(current) > 0.9;
-  // The deep end of the scale is only offered once the line is long enough for
-  // it to mean anything — see `depthButtons`.
-  const depths = depthButtons(members.length);
+  // What the empty state needs to say something useful instead of "nothing".
+  const laterToday = activeLine ? dueSoon(cards, activeLine) : 0;
+  const nextAt = activeLine ? nextDueAt(cards, activeLine) : null;
+  const untouched = activeLine ? newPool(cards, activeLine).length : 0;
 
   // The cloze this card is being asked as, or null for the plain prompt. Spans
   // are re-anchored against the sentence as it reads now, and a link whose
@@ -566,7 +583,7 @@ export default function Learn() {
   // reverse prompt is what the cards without a usable example fall back to.
   const reverse = reverseOn && !cloze;
 
-  async function handleDepth(depth: number) {
+  async function handleRate(rating: (typeof RATINGS)[number]["rating"]) {
     if (!current || !activeLine || busy) return;
     setBusy(true);
     const answer = typed.trim();
@@ -577,20 +594,6 @@ export default function Learn() {
     // `current` can already be the next card by the time this function
     // resumes after the await below. Flip these synchronously, before the
     // await, so that render never shows the next card as already revealed.
-    resetCardState();
-    try {
-      await placeAtDepth(members, activeLine, depth, answer, linkId);
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  async function handleRate(rating: (typeof RATINGS)[number]["rating"]) {
-    if (!current || !activeLine || busy) return;
-    setBusy(true);
-    const answer = typed.trim();
-    const linkId = cloze?.link.id ?? "";
-    // Same optimistic-cache dance as handleDepth: reset before the await.
     resetCardState();
     try {
       await rateCard(current, activeLine, rating, answer, linkId);
@@ -645,19 +648,14 @@ export default function Learn() {
         return;
       }
       const n = parseInt(e.key, 10);
-      if (fsrsOn) {
-        if (!Number.isNaN(n) && n >= 1 && n <= RATINGS.length) {
-          e.preventDefault();
-          handleRate(RATINGS[n - 1].rating);
-        }
-      } else if (!Number.isNaN(n) && n >= 1 && n <= depths.length) {
+      if (!Number.isNaN(n) && n >= 1 && n <= RATINGS.length) {
         e.preventDefault();
-        handleDepth(depths[n - 1]);
+        handleRate(RATINGS[n - 1].rating);
       }
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [revealed, current, busy, reverse, cloze?.link.id, depths.length, fsrsOn]);
+  }, [revealed, current, busy, reverse, cloze?.link.id]);
 
   // Hint boxes and the typed answer are per-card scratch state — clear them
   // whenever the top card changes (depth placed, deleted, or swapped in).
@@ -716,21 +714,6 @@ export default function Learn() {
           />
           Examples
         </label>
-        <label
-          className={checkToggle}
-          title="Order the line by recall probability (FSRS) and rate answers Again–Easy instead of picking a depth"
-        >
-          <input
-            type="checkbox"
-            checked={fsrsOn}
-            onChange={(e) => {
-              localStorage.setItem(FSRS_KEY, e.target.checked ? "1" : "0");
-              setFsrsOn(e.target.checked);
-              resetCardState();
-            }}
-          />
-          FSRS
-        </label>
       </div>
       <LineSelector lines={lines} value={activeLine} onChange={setActiveLine} />
     </div>
@@ -740,9 +723,21 @@ export default function Learn() {
     return (
       <div className={page}>
         {selector}
-        <div className={empty}>
-          This line is empty. Add cards to it from the{" "}
-          <Link href="/">Cards</Link> page.
+        <div className={doneBox}>
+          <div className={doneTitle}>🎉 На сегодня всё</div>
+          <div className={doneLine}>
+            {laterToday > 0
+              ? `Ещё ${laterToday} ${plural(laterToday, "карточка", "карточки", "карточек")} вернётся сегодня попозже.`
+              : nextAt !== null
+                ? `Следующая карточка — через ${formatGap(nextAt - Date.now())}.`
+                : "В этой колоде пока нет ни одной карточки в изучении."}
+          </div>
+          {untouched > 0 && (
+            <div className={doneLine}>
+              Не в изучении: {untouched}.{" "}
+              <Link href="/deck">Разобрать или добавить</Link>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -751,6 +746,8 @@ export default function Learn() {
   const c = current;
   // Past ratings for this card, to show alongside the depth buttons on reveal.
   const st = reviewStats(c.log, 5);
+  // What each button would schedule, so the choice is informed rather than blind.
+  const intervals = previewIntervals(c);
 
   // Which side is the prompt and which is the answer. Only side A can carry
   // audio, so reversed it sits on the prompt — but still only appears on
@@ -803,12 +800,6 @@ export default function Learn() {
   return (
     <div className={page}>
       {selector}
-      {caughtUp && (
-        <div className={caughtUpBanner}>
-          🎉 All caught up — everything is above 90% recall. Reviewing ahead is
-          fine.
-        </div>
-      )}
       <div className={card}>
         <div className={sideBlock}>
           <div className={cardTop}>
@@ -1044,42 +1035,20 @@ export default function Learn() {
       {revealed && (
         <>
           <div className={depthRow}>
-            {fsrsOn
-              ? RATINGS.map((r) => (
-                  <button
-                    key={r.rating}
-                    className={depthBtn}
-                    disabled={busy}
-                    onClick={() => handleRate(r.rating)}
-                  >
-                    {r.label}
-                  </button>
-                ))
-              : depths.map((d) => (
-                  <button
-                    key={d}
-                    className={depthBtn}
-                    disabled={busy}
-                    onClick={() => handleDepth(d)}
-                  >
-                    {d}
-                  </button>
-                ))}
+            {RATINGS.map((r) => (
+              <button
+                key={r.rating}
+                className={depthBtn}
+                disabled={busy}
+                onClick={() => handleRate(r.rating)}
+              >
+                {r.label}
+                <span className={btnHint}>{intervals[r.rating]}</span>
+              </button>
+            ))}
           </div>
           {st.seen > 0 && (
             <div className={statsRow}>
-              {fsrsOn && c.stability != null && (
-                <>
-                  <span>
-                    R {Math.round(retrievability(c) * 100)}% · S{" "}
-                    {c.stability < 10
-                      ? c.stability.toFixed(1)
-                      : Math.round(c.stability)}
-                    d
-                  </span>
-                  <span>·</span>
-                </>
-              )}
               <span>
                 Seen {st.seen}
                 {st.seen === 1 ? " time" : " times"}

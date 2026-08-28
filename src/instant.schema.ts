@@ -19,8 +19,29 @@ const _schema = i.schema({
       // Learning-line membership: one rank per line the card belongs to, keyed
       // by line id. A card can be in many lines at different positions.
       queues: i.json<{ [lineId: string]: { rank: string } }>().optional(),
-      // FSRS memory state. Per card, not per line — one fact, one memory.
-      // null/absent = never reviewed under FSRS (the "new" pool).
+      // FSRS scheduling state: the `ts-fsrs` Card, verbatim, with its dates as
+      // unix ms so it survives JSON. Absent = the card has never been taken
+      // into study (the "new" pool the Deck page draws from).
+      //
+      // One blob rather than a column each because the shape is the library's,
+      // not ours — and because the app already loads every card into memory,
+      // so nothing here is ever filtered server-side anyway.
+      srs: i
+        .json<{
+          due: number;
+          stability: number;
+          difficulty: number;
+          elapsed_days: number;
+          scheduled_days: number;
+          learning_steps: number;
+          reps: number;
+          lapses: number;
+          state: number;
+          last_review?: number | null;
+        }>()
+        .optional(),
+      // Superseded by `srs` — written by the retrievability-queue experiment,
+      // kept only so old rows don't fail validation.
       stability: i.number().optional(),
       difficulty: i.number().optional(),
       lastReviewedAt: i.number().optional(),
