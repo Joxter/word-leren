@@ -19,6 +19,11 @@ const _schema = i.schema({
       // Learning-line membership: one rank per line the card belongs to, keyed
       // by line id. A card can be in many lines at different positions.
       queues: i.json<{ [lineId: string]: { rank: string } }>().optional(),
+      // FSRS memory state. Per card, not per line — one fact, one memory.
+      // null/absent = never reviewed under FSRS (the "new" pool).
+      stability: i.number().optional(),
+      difficulty: i.number().optional(),
+      lastReviewedAt: i.number().optional(),
       // Append-only history of place/move actions, keyed by event id so entries
       // can be merged in without clobbering each other.
       log: i

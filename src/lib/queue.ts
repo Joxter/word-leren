@@ -69,6 +69,15 @@ export type LogEntry = {
    * `pickClozeLink` in lib/examples.ts.
    */
   linkId?: string;
+  // FSRS review (kind "rate"): amount holds the rating 1-4, and the state
+  // transition is recorded so the log alone can feed a parameter optimizer.
+  elapsedDays?: number;
+  sBefore?: number | null;
+  dBefore?: number | null;
+  sAfter?: number;
+  dAfter?: number;
+  /** "session" = from the queue, "field" = met in the wild, "manual" = state edited by hand. */
+  source?: "session" | "field" | "manual";
 };
 
 export type CardLog = { [eventId: string]: LogEntry };
