@@ -64,9 +64,27 @@ attributes** — hence the `exampleLinks` join entity instead of a plain many-to
 Span offsets index into `examples.aText` and go stale on any edit, so every read runs
 `anchorSpans` (in `src/lib/examples.ts`) to re-attach them by their stored `text`.
 
-## Learning "line"
+## Scheduling
 
-One global ordered queue, no timers/sessions. Ranks use `fractional-indexing`; all queue
-mutations live in `src/lib/queue.ts`. New cards prepend to the top. Every action is logged
-to the card's own `log` JSON. Pages: `src/pages/Learn.tsx`, `src/pages/Cards.tsx` (create form + the active
-line's list; there is no line selector there — it follows Learn's choice).
+Classic day-based spaced repetition on FSRS (`ts-fsrs`), in `src/lib/srs.ts`. A card's
+scheduling state is the library's own `Card`, stored verbatim in `cards.srs` with dates
+as unix ms — one JSON blob rather than a column each, because the shape is the library's
+and the app loads every card into memory anyway. The queue is just `due <= now`.
+
+- **No card enters study by itself.** Creating a card gives it a line rank but no `srs`,
+  which puts it in the Deck page's pool. From there you either mark it known (rated
+  `Easy` on sight, ~a week out, skipping the learning steps) or take it in to learn.
+- **The fuzz seed is tied to the card id** (`GenSeedStrategyWithCardId`). With the
+  default seed the randomness comes from card *state*, so a batch graded identically on
+  one day gets an identical "random" interval and travels the deck as one clump —
+  200 cards marked known all landed on day 8. Seeded per card they spread over 6-10.
+- Learn runs a 30s ticker: learning-step cards fall due in minutes, and nothing else
+  would re-render when they do.
+- `scripts/reset-srs.mjs` wipes scheduling state without touching `queues` or `log`.
+
+The **manual queue is dormant, not deleted**: ranks (`fractional-indexing`, mutations in
+`src/lib/queue.ts`) and the whole `log` history survive untouched, so the old depth-button
+scheduler is a revert away. Don't delete `queue.ts` while that's still true.
+
+Pages: `src/pages/Learn.tsx` (study), `src/pages/Deck.tsx` (triage + add),
+`src/pages/Cards.tsx` (create form + the active line's list).
