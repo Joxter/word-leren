@@ -515,6 +515,11 @@ export default function Learn() {
   // Which of the card's examples is being peeked at, counted up rather than
   // wrapped so the button can just increment — see `peeked` below.
   const [peek, setPeek] = useState<number | null>(null);
+  // A card in the learning steps comes back in minutes, not days. The queue is
+  // computed against `Date.now()` at render, and no data changes when a card
+  // simply falls due — without a ticker the page would sit on "all done" while
+  // a card waited behind it.
+  const [, tick] = useState(0);
   const [reverseOn, setReverseOn] = useState(() =>
     storedFlag(REVERSE_KEY, "reverse"),
   );
@@ -666,6 +671,11 @@ export default function Learn() {
     setTyped("");
     setPeek(null);
   }, [current?.id]);
+
+  useEffect(() => {
+    const t = setInterval(() => tick((n) => n + 1), 30_000);
+    return () => clearInterval(t);
+  }, []);
 
   // Auto-play the answer's audio once the card is revealed.
   useEffect(() => {
