@@ -1,26 +1,45 @@
 #!/usr/bin/env node
 /**
  * Seed FSRS memory state (stability / difficulty / lastReviewedAt) on cards
- * from the hand-built queue order.
+ * from the manual review history.
  *
- * The idea: a card's position in its line encodes when the manual scheduler
- * meant to show it again — position / (cards reviewed per day) ≈ days from
- * now. Add the time already elapsed since its last review and you get the
- * interval the manual jumps effectively chose, which is what stability is.
+ * Stability comes from the *last* jump the card got. That jump is the verdict
+ * the manual scheduler passed on the card ("show this again in N cards"), and
+ * N / (cards reviewed per day) is that verdict in days — which is what
+ * stability means.
  *
- *   S = elapsedDays + position / rate
+ *   S = lastJump / rate
  *
- * Difficulty starts at the FSRS default (a first "Good" answer), and gets
- * corrected by real reviews from here on. Cards with no reviews or in no line
- * are left untouched — they stay in the "new" pool (stability null).
+ * Note what S must NOT include: the time already elapsed. An earlier version
+ * used `S = elapsed + position / rate`, which is a vacuous identity — FSRS
+ * crosses R = 0.9 exactly at t = S, so an S built to always exceed the elapsed
+ * time puts every single card above 90% recall. Keeping S independent of
+ * elapsed is what makes R say something.
  *
- * Idempotent: cards that already have a stability are skipped, so it can also
- * repair a partial run.
+ * Difficulty comes from the *shape* of the history: the share of reviews that
+ * needed a short re-show (a jump of 50 or less, i.e. same-day drilling) maps
+ * onto FSRS's 1-10 scale. Replaying the whole history through `next_state`
+ * was tried and rejected — 58% of all reviews are short drill jumps, and FSRS
+ * reads a drill as a failure, so every card came out at D = 10 with S = 0.
+ * The share is a summary of the same signal that doesn't compound.
+ *
+ * Few-review cards have their difficulty shrunk toward the average, so one
+ * lucky (or unlucky) jump doesn't declare a card trivial or hopeless.
+ *
+ * Cards with no review history are left untouched — they stay in the "new"
+ * pool (stability null) for the "add N new" button to introduce.
+ *
+ * Re-runnable: seeding is derived from the logs, so it recomputes and
+ * overwrites. Cards that carry a real FSRS `rate` event are skipped — an
+ * answer you actually gave always beats a guess from the old history — unless
+ * `--force`, for when those answers were themselves given against a seeding
+ * since found to be wrong.
  *
  * Usage:
  *   node scripts/migrate-fsrs.mjs           # dry run: preview + fsrs-preview.tsv
  *   node scripts/migrate-fsrs.mjs --apply   # write the state
  *   node scripts/migrate-fsrs.mjs --rate 50 # override reviews/day (default 70)
+ *   node scripts/migrate-fsrs.mjs --force   # reseed rated cards too
  *
  * Requires VITE_INSTANT_APP_ID + INSTANT_APP_ADMIN_TOKEN in .env.local.
  */
@@ -29,7 +48,7 @@ import { readFileSync, existsSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { init } from "@instantdb/admin";
-import { fsrs, Rating } from "ts-fsrs";
+import { fsrs } from "ts-fsrs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -55,6 +74,7 @@ if (!APP_ID || !ADMIN_TOKEN) {
 
 const args = process.argv.slice(2);
 const APPLY = args.includes("--apply");
+const FORCE = args.includes("--force");
 const rateArg = args.indexOf("--rate");
 // ponytail: fixed reviews/day from the last month's logs; re-run with --rate
 // if the pace ever changes before applying.
@@ -66,63 +86,82 @@ if (!Number.isFinite(RATE) || RATE <= 0) {
 
 const db = init({ appId: APP_ID, adminToken: ADMIN_TOKEN });
 const scheduler = fsrs({ enable_fuzz: false });
-// The default difficulty: what FSRS assigns after a first "Good".
-const DEFAULT_D = scheduler.next_state(null, 0, Rating.Good).difficulty;
 
-const { cards, lines } = await db.query({ cards: {}, lines: {} });
+const { cards } = await db.query({ cards: {} });
 const now = Date.now();
 const DAY = 864e5;
 
-// ── per-card facts ───────────────────────────────────────────────────────────
+// A jump this short means "show it again today" — drilling, not scheduling.
+const DRILL = 50;
+// Virtual reviews pulling a short history's difficulty toward the average.
+const SHRINK = 3;
 
-/** Time of the card's last manual review (a "place" deeper than 1), or null. */
-function lastReview(card) {
-  let at = null;
+/** The card's manual reviews, oldest first. */
+function reviewsOf(card) {
+  return Object.values(card.log ?? {})
+    .filter((e) => e.kind === "place" && e.amount > 1)
+    .sort((a, b) => a.at - b.at);
+}
+
+/** Has the card been answered under FSRS proper? Then it needs no seeding. */
+function hasRealRating(card) {
+  return Object.values(card.log ?? {}).some((e) => e.kind === "rate");
+}
+
+/**
+ * When the card was last in front of you, by any scheduler. S and D come from
+ * the manual jumps alone, but "how long ago" must count an FSRS rating too, or
+ * a card reseeded under --force would be called stale the day after you
+ * answered it.
+ */
+function lastSeenAt(card) {
+  let at = 0;
   for (const e of Object.values(card.log ?? {})) {
-    if (e.kind === "place" && e.amount > 1 && (at === null || e.at > at)) {
-      at = e.at;
-    }
+    if (isReviewEvent(e) && e.at > at) at = e.at;
   }
   return at;
 }
 
-// Position of every card in every line, 1-indexed top-down by rank.
-const positions = new Map(); // cardId -> smallest position across lines
-for (const line of lines) {
-  const members = cards
-    .filter((c) => c.queues?.[line.id]?.rank !== undefined)
-    .sort((a, b) => {
-      const ra = a.queues[line.id].rank;
-      const rb = b.queues[line.id].rank;
-      return ra < rb ? -1 : ra > rb ? 1 : 0;
-    });
-  members.forEach((c, i) => {
-    const pos = i + 1;
-    const prev = positions.get(c.id);
-    if (prev === undefined || pos < prev) positions.set(c.id, pos);
-  });
-}
+const isReviewEvent = (e) =>
+  (e.kind === "place" && e.amount > 1) || e.kind === "rate";
+
+// The average drill share across cards, used as the prior for short histories.
+const shares = cards
+  .map(reviewsOf)
+  .filter((evs) => evs.length > 0)
+  .map((evs) => evs.filter((e) => e.amount <= DRILL).length / evs.length);
+const MEAN_SHARE = shares.reduce((a, b) => a + b, 0) / (shares.length || 1);
 
 // ── the plan ─────────────────────────────────────────────────────────────────
 
 const plan = [];
-let skippedSeeded = 0;
+let skippedRated = 0;
 let skippedNew = 0;
 for (const c of cards) {
-  if (c.stability != null) {
-    skippedSeeded++;
+  if (hasRealRating(c) && !FORCE) {
+    skippedRated++;
     continue;
   }
-  const at = lastReview(c);
-  const pos = positions.get(c.id);
-  if (at === null || pos === undefined) {
+  const evs = reviewsOf(c);
+  if (evs.length === 0) {
     skippedNew++;
     continue;
   }
-  const elapsed = (now - at) / DAY;
-  const stability = Math.max(0.1, elapsed + pos / RATE);
-  const retrievability = scheduler.forgetting_curve(elapsed, stability);
-  plan.push({ card: c, pos, elapsed, stability, retrievability });
+  const last = evs[evs.length - 1];
+  // Half a day is the floor: even the shortest jump means "later", not "now".
+  const stability = Math.max(0.5, last.amount / RATE);
+  const drills = evs.filter((e) => e.amount <= DRILL).length;
+  const share = (drills + SHRINK * MEAN_SHARE) / (evs.length + SHRINK);
+  const difficulty = Math.min(10, Math.max(1, 1 + 9 * share));
+  const elapsed = (now - lastSeenAt(c)) / DAY;
+  plan.push({
+    card: c,
+    elapsed,
+    stability,
+    difficulty,
+    reviews: evs.length,
+    retrievability: scheduler.forgetting_curve(elapsed, stability),
+  });
 }
 
 // ── preview ──────────────────────────────────────────────────────────────────
@@ -132,42 +171,46 @@ plan.sort((a, b) => a.retrievability - b.retrievability);
 const fmt = (p, newPos) =>
   [
     String(newPos).padStart(4),
-    String(p.pos).padStart(6),
     p.retrievability.toFixed(3).padStart(6),
     p.stability.toFixed(1).padStart(6),
-    p.elapsed.toFixed(1).padStart(6),
+    p.difficulty.toFixed(1).padStart(5),
+    String(p.reviews).padStart(4),
+    p.elapsed.toFixed(0).padStart(5),
     p.card.aCard.slice(0, 40),
   ].join("  ");
 
-console.log(`rate: ${RATE} reviews/day, default difficulty ${DEFAULT_D.toFixed(2)}`);
+console.log(`rate: ${RATE} reviews/day, mean drill share ${MEAN_SHARE.toFixed(2)}`);
 console.log(
-  `to seed: ${plan.length}   already seeded: ${skippedSeeded}   left new: ${skippedNew}\n`,
+  `to seed: ${plan.length}   already rated: ${skippedRated}   left new: ${skippedNew}\n`,
 );
-console.log(" new  in-line       R       S   days  card");
-for (const [i, p] of plan.slice(0, 30).entries()) console.log(fmt(p, i + 1));
+console.log(" pos       R       S     D   n   ago  card");
+for (const [i, p] of plan.slice(0, 25).entries()) console.log(fmt(p, i + 1));
 console.log("  …");
 for (const [i, p] of plan.slice(-5).entries())
   console.log(fmt(p, plan.length - 4 + i));
 
-// Biggest reorders vs the current line, to eyeball what the model disagrees on.
-const movers = plan
-  .map((p, i) => ({ ...p, newPos: i + 1, jump: p.pos - (i + 1) }))
-  .sort((a, b) => Math.abs(b.jump) - Math.abs(a.jump))
-  .slice(0, 10);
-console.log("\nbiggest movers (in-line → new):");
-for (const m of movers)
-  console.log(
-    `  ${String(m.pos).padStart(4)} → ${String(m.newPos).padStart(4)}  ${m.card.aCard.slice(0, 40)}`,
-  );
+// The spread is the whole point of this seeding — print it, so a rerun that
+// flattens it out is obvious rather than something to discover in the app.
+const at = (arr, q) => arr[Math.floor(q * (arr.length - 1))];
+const Rs = plan.map((p) => p.retrievability);
+const Ds = plan.map((p) => p.difficulty).sort((a, b) => a - b);
+console.log(
+  `\nR    p10 ${at(Rs, 0.1).toFixed(2)}  p50 ${at(Rs, 0.5).toFixed(2)}  p90 ${at(Rs, 0.9).toFixed(2)}` +
+    `   below 0.9: ${Rs.filter((r) => r < 0.9).length}/${Rs.length}`,
+);
+console.log(
+  `D    p10 ${at(Ds, 0.1).toFixed(1)}  p50 ${at(Ds, 0.5).toFixed(1)}  p90 ${at(Ds, 0.9).toFixed(1)}`,
+);
 
 const tsv = [
-  "newPos\tlinePos\tR\tS\telapsedDays\taCard\tbCard",
+  "pos\tR\tS\tD\treviews\telapsedDays\taCard\tbCard",
   ...plan.map((p, i) =>
     [
       i + 1,
-      p.pos,
       p.retrievability.toFixed(4),
       p.stability.toFixed(2),
+      p.difficulty.toFixed(2),
+      p.reviews,
       p.elapsed.toFixed(2),
       p.card.aCard,
       p.card.bCard,
@@ -190,8 +233,8 @@ for (let i = 0; i < plan.length; i += CHUNK) {
     plan.slice(i, i + CHUNK).map((p) =>
       db.tx.cards[p.card.id].update({
         stability: p.stability,
-        difficulty: DEFAULT_D,
-        lastReviewedAt: lastReview(p.card),
+        difficulty: p.difficulty,
+        lastReviewedAt: now - p.elapsed * DAY,
       }),
     ),
   );
