@@ -94,12 +94,15 @@ export interface ReviewStats {
  * event from pressing a Depth button on the Learn page; the synthetic adds
  * (`enqueueBottom` logs `place` amount 0, `enqueueTop` used to log `place`
  * amount 1 and now logs `top` events) and `move` events are not reviews, so we
- * only count `place` events with amount > 1.
+ * only count `place` events with amount > 1. FSRS `rate` events are reviews
+ * too (their amount is the 1-4 rating).
  */
+export function isReview(e: LogEntry): boolean {
+  return (e.kind === "place" && e.amount > 1) || e.kind === "rate";
+}
+
 export function reviewStats(log?: CardLog, limit = 2): ReviewStats {
-  const reviews = Object.values(log ?? {}).filter(
-    (e) => e.kind === "place" && e.amount > 1,
-  );
+  const reviews = Object.values(log ?? {}).filter(isReview);
   reviews.sort((a, b) => b.at - a.at);
   return {
     seen: reviews.length,
@@ -132,7 +135,7 @@ export function dailyReviewStats(
   const uniques = new Map<string, Set<string>>();
   for (const c of cards) {
     for (const e of Object.values(c.log ?? {})) {
-      if (e.kind !== "place" || e.amount <= 1) continue;
+      if (!isReview(e)) continue;
       const k = dayKey(new Date(e.at));
       totals.set(k, (totals.get(k) ?? 0) + 1);
       let set = uniques.get(k);
