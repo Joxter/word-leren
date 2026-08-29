@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { dueCards, newPool, dueSoon, formatGap, type SrsState } from "./srs";
+import {
+  dueCards,
+  dueForecast,
+  newPool,
+  dueSoon,
+  formatGap,
+  type SrsState,
+} from "./srs";
 
 const HOUR = 36e5;
 const state = (due: number): SrsState => ({
@@ -77,5 +84,28 @@ describe("formatGap", () => {
     expect(formatGap(8 * 864e5)).toBe("8 дн");
     expect(formatGap(60 * 864e5)).toBe("2.0 мес");
     expect(formatGap(400 * 864e5)).toBe("1.1 г");
+  });
+});
+
+describe("dueForecast", () => {
+  const noon = new Date();
+  noon.setHours(12, 0, 0, 0);
+  const at = (days: number) => +noon + days * 864e5;
+
+  it("buckets by calendar day and folds overdue into today", () => {
+    const days = dueForecast(
+      [
+        { id: "a", srs: state(at(-9)) },
+        { id: "b", srs: state(at(0)) },
+        { id: "c", srs: state(at(2)) },
+        { id: "d", srs: state(at(2)) },
+        { id: "beyond", srs: state(at(40)) },
+        { id: "new" },
+      ],
+      7,
+      +noon,
+    );
+    expect(days.map((d) => d.cards.length)).toEqual([2, 0, 2, 0, 0, 0, 0]);
+    expect(days[0].date.getDate()).toBe(noon.getDate());
   });
 });

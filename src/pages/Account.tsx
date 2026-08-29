@@ -3,7 +3,7 @@
 // delete, pick the active one) lives here rather than in the Learn/Line header,
 // which is for working *inside* one line.
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { css } from "@linaria/core";
 import { db } from "../db";
 import { mine } from "../lib/session";
@@ -15,7 +15,10 @@ import {
   deleteLine,
 } from "../lib/lines";
 import { isFresh, sortLine, dailyReviewStats } from "../lib/queue";
+import { dueForecast } from "../lib/srs";
+import { showCounter, setShowCounter } from "../lib/prefs";
 import type { CardLog, QueuedCard } from "../lib/queue";
+import type { SrsState } from "../lib/srs";
 
 const page = css`
   max-width: 760px;
@@ -174,6 +177,7 @@ const dayBlock = css`
   text-align: center;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   align-items: center;
   line-height: 1.15;
 `;
@@ -193,6 +197,43 @@ const dayUnique = css`
   font-weight: 700;
   color: #1a1a1a;
   font-variant-numeric: tabular-nums;
+`;
+
+// One dot per card, in a column per day. Sized by viewBox, so it scales with
+// the page and the dots stay round.
+const swarm = css`
+  display: block;
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #eee;
+`;
+
+const swarmLegend = css`
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  color: #999;
+`;
+
+const swatch = css`
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+`;
+
+const settingRow = css`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1rem;
+  font-size: 0.9rem;
+  color: #1a1a1a;
+  cursor: pointer;
+
+  input {
+    cursor: pointer;
+  }
 `;
 
 const dayTotal = css`
@@ -277,6 +318,102 @@ const empty = css`
 interface AccountCard extends QueuedCard {
   id: string;
   log?: CardLog;
+  srs?: SrsState;
+}
+
+/** FSRS difficulty (1..10) as green→red. */
+function difficultyColor(d: number): string {
+  const t = Math.min(1, Math.max(0, (d - 1) / 9));
+  return `hsl(${150 - t * 150} 62% ${58 - t * 10}%)`;
+}
+
+// The chart is drawn to this width and stretched to the column, so a smaller
+// number means bigger bricks. Halved on a phone, where 720 units squeezed into
+// a 360px screen made them illegible.
+const PHONE = "(max-width: 540px)";
+const chartWidth = () => (window.matchMedia(PHONE).matches ? 360 : 720);
+// Ten bricks to a column, so a day can be counted in tens at a glance.
+const ROWS = 10;
+const BRICK_H = 5;
+const ROW_PITCH = 7;
+// A gap after every fifth brick, which is what makes ten countable.
+const GROUP_GAP = 2;
+// Days are set apart by three times that, so the split between two days always
+// reads stronger than the split inside a column.
+const DAY_GAP = GROUP_GAP * 5;
+const H = ROWS * ROW_PITCH + GROUP_GAP;
+
+/**
+ * A brick per card over the days ahead, coloured by how hard the card is.
+ * Bricks stack ten to a column and the columns run left to right, so height
+ * reads as "up to ten" and width as how many tens. Each day is only as wide as
+ * its own cards need — a quiet day is a narrow sliver, a heavy one a wide slab.
+ */
+function Swarm({ days }: { days: { date: Date; cards: AccountCard[] }[] }) {
+  const [W, setW] = useState(chartWidth);
+  // Rotating the phone crosses the breakpoint, and nothing else re-renders.
+  useEffect(() => {
+    const mq = window.matchMedia(PHONE);
+    const sync = () => setW(chartWidth());
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+  // An empty day still gets one column's worth of room, so the run of days
+  // stays legible instead of collapsing into one gap.
+  const colsOf = (n: number) => Math.max(1, Math.ceil(n / ROWS));
+  const totalCols = days.reduce((sum, d) => sum + colsOf(d.cards.length), 0);
+  const pitch = Math.min(
+    6,
+    (W - DAY_GAP * (days.length - 1)) / Math.max(1, totalCols),
+  );
+  const w = Math.max(0.8, pitch - 0.8);
+  let x0 = 0;
+
+  return (
+    <svg
+      className={swarm}
+      viewBox={`0 0 ${W} ${H}`}
+      role="img"
+      aria-label={`Cards due over the next ${days.length} days, one brick per card`}
+    >
+      {days.map((day) => {
+        const x = x0;
+        const dayW = colsOf(day.cards.length) * pitch;
+        x0 += dayW + DAY_GAP;
+        // Sorted so a column reads as a gradient: the hard cards sink.
+        const sorted = [...day.cards].sort(
+          (a, b) => (b.srs?.difficulty ?? 0) - (a.srs?.difficulty ?? 0),
+        );
+        return (
+          <g key={+day.date}>
+            {sorted.map((c, k) => {
+              const row = k % ROWS;
+              return (
+                <rect
+                  key={c.id}
+                  x={x + Math.floor(k / ROWS) * pitch}
+                  y={H - BRICK_H - row * ROW_PITCH - (row >= 5 ? GROUP_GAP : 0)}
+                  width={w}
+                  height={BRICK_H}
+                  rx={0.6}
+                  fill={difficultyColor(c.srs?.difficulty ?? 5)}
+                />
+              );
+            })}
+            <rect
+              x={x}
+              y={0}
+              width={dayW + DAY_GAP}
+              height={H}
+              fill="transparent"
+            >
+              <title>{`${day.date.toLocaleDateString()} — ${day.cards.length}`}</title>
+            </rect>
+          </g>
+        );
+      })}
+    </svg>
+  );
 }
 
 export default function Account() {
@@ -287,6 +424,7 @@ export default function Account() {
   const [editing, setEditing] = useState<string | null>(null);
   const [draft, setDraft] = useState("");
   const [newName, setNewName] = useState("");
+  const [counterOn, setCounterOn] = useState(showCounter);
 
   // Everything on this page is a count over the same three collections, so they
   // are fetched once here rather than per section.
@@ -301,6 +439,13 @@ export default function Account() {
   const grammarCount = data?.lightCards?.length ?? 0;
   // Study activity across every line, the strip that used to sit on the Line page.
   const days = dailyReviewStats(cards, 14);
+  // And what is coming: how the scheduler spread the collection over the days
+  // ahead, so a wall of repeats is visible before you walk into it. A card in
+  // no line keeps its schedule but is never served, so it is not work ahead.
+  const forecast = dueForecast(
+    cards.filter((c) => Object.keys(c.queues ?? {}).length > 0),
+    14,
+  );
 
   function lineStats(lineId: string) {
     const members = sortLine(cards, lineId);
@@ -407,6 +552,46 @@ export default function Account() {
               </div>
             );
           })}
+        </div>
+      </section>
+
+      <section className={section}>
+        <div className={sectionHead}>
+          <h2 className={sectionTitle}>Next 14 days</h2>
+          <span className={spacer} />
+          <span className={swarmLegend}>
+            <span
+              className={swatch}
+              style={{ background: difficultyColor(1) }}
+            />
+            easy
+            <span
+              className={swatch}
+              style={{ background: difficultyColor(10) }}
+            />
+            hard
+          </span>
+        </div>
+        <Swarm days={forecast} />
+        <div className={dayLabel}>today</div>
+      </section>
+
+      <section className={section}>
+        <div className={sectionHead}>
+          <h2 className={sectionTitle}>Learn</h2>
+        </div>
+        <div className={card}>
+          <label className={settingRow}>
+            <input
+              type="checkbox"
+              checked={counterOn}
+              onChange={(e) => {
+                setShowCounter(e.target.checked);
+                setCounterOn(e.target.checked);
+              }}
+            />
+            Show how many cards are due right now
+          </label>
         </div>
       </section>
 

@@ -241,3 +241,27 @@ export function formatGap(ms: number): string {
   if (months < 12) return `${months.toFixed(months < 3 ? 1 : 0)} мес`;
   return `${(days / 365).toFixed(1)} г`;
 }
+
+/** The cards falling due on each of the next `days` days, today first. */
+export function dueForecast<T extends StudyCard>(
+  cards: T[],
+  days = 14,
+  now = Date.now(),
+): { date: Date; cards: T[] }[] {
+  const today = new Date(now);
+  today.setHours(0, 0, 0, 0);
+  const out = Array.from({ length: days }, (_, i) => ({
+    date: new Date(today.getFullYear(), today.getMonth(), today.getDate() + i),
+    cards: [] as T[],
+  }));
+  for (const c of cards) {
+    if (!c.srs) continue;
+    const due = new Date(c.srs.due);
+    due.setHours(0, 0, 0, 0);
+    // Overdue cards are work for today, so they land in the first bucket.
+    // Rounded, because a DST change inside the window shifts a day by an hour.
+    const day = Math.max(0, Math.round((+due - +today) / 864e5));
+    if (day < days) out[day].cards.push(c);
+  }
+  return out;
+}

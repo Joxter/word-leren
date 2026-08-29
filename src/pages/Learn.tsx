@@ -15,6 +15,7 @@ import {
   RATINGS,
   type SrsState,
 } from "../lib/srs";
+import { showCounter } from "../lib/prefs";
 import { diffTyped } from "../lib/diff";
 import { saveCard, deleteCard } from "../lib/cards";
 import { useLines, useActiveLine } from "../lib/lines";
@@ -401,6 +402,11 @@ const checkToggle = css`
   }
 `;
 
+const counter = css`
+  color: #666;
+  font-variant-numeric: tabular-nums;
+`;
+
 // The "Reverse" / "Examples" pair, sized to match the line selector opposite.
 const topBarToggles = css`
   display: flex;
@@ -526,6 +532,8 @@ export default function Learn() {
   const [examplesOn, setExamplesOn] = useState(() =>
     storedFlag(EXAMPLES_KEY, "examples"),
   );
+  // Set on the Account page; read once per visit, which is when it can change.
+  const [counterOn] = useState(showCounter);
 
   // Per-card scratch state: cleared whenever the prompt changes out from under
   // the user, whether that's a new card or a mode flip.
@@ -724,6 +732,11 @@ export default function Learn() {
           />
           Examples
         </label>
+        {counterOn && (
+          <span className={counter} title="Cards still due">
+            {members.length}
+          </span>
+        )}
       </div>
       <LineSelector lines={lines} value={activeLine} onChange={setActiveLine} />
     </div>
