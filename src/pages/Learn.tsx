@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { css } from "@linaria/core";
 import { Link } from "wouter";
 import { db } from "../db";
-import { reviewStats } from "../lib/queue";
+import { reviewStats, dailyReviewStats } from "../lib/queue";
 import type { CardLog } from "../lib/queue";
 import {
   dueCards,
@@ -403,8 +403,15 @@ const checkToggle = css`
 `;
 
 const counter = css`
+  display: inline-flex;
+  gap: 0.3rem;
   color: #666;
   font-variant-numeric: tabular-nums;
+`;
+
+const countDone = css`
+  color: #16a34a;
+  font-weight: 600;
 `;
 
 // The "Reverse" / "Examples" pair, sized to match the line selector opposite.
@@ -575,6 +582,10 @@ export default function Learn() {
   const laterToday = activeLine ? dueSoon(cards, activeLine) : 0;
   const nextAt = activeLine ? nextDueAt(cards, activeLine) : null;
   const untouched = activeLine ? newPool(cards, activeLine).length : 0;
+  // Distinct cards answered today, across every line — the number the counter
+  // is there to grow. Repeats of the same card in its learning steps would
+  // inflate the total, so `unique` is the honest one.
+  const doneToday = counterOn ? dailyReviewStats(cards, 1)[0].unique : 0;
 
   // The cloze this card is being asked as, or null for the plain prompt. Spans
   // are re-anchored against the sentence as it reads now, and a link whose
@@ -733,8 +744,11 @@ export default function Learn() {
           Examples
         </label>
         {counterOn && (
-          <span className={counter} title="Cards still due">
-            {members.length}
+          <span className={counter}>
+            <span className={countDone} title="Cards studied today">
+              ✓ {doneToday}
+            </span>
+            <span title="Cards still due">· {members.length}</span>
           </span>
         )}
       </div>

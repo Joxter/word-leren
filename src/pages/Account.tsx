@@ -590,7 +590,7 @@ export default function Account() {
                 setCounterOn(e.target.checked);
               }}
             />
-            Show how many cards are due right now
+            Show counters on Learn: studied today, still due
           </label>
         </div>
       </section>
