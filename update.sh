@@ -50,7 +50,19 @@ set -euo pipefail
   docker image prune -f
 
   echo
-  echo "Проверка:"
-  curl -fsS --max-time 5 http://127.0.0.1:8787/health && echo " ← health ok"
+  echo -n "Проверка: "
+  # The server resolves the owner against InstantDB before it starts listening,
+  # so it is not up the instant `up -d` returns — checking once said "Connection
+  # reset" on a perfectly healthy deploy.
+  for i in $(seq 30); do
+    if curl -fsS --max-time 2 http://127.0.0.1:8787/health > /dev/null 2>&1; then
+      echo "health ok"
+      exit 0
+    fi
+    sleep 1
+  done
+  echo "не отвечает за 30с"
+  $COMPOSE logs --tail 20 mcp
+  exit 1
 
 }
