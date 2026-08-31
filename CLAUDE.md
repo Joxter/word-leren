@@ -86,5 +86,20 @@ The **manual queue is dormant, not deleted**: ranks (`fractional-indexing`, muta
 `src/lib/queue.ts`) and the whole `log` history survive untouched, so the old depth-button
 scheduler is a revert away. Don't delete `queue.ts` while that's still true.
 
+## MCP-сервер
+
+`server/mcp.ts` — read-only MCP поверх колоды, чтобы Клод дотягивался до неё с
+телефона. Запуск локально `npm run mcp`, деплой — `docs/deploy.md`.
+
+- Чистые вьюхи (`brief`, `events`, `byDay`) лежат в `src/lib/deck.ts`, а не
+  рядом с сервером: `src/lib` переживёт переезд с Instant, и тесты смотрят туда.
+- Сервер импортирует `src/lib/*.ts` **напрямую**, без сборки — Node 24 стрипает
+  типы. Отсюда два правила для всего, до чего он дотягивается: относительные
+  импорты с явным расширением `.ts`, а импорт только ради типа — `import type`.
+  Ни tsc, ни `vite build` этого не ловят, падает только запуск.
+- Admin-токен ходит мимо permissions, поэтому каждый запрос сужается по
+  `owner.id` руками — `mine()` из `lib/session.ts` тут не работает.
+- Авторизация — секрет в пути. Потолок известный: кто знает URL, тот читает.
+
 Pages: `src/pages/Learn.tsx` (study), `src/pages/Deck.tsx` (triage + add),
 `src/pages/Cards.tsx` (create form + the active line's list).

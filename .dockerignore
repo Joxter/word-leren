@@ -1,0 +1,7 @@
+# The build context is only package files, server/ and src/lib — everything else
+# is either huge (audio, dictionaries, exam dumps) or secret.
+*
+!package.json
+!package-lock.json
+!server
+!src/lib

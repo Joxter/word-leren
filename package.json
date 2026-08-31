@@ -10,25 +10,28 @@
     "preview": "vite preview",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "test": "vitest run",
+    "mcp": "node --env-file-if-exists=.env.local server/mcp.ts",
     "backup": "node scripts/backup.mjs",
     "generate": "node scripts/generate.mjs",
     "build-dictionary": "node scripts/build-dictionary.mjs"
   },
   "dependencies": {
+    "@instantdb/admin": "^0.22.185",
     "@instantdb/react": "^0.17.0",
     "@linaria/core": "^6.2.0",
     "@linaria/react": "^6.2.0",
     "@markdoc/markdoc": "^0.5.5",
+    "@modelcontextprotocol/sdk": "^1.30.0",
     "fractional-indexing": "^3.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "ts-fsrs": "^5.4.1",
-    "wouter": "^3.9.0"
+    "wouter": "^3.9.0",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.24.0",
     "@babel/preset-typescript": "^7.24.0",
-    "@instantdb/admin": "^0.22.155",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",

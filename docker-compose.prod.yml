@@ -1,0 +1,23 @@
+# Runs on the droplet from /sites/word-leren. Deployed by ./update.sh, which
+# pins IMAGE_TAG to the commit being deployed.
+services:
+  mcp:
+    image: ghcr.io/joxter/word-leren/mcp:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    # VITE_INSTANT_APP_ID, INSTANT_APP_ADMIN_TOKEN, OWNER_EMAIL, MCP_SECRET.
+    # chmod 600 — the admin token bypasses every permission rule in the app.
+    env_file: .env
+    # Published to loopback only; nginx terminates TLS and proxies here. The
+    # box is shared with other people's services, so nothing binds 0.0.0.0.
+    ports:
+      - "127.0.0.1:8787:8787"
+    # The droplet has 1 GB total and a Postgres next door. This server holds the
+    # whole deck in memory for the length of a request (~1 MB today), so the cap
+    # is far above normal use and only there to keep a leak from taking the box
+    # down with it.
+    mem_limit: 256m
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8787/health').then(r=>process.exit(r.ok?0:1),()=>process.exit(1))"]
+      interval: 60s
+      timeout: 5s
+      retries: 3
