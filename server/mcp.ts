@@ -22,7 +22,14 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { z } from "zod";
 import { rankMatches } from "../src/lib/search.ts";
-import { brief, byDay, events, STATE, type DeckCard } from "../src/lib/deck.ts";
+import {
+  brief,
+  byDay,
+  events,
+  tally,
+  STATE,
+  type DeckCard,
+} from "../src/lib/deck.ts";
 
 const APP_ID = process.env.VITE_INSTANT_APP_ID;
 const ADMIN_TOKEN = process.env.INSTANT_APP_ADMIN_TOKEN;
@@ -55,24 +62,26 @@ const db = init({ appId: APP_ID!, adminToken: ADMIN_TOKEN! });
 
 // ── data ─────────────────────────────────────────────────────────────────────
 
-type Card = DeckCard & { queues?: Record<string, { rank: string }> };
-
 let ownerId = "";
 
-async function fetchCards(): Promise<Card[]> {
+async function fetchCards(): Promise<DeckCard[]> {
   const { cards } = await db.query({
     cards: { $: { where: { "owner.id": ownerId } } },
   });
-  return cards as Card[];
+  return cards as DeckCard[];
 }
 
-/** Line ids resolved to names, for the log. Two rows, fetched per call. */
+/** Line ids resolved to names. Two rows, fetched per call. */
 async function fetchLines(): Promise<Record<string, string>> {
   const { lines } = await db.query({
     lines: { $: { where: { "owner.id": ownerId } } },
   });
   return Object.fromEntries(lines.map((l: any) => [l.id, l.name]));
 }
+
+/** Line names known at boot, to name them in a tool description. A line added
+ *  later still filters — only this list goes stale, until a restart. */
+let lineNames: string[] = [];
 
 const ok = (data: unknown) => ({
   content: [{ type: "text" as const, text: JSON.stringify(data, null, 1) }],
@@ -85,7 +94,8 @@ function buildServer(): McpServer {
     { name: "word-leren", version: "0.1.0" },
     {
       instructions:
-        "Read-only access to a personal Dutch flashcard deck (side A is Dutch) and its review history.",
+        "Read-only access to a personal Dutch flashcard deck (side A is Dutch) and its review history. " +
+        "The deck is split into lines — separate decks under one account, listed in `search_cards`.",
     },
   );
 
@@ -94,24 +104,39 @@ function buildServer(): McpServer {
     {
       title: "Search cards",
       description:
-        "List or search the deck. Ranked by relevance when `query` is given, by due date otherwise (soonest first, unstudied last).",
+        "List or search the deck. Ranked by relevance when `query` is given, by due date otherwise (soonest first, unstudied last). " +
+        `The deck is split into lines, which are separate decks sharing one account: ${lineNames.join(", ")}. ` +
+        "Most cards are Dutch; the English line is a small side deck and holds most of the half-finished rows.",
       inputSchema: {
         query: z
           .string()
           .optional()
-          .describe("Matches side A, then side B, then the note"),
+          .describe("Matches side A, then side B. Notes are not searched"),
         state: z
           .enum(["all", "unstudied", "learning", "review", "relearning", "due"])
           .optional()
           .describe("`due` means due now, across every state. Default: all"),
+        line: z.string().optional().describe("Restrict to one line, by name"),
         limit: z.number().int().min(1).max(500).optional(),
       },
       annotations: { readOnlyHint: true },
     },
-    async ({ query, state = "all", limit = 50 }) => {
+    async ({ query, state = "all", line, limit = 50 }) => {
       const now = Date.now();
-      let cards = await fetchCards();
-      const total = cards.length;
+      const [all, lines] = await Promise.all([fetchCards(), fetchLines()]);
+      let cards = all;
+
+      if (line) {
+        const id = Object.keys(lines).find(
+          (k) => lines[k].toLowerCase() === line.toLowerCase(),
+        );
+        if (!id)
+          return ok({ error: "no such line", lines: Object.values(lines) });
+        cards = cards.filter((c) => c.queues?.[id]);
+      }
+      // Counts describe the line, not the state/query filter below — they are
+      // here so "how much is due" doesn't cost a query of its own.
+      const counts = tally(cards, now);
 
       if (state === "unstudied") cards = cards.filter((c) => !c.srs);
       else if (state === "due")
@@ -124,13 +149,15 @@ function buildServer(): McpServer {
 
       // An empty query means "no text filter" here, not "match nothing" — this
       // is a list tool as much as a search one, so rankMatches only runs when
-      // there is something to rank.
+      // there is something to rank. Notes are out of the fields on purpose:
+      // they carry whole dictionary entries, and a short word like "rooster"
+      // matched half the deck through somebody else's example sentence.
       const q = query?.trim();
       // Ranked unlimited and sliced after, so `matched` is the honest number of
       // hits rather than however many fit under `limit`.
       const hits = q
         ? rankMatches(cards, q, {
-            fields: (c) => [c.aCard, c.bCard, c.note],
+            fields: (c) => [c.aCard, c.bCard],
             label: (c) => c.aCard,
           })
         : cards.sort(
@@ -139,10 +166,11 @@ function buildServer(): McpServer {
       const rows = hits.slice(0, limit);
 
       return ok({
-        deckSize: total,
+        deckSize: all.length,
+        counts,
         matched: q ? hits.length : matched,
         returned: rows.length,
-        cards: rows.map(brief),
+        cards: rows.map((c) => brief(c, lines)),
       });
     },
   );
@@ -152,7 +180,10 @@ function buildServer(): McpServer {
     {
       title: "Get card",
       description:
-        "One card in full: scheduling state, example sentences it appears in, and its whole event log.",
+        "One card in full: scheduling state, example sentences it appears in, and its whole event log. " +
+        "`note` and `examples` are different things: the note is free text, usually a pasted dictionary " +
+        "entry, and the sentences in it are not examples. `examples` are sentence rows shared across cards, " +
+        "each with the fragments blanked out for this one.",
       inputSchema: { id: z.string() },
       annotations: { readOnlyHint: true },
     },
@@ -163,16 +194,20 @@ function buildServer(): McpServer {
           exampleLinks: { example: {} },
         },
       });
-      const card = cards[0] as (Card & { exampleLinks?: any[] }) | undefined;
+      const card = cards[0] as
+        (DeckCard & { exampleLinks?: any[] }) | undefined;
       if (!card) return ok({ error: "no such card" });
       const lines = await fetchLines();
 
       return ok({
-        ...brief(card),
+        ...brief(card, lines),
         note: card.note || undefined,
+        // The admin SDK returns *every* nested link as an array, `has: one`
+        // included — unlike the react client, where `l.example` is the object.
+        // Reading it as an object silently yields undefined, not an error.
         examples: (card.exampleLinks ?? []).map((l) => ({
-          text: l.example?.aText,
-          translation: l.example?.bText || undefined,
+          text: l.example?.[0]?.aText,
+          translation: l.example?.[0]?.bText || undefined,
           // Which fragments of the sentence are blanked out for this card.
           blanks: (l.spans ?? []).map((s: any) => s.text),
         })),
@@ -186,7 +221,7 @@ function buildServer(): McpServer {
     {
       title: "Review history",
       description:
-        "What was studied and when, newest first, plus a per-day summary. Events: `rate` (answered, amount is the 1-4 grade), `introduce` (taken into study), `known` (marked known on sight), and older `place`/`move` from the retired manual queue.",
+        "What was studied and when, newest first, plus a per-day summary. Events: `rate` (answered, `grade` is Again/Hard/Good/Easy), `introduce` (taken into study) and `known` (marked known on sight). The retired manual queue's own events (`place`/`top`/`move`, up to 2026-08-28) are still in the database but left out here.",
       inputSchema: {
         days: z
           .number()
@@ -273,6 +308,7 @@ if (!$users.length) {
   process.exit(1);
 }
 ownerId = $users[0].id;
+lineNames = Object.values(await fetchLines());
 
 createServer((req, res) => {
   handle(req, res).catch((err) => {

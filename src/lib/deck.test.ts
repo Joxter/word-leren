@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { brief, events, byDay, type DeckCard } from "./deck";
+import { brief, events, byDay, tally, type DeckCard } from "./deck";
 
 const card = (over: Partial<DeckCard> = {}): DeckCard => ({
   id: "c1",
@@ -73,6 +73,22 @@ describe("events", () => {
   it("survives cards with no log", () => {
     expect(events([card()])).toEqual([]);
   });
+
+  it("leaves out the retired manual queue's own events", () => {
+    // place/top/move outnumber the study history 12:1 and say nothing about
+    // how a card is doing. The rows stay in the database, just not here.
+    const out = events([
+      card({
+        log: {
+          a: { at: 1, lineId: "L", kind: "place", amount: 3 },
+          b: { at: 2, lineId: "L", kind: "top", amount: 0 },
+          c: { at: 3, lineId: "L", kind: "move", amount: 1 },
+          d: { at: 4, lineId: "L", kind: "known", amount: 0 },
+        },
+      }),
+    ]);
+    expect(out.map((e) => e.kind)).toEqual(["known"]);
+  });
 });
 
 describe("byDay", () => {
@@ -98,5 +114,48 @@ describe("brief keeps lists small", () => {
     // Notes carry whole dictionary entries; 500 of them made a 215 KB reply.
     const b = brief(card({ note: "x".repeat(5000) }));
     expect(JSON.stringify(b)).not.toContain("xxx");
+  });
+});
+
+describe("tally", () => {
+  const now = new Date(2026, 8, 1, 12).getTime();
+  const srs = (over: Partial<DeckCard["srs"]> & { due: number }) => ({
+    stability: 1,
+    difficulty: 5,
+    reps: 1,
+    lapses: 0,
+    state: 2,
+    ...over,
+  });
+
+  it("counts states, and due separately from due-by-midnight", () => {
+    const out = tally(
+      [
+        card(),
+        card({ srs: srs({ due: now - 1000 }) }),
+        card({ srs: srs({ due: now + 6 * 3600e3 }) }),
+        card({ srs: srs({ due: now + 5 * 864e5 }) }),
+        card({ srs: srs({ due: now + 60e3, state: 1 }) }),
+      ],
+      now,
+    );
+    expect(out).toEqual({
+      unstudied: 1,
+      review: 3,
+      learning: 1,
+      due: 1,
+      dueToday: 3,
+    });
+  });
+});
+
+describe("brief lines", () => {
+  it("names the lines a card is in, and omits the key when it is in none", () => {
+    const c = card({ queues: { l1: { rank: "a0" }, l2: { rank: "a1" } } });
+    expect(brief(c, { l1: "default", l2: "English" }).lines).toEqual([
+      "default",
+      "English",
+    ]);
+    expect(brief(card()).lines).toBeUndefined();
   });
 });

@@ -35,12 +35,14 @@ export interface DeckCard {
   note?: string;
   srs?: Srs;
   log?: Record<string, LogEvent>;
+  queues?: Record<string, { rank: string }>;
 }
 
 export interface Brief {
   id: string;
   a: string;
   b: string;
+  lines?: string[];
   state: string;
   due?: string;
   reps?: number;
@@ -53,11 +55,16 @@ export interface Brief {
  *  stay out: they hold a screenful of dictionary markup each, and 500 of them
  *  came to 215 KB — a list is for choosing which card to open, and `get_card`
  *  is what opens it. */
-export function brief(c: DeckCard): Brief {
+export function brief(c: DeckCard, lines: Record<string, string> = {}): Brief {
+  const inLines = Object.keys(c.queues ?? {}).map((id) => lines[id] ?? id);
   return {
     id: c.id,
     a: c.aCard,
     b: c.bCard,
+    // Which line(s) the card belongs to: the deck is not one deck. Without it a
+    // mixed list reads as noise ("Seoul shares open 5.72 pct lower" is not a
+    // Dutch card gone wrong, it is the English line).
+    lines: inLines.length ? inLines : undefined,
     state: c.srs ? (STATE[c.srs.state] ?? `state ${c.srs.state}`) : "Unstudied",
     due: c.srs ? new Date(c.srs.due).toISOString() : undefined,
     reps: c.srs?.reps,
@@ -79,6 +86,12 @@ export interface HistoryEvent {
   dueInDays?: number;
 }
 
+/** Kinds written by the retired manual queue (`lib/queue.ts`). The rows stay —
+ *  that scheduler is a revert away — but they outnumber the study history 12:1
+ *  and say nothing about how a card is doing, so the read-only views drop them.
+ *  Look in `cards.log` itself if the old placements are ever wanted. */
+const RETIRED = new Set(["place", "top", "move"]);
+
 /**
  * Every card's log flattened into one stream, newest first, with line ids
  * resolved to names and grades to words. The logs are keyed by event id and
@@ -92,6 +105,7 @@ export function events(
   const out: HistoryEvent[] = [];
   for (const c of cards) {
     for (const e of Object.values(c.log ?? {})) {
+      if (RETIRED.has(e.kind)) continue;
       out.push({
         at: e.at,
         when: new Date(e.at).toISOString(),
@@ -122,6 +136,22 @@ export function byDay(
     const bucket = (out[key] ??= {});
     const k = e.kind === "rate" ? `rate:${e.grade}` : e.kind;
     bucket[k] = (bucket[k] ?? 0) + 1;
+  }
+  return out;
+}
+
+/** Deck-wide counts, so a caller doesn't need five queries for five numbers.
+ *  `due` is due now, `dueToday` includes what falls due before midnight. */
+export function tally(cards: DeckCard[], now = Date.now()) {
+  const endOfDay = new Date(now).setHours(23, 59, 59, 999);
+  const out: Record<string, number> = { due: 0, dueToday: 0 };
+  for (const c of cards) {
+    const state = c.srs
+      ? (STATE[c.srs.state] ?? `state ${c.srs.state}`).toLowerCase()
+      : "unstudied";
+    out[state] = (out[state] ?? 0) + 1;
+    if (c.srs && c.srs.due <= now) out.due++;
+    if (c.srs && c.srs.due <= endOfDay) out.dueToday++;
   }
   return out;
 }
