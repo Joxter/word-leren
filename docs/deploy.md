@@ -1,15 +1,15 @@
 # Деплой MCP-сервера
 
 Приложение (фронт) живёт на GitHub Pages и деплоится отдельно — здесь только
-`server/mcp.ts`, read-only MCP поверх колоды.
+`server/mcp.ts`, MCP поверх колоды (читает колоду, правит текст карточек).
 
-| | |
-|---|---|
-| Дроплет | `134.209.227.168`, Ubuntu 22.04, 1 vCPU / 1 ГБ, рядом чужие сервисы |
-| Каталог | `/sites/word-leren` |
-| Домен | `word.joxter.me` → nginx → `127.0.0.1:8787` |
-| Образ | `ghcr.io/joxter/word-leren/mcp`, тег = sha коммита |
-| Логи | `ops-dozzle` (веб) или `docker compose -f docker-compose.prod.yml logs -f mcp` |
+|         |                                                                                |
+| ------- | ------------------------------------------------------------------------------ |
+| Дроплет | `134.209.227.168`, Ubuntu 22.04, 1 vCPU / 1 ГБ, рядом чужие сервисы            |
+| Каталог | `/sites/word-leren`                                                            |
+| Домен   | `word.joxter.me` → nginx → `127.0.0.1:8787`                                    |
+| Образ   | `ghcr.io/joxter/word-leren/mcp`, тег = sha коммита                             |
+| Логи    | `ops-dozzle` (веб) или `docker compose -f docker-compose.prod.yml logs -f mcp` |
 
 Ничего не собирается на боксе: CI (`.github/workflows/publish.yml`) прогоняет
 тесты, собирает образ и кладёт в ghcr.io, дроплет только тянет. Сборки как

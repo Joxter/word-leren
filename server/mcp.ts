@@ -1,8 +1,8 @@
 /**
- * Read-only MCP server over the card deck: what is in it, and what happened to
- * it. Runs on the droplet so Claude can reach the deck from anywhere — a local
- * stdio server would only exist while the laptop is open. See PLAN-inbox.md for
- * the write half, which is deliberately not here yet.
+ * MCP server over the card deck: what is in it, what happened to it, and — the
+ * one write so far — fixing a card's text. Runs on the droplet so Claude can
+ * reach the deck from anywhere; a local stdio server would only exist while the
+ * laptop is open. See PLAN-inbox.md for the rest of the write half.
  *
  * Run: node --env-file-if-exists=.env.local server/mcp.ts
  * Env: VITE_INSTANT_APP_ID, INSTANT_APP_ADMIN_TOKEN, OWNER_EMAIL, MCP_SECRET, PORT
@@ -17,7 +17,7 @@ import {
   type ServerResponse,
 } from "node:http";
 import { timingSafeEqual } from "node:crypto";
-import { init } from "@instantdb/admin";
+import { id as newId, init } from "@instantdb/admin";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { z } from "zod";
@@ -25,8 +25,10 @@ import { rankMatches } from "../src/lib/search.ts";
 import {
   brief,
   byDay,
+  editEvent,
   events,
   tally,
+  trimCardText,
   STATE,
   type DeckCard,
 } from "../src/lib/deck.ts";
@@ -96,7 +98,8 @@ function buildServer(): McpServer {
     { name: "word-leren", version: "0.1.0" },
     {
       instructions:
-        "Read-only access to a personal Dutch flashcard deck (side A is Dutch) and its review history. " +
+        "A personal Dutch flashcard deck (side A is Dutch) and its review history. Reading is free; " +
+        "the only write is `edit_card`, which fixes a card's text and nothing else. " +
         "The deck is split into lines — separate decks under one account, listed in `search_cards`.",
     },
   );
@@ -260,6 +263,74 @@ function buildServer(): McpServer {
         byDay: byDay(all),
         events: all.slice(0, limit),
       });
+    },
+  );
+
+  server.registerTool(
+    "edit_card",
+    {
+      title: "Edit card",
+      description:
+        "Fix a card's text: side A, side B, the note, or any combination. Only the fields you pass change. " +
+        "Scheduling is not touched — an edit never moves a card's due date, and a card whose word changes " +
+        "completely is a new card, not an edit. Each field replaces the old value whole, so to add a line to " +
+        "a note, read it with `get_card` and pass it back with the line in it. " +
+        "A note often ends in a `{% dict %} … {% /dict %}` block: that is a dictionary entry the app pastes " +
+        "in and refills, so keep it as it is and write above it. " +
+        "The edit is logged and shows up in the card's history.",
+      inputSchema: {
+        id: z.string(),
+        aCard: z.string().optional().describe("Side A — the Dutch word"),
+        bCard: z.string().optional().describe("Side B — the translation"),
+        note: z
+          .string()
+          .optional()
+          .describe("Free text under the card, Markdoc. Replaces the old note"),
+      },
+      annotations: { readOnlyHint: false, idempotentHint: true },
+    },
+    async ({ id, aCard, bCard, note }) => {
+      const { cards } = await db.query({
+        cards: {
+          $: {
+            where: { id, "owner.id": ownerId, deletedAt: { $isNull: true } },
+          },
+        },
+      });
+      const card = cards[0] as DeckCard | undefined;
+      if (!card) return ok({ error: "no such card" });
+
+      const text = trimCardText({
+        aCard: aCard ?? card.aCard,
+        bCard: bCard ?? card.bCard,
+        note: note ?? card.note ?? "",
+      });
+      // A card with a blank side is unanswerable, and the app's own form is
+      // what usually stops that — this connection goes around it. Only what the
+      // caller sent is judged: half-finished rows with an empty side already
+      // exist (most of the English line), and they must stay editable.
+      if (
+        (aCard !== undefined && !text.aCard) ||
+        (bCard !== undefined && !text.bCard)
+      )
+        return ok({ error: "a side you are editing can't be left empty" });
+
+      const event = editEvent(card, text, "mcp");
+      if (!event) return ok({ id, changed: [], note: "nothing to change" });
+      // Only the changed fields are written. Sending all three would have this
+      // edit overwrite whatever a Save in the open app wrote a second ago —
+      // with the text this request read *before* that save.
+      const changes = Object.fromEntries(event.fields.map((f) => [f, text[f]]));
+      await db.transact([
+        db.tx.cards[id].update(changes),
+        // `merge`, not `update` — the log is one JSON blob and an update would
+        // replace the whole history with this single event.
+        db.tx.cards[id].merge({ log: { [newId()]: event } }),
+      ]);
+
+      // `text` is the stored row plus exactly `changes`, so it is the card as
+      // it now stands.
+      return ok({ id, changed: event.fields, card: text });
     },
   );
 

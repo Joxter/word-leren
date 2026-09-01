@@ -11,6 +11,7 @@ import {
   entryCardFront,
   type DictEntry,
 } from "./dictionary";
+import { editEvent, trimCardText, type CardText } from "./deck";
 import type { LinkedCard } from "./examples";
 import { getDefaultLineId } from "./lines";
 import { enqueueTop, logEntry, type CardLog } from "./queue";
@@ -24,54 +25,18 @@ import type { CardData } from "../pages/Cards";
  */
 type TxOp = Extract<Parameters<typeof db.transact>[0], unknown[]>[number];
 
-/** The text fields of a card, the ones a person types into. */
-interface CardText {
-  aCard: string;
-  bCard: string;
-  note: string;
-}
+// `trimCardText` and the edit diff live in `lib/deck.ts`, the one module the
+// MCP server can import — everything here reaches `../db`, which connects on
+// import. Re-exported so the pages keep importing card things from cards.ts.
+export { trimCardText, type CardText };
 
-/**
- * Strip the whitespace around a card's text. It arrives with pasted words and
- * as the newline left behind at the end of a note, and it is never meaningful:
- * it breaks the dictionary's `lemmaKey` lookups and shows up as a blank first
- * line on the card. Every write path runs its form through here. Only the ends
- * go — a note's own line breaks are the whole point of it.
- */
-export function trimCardText<T extends CardText>(data: T): T {
-  return {
-    ...data,
-    aCard: data.aCard.trim(),
-    bCard: data.bCard.trim(),
-    note: data.note.trim(),
-  };
-}
-
-/**
- * An `edit` log event for the text fields that actually changed, or null when
- * nothing did (an image-only save, or a Save on an untouched form — the modal
- * has no dirty tracking, so most saves come through here unchanged).
- *
- * The old `aCard`/`bCard` are kept verbatim; the old note is not. A note holds
- * a whole dictionary entry, and every page loads every card with its log — a
- * copy per edit would grow the row nobody asked to grow. `fields` still says
- * the note changed and when.
- */
+/** `editEvent` under its own event id, ready to merge into `cards.log`. */
 export function editEntry(
   before: Partial<CardText>,
   after: CardText,
 ): CardLog | null {
-  const fields = (["aCard", "bCard", "note"] as const).filter(
-    (f) => (before[f] ?? "") !== after[f],
-  );
-  if (fields.length === 0) return null;
-  return logEntry("", "edit", fields.length, {
-    fields,
-    prev: {
-      ...(fields.includes("aCard") ? { aCard: before.aCard ?? "" } : {}),
-      ...(fields.includes("bCard") ? { bCard: before.bCard ?? "" } : {}),
-    },
-  });
+  const event = editEvent(before, after);
+  return event && { [id()]: event };
 }
 
 /**

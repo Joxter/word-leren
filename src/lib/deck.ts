@@ -1,7 +1,8 @@
-// Read-only views over a card and its history, shared by the MCP server. Pure
-// on purpose: it lives here rather than next to the server because `src/lib` is
-// the part that survives the move off InstantDB, and because the server itself
-// opens a socket the moment it is imported, which no test wants.
+// Views over a card and its history, plus the two text helpers both writers
+// need, shared by the MCP server. Pure on purpose: it lives here rather than
+// next to the server because `src/lib` is the part that survives the move off
+// InstantDB, and because everything else in `lib/` opens a socket the moment it
+// is imported (`../db`), which neither the server nor a test wants.
 
 /** `ts-fsrs` State by its numeric value. A card with no `srs` at all is in none
  *  of these: it has never been taken into study (the Deck page's pool). */
@@ -25,6 +26,8 @@ export interface LogEvent {
   lineId: string;
   kind: string;
   amount: number;
+  /** kind "edit": which of the card's text fields changed. */
+  fields?: (keyof CardText)[];
   [k: string]: unknown;
 }
 
@@ -74,6 +77,63 @@ export function brief(c: DeckCard, lines: Record<string, string> = {}): Brief {
   };
 }
 
+/** The text fields of a card, the ones a person types into. */
+export interface CardText {
+  aCard: string;
+  bCard: string;
+  note: string;
+}
+
+/**
+ * Strip the whitespace around a card's text. It arrives with pasted words and
+ * as the newline left behind at the end of a note, and it is never meaningful:
+ * it breaks the dictionary's `lemmaKey` lookups and shows up as a blank first
+ * line on the card. Every write path runs its form through here. Only the ends
+ * go — a note's own line breaks are the whole point of it.
+ */
+export function trimCardText<T extends CardText>(data: T): T {
+  return {
+    ...data,
+    aCard: data.aCard.trim(),
+    bCard: data.bCard.trim(),
+    note: data.note.trim(),
+  };
+}
+
+/**
+ * The `edit` event for a card's text change, or null when nothing changed (an
+ * image-only save, or a Save on an untouched form — the modal has no dirty
+ * tracking, so most saves come through unchanged).
+ *
+ * The old `aCard`/`bCard` are kept verbatim; the old note is not. A note holds
+ * a whole dictionary entry, and every page loads every card's log — a copy per
+ * edit would grow the row nobody asked to grow. `fields` still says the note
+ * changed and when. `via` marks where the edit came from ("mcp"); an edit made
+ * in the app leaves it out.
+ */
+export function editEvent(
+  before: Partial<CardText>,
+  after: CardText,
+  via?: string,
+): (LogEvent & { fields: (keyof CardText)[] }) | null {
+  const fields = (["aCard", "bCard", "note"] as const).filter(
+    (f) => (before[f] ?? "") !== after[f],
+  );
+  if (fields.length === 0) return null;
+  return {
+    at: Date.now(),
+    lineId: "",
+    kind: "edit",
+    amount: fields.length,
+    fields,
+    prev: {
+      ...(fields.includes("aCard") ? { aCard: before.aCard ?? "" } : {}),
+      ...(fields.includes("bCard") ? { bCard: before.bCard ?? "" } : {}),
+    },
+    ...(via ? { via } : {}),
+  };
+}
+
 export interface HistoryEvent {
   at: number;
   when: string;
@@ -84,8 +144,9 @@ export interface HistoryEvent {
   line?: string;
   typed?: string;
   dueInDays?: number;
-  /** Card text edit (kind "edit"): which fields changed. */
+  /** Card text edit (kind "edit"): which fields changed, and from where. */
   fields?: string[];
+  via?: string;
 }
 
 /** Kinds written by the retired manual queue (`lib/queue.ts`). The rows stay —
@@ -120,6 +181,7 @@ export function events(
         dueInDays:
           typeof e.dueIn === "number" ? +e.dueIn.toFixed(1) : undefined,
         fields: Array.isArray(e.fields) ? (e.fields as string[]) : undefined,
+        via: typeof e.via === "string" ? e.via : undefined,
       });
     }
   }

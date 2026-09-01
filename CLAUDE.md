@@ -69,7 +69,7 @@ for the console. Nothing purges old rows either; if the deck ever needs it, a
 script over `deletedAt` is the place.
 
 - Reads filter with `myCards()`. Two exceptions: `CardExamples` fetches a card
-  by id (it is the card open in the editor), and cards reached *through* a
+  by id (it is the card open in the editor), and cards reached _through_ a
   nested link — `examples: { links: { card: {} } }` — can't be filtered in the
   query at all. Those go through `liveLinks` (lib/examples.ts) instead, which
   drops an attachment whose card is deleted. The write paths don't call it: a
@@ -124,11 +124,19 @@ scheduler is a revert away. Don't delete `queue.ts` while that's still true.
 
 ## MCP-сервер
 
-`server/mcp.ts` — read-only MCP поверх колоды, чтобы Клод дотягивался до неё с
-телефона. Запуск локально `npm run mcp`, деплой — `docs/deploy.md`.
+`server/mcp.ts` — MCP поверх колоды, чтобы Клод дотягивался до неё с телефона.
+Читает всё, пишет одно: `edit_card` правит текст карточки (стороны и `note`).
+Запуск локально `npm run mcp`, деплой — `docs/deploy.md`.
 
-- Чистые вьюхи (`brief`, `events`, `byDay`) лежат в `src/lib/deck.ts`, а не
-  рядом с сервером: `src/lib` переживёт переезд с Instant, и тесты смотрят туда.
+- Чистые вьюхи (`brief`, `events`, `byDay`) и обе текстовые функции
+  (`trimCardText`, `editEvent`) лежат в `src/lib/deck.ts`, а не рядом с
+  сервером: `src/lib` переживёт переезд с Instant, и тесты смотрят туда. Это
+  **единственный** модуль в `lib/`, который серверу можно импортировать —
+  остальные тянут `../db` и открывают сокет на импорте.
+- `edit_card` меняет только текст. Расписание, линии и примеры он не трогает:
+  правка опечатки не должна двигать `due`. Событие пишется в тот же `cards.log`
+  с `via: "mcp"` — иначе в истории не отличить правку из приложения от правки
+  из чата.
 - Сервер импортирует `src/lib/*.ts` **напрямую**, без сборки — Node 24 стрипает
   типы. Отсюда два правила для всего, до чего он дотягивается: относительные
   импорты с явным расширением `.ts`, а импорт только ради типа — `import type`.
@@ -143,7 +151,8 @@ scheduler is a revert away. Don't delete `queue.ts` while that's still true.
   их в 12 раз больше, чем настоящих ответов.
 - Поиск в MCP ищет только по сторонам карточки, без `note`: заметка — это
   вставленная словарная статья, и короткое слово находилось в чужом примере.
-- Авторизация — секрет в пути. Потолок известный: кто знает URL, тот читает.
+- Авторизация — секрет в пути. Потолок вырос вместе с `edit_card`: кто знает
+  URL, тот и правит карточки. Ротация — env на дроплете плюс коннектор.
 
 Pages: `src/pages/Learn.tsx` (study), `src/pages/Deck.tsx` (triage + add),
 `src/pages/Cards.tsx` (create form + the active line's list).

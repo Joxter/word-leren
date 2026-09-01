@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { brief, events, byDay, tally, type DeckCard } from "./deck";
+import { brief, byDay, editEvent, events, tally, type DeckCard } from "./deck";
 
 const card = (over: Partial<DeckCard> = {}): DeckCard => ({
   id: "c1",
@@ -157,5 +157,26 @@ describe("brief lines", () => {
       "English",
     ]);
     expect(brief(card()).lines).toBeUndefined();
+  });
+});
+
+describe("editEvent", () => {
+  const before = { aCard: "hond", bCard: "dog", note: "een dier" };
+
+  it("marks where the edit came from, and only when asked", () => {
+    expect(editEvent(before, { ...before, bCard: "the dog" }, "mcp")?.via).toBe(
+      "mcp",
+    );
+    expect(
+      editEvent(before, { ...before, bCard: "the dog" }),
+    ).not.toHaveProperty("via");
+  });
+
+  it("reaches the history as an edit naming its fields", () => {
+    const ev = editEvent(before, { ...before, note: "groot dier" }, "mcp")!;
+    const [out] = events([card({ log: { e1: ev } })]);
+    expect(out.kind).toBe("edit");
+    expect(out.fields).toEqual(["note"]);
+    expect(out.via).toBe("mcp");
   });
 });
