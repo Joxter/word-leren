@@ -5,6 +5,8 @@ import {
   newPool,
   dueSoon,
   formatGap,
+  previewIntervals,
+  Rating,
   type SrsState,
 } from "./srs";
 
@@ -84,6 +86,65 @@ describe("formatGap", () => {
     expect(formatGap(8 * 864e5)).toBe("8 дн");
     expect(formatGap(60 * 864e5)).toBe("2.0 мес");
     expect(formatGap(400 * 864e5)).toBe("1.1 г");
+  });
+});
+
+describe("previewIntervals", () => {
+  // A mature card: 11 days of stability, easily recalled so far.
+  const mature = {
+    id: "mature",
+    srs: {
+      ...state(now),
+      stability: 10.97,
+      difficulty: 2.1,
+      scheduled_days: 12,
+      reps: 3,
+    },
+  };
+
+  it("spells out what a rating costs past its learning step", () => {
+    const p = previewIntervals(mature, now);
+    // Again only schedules a 10-minute relearning step, so on its own it
+    // reads cheaper than Hard. The arrow is what makes the two comparable.
+    expect(p[Rating.Again]).toMatch(/^10 мин → /);
+    expect(p[Rating.Again]).not.toBe(p[Rating.Hard]);
+    // A rating that lands straight in review is its own whole answer.
+    for (const r of [Rating.Hard, Rating.Good, Rating.Easy]) {
+      expect(p[r]).not.toContain("→");
+    }
+  });
+
+  // The buttons are compared across units — "1 дн" against "1.7 мес" — so the
+  // unit has to come back out of the string along with the number.
+  const UNIT: Record<string, number> = {
+    мин: 1 / 1440,
+    ч: 1 / 24,
+    дн: 1,
+    мес: 30.4,
+    г: 365,
+  };
+  const days = (gap: string) => {
+    const last = gap.split("\u2192").pop()!.trim();
+    const [, n, unit] = last.match(/([\d.]+) (\S+)/)!;
+    return Number(n) * UNIT[unit];
+  };
+
+  it("costs Again more than a pass, once the step is paid", () => {
+    const older = {
+      ...mature,
+      srs: { ...mature.srs, stability: 60, elapsed_days: 12 },
+    };
+    for (const card of [mature, older]) {
+      const p = previewIntervals(card, now);
+      expect(days(p[Rating.Again])).toBeLessThan(days(p[Rating.Good]));
+    }
+  });
+
+  it("prints a gap that reads back as a number of days", () => {
+    const p = previewIntervals(mature, now);
+    for (const r of [Rating.Again, Rating.Hard, Rating.Good, Rating.Easy]) {
+      expect(days(p[r])).toBeGreaterThan(0);
+    }
   });
 });
 

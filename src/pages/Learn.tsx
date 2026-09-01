@@ -358,6 +358,51 @@ const depthBtn = css`
   }
 `;
 
+// Training wheels under the rating buttons: what each grade means, so the
+// choice comes from how the recall felt rather than from the day counts.
+// Delete this block, `ratingGuide`, `guideKey` and `guideNote` once the four
+// buttons are second nature.
+const ratingGuide = css`
+  margin-top: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: #777;
+`;
+
+const guideKey = css`
+  font-weight: 700;
+  color: #444;
+`;
+
+// The intervals, kept below the guide rather than on the buttons: they are the
+// scheduler's opinion about this card, and having them under the thumb is what
+// turned answering into picking a date. Outlives the training wheels above.
+const intervalRow = css`
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #ececec;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.7rem;
+  font-size: 0.72rem;
+  color: #aaa;
+`;
+
+const intervalKey = css`
+  font-weight: 600;
+  color: #888;
+`;
+
+const guideNote = css`
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #ececec;
+  color: #999;
+`;
+
 const statsRow = css`
   display: flex;
   align-items: center;
@@ -446,13 +491,6 @@ const doneTitle = css`
 const doneLine = css`
   font-size: 0.9rem;
   color: #555;
-`;
-
-// The interval each button would schedule, printed under its label.
-const btnHint = css`
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: #888;
 `;
 
 const editBtn = css`
@@ -1080,8 +1118,29 @@ export default function Learn() {
                 onClick={() => handleRate(r.rating)}
               >
                 {r.label}
-                <span className={btnHint}>{intervals[r.rating]}</span>
               </button>
+            ))}
+          </div>
+          {/* Training wheels — see `ratingGuide`. */}
+          <div className={ratingGuide}>
+            {RATINGS.map((r) => (
+              <div key={r.rating}>
+                <span className={guideKey}>{r.label}</span> — {r.hint}
+              </div>
+            ))}
+            <div className={guideNote}>
+              Отвечай по тому, как далось воспоминание. Сроки внизу — вывод
+              алгоритма об этой карточке, и выбирая по ним, ты возвращаешь ему
+              его же догадку. Числа через стрелку («10 мин → 1 дн») значат
+              «короткий шаг сегодня, а после него — столько».
+            </div>
+          </div>
+          <div className={intervalRow}>
+            {RATINGS.map((r) => (
+              <span key={r.rating}>
+                <span className={intervalKey}>{r.label}</span>{" "}
+                {intervals[r.rating]}
+              </span>
             ))}
           </div>
           {st.seen > 0 && (

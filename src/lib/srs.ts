@@ -30,10 +30,26 @@ const scheduler = fsrs({
 export { Rating, State };
 
 export const RATINGS = [
-  { rating: Rating.Again, label: "Again" },
-  { rating: Rating.Hard, label: "Hard" },
-  { rating: Rating.Good, label: "Good" },
-  { rating: Rating.Easy, label: "Easy" },
+  {
+    rating: Rating.Again,
+    label: "Again",
+    hint: "Не вспомнил, подсмотрел, вспомнил не то. Не жалей её: сброс дешевле выученной ошибки.",
+  },
+  {
+    rating: Rating.Hard,
+    label: "Hard",
+    hint: "Вспомнил верно, но с усилием и паузой. Редкая кнопка: срок почти как у Good, а сложность растёт навсегда.",
+  },
+  {
+    rating: Rating.Good,
+    label: "Good",
+    hint: "Вспомнил. Обычный ответ, сюда попадает большинство.",
+  },
+  {
+    rating: Rating.Easy,
+    label: "Easy",
+    hint: "Узнал сразу, спрашивать было незачем.",
+  },
 ] as const;
 
 /** The `ts-fsrs` Card as it is stored: dates flattened to unix ms. */
@@ -216,7 +232,39 @@ export async function markKnown(
   );
 }
 
-/** Human-readable "when will I see this again", for the rating buttons. */
+/**
+ * What waits on the other side of the learning steps: the card walked through
+ * whatever steps it has left, passing each one. Zero when the rating already
+ * put the card in review and its own number is the whole answer.
+ */
+function settle(next: FsrsCard, cardId: string): number {
+  const stepping = (c: FsrsCard) =>
+    c.state === State.Learning || c.state === State.Relearning;
+  if (!stepping(next)) return 0;
+  let c = next;
+  // Steps are few and short; the cap only guards against a configuration that
+  // would never graduate.
+  for (let i = 0; i < 5 && stepping(c); i++) {
+    const at = +c.due;
+    c = scheduler.next(
+      { ...c, id: cardId } as unknown as CardInput,
+      at,
+      Rating.Good,
+    ).card;
+  }
+  return +c.due - +next.due;
+}
+
+/**
+ * Human-readable "when will I see this again", for the rating buttons.
+ *
+ * A rating that leaves the card in its learning steps answers that question
+ * twice, and only the second answer is comparable to the other buttons: Again
+ * on a mature card reads "10 мин" next to Good's "15 дн", which makes the one
+ * rating that wipes 15 days of stability look like the cheap option. So a
+ * button that only schedules a step prints the step *and* the interval behind
+ * it — "10 мин → 1 д" against Good's "15 дн" is the real comparison.
+ */
 export function previewIntervals(
   card: StudyCard,
   now = Date.now(),
@@ -225,7 +273,10 @@ export function previewIntervals(
   const out: Record<number, string> = {};
   for (const { rating } of RATINGS) {
     const { card: next } = scheduler.next(input, now, rating);
-    out[rating] = formatGap(+next.due - now);
+    const rest = settle(next, card.id);
+    out[rating] = rest
+      ? `${formatGap(+next.due - now)} → ${formatGap(rest)}`
+      : formatGap(+next.due - now);
   }
   return out;
 }

@@ -80,6 +80,13 @@ and the app loads every card into memory anyway. The queue is just `due <= now`.
   200 cards marked known all landed on day 8. Seeded per card they spread over 6-10.
 - Learn runs a 30s ticker: learning-step cards fall due in minutes, and nothing else
   would re-render when they do.
+- **The rating buttons print two numbers when one isn't comparable.** `Again` on a
+  mature card only schedules a 10-minute relearning step, so next to `Good`'s "15 дн"
+  it reads like the cheap option while actually wiping the card's stability. Any
+  rating that lands in a learning step shows the step *and* what follows it
+  (`10 мин → 1 дн`) — that's `settle()` in `srs.ts`, walking the remaining steps on
+  `Good`. Two buttons can still print the same day count: below ~1.5 days of
+  stability every grade floors to one day, and the difference lives in S/D instead.
 - `scripts/reset-srs.mjs` wipes scheduling state without touching `queues` or `log`.
 
 The **manual queue is dormant, not deleted**: ranks (`fractional-indexing`, mutations in
