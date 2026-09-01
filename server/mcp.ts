@@ -169,6 +169,7 @@ function buildServer(): McpServer {
 
       return ok({
         ...brief(card),
+        note: card.note || undefined,
         examples: (card.exampleLinks ?? []).map((l) => ({
           text: l.example?.aText,
           translation: l.example?.bText || undefined,
@@ -205,7 +206,11 @@ function buildServer(): McpServer {
       annotations: { readOnlyHint: true },
     },
     async ({ days = 14, limit = 200 }) => {
-      const since = Date.now() - days * 864e5;
+      // Whole calendar days, not a rolling window: `days: 1` means today, and
+      // the oldest bucket in `byDay` is a full day rather than a silently
+      // truncated one.
+      const midnight = new Date().setHours(0, 0, 0, 0);
+      const since = midnight - (days - 1) * 864e5;
       const [cards, lines] = await Promise.all([fetchCards(), fetchLines()]);
       const all = events(cards, lines).filter((e) => e.at >= since);
 

@@ -39,16 +39,6 @@ set -euo pipefail
   # There is no database here and no migration step — the data lives in
   # InstantDB, and this server only reads it. A deploy is just a new image.
 
-  # Our images are tagged by sha, so the previous one keeps its tag and is never
-  # "dangling" — `image prune` would walk right past it and every deploy would
-  # leave its predecessor on disk for good.
-  docker images --format '{{.Repository}}:{{.Tag}}' \
-    | grep '^ghcr\.io/joxter/word-leren/' \
-    | grep -v ":$SHA\$" \
-    | xargs -r docker rmi -f > /dev/null 2>&1 || true
-
-  docker image prune -f
-
   echo
   echo -n "Проверка: "
   # The server resolves the owner against InstantDB before it starts listening,
@@ -57,12 +47,33 @@ set -euo pipefail
   for i in $(seq 30); do
     if curl -fsS --max-time 2 http://127.0.0.1:8787/health > /dev/null 2>&1; then
       echo "health ok"
-      exit 0
+      HEALTHY=1
+      break
     fi
     sleep 1
   done
-  echo "не отвечает за 30с"
-  $COMPOSE logs --tail 20 mcp
-  exit 1
+
+  if [ -z "${HEALTHY:-}" ]; then
+    echo "не отвечает за 30с"
+    $COMPOSE logs --tail 20 mcp
+    echo
+    echo "Предыдущий образ ещё на диске — откат:"
+    docker images --format '{{.Repository}}:{{.Tag}}' \
+      | grep '^ghcr\.io/joxter/word-leren/' | grep -v ":$SHA\$" | head -1
+    echo "  IMAGE_TAG=<тег выше> $COMPOSE up -d mcp"
+    exit 1
+  fi
+
+  # Only once the new container answers. Images are tagged by sha, so the
+  # previous one keeps its tag and is never "dangling" — `image prune` would
+  # walk right past it and every deploy would leave its predecessor for good.
+  # Deleting it before the health check left a failed deploy with nothing to
+  # roll back to.
+  docker images --format '{{.Repository}}:{{.Tag}}' \
+    | grep '^ghcr\.io/joxter/word-leren/' \
+    | grep -v ":$SHA\$" \
+    | xargs -r docker rmi -f > /dev/null 2>&1 || true
+
+  docker image prune -f
 
 }

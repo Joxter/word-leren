@@ -41,7 +41,6 @@ export interface Brief {
   id: string;
   a: string;
   b: string;
-  note?: string;
   state: string;
   due?: string;
   reps?: number;
@@ -51,13 +50,14 @@ export interface Brief {
 }
 
 /** What a list returns: enough to decide on a card, not the whole row. Notes
- *  can run to a screenful of dictionary markup, so they stay out of lists. */
+ *  stay out: they hold a screenful of dictionary markup each, and 500 of them
+ *  came to 215 KB — a list is for choosing which card to open, and `get_card`
+ *  is what opens it. */
 export function brief(c: DeckCard): Brief {
   return {
     id: c.id,
     a: c.aCard,
     b: c.bCard,
-    note: c.note || undefined,
     state: c.srs ? (STATE[c.srs.state] ?? `state ${c.srs.state}`) : "Unstudied",
     due: c.srs ? new Date(c.srs.due).toISOString() : undefined,
     reps: c.srs?.reps,

@@ -26,6 +26,15 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm test
+      # `tsconfig.json` покрывает только src, поэтому про server/ не знает
+      # ни tsc, ни vite — синтаксическая ошибка там доезжала до ghcr, а
+      # update.sh подменял контейнер за 15 строк до проверки health.
+      - run: node --check server/mcp.ts
+      # Node стрипает типы без анализа: импорт, использованный только как тип,
+      # остаётся настоящим импортом и падает в рантайме. Ни tsc, ни --check
+      # этого не видят — ловится только настоящей загрузкой модулей, которые
+      # сервер тянет из src/.
+      - run: node --input-type=module -e 'await import("./src/lib/deck.ts"); await import("./src/lib/search.ts")'
 
   publish:
     # Publishing an image that fails its own tests just moves the breakage to

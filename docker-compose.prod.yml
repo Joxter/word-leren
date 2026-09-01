@@ -7,6 +7,12 @@ services:
     # VITE_INSTANT_APP_ID, INSTANT_APP_ADMIN_TOKEN, OWNER_EMAIL, MCP_SECRET.
     # chmod 600 — the admin token bypasses every permission rule in the app.
     env_file: .env
+    environment:
+      # `byDay` в review_history режет историю по календарным дням процесса.
+      # Без этого контейнер считает по UTC, и всё, что училось после полуночи
+      # по Амстердаму, уезжает во вчера — а «вчера» тут значит вчера для того,
+      # кто учил.
+      TZ: Europe/Amsterdam
     # Published to loopback only; nginx terminates TLS and proxies here. The
     # box is shared with other people's services, so nothing binds 0.0.0.0.
     ports:

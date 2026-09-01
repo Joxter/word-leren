@@ -92,3 +92,11 @@ describe("byDay", () => {
     expect(out["2026-08-31"]).toEqual({ "rate:Good": 2, introduce: 1 });
   });
 });
+
+describe("brief keeps lists small", () => {
+  it("leaves the note out — it belongs to get_card", () => {
+    // Notes carry whole dictionary entries; 500 of them made a 215 KB reply.
+    const b = brief(card({ note: "x".repeat(5000) }));
+    expect(JSON.stringify(b)).not.toContain("xxx");
+  });
+});
