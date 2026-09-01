@@ -30,3 +30,15 @@ export function ownedPath(path: string): string {
 export function mine(): { "owner.id": string } {
   return { "owner.id": ownerId() };
 }
+
+/**
+ * `mine()` plus "not thrown away" — the where clause every card list wants.
+ * Deleting a card only stamps `deletedAt` (see `deleteCard`), so a query that
+ * forgets this filter shows the deleted ones back.
+ */
+export function myCards(): {
+  "owner.id": string;
+  deletedAt: { $isNull: true };
+} {
+  return { ...mine(), deletedAt: { $isNull: true } };
+}

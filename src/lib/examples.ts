@@ -52,6 +52,8 @@ export interface LinkedCard {
   bLang: string;
   aCard: string;
   bCard: string;
+  /** Set once the card is thrown away — see `liveLinks`. */
+  deletedAt?: number | null;
 }
 
 export interface ExampleLink {
@@ -60,6 +62,22 @@ export interface ExampleLink {
   createdAt: number;
   card?: LinkedCard;
   example?: Example;
+}
+
+/**
+ * An example's links, minus the ones pointing at a thrown-away card. Deleting a
+ * card is a `deletedAt` stamp (`deleteCard` in lib/cards.ts) and the join row
+ * survives it, so without this the card goes on labelling its sentences, and
+ * `where` can't help — a nested link isn't filterable in the query. Links with
+ * no card at all are left in: the callers that mind already check.
+ *
+ * Not applied on the write paths (`saveExampleOps` re-anchors every link,
+ * deleted or not) — a restored card should find its blanks where it left them.
+ */
+export function liveLinks(
+  example?: { links?: ExampleLink[] } | null,
+): ExampleLink[] {
+  return (example?.links ?? []).filter((l) => !l.card?.deletedAt);
 }
 
 export function emptyExample(aLang = "NL", bLang = "EN"): ExampleData {

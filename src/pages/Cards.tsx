@@ -21,7 +21,7 @@ import {
 import type { CardLog } from "../lib/queue";
 import { saveCard, deleteCard, trimCardText } from "../lib/cards";
 import { useLines, useActiveLine } from "../lib/lines";
-import { mine, ownedPath, ownerId } from "../lib/session";
+import { myCards, ownedPath, ownerId } from "../lib/session";
 import LineCheckboxes from "../components/LineCheckboxes";
 
 export type Lang = "EN" | "RU" | "NL";
@@ -599,7 +599,7 @@ export default function Cards() {
   const { data, isLoading } = db.useQuery({
     cards: {
       image: {},
-      $: { where: mine(), limit: 5000, order: { serverCreatedAt: "desc" } },
+      $: { where: myCards(), limit: 5000, order: { serverCreatedAt: "desc" } },
     },
   });
 
@@ -708,7 +708,7 @@ export default function Cards() {
     imageFile: File | null,
     removeImageId: string | null,
   ): Promise<void> {
-    await saveCard(modalCard!.id, formData, imageFile, removeImageId);
+    await saveCard(modalCard!, formData, imageFile, removeImageId);
     setModalCard(null);
   }
 

@@ -1,6 +1,7 @@
 import { id } from "@instantdb/react";
 import { generateKeyBetween, generateNKeysBetween } from "fractional-indexing";
 import { db } from "../db";
+import { myCards } from "./session";
 
 // A learning line is an ordered list of cards. Each card stores one fractional
 // `rank` string per line it belongs to, under `card.queues[lineId]`. Sorting
@@ -78,9 +79,28 @@ export type LogEntry = {
   dAfter?: number;
   /** "session" = from the queue, "field" = met in the wild, "manual" = state edited by hand. */
   source?: "session" | "field" | "manual";
+  /** Card text edit (kind "edit"): which of aCard/bCard/note changed... */
+  fields?: string[];
+  /** ...and what the short ones used to say. The old note is not kept: it holds
+   *  a whole dictionary entry, and every page loads every card's log. */
+  prev?: { aCard?: string; bCard?: string };
 };
 
 export type CardLog = { [eventId: string]: LogEntry };
+
+/**
+ * One log event, keyed by its own id so several writers can `merge` into the
+ * same `log` without clobbering each other. `lineId` is "" for events that
+ * happen outside any line (an edit, a delete).
+ */
+export function logEntry(
+  lineId: string,
+  kind: string,
+  amount: number,
+  extra: Record<string, unknown> = {},
+): CardLog {
+  return { [id()]: { at: Date.now(), lineId, kind, amount, ...extra } };
+}
 
 export interface ReviewStats {
   /** How many times the card was reviewed (a Depth button was pressed). */
@@ -329,7 +349,9 @@ export async function enqueueTop(
   lineId: string,
   cardId: string,
 ): Promise<void> {
-  const res = await db.queryOnce({ cards: {} });
+  // Deleted cards keep their rank, so they have to be kept out here too —
+  // otherwise a thrown-away card still takes up a slot near the top.
+  const res = await db.queryOnce({ cards: { $: { where: myCards() } } });
   const cards = (res.data?.cards ?? []) as (QueuedCard & { log?: CardLog })[];
   const members = sortLine(cards, lineId).filter((c) => c.id !== cardId);
   const { rank, position } = topInsertRank(members, lineId);

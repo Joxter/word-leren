@@ -13,7 +13,7 @@ import {
 } from "./dictionary";
 import type { LinkedCard } from "./examples";
 import { getDefaultLineId } from "./lines";
-import { enqueueTop } from "./queue";
+import { enqueueTop, logEntry, type CardLog } from "./queue";
 import { ownedPath, ownerId } from "./session";
 import type { CardData } from "../pages/Cards";
 
@@ -48,17 +48,53 @@ export function trimCardText<T extends CardText>(data: T): T {
 }
 
 /**
+ * An `edit` log event for the text fields that actually changed, or null when
+ * nothing did (an image-only save, or a Save on an untouched form — the modal
+ * has no dirty tracking, so most saves come through here unchanged).
+ *
+ * The old `aCard`/`bCard` are kept verbatim; the old note is not. A note holds
+ * a whole dictionary entry, and every page loads every card with its log — a
+ * copy per edit would grow the row nobody asked to grow. `fields` still says
+ * the note changed and when.
+ */
+export function editEntry(
+  before: Partial<CardText>,
+  after: CardText,
+): CardLog | null {
+  const fields = (["aCard", "bCard", "note"] as const).filter(
+    (f) => (before[f] ?? "") !== after[f],
+  );
+  if (fields.length === 0) return null;
+  return logEntry("", "edit", fields.length, {
+    fields,
+    prev: {
+      ...(fields.includes("aCard") ? { aCard: before.aCard ?? "" } : {}),
+      ...(fields.includes("bCard") ? { bCard: before.bCard ?? "" } : {}),
+    },
+  });
+}
+
+/**
  * Save an edited card. `imageFile` uploads and links a new image; the caller
  * passes `removeImageId` (the card's current image id) when the old image
  * should be unlinked and deleted, either because it was removed or replaced.
+ *
+ * The card comes in whole, not as an id, so the text it used to hold can go
+ * into the log alongside the new one.
  */
 export async function saveCard(
-  cardId: string,
+  card: { id: string } & Partial<CardText>,
   formData: CardData,
   imageFile: File | null,
   removeImageId: string | null,
 ): Promise<void> {
-  const ops: TxOp[] = [db.tx.cards[cardId].update(trimCardText(formData))];
+  const cardId = card.id;
+  const text = trimCardText(formData);
+  const edit = editEntry(card, text);
+  const ops: TxOp[] = [db.tx.cards[cardId].update(text)];
+  // `merge`, not `update` — the log is one JSON blob and an update would
+  // replace the whole history with this single event.
+  if (edit) ops.push(db.tx.cards[cardId].merge({ log: edit }));
   if (removeImageId) {
     ops.push(db.tx.cards[cardId].unlink({ image: removeImageId }));
     ops.push(db.tx.$files[removeImageId].delete());
@@ -76,8 +112,28 @@ export async function saveCard(
   await db.transact(ops);
 }
 
+/**
+ * Throw a card away: stamp `deletedAt` and log it. The row stays whole — its
+ * srs state, its log, its line ranks — so `restoreCard` is the only thing
+ * needed to bring it back. Reads keep deleted cards out by filtering on
+ * `deletedAt` (`myCards()` in lib/session.ts).
+ */
 export function deleteCard(cardId: string): Promise<unknown> {
-  return db.transact(db.tx.cards[cardId].delete());
+  return db.transact([
+    // Two ops on purpose: `deletedAt` is a plain attribute (update), the log is
+    // one JSON blob every writer merges into.
+    db.tx.cards[cardId].update({ deletedAt: Date.now() }),
+    db.tx.cards[cardId].merge({ log: logEntry("", "delete", 0) }),
+  ]);
+}
+
+/** Undo a `deleteCard`. No screen calls this yet — it is for the console and
+ *  for whatever un-delete list gets built. */
+export function restoreCard(cardId: string): Promise<unknown> {
+  return db.transact([
+    db.tx.cards[cardId].update({ deletedAt: null }),
+    db.tx.cards[cardId].merge({ log: logEntry("", "restore", 0) }),
+  ]);
 }
 
 /**

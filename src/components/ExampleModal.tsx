@@ -6,6 +6,7 @@ import {
   anchorSpans,
   deleteExample,
   emptyExample,
+  liveLinks,
   saveExampleWithLinks,
   toExampleData,
   type Example,
@@ -341,7 +342,7 @@ export default function ExampleModal({
       : emptyExample(card?.aLang ?? "NL", card?.bLang ?? "EN"),
   );
   const [links, setLinks] = useState<PendingLink[]>(() => {
-    const existing: PendingLink[] = (example?.links ?? [])
+    const existing: PendingLink[] = liveLinks(example)
       .filter((l) => l.card)
       .map((l) => ({
         id: l.id,

@@ -45,6 +45,11 @@ const _schema = i.schema({
       stability: i.number().optional(),
       difficulty: i.number().optional(),
       lastReviewedAt: i.number().optional(),
+      // Soft delete: when the card was thrown away. The row, its log and its
+      // line ranks all stay — every read filters on `deletedAt` being null
+      // (`myCards()` in lib/session.ts), so a delete is one field away from
+      // being undone.
+      deletedAt: i.number().optional().indexed(),
       // Append-only history of place/move actions, keyed by event id so entries
       // can be merged in without clobbering each other.
       log: i

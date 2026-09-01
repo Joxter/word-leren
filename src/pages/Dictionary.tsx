@@ -17,11 +17,11 @@ import {
   type DictEntry,
 } from "../lib/dictionary";
 import { rankMatches } from "../lib/search";
-import type { Example } from "../lib/examples";
+import { liveLinks, type Example } from "../lib/examples";
 import CardModal from "../components/CardModal";
 import PlayButton from "../components/PlayButton";
 import { createCardFromEntry, saveCard, deleteCard } from "../lib/cards";
-import { mine } from "../lib/session";
+import { mine, myCards } from "../lib/session";
 import type { Card, CardData } from "./Cards";
 
 /** A card as loaded here — the queue helpers also want its `log`. */
@@ -40,7 +40,7 @@ function searchCards(cards: CardWithLog[], rawQuery: string): CardWithLog[] {
 
 /** The words an example is attached to, for both its search text and its row. */
 function exampleCards(example: Example): string[] {
-  return (example.links ?? []).flatMap((l) => (l.card ? [l.card.aCard] : []));
+  return liveLinks(example).flatMap((l) => (l.card ? [l.card.aCard] : []));
 }
 
 /** Search shared example sentences: the Dutch, then the translation, then the
@@ -890,7 +890,7 @@ export default function Dictionary() {
   const lineId = lines[0]?.id ?? null;
 
   const { data: cardsData } = db.useQuery({
-    cards: { image: {}, $: { where: mine() } },
+    cards: { image: {}, $: { where: myCards() } },
     examples: { links: { card: {} }, $: { where: mine(), limit: 2000 } },
   });
   const allCards = useMemo(
@@ -931,7 +931,7 @@ export default function Dictionary() {
     imageFile: File | null,
     removeImageId: string | null,
   ): Promise<void> {
-    await saveCard(modalCard!.id, formData, imageFile, removeImageId);
+    await saveCard(modalCard!, formData, imageFile, removeImageId);
     setModalCard(null);
   }
 

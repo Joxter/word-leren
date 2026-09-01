@@ -1,4 +1,3 @@
-import { id } from "@instantdb/react";
 import {
   fsrs,
   Rating,
@@ -11,6 +10,7 @@ import {
   type Grade,
 } from "ts-fsrs";
 import { db } from "../db";
+import { logEntry } from "./queue";
 
 // Classic day-based spaced repetition on top of FSRS. A card carries the
 // library's own Card state in `card.srs` (dates as unix ms) and the queue is
@@ -135,15 +135,6 @@ export function dueSoon(
     (c) =>
       inLine(c, lineId) && c.srs && c.srs.due > now && c.srs.due <= now + 864e5,
   ).length;
-}
-
-function logEntry(
-  lineId: string,
-  kind: string,
-  amount: number,
-  extra: Record<string, unknown> = {},
-) {
-  return { [id()]: { at: Date.now(), lineId, kind, amount, ...extra } };
 }
 
 /**

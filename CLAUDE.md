@@ -38,11 +38,15 @@ Every entity carries an `owner` link to `$users` and the perms allow only your o
 - `ownerId()` is a module singleton, not a hook — `AuthGate` sets it during render so the
   plain mutation helpers in `lib/` can reach it without threading a param through every page.
 - Queries pass `$: { where: mine() }`. The perms already hide other users' rows, but `limit`
-  counts rows *before* the rules reject them, so an unfiltered `limit` silently under-fetches.
+  counts rows _before_ the rules reject them, so an unfiltered `limit` silently under-fetches.
 - `$files` can't use the owner link for `create` (an upload precedes any transaction), so
   uploads go to `ownedPath(...)` → `<userId>/…` and the create rule checks that prefix.
 - Anything not listed in `instant.perms.ts` is denied by `$default` — a new entity needs a
   rule added there or it will look broken rather than error.
+
+Card reads go through `myCards()` instead of `mine()` — same owner filter plus
+`deletedAt: { $isNull: true }`, because deleting a card only stamps that field
+(see below). A card query that reuses plain `mine()` shows deleted cards back.
 
 `scripts/migrate-owner.mjs` links pre-auth rows to one account. It is idempotent, so it also
 works as a repair tool if a write path ever forgets the owner.
@@ -55,6 +59,31 @@ works as a repair tool if a write path ever forgets the owner.
 gender tags are noisier than the hand-made decks (it calls "het casino" a de-word).
 Wiktionary is case-sensitive where `lemmaKey` is not, so `buildKaikki` prefers the
 spelling the dictionary already uses — otherwise `Chili` inherits `chili` the pepper.
+
+## Deleting and editing cards
+
+Deletion is soft: `deleteCard` stamps `cards.deletedAt` and logs a `delete`
+event; nothing is removed. The card keeps its `srs`, its `log` and its ranks in
+`queues`, so `restoreCard` is the whole way back — no screen calls it yet, it is
+for the console. Nothing purges old rows either; if the deck ever needs it, a
+script over `deletedAt` is the place.
+
+- Reads filter with `myCards()`. Two exceptions: `CardExamples` fetches a card
+  by id (it is the card open in the editor), and cards reached *through* a
+  nested link — `examples: { links: { card: {} } }` — can't be filtered in the
+  query at all. Those go through `liveLinks` (lib/examples.ts) instead, which
+  drops an attachment whose card is deleted. The write paths don't call it: a
+  restored card should find its blanks where it left them.
+- The perms **deny** `delete` on `cards`: a stray `.delete()` from the browser
+  now fails instead of taking a card's history with it. A real purge runs from
+  `scripts/` on the admin token, which goes around the rules.
+- `saveCard` takes the **card**, not its id, so it can diff the text it used to
+  hold and append an `edit` event (`editEntry` in `lib/cards.ts`). The event
+  names the changed fields and keeps the old `aCard`/`bCard`; the old **note is
+  not kept** — it holds a whole dictionary entry and every page loads every
+  card's log, so copies per edit would grow the row for nothing.
+- Log writes are `merge`, never `update`: `log` is one JSON blob and an update
+  replaces the entire history with the single new event.
 
 ## Examples
 
@@ -75,7 +104,7 @@ and the app loads every card into memory anyway. The queue is just `due <= now`.
   which puts it in the Deck page's pool. From there you either mark it known (rated
   `Easy` on sight, ~a week out, skipping the learning steps) or take it in to learn.
 - **The fuzz seed is tied to the card id** (`GenSeedStrategyWithCardId`). With the
-  default seed the randomness comes from card *state*, so a batch graded identically on
+  default seed the randomness comes from card _state_, so a batch graded identically on
   one day gets an identical "random" interval and travels the deck as one clump —
   200 cards marked known all landed on day 8. Seeded per card they spread over 6-10.
 - Learn runs a 30s ticker: learning-step cards fall due in minutes, and nothing else
@@ -83,7 +112,7 @@ and the app loads every card into memory anyway. The queue is just `due <= now`.
 - **The rating buttons print two numbers when one isn't comparable.** `Again` on a
   mature card only schedules a 10-minute relearning step, so next to `Good`'s "15 дн"
   it reads like the cheap option while actually wiping the card's stability. Any
-  rating that lands in a learning step shows the step *and* what follows it
+  rating that lands in a learning step shows the step _and_ what follows it
   (`10 мин → 1 дн`) — that's `settle()` in `srs.ts`, walking the remaining steps on
   `Good`. Two buttons can still print the same day count: below ~1.5 days of
   stability every grade floors to one day, and the difference lives in S/D instead.

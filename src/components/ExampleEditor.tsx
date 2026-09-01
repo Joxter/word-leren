@@ -5,6 +5,7 @@ import { db } from "../db";
 import {
   anchorSpans,
   createExampleLink,
+  liveLinks,
   deleteExample,
   exampleUpdateOps,
   saveLinkSpans,
@@ -18,7 +19,7 @@ import {
 import { deleteCard, saveCard } from "../lib/cards";
 import { useActiveLine, useLinePositions, useLines } from "../lib/lines";
 import { moveToTop, sortLine, type CardLog } from "../lib/queue";
-import { mine } from "../lib/session";
+import { myCards } from "../lib/session";
 import type { Card, CardData } from "../pages/Cards";
 import CardModal from "./CardModal";
 import CardPicker from "./CardPicker";
@@ -302,7 +303,7 @@ export default function ExampleEditor({ example, onDeleted }: Props) {
   // the line off it, and Edit opens the card itself — one subscription for all
   // three rather than one each.
   const { data } = db.useQuery({
-    cards: { image: {}, $: { where: mine(), limit: 5000 } },
+    cards: { image: {}, $: { where: myCards(), limit: 5000 } },
   });
   const cards = useMemo(
     () => (data?.cards ?? []) as (Card & { log?: CardLog })[],
@@ -319,7 +320,7 @@ export default function ExampleEditor({ example, onDeleted }: Props) {
     [cards, activeLine],
   );
 
-  const links = (example.links ?? []).filter(
+  const links = liveLinks(example).filter(
     (l): l is ExampleLink & { card: NonNullable<ExampleLink["card"]> } =>
       !!l.card,
   );
@@ -390,7 +391,7 @@ export default function ExampleEditor({ example, onDeleted }: Props) {
     imageFile: File | null,
     removeImageId: string | null,
   ): Promise<void> {
-    await saveCard(modalCard!.id, formData, imageFile, removeImageId);
+    await saveCard(modalCard!, formData, imageFile, removeImageId);
     setModalCard(null);
   }
 

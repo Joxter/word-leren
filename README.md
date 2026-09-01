@@ -40,6 +40,13 @@ Cards page; only the lines themselves are managed here.
 
 Bilingual flashcards for three language pairs: NL↔EN, NL↔RU, and EN↔RU. Cards support optional images (paste from clipboard or upload) and an optional side-A audio clip (a path under `public/`, e.g. a dictionary pronunciation); a play button appears wherever the side-A word is shown — the create/edit forms, the card list, the line, and during review. Text fields accept Markdoc (markdown) syntax. New cards are added to the top of every line checked in the create form.
 
+Deleting a card is soft: the row is stamped `deletedAt` and disappears from every
+list, keeping its scheduling state, its history and its place in the lines, so
+bringing it back is one field away (`restoreCard` in `src/lib/cards.ts` — there is
+no screen for it yet). Edits to a card's text are recorded in the same history as
+reviews: an `edit` event names which of the two sides or the note changed, and
+keeps the previous text of the sides.
+
 ### Search
 
 Every box that looks something up — the dictionary, the card list, and the pickers that

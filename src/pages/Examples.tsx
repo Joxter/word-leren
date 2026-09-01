@@ -4,7 +4,7 @@ import { db } from "../db";
 import ExampleEditor from "../components/ExampleEditor";
 import ExampleText from "../components/ExampleText";
 import { Textarea } from "../components/Textarea";
-import { createExample, type Example } from "../lib/examples";
+import { createExample, liveLinks, type Example } from "../lib/examples";
 import { mine } from "../lib/session";
 
 const A_LANGS = ["NL", "EN"] as const;
@@ -310,7 +310,7 @@ const placeholder = css`
 
 /** Attached to nothing, or attached with no fragments picked yet. */
 function needsWork(e: Example): boolean {
-  const links = e.links ?? [];
+  const links = liveLinks(e);
   return links.length === 0 || links.some((l) => !l.spans?.length);
 }
 
@@ -348,7 +348,7 @@ export default function Examples() {
       return (
         e.aText.toLowerCase().includes(q) ||
         (e.bText ?? "").toLowerCase().includes(q) ||
-        (e.links ?? []).some(
+        liveLinks(e).some(
           (l) =>
             l.card?.aCard.toLowerCase().includes(q) ||
             l.card?.bCard.toLowerCase().includes(q),
@@ -482,7 +482,7 @@ export default function Examples() {
               {shown.map((e) => {
                 // Every card's fragments at once — the editor is where they are
                 // split back apart per card.
-                const spans = (e.links ?? []).flatMap((l) => l.spans ?? []);
+                const spans = liveLinks(e).flatMap((l) => l.spans ?? []);
                 const classes = [bodyRow];
                 if (e.id === selectedId) classes.push(bodyRowActive);
                 else if (needsWork(e)) classes.push(bodyRowLoose);

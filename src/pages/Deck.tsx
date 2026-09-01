@@ -2,7 +2,7 @@ import { useState } from "react";
 import { css } from "@linaria/core";
 import { Link } from "wouter";
 import { db } from "../db";
-import { mine } from "../lib/session";
+import { myCards } from "../lib/session";
 import { useLines, useActiveLine } from "../lib/lines";
 import { newPool, introduce, markKnown, type SrsState } from "../lib/srs";
 import LineSelector from "../components/LineSelector";
@@ -207,7 +207,7 @@ export default function Deck() {
   const [activeLine, setActiveLine] = useActiveLine(lines);
 
   const { data, isLoading } = db.useQuery({
-    cards: { $: { where: mine(), limit: 5000 } },
+    cards: { $: { where: myCards(), limit: 5000 } },
   });
 
   const cards = (data?.cards ?? []) as DeckCard[];

@@ -14,7 +14,7 @@ import {
 import type { LinkedCard } from "../lib/examples";
 import { useLinePositions } from "../lib/lines";
 import type { CardQueues } from "../lib/queue";
-import { mine } from "../lib/session";
+import { myCards } from "../lib/session";
 import LinePos from "./LinePos";
 import SearchPicker, { pickerNote, pickerRow } from "./SearchPicker";
 
@@ -91,7 +91,7 @@ interface Props {
  */
 export default function CardPicker({ exclude, cards, onPick }: Props) {
   const { data } = db.useQuery(
-    cards ? null : { cards: { $: { where: mine(), limit: 5000 } } },
+    cards ? null : { cards: { $: { where: myCards(), limit: 5000 } } },
   );
   const all = useMemo(
     () => cards ?? ((data?.cards ?? []) as SearchableCard[]),

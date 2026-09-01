@@ -84,6 +84,8 @@ export interface HistoryEvent {
   line?: string;
   typed?: string;
   dueInDays?: number;
+  /** Card text edit (kind "edit"): which fields changed. */
+  fields?: string[];
 }
 
 /** Kinds written by the retired manual queue (`lib/queue.ts`). The rows stay —
@@ -117,6 +119,7 @@ export function events(
         typed: typeof e.typed === "string" && e.typed ? e.typed : undefined,
         dueInDays:
           typeof e.dueIn === "number" ? +e.dueIn.toFixed(1) : undefined,
+        fields: Array.isArray(e.fields) ? (e.fields as string[]) : undefined,
       });
     }
   }

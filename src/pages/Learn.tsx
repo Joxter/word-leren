@@ -19,7 +19,7 @@ import { showCounter } from "../lib/prefs";
 import { diffTyped } from "../lib/diff";
 import { saveCard, deleteCard } from "../lib/cards";
 import { useLines, useActiveLine } from "../lib/lines";
-import { mine } from "../lib/session";
+import { myCards } from "../lib/session";
 import LineSelector from "../components/LineSelector";
 import CardModal from "../components/CardModal";
 import MarkdocContent from "../components/MarkdocContent";
@@ -609,7 +609,7 @@ export default function Learn() {
     cards: {
       image: {},
       exampleLinks: { example: {} },
-      $: { where: mine(), limit: 5000 },
+      $: { where: myCards(), limit: 5000 },
     },
   });
 
@@ -674,7 +674,7 @@ export default function Learn() {
     imageFile: File | null,
     removeImageId: string | null,
   ): Promise<void> {
-    await saveCard(modalCard!.id, formData, imageFile, removeImageId);
+    await saveCard(modalCard!, formData, imageFile, removeImageId);
     setModalCard(null);
   }
 

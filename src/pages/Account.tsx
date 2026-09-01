@@ -6,7 +6,7 @@
 import { useEffect, useState } from "react";
 import { css } from "@linaria/core";
 import { db } from "../db";
-import { mine } from "../lib/session";
+import { mine, myCards } from "../lib/session";
 import {
   useLines,
   useActiveLine,
@@ -429,7 +429,7 @@ export default function Account() {
   // Everything on this page is a count over the same three collections, so they
   // are fetched once here rather than per section.
   const { data, isLoading } = db.useQuery({
-    cards: { $: { where: mine(), limit: 5000 } },
+    cards: { $: { where: myCards(), limit: 5000 } },
     examples: { $: { where: mine(), limit: 5000 } },
     lightCards: { $: { where: mine(), limit: 5000 } },
   });

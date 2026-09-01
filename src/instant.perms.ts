@@ -44,7 +44,12 @@ const rules = {
       delete: "false",
     },
   },
-  cards: owned,
+  // Deleting a card is a `deletedAt` stamp, not a delete (see `deleteCard` in
+  // lib/cards.ts), so the browser never needs the real thing — and denying it
+  // means a stray `.delete()` fails loudly instead of taking the card's srs
+  // state, history and line ranks with it. Scripts run on the admin token,
+  // which goes around the rules, so a real purge is still possible from there.
+  cards: { allow: { ...owned.allow, delete: "false" } },
   lines: owned,
   examples: owned,
   exampleLinks: owned,

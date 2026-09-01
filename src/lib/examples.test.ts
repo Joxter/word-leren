@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   anchorSpans,
+  liveLinks,
   normalizeSpans,
   pickClozeLink,
   segmentText,
@@ -244,5 +245,32 @@ describe("toggleSpan", () => {
   it("clears every blank a wide range touches", () => {
     const spans = [at(SENTENCE, "sta"), at(SENTENCE, "elke")];
     expect(toggleSpan(spans, 0, SENTENCE.length, SENTENCE)).toEqual([]);
+  });
+});
+
+describe("liveLinks", () => {
+  const card = (id: string, deletedAt?: number) => ({
+    id,
+    aLang: "NL",
+    bLang: "EN",
+    aCard: id,
+    bCard: id,
+    ...(deletedAt ? { deletedAt } : {}),
+  });
+  const link = (id: string, c?: ReturnType<typeof card>) =>
+    ({ id, spans: [], createdAt: 0, card: c }) as ExampleLink;
+
+  it("drops the links whose card was thrown away", () => {
+    const links = [link("a", card("hond")), link("b", card("kat", 1))];
+    expect(liveLinks({ links }).map((l) => l.id)).toEqual(["a"]);
+  });
+
+  it("keeps a link with no card at all — the callers that mind check", () => {
+    expect(liveLinks({ links: [link("a")] })).toHaveLength(1);
+  });
+
+  it("takes an example without links, or none at all", () => {
+    expect(liveLinks({})).toEqual([]);
+    expect(liveLinks(null)).toEqual([]);
   });
 });

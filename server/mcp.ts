@@ -66,7 +66,9 @@ let ownerId = "";
 
 async function fetchCards(): Promise<DeckCard[]> {
   const { cards } = await db.query({
-    cards: { $: { where: { "owner.id": ownerId } } },
+    cards: {
+      $: { where: { "owner.id": ownerId, deletedAt: { $isNull: true } } },
+    },
   });
   return cards as DeckCard[];
 }
@@ -190,7 +192,9 @@ function buildServer(): McpServer {
     async ({ id }) => {
       const { cards } = await db.query({
         cards: {
-          $: { where: { id, "owner.id": ownerId } },
+          $: {
+            where: { id, "owner.id": ownerId, deletedAt: { $isNull: true } },
+          },
           exampleLinks: { example: {} },
         },
       });
