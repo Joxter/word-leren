@@ -188,15 +188,21 @@ export interface QueuedCard {
 /**
  * A card is "fresh" if it hasn't been studied or manually nudged since it was
  * last added to a line or sent back to the top: its latest add event (`top`,
- * or a synthetic `place` with amount <= 1) is no older than its latest review
- * (`place` with amount > 1) or `move`. New cards with no history are fresh;
+ * `create`, or a synthetic `place` with amount <= 1) is no older than its
+ * latest review (`place` with amount > 1) or `move`. New cards with no history are fresh;
  * re-topping a studied card makes it fresh again until it's reviewed.
  */
 export function isFresh(log?: CardLog): boolean {
   let lastAdd = -Infinity;
   let lastStudy = -Infinity;
   for (const e of Object.values(log ?? {})) {
-    if (e.kind === "top" || (e.kind === "place" && e.amount <= 1)) {
+    if (
+      e.kind === "top" ||
+      // The MCP server logs a `create` instead of a `top` — it puts the card in
+      // the line in the same write, and an add is an add.
+      e.kind === "create" ||
+      (e.kind === "place" && e.amount <= 1)
+    ) {
       lastAdd = Math.max(lastAdd, e.at);
     } else {
       lastStudy = Math.max(lastStudy, e.at);

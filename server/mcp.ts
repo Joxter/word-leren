@@ -1,6 +1,6 @@
 /**
- * MCP server over the card deck: what is in it, what happened to it, and — the
- * one write so far — fixing a card's text. Runs on the droplet so Claude can
+ * MCP server over the card deck: what is in it, what happened to it, and the
+ * two writes — fixing a card's text and adding a card. Runs on the droplet so Claude can
  * reach the deck from anywhere; a local stdio server would only exist while the
  * laptop is open. See PLAN-inbox.md for the rest of the write half.
  *
@@ -20,6 +20,7 @@ import { timingSafeEqual } from "node:crypto";
 import { id as newId, init } from "@instantdb/admin";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
+import { generateKeyBetween } from "fractional-indexing";
 import { z } from "zod";
 import { rankMatches } from "../src/lib/search.ts";
 import {
@@ -75,10 +76,14 @@ async function fetchCards(): Promise<DeckCard[]> {
   return cards as DeckCard[];
 }
 
-/** Line ids resolved to names. Two rows, fetched per call. */
+/** Line ids resolved to names, oldest first. Two rows, fetched per call. The
+ *  order is not decoration: `create_card` takes the first as the default line,
+ *  the same "oldest line wins" rule as `getDefaultLineId` in the app. */
 async function fetchLines(): Promise<Record<string, string>> {
   const { lines } = await db.query({
-    lines: { $: { where: { "owner.id": ownerId } } },
+    lines: {
+      $: { where: { "owner.id": ownerId }, order: { createdAt: "asc" } },
+    },
   });
   return Object.fromEntries(lines.map((l: any) => [l.id, l.name]));
 }
@@ -86,6 +91,11 @@ async function fetchLines(): Promise<Record<string, string>> {
 /** Line names known at boot, to name them in a tool description. A line added
  *  later still filters — only this list goes stale, until a restart. */
 let lineNames: string[] = [];
+
+/** A line id by name, case-insensitively — the tools take names, the cards
+ *  store ids. */
+const findLine = (lines: Record<string, string>, name: string) =>
+  Object.keys(lines).find((k) => lines[k].toLowerCase() === name.toLowerCase());
 
 const ok = (data: unknown) => ({
   content: [{ type: "text" as const, text: JSON.stringify(data, null, 1) }],
@@ -99,7 +109,7 @@ function buildServer(): McpServer {
     {
       instructions:
         "A personal Dutch flashcard deck (side A is Dutch) and its review history. Reading is free; " +
-        "the only write is `edit_card`, which fixes a card's text and nothing else. " +
+        "the writes are `edit_card`, which fixes a card's text and nothing else, and `create_card`, which adds one. " +
         "The deck is split into lines — separate decks under one account, listed in `search_cards`.",
     },
   );
@@ -132,9 +142,7 @@ function buildServer(): McpServer {
       let cards = all;
 
       if (line) {
-        const id = Object.keys(lines).find(
-          (k) => lines[k].toLowerCase() === line.toLowerCase(),
-        );
+        const id = findLine(lines, line);
         if (!id)
           return ok({ error: "no such line", lines: Object.values(lines) });
         cards = cards.filter((c) => c.queues?.[id]);
@@ -228,7 +236,7 @@ function buildServer(): McpServer {
     {
       title: "Review history",
       description:
-        "What was studied and when, newest first, plus a per-day summary. Events: `rate` (answered, `grade` is Again/Hard/Good/Easy), `introduce` (taken into study) and `known` (marked known on sight). The retired manual queue's own events (`place`/`top`/`move`, up to 2026-08-28) are still in the database but left out here.",
+        "What was studied and when, newest first, plus a per-day summary. Events: `rate` (answered, `grade` is Again/Hard/Good/Easy), `introduce` (taken into study), `known` (marked known on sight), `create` (card added) and `edit` (card text changed). `via` says where a write came from — `mcp` is this connection, absent is the app. The retired manual queue's own events (`place`/`top`/`move`, up to 2026-08-28) are still in the database but left out here.",
       inputSchema: {
         days: z
           .number()
@@ -331,6 +339,102 @@ function buildServer(): McpServer {
       // `text` is the stored row plus exactly `changes`, so it is the card as
       // it now stands.
       return ok({ id, changed: event.fields, card: text });
+    },
+  );
+
+  server.registerTool(
+    "create_card",
+    {
+      title: "Create card",
+      description:
+        "Add a card to the deck. It lands at the top of a line's new-card pool and is created *unstudied*: " +
+        "it has no schedule until it is taken into study from the app, so creating cards never adds anything due today. " +
+        "Side A is the word being learned (Dutch, unless the line says otherwise), side B its translation. " +
+        "A card whose side A already exists is refused — edit that one with `edit_card` instead of making a second. " +
+        "The note is free text (Markdoc); the app's own `{% dict %}` dictionary block is filled in there, not here. " +
+        "Examples, images and audio can't be attached from here.",
+      inputSchema: {
+        aCard: z.string().describe("Side A — the word being learned"),
+        bCard: z.string().describe("Side B — the translation"),
+        note: z
+          .string()
+          .optional()
+          .describe("Free text under the card, Markdoc"),
+        line: z
+          .string()
+          .optional()
+          .describe(
+            `Which line to add it to, by name. Default: ${lineNames[0] ?? "the oldest line"}`,
+          ),
+        aLang: z.enum(["NL", "EN"]).optional().describe("Default NL"),
+        bLang: z.enum(["EN", "RU"]).optional().describe("Default EN"),
+      },
+      annotations: { readOnlyHint: false, idempotentHint: false },
+    },
+    async ({ aCard, bCard, note, line, aLang = "NL", bLang = "EN" }) => {
+      const text = trimCardText({ aCard, bCard, note: note ?? "" });
+      // The app's form can't submit a blank side; this connection goes around
+      // it, and a card with one side is unanswerable. (`edit_card` is laxer on
+      // purpose — half-finished rows already exist and stay editable.)
+      if (!text.aCard || !text.bCard)
+        return ok({ error: "both sides are required" });
+
+      const [cards, lines] = await Promise.all([fetchCards(), fetchLines()]);
+      // Object key order is insertion order, and fetchLines asks for oldest
+      // first — so this is the app's default line.
+      const lineId = line ? findLine(lines, line) : Object.keys(lines)[0];
+      if (!lineId)
+        return ok({ error: "no such line", lines: Object.values(lines) });
+
+      // Cheap duplicate guard: the deck is small enough that it is already in
+      // memory, and a chat that can't see the deck is exactly what re-adds a
+      // word it added last week. Side A only — the same Dutch word twice is a
+      // duplicate however the translations differ.
+      const dup = cards.find(
+        (c) => c.aCard.toLowerCase() === text.aCard.toLowerCase(),
+      );
+      if (dup)
+        return ok({
+          error: "a card with this side A exists",
+          card: brief(dup, lines),
+        });
+
+      // Straight to the top of the line. The app's `enqueueTop` instead slots
+      // new cards between non-fresh ones, but that lives in lib/queue.ts, which
+      // opens a socket on import — and the line order only decides what the
+      // Deck page offers first now that FSRS does the scheduling.
+      // ponytail: plain top; port `topInsertRank` here if the pool ever clumps.
+      const ranks = cards
+        .map((c) => c.queues?.[lineId]?.rank)
+        .filter((r): r is string => !!r);
+      const top = ranks.length ? ranks.reduce((a, b) => (a < b ? a : b)) : null;
+
+      const cardId = newId();
+      await db.transact(
+        db.tx.cards[cardId]
+          .update({
+            aLang,
+            bLang,
+            ...text,
+            queues: { [lineId]: { rank: generateKeyBetween(null, top) } },
+            log: {
+              [newId()]: {
+                at: Date.now(),
+                lineId,
+                kind: "create",
+                amount: 1,
+                // Without this the history can't tell a card added from the
+                // chat from one typed into the app.
+                via: "mcp",
+              },
+            },
+          })
+          // No owner link, no readable row — the admin token writes past the
+          // permissions that would have caught this.
+          .link({ owner: ownerId }),
+      );
+
+      return ok({ id: cardId, line: lines[lineId], card: text });
     },
   );
 
