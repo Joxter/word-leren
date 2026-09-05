@@ -10,6 +10,7 @@ import {
   type Grade,
 } from "ts-fsrs";
 import { db } from "../db";
+import { freshSrs } from "./deck";
 import { logEntry, type CardLog } from "./queue";
 
 // Classic day-based spaced repetition on top of FSRS. A card carries the
@@ -240,42 +241,10 @@ export async function introduce(
   await db.transact(
     cardIds.map((cid) =>
       db.tx.cards[cid].merge({
-        srs: store(createEmptyCard(now)),
+        srs: freshSrs(now),
         log: logEntry(lineId, "introduce", 0),
       }),
     ),
-  );
-}
-
-/**
- * Mark cards as already known: rate them Easy on sight, which schedules them
- * about a week out without making you sit through the learning steps. The
- * per-card fuzz seed keeps a batch from landing on the same day.
- */
-export async function markKnown(
-  cardIds: string[],
-  lineId: string,
-): Promise<void> {
-  if (cardIds.length === 0) return;
-  const now = Date.now();
-  await db.transact(
-    cardIds.map((cid) => {
-      const { card } = scheduler.next(
-        toInput({ id: cid }, now),
-        now,
-        Rating.Easy,
-      );
-      const srs = store(card);
-      return db.tx.cards[cid].merge({
-        srs,
-        log: logEntry(lineId, "known", Rating.Easy, {
-          sAfter: srs.stability,
-          dAfter: srs.difficulty,
-          dueIn: (srs.due - now) / 864e5,
-          source: "triage",
-        }),
-      });
-    }),
   );
 }
 

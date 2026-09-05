@@ -28,6 +28,7 @@ import {
   byDay,
   editEvent,
   events,
+  freshSrs,
   tally,
   trimCardText,
   STATE,
@@ -354,8 +355,8 @@ function buildServer(): McpServer {
     {
       title: "Create card",
       description:
-        "Add a card to the deck. It lands at the top of a line's new-card pool and is created *unstudied*: " +
-        "it has no schedule until it is taken into study from the app, so creating cards never adds anything due today. " +
+        "Add a card to the deck. It goes straight into study: it is scheduled as a brand-new card and comes up " +
+        "in the next session, learning steps and all — so adding cards does add to today's load. " +
         "Side A is the word being learned (Dutch, unless the line says otherwise), side B its translation. " +
         "A card whose side A already exists is refused — edit that one with `edit_card` instead of making a second. " +
         "The note is free text (Markdoc); the app's own `{% dict %}` dictionary block is filled in there, not here. " +
@@ -408,8 +409,8 @@ function buildServer(): McpServer {
 
       // Straight to the top of the line. The app's `enqueueTop` instead slots
       // new cards between non-fresh ones, but that lives in lib/queue.ts, which
-      // opens a socket on import — and the line order only decides what the
-      // Deck page offers first now that FSRS does the scheduling.
+      // opens a socket on import — and rank barely decides anything now that
+      // FSRS does the scheduling and the card enters study on creation.
       // ponytail: plain top; port `topInsertRank` here if the pool ever clumps.
       const ranks = cards
         .map((c) => c.queues?.[lineId]?.rank)
@@ -424,6 +425,8 @@ function buildServer(): McpServer {
             bLang,
             ...text,
             queues: { [lineId]: { rank: generateKeyBetween(null, top) } },
+            // Same state the app's `introduce` writes: a new card, due now.
+            srs: freshSrs(),
             log: {
               [newId()]: {
                 at: Date.now(),

@@ -16,6 +16,7 @@ import type { LinkedCard } from "./examples";
 import { getDefaultLineId } from "./lines";
 import { enqueueTop, logEntry, type CardLog } from "./queue";
 import { ownedPath, ownerId } from "./session";
+import { introduce } from "./srs";
 import type { CardData } from "../pages/Cards";
 
 /**
@@ -103,9 +104,11 @@ export function restoreCard(cardId: string): Promise<unknown> {
 
 /**
  * Create a card from a dictionary entry and put it at the top of the default
- * line, the same card the Dictionary page's "+ Add to cards" makes. Returns it
- * in the shape the example editors label a link with, so the caller can attach
- * it to a sentence straight away.
+ * line, the same card the Dictionary page's "+ Add to cards" makes. It goes
+ * straight into study — `introduce` seeds its FSRS state here, so a new card
+ * is asked at the next session instead of waiting in the Backlog pool.
+ * Returns it in the shape the example editors label a link with, so the caller
+ * can attach it to a sentence straight away.
  *
  * Deck examples go in as the note's own text; the whole Wiktionary entry
  * follows in a `{% dict %}` block, which renders collapsed and can be deleted
@@ -143,7 +146,9 @@ export async function createCardFromEntry(
       .update({ ...card, ...(rawAudio ? { audio: `audio/${rawAudio}` } : {}) })
       .link({ owner: ownerId() }),
   );
-  await enqueueTop(await getDefaultLineId(), cardId);
+  const lineId = await getDefaultLineId();
+  await enqueueTop(lineId, cardId);
+  await introduce([cardId], lineId);
   return {
     id: cardId,
     aLang: card.aLang,

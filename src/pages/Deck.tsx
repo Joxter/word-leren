@@ -4,18 +4,12 @@ import { Link } from "wouter";
 import { db } from "../db";
 import { myCards } from "../lib/session";
 import { useLines, useActiveLine } from "../lib/lines";
-import { newPool, introduce, markKnown, type SrsState } from "../lib/srs";
+import { newPool, introduce, type SrsState } from "../lib/srs";
 import LineSelector from "../components/LineSelector";
 
-// Everything that hasn't been taken into study yet, and the two ways to move
-// it: mark a card known (straight to ~a week out, skipping the learning steps)
-// or take it in to learn properly.
-//
-// Triage runs in fixed batches so a long list can't be mis-ticked wholesale;
-// the add tab shows the whole pool at once, because there the point is picking
-// a themed handful out of everything.
-
-const BATCH = 10;
+// Everything that hasn't been taken into study yet, and the way in: tick a
+// themed handful and send it to learn. The whole pool shows at once, because
+// picking by theme means seeing all of it.
 
 const page = css`
   max-width: 720px;
@@ -35,30 +29,10 @@ const topBar = css`
   margin-bottom: 1rem;
 `;
 
-const tabs = css`
-  display: flex;
-  gap: 0.5rem;
-`;
-
-const tab = css`
-  background: #fff;
-  border: 1px solid #d5d5d5;
-  border-radius: 8px;
-  padding: 0.4rem 0.8rem;
-  font-size: 0.85rem;
-  font-family: inherit;
-  color: #444;
-  cursor: pointer;
-
-  &:hover {
-    border-color: #1a1a1a;
-  }
-`;
-
-const tabOn = css`
-  background: #1a1a1a;
-  border-color: #1a1a1a;
-  color: #fff;
+const title = css`
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
 `;
 
 const intro = css`
@@ -196,12 +170,8 @@ interface DeckCard {
 }
 
 export default function Deck() {
-  const [mode, setMode] = useState<"triage" | "add">("triage");
   const [ticked, setTicked] = useState<Set<string>>(new Set());
   const [busy, setBusy] = useState(false);
-  // How far triage has been paged through. Cards are never consumed by
-  // skipping, so this is a cursor, not a mutation.
-  const [skippedCount, setSkipped] = useState(0);
 
   const { lines, isLoading: linesLoading } = useLines();
   const [activeLine, setActiveLine] = useActiveLine(lines);
@@ -212,9 +182,6 @@ export default function Deck() {
 
   const cards = (data?.cards ?? []) as DeckCard[];
   const pool = activeLine ? newPool(cards, activeLine) : [];
-  // Triage works through the pool a screenful at a time; adding sees it all.
-  const batch =
-    mode === "triage" ? pool.slice(skippedCount, skippedCount + BATCH) : pool;
 
   function toggle(cardId: string) {
     setTicked((prev) => {
@@ -227,7 +194,7 @@ export default function Deck() {
 
   /** Tick five cards at random among those not already ticked. */
   function addRandomFive() {
-    const free = batch.filter((c) => !ticked.has(c.id));
+    const free = pool.filter((c) => !ticked.has(c.id));
     for (let i = free.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [free[i], free[j]] = [free[j], free[i]];
@@ -250,43 +217,12 @@ export default function Deck() {
     }
   }
 
-  /**
-   * Move past this batch without touching the cards. Skipping must not rate
-   * them: an `Again` here would drop the card into the learning steps, which
-   * is exactly the drilling triage exists to avoid.
-   */
-  function skipBatch() {
-    setSkipped((n) => n + BATCH);
-    setTicked(new Set());
-  }
-
   if (isLoading || linesLoading) return <div className={page} />;
-
-  const tickedHere = batch.filter((c) => ticked.has(c.id)).length;
 
   return (
     <div className={page}>
       <div className={topBar}>
-        <div className={tabs}>
-          <button
-            className={mode === "triage" ? `${tab} ${tabOn}` : tab}
-            onClick={() => {
-              setMode("triage");
-              setTicked(new Set());
-            }}
-          >
-            Разбор
-          </button>
-          <button
-            className={mode === "add" ? `${tab} ${tabOn}` : tab}
-            onClick={() => {
-              setMode("add");
-              setTicked(new Set());
-            }}
-          >
-            Добавить
-          </button>
-        </div>
+        <h1 className={title}>Backlog</h1>
         <LineSelector
           lines={lines}
           value={activeLine}
@@ -295,42 +231,20 @@ export default function Deck() {
       </div>
 
       <div className={intro}>
-        {mode === "triage" ? (
-          <>
-            Отметь те карточки, которые знаешь наверняка — они уйдут примерно на
-            неделю вперёд, без разучивания. Остальные останутся нетронутыми и
-            попадут в изучение позже, когда ты добавишь их сам.
-          </>
-        ) : (
-          <>
-            Отметь карточки, которые хочешь начать учить — они встанут в очередь
-            и появятся на странице учёбы со всеми шагами разучивания.
-          </>
-        )}
+        Отметь карточки, которые хочешь начать учить — они встанут в очередь и
+        появятся на странице учёбы со всеми шагами разучивания.
       </div>
 
-      {batch.length === 0 ? (
+      {pool.length === 0 ? (
         <div className={empty}>
-          {pool.length === 0 ? (
-            <>
-              Все карточки этой колоды уже в изучении.
-              <br />
-              <Link href="/learn">Вернуться к учёбе</Link>
-            </>
-          ) : (
-            <>
-              Разобрал всё, что было пролистано.
-              <br />
-              <button className={btn} onClick={() => setSkipped(0)}>
-                Начать сначала ({pool.length})
-              </button>
-            </>
-          )}
+          Все карточки этой колоды уже в изучении.
+          <br />
+          <Link href="/learn">Вернуться к учёбе</Link>
         </div>
       ) : (
         <>
           <div className={list}>
-            {batch.map((c) => {
+            {pool.map((c) => {
               const on = ticked.has(c.id);
               return (
                 <label key={c.id} className={on ? `${row} ${rowOn}` : row}>
@@ -361,32 +275,15 @@ export default function Deck() {
                 Снять отметки
               </button>
             )}
-            {mode === "triage" ? (
-              <>
-                <button
-                  className={`${btn} ${primaryBtn}`}
-                  disabled={busy || ticked.size === 0}
-                  onClick={() => run(markKnown)}
-                >
-                  Знаю эти ({ticked.size})
-                </button>
-                <button className={btn} disabled={busy} onClick={skipBatch}>
-                  Дальше →
-                </button>
-              </>
-            ) : (
-              <button
-                className={`${btn} ${primaryBtn}`}
-                disabled={busy || ticked.size === 0}
-                onClick={() => run(introduce)}
-              >
-                Добавить в изучение ({ticked.size})
-              </button>
-            )}
+            <button
+              className={`${btn} ${primaryBtn}`}
+              disabled={busy || ticked.size === 0}
+              onClick={() => run(introduce)}
+            >
+              Добавить в изучение ({ticked.size})
+            </button>
             <span className={counter}>
-              {mode === "triage"
-                ? `${tickedHere} из ${batch.length} · осталось ${pool.length}`
-                : `отмечено ${ticked.size} · всего ${pool.length}`}
+              отмечено {ticked.size} · всего {pool.length}
             </span>
           </div>
         </>

@@ -4,6 +4,21 @@
 // InstantDB, and because everything else in `lib/` opens a socket the moment it
 // is imported (`../db`), which neither the server nor a test wants.
 
+import { createEmptyCard } from "ts-fsrs";
+
+/** Scheduling state for a card taken into study but never answered — what both
+ *  writers stamp on a new card. The library's `Card` with its dates as unix ms,
+ *  which is how `cards.srs` stores them (`store` in lib/srs.ts). Here rather
+ *  than in srs.ts because the MCP server needs it and srs.ts reaches `../db`. */
+export function freshSrs(now = Date.now()) {
+  const card = createEmptyCard(now);
+  return {
+    ...card,
+    due: +card.due,
+    last_review: card.last_review ? +card.last_review : null,
+  };
+}
+
 /** `ts-fsrs` State by its numeric value. A card with no `srs` at all is in none
  *  of these: it has never been taken into study (the Deck page's pool). */
 export const STATE = ["New", "Learning", "Review", "Relearning"];

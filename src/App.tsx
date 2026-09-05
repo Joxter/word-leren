@@ -204,7 +204,7 @@ function Nav() {
           <NavLink href="/">Cards</NavLink>
           <NavLink href="/dictionary">Dictionary</NavLink>
           <NavLink href="/learn">Learn</NavLink>
-          <NavLink href="/deck">Deck</NavLink>
+          <NavLink href="/deck">Backlog</NavLink>
           <NavLink href="/examples">Examples</NavLink>
           <NavLink href="/grammar">Grammar</NavLink>
         </nav>

@@ -801,7 +801,7 @@ export default function Learn() {
           {untouched > 0 && (
             <div className={doneLine}>
               Не в изучении: {untouched}.{" "}
-              <Link href="/deck">Разобрать или добавить</Link>
+              <Link href="/deck">Добавить из беклога</Link>
             </div>
           )}
         </div>

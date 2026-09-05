@@ -9,7 +9,7 @@ import MarkdocField from "../components/MarkdocField";
 import PlayButton from "../components/PlayButton";
 import { reviewStats, sortLine, enqueueTop } from "../lib/queue";
 import type { CardLog } from "../lib/queue";
-import { difficultyColor, rateCard, Rating } from "../lib/srs";
+import { difficultyColor, introduce, rateCard, Rating } from "../lib/srs";
 import type { SrsState } from "../lib/srs";
 import { saveCard, deleteCard, trimCardText } from "../lib/cards";
 import { useLines, useActiveLine } from "../lib/lines";
@@ -503,6 +503,9 @@ export default function Cards() {
     for (const lineId of selectedNewLines) {
       await enqueueTop(lineId, cardId);
     }
+    // Straight into study: a hand-entered card is one you just decided to
+    // learn, so it gets its FSRS state now rather than sitting in the Backlog.
+    await introduce([cardId], [...selectedNewLines][0] ?? "");
     // Keep the language pair — entering cards comes in runs of the same kind.
     setNewForm(makeDefaultForm(newForm.aLang, newForm.bLang));
     setNewImageFile(null);

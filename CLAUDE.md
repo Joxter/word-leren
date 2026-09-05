@@ -100,9 +100,12 @@ scheduling state is the library's own `Card`, stored verbatim in `cards.srs` wit
 as unix ms — one JSON blob rather than a column each, because the shape is the library's
 and the app loads every card into memory anyway. The queue is just `due <= now`.
 
-- **No card enters study by itself.** Creating a card gives it a line rank but no `srs`,
-  which puts it in the Deck page's pool. From there you either mark it known (rated
-  `Easy` on sight, ~a week out, skipping the learning steps) or take it in to learn.
+- **New cards go straight into study.** Creating a card (the Cards form, the dictionary's
+  "+ Add to cards") calls `introduce`, so it gets FSRS state and is asked at the next
+  session. The Backlog page (`Deck.tsx`) is only for the pool that predates that —
+  cards with a line rank and no `srs` — and goes away once the pool is empty.
+  Retired 2026-09-05: the "mark known" bulk triage (`markKnown`, rating `Easy` on sight
+  ~a week out) — it existed to drain that pool and its `known` events are still in the log.
 - **The fuzz seed is tied to the card id** (`GenSeedStrategyWithCardId`). With the
   default seed the randomness comes from card _state_, so a batch graded identically on
   one day gets an identical "random" interval and travels the deck as one clump —
@@ -135,8 +138,10 @@ scheduler is a revert away. Don't delete `queue.ts` while that's still true.
   **единственный** модуль в `lib/`, который серверу можно импортировать —
   остальные тянут `../db` и открывают сокет на импорте.
 - `create_card` кладёт карточку в начало линии (по умолчанию — самая старая,
-  как `getDefaultLineId` в приложении) и **без `srs`**: карточка попадает в пул
-  новых на Deck, а в учёбу её берут руками. Ранг считается тут же, простым
+  как `getDefaultLineId` в приложении) и **сразу в оборот**: `freshSrs()` из
+  `lib/deck.ts` — то же состояние, что пишет `introduce` в приложении, так что
+  карточка спрашивается в ближайшей сессии. Отдельного события `introduce` нет,
+  `create` говорит и то и другое. Ранг считается тут же, простым
   «в самый верх» — умный `topInsertRank` живёт в `lib/queue.ts`, а тот тянет
   `../db`. Дубли по стороне A отбиваются: чат не видит колоду и заводит слово
   повторно. Событие — `kind: "create"` (не `top`), и `isFresh` в `queue.ts`
@@ -162,5 +167,5 @@ scheduler is a revert away. Don't delete `queue.ts` while that's still true.
 - Авторизация — секрет в пути. Потолок вырос вместе с `edit_card`: кто знает
   URL, тот и правит карточки. Ротация — env на дроплете плюс коннектор.
 
-Pages: `src/pages/Learn.tsx` (study), `src/pages/Deck.tsx` (triage + add),
-`src/pages/Cards.tsx` (create form + the active line's list).
+Pages: `src/pages/Learn.tsx` (study), `src/pages/Deck.tsx` (Backlog: the pre-`introduce`
+pool), `src/pages/Cards.tsx` (create form + the active line's list).

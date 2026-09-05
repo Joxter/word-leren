@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   DEPTH_BUTTONS,
   depthButtons,
+  isFresh,
   linePositions,
   type QueuedCard,
 } from "./queue";
@@ -70,5 +71,28 @@ describe("linePositions", () => {
 
   it("has nothing to say without lines", () => {
     expect(linePositions(cards, []).size).toBe(0);
+  });
+});
+
+// Every card now gets an `introduce` right after its `top` (see lib/cards.ts),
+// so counting that as study would make "fresh" mean nothing.
+describe("isFresh", () => {
+  const log = (...events: [number, string][]) =>
+    Object.fromEntries(
+      events.map(([at, kind], i) => [
+        `e${i}`,
+        { at, lineId: "L", kind, amount: 0 },
+      ]),
+    );
+
+  it("counts seeding the schedule as an add, not a review", () => {
+    expect(isFresh(log([1, "top"], [2, "introduce"]))).toBe(true);
+    expect(isFresh(log([1, "create"]))).toBe(true);
+    expect(isFresh(undefined)).toBe(true);
+  });
+
+  it("goes stale once the card is answered", () => {
+    expect(isFresh(log([1, "top"], [2, "introduce"], [3, "rate"]))).toBe(false);
+    expect(isFresh(log([1, "rate"], [2, "top"]))).toBe(true);
   });
 });
