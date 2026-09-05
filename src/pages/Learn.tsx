@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { css } from "@linaria/core";
 import { Link } from "wouter";
 import { db } from "../db";
-import { reviewStats, dailyReviewStats } from "../lib/queue";
+import { dailyReviewStats } from "../lib/queue";
 import type { CardLog } from "../lib/queue";
 import {
   dueCards,
@@ -12,6 +12,8 @@ import {
   rateCard,
   previewIntervals,
   formatGap,
+  gradeHistory,
+  GRADE_COLORS,
   RATINGS,
   type SrsState,
 } from "../lib/srs";
@@ -391,6 +393,27 @@ const intervalRow = css`
   color: #aaa;
 `;
 
+// The card's own answers, one dot each, oldest to newest. It replaced a
+// "Seen N times" line plus the last few ratings as numbers: the same history
+// reads faster as a shape — a run of green with one red in it is a card that
+// lapsed once, and that is the thing you look for.
+const historyRow = css`
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem;
+`;
+
+const historyDot = css`
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  /* The newest answer is the rightmost; a card with a long history wraps
+     rather than shrinking the dots into invisibility. */
+  flex: none;
+`;
+
 const intervalKey = css`
   font-weight: 600;
   color: #888;
@@ -401,37 +424,6 @@ const guideNote = css`
   padding-top: 0.5rem;
   border-top: 1px solid #ececec;
   color: #999;
-`;
-
-const statsRow = css`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
-  font-size: 0.75rem;
-  color: #999;
-`;
-
-const statsPills = css`
-  display: flex;
-  gap: 0.3rem;
-`;
-
-const statsPill = css`
-  border: 1px solid #e5e5e5;
-  background: #fff;
-  border-radius: 4px;
-  padding: 0.1rem 0.4rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #666;
-  font-variant-numeric: tabular-nums;
-`;
-
-// The most recent rating, called out a touch stronger than the previous ones.
-const statsPillLatest = css`
-  border-color: #ccc;
-  color: #1a1a1a;
 `;
 
 const checkToggle = css`
@@ -459,7 +451,7 @@ const countDone = css`
   font-weight: 600;
 `;
 
-// The "Reverse" / "Examples" pair, sized to match the line selector opposite.
+// The "Examples" toggle, sized to match the line selector opposite.
 const topBarToggles = css`
   display: flex;
   align-items: center;
@@ -525,17 +517,15 @@ interface LearnCard {
 }
 
 /**
- * The two toggles that decide what the prompt asks for. `examples` shows one of
- * the card's example sentences with the card's own fragments blanked out;
- * `reverse` shows side A and wants its meaning, the direction reading actually
- * asks of you. Default (neither) shows side B and wants side A — produce the
- * Dutch word.
+ * The toggle that decides what the prompt asks for. `examples` shows one of the
+ * card's example sentences with the card's own fragments blanked out; off, the
+ * prompt is side B and the answer is side A — produce the Dutch word.
  *
- * They are independent, but a card can only be asked one way at a time, so with
- * both on the example wins and `reverse` applies to the cards that have no
- * example to blank out.
+ * There used to be a `reverse` toggle beside it (show side A, recall its
+ * meaning). Recognising a word you are reading is the easy direction and the
+ * deck was not getting anything out of asking it, so it is gone; the stored
+ * flag is simply no longer read.
  */
-const REVERSE_KEY = "word-leren:reverse";
 const EXAMPLES_KEY = "word-leren:examples";
 // Superseded by the two keys above, which used to be one three-way choice.
 // Read once, so an existing preference survives the change.
@@ -571,9 +561,6 @@ export default function Learn() {
   // simply falls due — without a ticker the page would sit on "all done" while
   // a card waited behind it.
   const [, tick] = useState(0);
-  const [reverseOn, setReverseOn] = useState(() =>
-    storedFlag(REVERSE_KEY, "reverse"),
-  );
   const [examplesOn, setExamplesOn] = useState(() =>
     storedFlag(EXAMPLES_KEY, "examples"),
   );
@@ -641,10 +628,6 @@ export default function Learn() {
       ? { link: clozeLink, example: clozeLink.example, spans: clozeSpans }
       : null;
 
-  // A sentence is asked in its own direction, so with both toggles on the
-  // reverse prompt is what the cards without a usable example fall back to.
-  const reverse = reverseOn && !cloze;
-
   async function handleRate(rating: (typeof RATINGS)[number]["rating"]) {
     if (!current || !activeLine || busy) return;
     setBusy(true);
@@ -662,6 +645,13 @@ export default function Learn() {
     } finally {
       setBusy(false);
     }
+  }
+
+  /** Leave the answer box without answering: the typed text goes too, or the
+   *  reveal would diff against a half-written word nobody stands behind. */
+  function cancelTyping() {
+    setTyping(false);
+    setTyped("");
   }
 
   /** Open the example peek, or step to the next one. */
@@ -700,7 +690,7 @@ export default function Learn() {
         } else if (e.key === "h" || e.key === "H") {
           e.preventDefault();
           if (current) setHintOpen(true);
-        } else if ((e.key === "t" || e.key === "T") && !reverse) {
+        } else if (e.key === "t" || e.key === "T") {
           e.preventDefault();
           if (current) setTyping(true);
         } else if (e.key === "e" || e.key === "E") {
@@ -717,7 +707,7 @@ export default function Learn() {
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [revealed, current, busy, reverse, cloze?.link.id]);
+  }, [revealed, current, busy, cloze?.link.id]);
 
   // Hint boxes and the typed answer are per-card scratch state — clear them
   // whenever the top card changes (depth placed, deleted, or swapped in).
@@ -757,19 +747,6 @@ export default function Learn() {
       <div className={topBarToggles}>
         <label
           className={checkToggle}
-          title="Show side A first and recall its meaning — on cards that aren't asked as an example sentence"
-        >
-          <input
-            type="checkbox"
-            checked={reverseOn}
-            onChange={(e) =>
-              toggleFlag(REVERSE_KEY, e.target.checked, setReverseOn)
-            }
-          />
-          Reverse
-        </label>
-        <label
-          className={checkToggle}
           title="Prompt with an example sentence with this card's words blanked out, where there is one"
         >
           <input
@@ -801,11 +778,14 @@ export default function Learn() {
         <div className={doneBox}>
           <div className={doneTitle}>🎉 На сегодня всё</div>
           <div className={doneLine}>
-            {laterToday > 0
-              ? `Ещё ${laterToday} ${plural(laterToday, "карточка", "карточки", "карточек")} вернётся сегодня попозже.`
-              : nextAt !== null
-                ? `Следующая карточка — через ${formatGap(nextAt - Date.now())}.`
-                : "В этой колоде пока нет ни одной карточки в изучении."}
+            {/* The nearest card's time comes along in either case: "ещё
+                вернётся" without it left the one question the screen exists to
+                answer — стоит ли ждать — unanswered. */}
+            {nextAt === null
+              ? "В этой колоде пока нет ни одной карточки в изучении."
+              : laterToday > 0
+                ? `Ещё ${laterToday} ${plural(laterToday, "карточка вернётся", "карточки вернутся", "карточек вернётся")} сегодня, ближайшая через ${formatGap(nextAt - Date.now())}.`
+                : `Следующая карточка — через ${formatGap(nextAt - Date.now())}.`}
           </div>
           {untouched > 0 && (
             <div className={doneLine}>
@@ -819,24 +799,19 @@ export default function Learn() {
   }
 
   const c = current;
-  // Past ratings for this card, to show alongside the depth buttons on reveal.
-  const st = reviewStats(c.log, 5);
   // What each button would schedule, so the choice is informed rather than blind.
   const intervals = previewIntervals(c);
+  // How this card has gone so far, oldest answer first.
+  const history = gradeHistory(c.log);
 
-  // Which side is the prompt and which is the answer. Only side A can carry
-  // audio, so reversed it sits on the prompt — but still only appears on
-  // reveal, matching the forward direction.
-  const promptText = reverse ? c.aCard : c.bCard;
-  const promptLang = reverse ? c.aLang : c.bLang;
+  // Which side is the prompt and which is the answer: side B asks, side A
+  // answers. Audio belongs to side A, so it only ever plays on reveal.
+  const promptText = c.bCard;
+  const promptLang = c.bLang;
   // In a cloze the answer is the blanked fragments, joined the way they read in
   // the sentence — that is what Type checks and what the hint boxes spell out.
-  const answerText = cloze
-    ? spansAnswer(cloze.spans)
-    : reverse
-      ? c.bCard
-      : c.aCard;
-  const answerLang = cloze ? cloze.example.aLang : reverse ? c.bLang : c.aLang;
+  const answerText = cloze ? spansAnswer(cloze.spans) : c.aCard;
+  const answerLang = cloze ? cloze.example.aLang : c.aLang;
 
   // Everything else attached to this card, shown on reveal as extra context.
   // flatMap rather than filter so the example narrows to non-null.
@@ -928,9 +903,6 @@ export default function Learn() {
           ) : (
             <div className={frontRow}>
               <div className={front}>{promptText}</div>
-              {reverse && revealed && c.audio && (
-                <PlayButton path={c.audio} small />
-              )}
             </div>
           )}
         </div>
@@ -943,15 +915,18 @@ export default function Learn() {
             <div className={peekBox}>
               {peeked && (
                 <div className={exampleItem}>
-                  {/* Reversed, side A is on the prompt already and the sentence
-                      can show it; forwards it is the answer, so it stays
-                      blanked and the translation — which would name it — off. */}
+                  {/* The card's own words are the answer, so they stay blanked
+                      and the translation — which would name them — stays off. */}
                   <ExampleText
                     text={peeked.example.aText}
                     spans={peeked.spans}
-                    mode={reverse ? "highlight" : "blank"}
+                    mode="blank"
                   />
-                  {!reverse && peeked.example.bText?.trim() && (
+                  {/* Kept, the way the cloze prompt keeps its own: the sentence
+                      with its gaps is often ambiguous on its own, and the
+                      exercise is to produce the Dutch, not to guess which
+                      meaning was meant. */}
+                  {peeked.example.bText?.trim() && (
                     <div className={exampleTranslation}>
                       {peeked.example.bText}
                     </div>
@@ -1005,11 +980,10 @@ export default function Learn() {
               </div>
             )}
             {/* In a cloze the sentence above already spells the answer out in
-                place, so this line names the card itself instead. Reversed,
-                side A is on the prompt and already had its play button. */}
+                place, so this line names the card itself instead. */}
             <div className={frontRow}>
               <div className={front}>{cloze ? c.aCard : answerText}</div>
-              {!reverse && c.audio && <PlayButton path={c.audio} small />}
+              {c.audio && <PlayButton path={c.audio} small />}
               {cloze && <span className={cardMeaning}>{c.bCard}</span>}
             </div>
             {cloze?.example.note?.trim() && (
@@ -1044,12 +1018,9 @@ export default function Learn() {
               Hint
             </button>
           )}
-          {/* Typing is a production exercise, so it only makes sense in the
-              forward direction: reversed, the answer is the translation, where
-              a per-character diff would flag every equally-valid wording. */}
-          {!reverse &&
-            (typing ? (
-              COARSE_POINTER ? (
+          {typing ? (
+            <>
+              {COARSE_POINTER ? (
                 <div className={fakeInput}>
                   {typed}
                   <span className={fakeCaret} />
@@ -1069,6 +1040,9 @@ export default function Learn() {
                       e.preventDefault();
                       setRevealed(true);
                     }
+                    // The page-level handler ignores keys typed into an input,
+                    // so Escape has to be caught here.
+                    if (e.key === "Escape") cancelTyping();
                   }}
                   placeholder={
                     cloze
@@ -1076,12 +1050,23 @@ export default function Learn() {
                       : `Type the ${answerLang} answer…`
                   }
                 />
-              )
-            ) : (
-              <button className={hintBtn} onClick={() => setTyping(true)}>
-                Type
+              )}
+              {/* Typing is easy to start by accident (one keypress) and used to
+                  be impossible to leave without answering — on a phone the
+                  virtual keyboard took the screen with it. */}
+              <button
+                className={hintBtn}
+                title="Отменить ввод"
+                onClick={cancelTyping}
+              >
+                ✕
               </button>
-            ))}
+            </>
+          ) : (
+            <button className={hintBtn} onClick={() => setTyping(true)}>
+              Type
+            </button>
+          )}
           <button className={revealBtn} onClick={() => setRevealed(true)}>
             Reveal
           </button>
@@ -1143,34 +1128,19 @@ export default function Learn() {
               </span>
             ))}
           </div>
-          {st.seen > 0 && (
-            <div className={statsRow}>
-              <span>
-                Seen {st.seen}
-                {st.seen === 1 ? " time" : " times"}
-              </span>
-              {st.recent.length > 0 && (
-                <>
-                  <span>·</span>
-                  <span
-                    className={statsPills}
-                    title="Last ratings (newest first)"
-                  >
-                    {st.recent.map((amount, j) => (
-                      <span
-                        key={j}
-                        className={
-                          j === 0
-                            ? `${statsPill} ${statsPillLatest}`
-                            : statsPill
-                        }
-                      >
-                        {amount}
-                      </span>
-                    ))}
-                  </span>
-                </>
-              )}
+          {history.length > 0 && (
+            <div
+              className={historyRow}
+              title="Ответы по этой карточке: старые слева, свежие справа"
+            >
+              {history.map((h) => (
+                <span
+                  key={h.at}
+                  className={historyDot}
+                  style={{ background: GRADE_COLORS[h.rating] ?? "#ddd" }}
+                  title={`${new Date(h.at).toLocaleDateString()} · ${RATINGS.find((r) => r.rating === h.rating)?.label ?? h.rating}${h.dueIn !== undefined ? ` · +${formatGap(h.dueIn * 864e5)}` : ""}`}
+                />
+              ))}
             </div>
           )}
         </>

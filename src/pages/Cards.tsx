@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { useImagePaste } from "../hooks/useImagePaste";
 import { css } from "@linaria/core";
@@ -7,18 +7,10 @@ import { db } from "../db";
 import CardModal from "../components/CardModal";
 import MarkdocField from "../components/MarkdocField";
 import PlayButton from "../components/PlayButton";
-import {
-  MOVE_STEPS,
-  safeKeyBetween,
-  moveToRank,
-  moveToTop,
-  removeFromLine,
-  rankInLine,
-  reviewStats,
-  sortLine,
-  enqueueTop,
-} from "../lib/queue";
+import { reviewStats, sortLine, enqueueTop } from "../lib/queue";
 import type { CardLog } from "../lib/queue";
+import { difficultyColor, rateCard, Rating } from "../lib/srs";
+import type { SrsState } from "../lib/srs";
 import { saveCard, deleteCard, trimCardText } from "../lib/cards";
 import { useLines, useActiveLine } from "../lib/lines";
 import { myCards, ownedPath, ownerId } from "../lib/session";
@@ -40,10 +32,12 @@ export interface Card extends CardData {
   id: string;
   image?: { id: string; url: string; path: string };
   queues?: { [lineId: string]: { rank: string } };
+  srs?: SrsState;
 }
 
-const A_LANGS = ["NL", "EN"] as const;
-const B_LANGS = ["EN", "RU"] as const;
+// Every new card is NL → EN; the picker that used to ask was left over from an
+// older idea of the deck. The fields stay on the form, just unasked.
+const NEW_LANGS = { a: "NL", b: "EN" };
 
 const page = css`
   max-width: 840px;
@@ -80,73 +74,12 @@ const formSide = css`
   gap: 0.375rem;
 `;
 
-const formSideRow = css`
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-`;
-
 const formLabel = css`
   font-size: 0.75rem;
   font-weight: 600;
   color: #555;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-`;
-
-const segmented = css`
-  display: inline-flex;
-  border: 1px solid #e8e8e8;
-  border-radius: 6px;
-  overflow: hidden;
-  width: 100%;
-`;
-
-const segmentedItem = css`
-  flex: 1;
-  position: relative;
-
-  input[type="radio"] {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  label {
-    display: block;
-    text-align: center;
-    padding: 0.35rem 0.5rem;
-    font-size: 0.8rem;
-    font-weight: 500;
-    cursor: pointer;
-    background: transparent;
-    color: #aaa;
-    border-right: 1px solid #e8e8e8;
-    transition:
-      background 0.1s,
-      color 0.1s;
-    user-select: none;
-  }
-
-  &:last-child label {
-    border-right: none;
-  }
-
-  input[type="radio"]:checked + label {
-    background: #ebebeb;
-    color: #333;
-  }
-
-  &:hover label {
-    background: #f5f5f5;
-    color: #888;
-  }
-
-  input[type="radio"]:checked + label:hover {
-    background: #ebebeb;
-    color: #333;
-  }
 `;
 
 const formImageRow = css`
@@ -320,17 +253,22 @@ const tableWrap = css`
 // three-line card via grid areas (the header is hidden there).
 const cols = css`
   display: grid;
-  grid-template-columns: 2rem minmax(0, 1fr) minmax(0, 1fr) 3rem 5.5rem auto;
+  /* Every column is a fixed width or a share of what's left, none of them
+     content-sized: each row is its own grid, so a column that sizes to its
+     content lands somewhere else on the next row. The actions column holds one
+     button that only studied cards have — sized to content it was zero wide on
+     the rows without it, and the text columns beside it shifted. */
+  grid-template-columns: 2rem minmax(0, 1fr) minmax(0, 1fr) 1.5rem 4.5rem;
   gap: 0.75rem;
   align-items: center;
   padding: 0.5rem 0.75rem;
 
   @media (max-width: 680px) {
-    grid-template-columns: 1.75rem minmax(0, 1fr) auto;
+    grid-template-columns: 1.75rem minmax(0, 1fr) 4.5rem;
     grid-template-areas:
       "idx a actions"
       "idx b actions"
-      "idx seen last";
+      "idx diff diff";
     gap: 0.3rem 0.5rem;
   }
 `;
@@ -345,14 +283,6 @@ const row = css`
 
   &:hover {
     background: #fafafa;
-  }
-`;
-
-const rowSelected = css`
-  background: #f0f0f0;
-
-  &:hover {
-    background: #f0f0f0;
   }
 `;
 
@@ -394,48 +324,25 @@ const bCell = css`
   }
 `;
 
-const seenCell = css`
+const diffCell = css`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 0.2rem;
-  font-size: 0.75rem;
-  color: #999;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
+  justify-content: center;
 
   @media (max-width: 680px) {
-    grid-area: seen;
+    grid-area: diff;
     justify-content: flex-start;
   }
 `;
 
-const ratingCell = css`
-  display: flex;
-  gap: 0.25rem;
-  align-items: center;
-
-  @media (max-width: 680px) {
-    grid-area: last;
-    justify-content: flex-end;
-  }
-`;
-
-const ratingPill = css`
-  border: 1px solid #e5e5e5;
-  background: #fff;
-  border-radius: 4px;
-  padding: 0.1rem 0.35rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: #666;
-  font-variant-numeric: tabular-nums;
-`;
-
-// The most recent rating, called out a touch stronger than the previous one.
-const ratingLatest = css`
-  border-color: #ccc;
-  color: #1a1a1a;
+// How hard the card is, in the same green→red as the Account page's swarm.
+// An unstudied card has no difficulty to show, so it gets an empty ring rather
+// than a colour that would claim something.
+const diffDot = css`
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  border: 1px solid #e0e0e0;
 `;
 
 const rowActions = css`
@@ -470,53 +377,6 @@ const rowBtn = css`
   }
 `;
 
-// Low-emphasis "remove from line", tucked into the expanded toolbar.
-const removeLink = css`
-  background: none;
-  border: none;
-  color: #b0b0b0;
-  font-size: 0.75rem;
-  cursor: pointer;
-  padding: 0.3rem 0.4rem;
-
-  &:hover {
-    color: #dc2626;
-    text-decoration: underline;
-  }
-`;
-
-const toolbar = css`
-  grid-column: 1 / -1;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-  padding-top: 0.5rem;
-  margin-top: 0.25rem;
-  border-top: 1px solid #f0f0f0;
-`;
-
-const stepGroup = css`
-  display: flex;
-  gap: 0.25rem;
-`;
-
-const stepBtn = css`
-  background: #f4f4f4;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  padding: 0.3rem 0.55rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #333;
-  cursor: pointer;
-  font-variant-numeric: tabular-nums;
-
-  &:hover {
-    background: #e8e8e8;
-  }
-`;
-
 // The orders the list can be shown in. "queue" is the line itself; the other
 // two are read-only views of the same cards.
 const SORTS = ["queue", "seen", "created"] as const;
@@ -539,6 +399,7 @@ interface LineCard {
   image?: { id: string; url: string; path: string };
   queues?: { [lineId: string]: { rank: string } };
   log?: CardLog;
+  srs?: SrsState;
 }
 
 function makeDefaultForm(aLang: string, bLang: string): CardData {
@@ -547,15 +408,9 @@ function makeDefaultForm(aLang: string, bLang: string): CardData {
 
 export default function Cards() {
   const [modalCard, setModalCard] = useState<Card | null>(null);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortBy>("queue");
-  // Moving a card reorders the list, which otherwise resets the window scroll.
-  // We stash the scroll position on a move and restore it once the new order
-  // has committed (before paint) so the page stays put.
-  const scrollTarget = useRef<number | null>(null);
-
   const [newForm, setNewForm] = useState<CardData>(
-    makeDefaultForm(A_LANGS[0], B_LANGS[0]),
+    makeDefaultForm(NEW_LANGS.a, NEW_LANGS.b),
   );
   const [newImageFile, setNewImageFile] = useState<File | null>(null);
   const [newImagePreview, setNewImagePreview] = useState<string | null>(null);
@@ -624,16 +479,6 @@ export default function Cards() {
           )
         : members;
 
-  // When the rendered order changes, restore any scroll position captured by a
-  // move so reordering doesn't jump the page.
-  const orderKey = displayMembers.map((m) => m.id).join(",");
-  useLayoutEffect(() => {
-    if (scrollTarget.current !== null) {
-      window.scrollTo(0, scrollTarget.current);
-      scrollTarget.current = null;
-    }
-  }, [orderKey]);
-
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault();
     setNewSaving(true);
@@ -665,42 +510,18 @@ export default function Cards() {
     setNewSaving(false);
   }
 
-  async function handleMove(cardId: string, steps: number) {
-    if (!activeLine) return;
-    const index = members.findIndex((c) => c.id === cardId);
-    if (index < 0) return;
-    const arr = members.slice();
-    const [moving] = arr.splice(index, 1);
-    if (!moving) return;
-    const target = Math.max(0, Math.min(arr.length, index + steps));
-    if (target === index) return;
-    // Only now that the move is certain — a stashed position left behind by a
-    // no-op would fire on the next reorder (or on adding a card) and scroll
-    // the page somewhere the user did not ask to go.
-    scrollTarget.current = window.scrollY;
-    const left = arr[target - 1];
-    const right = arr[target];
-    const newRank = safeKeyBetween(
-      left ? rankInLine(left, activeLine)! : null,
-      right ? rankInLine(right, activeLine)! : null,
-    );
-    await moveToRank(moving.id, activeLine, newRank, steps);
+  /** Met the word in the wild and blanked on it: grade it Again from the list,
+   *  so it comes back in a few minutes instead of waiting out a schedule the
+   *  failure just disproved. Logged as `source: "field"` — it is a real review,
+   *  it just didn't happen in a session. */
+  async function handleRateAgain(card: Card) {
+    await rateCard(card, activeLine ?? "", Rating.Again, "", "", "field");
   }
 
-  // Send a card back to the top of the queue — as high as possible without
-  // sitting next to another fresh (not-yet-studied) card.
-  async function handleMoveToTop(cardId: string) {
-    if (!activeLine) return;
-    const index = members.findIndex((c) => c.id === cardId);
-    if (index <= 0) return; // not found, or already at the top
-    scrollTarget.current = window.scrollY;
-    await moveToTop(members, activeLine, cardId);
-  }
-
-  async function handleRemove(cardId: string) {
-    if (!activeLine) return;
-    await removeFromLine(activeLine, cardId);
-    if (selectedId === cardId) setSelectedId(null);
+  function handleDelete(cardId: string) {
+    // Soft: `deleteCard` stamps `deletedAt`, the row and its history stay.
+    deleteCard(cardId);
+    setModalCard(null);
   }
 
   async function handleUpdate(
@@ -712,34 +533,11 @@ export default function Cards() {
     setModalCard(null);
   }
 
-  function handleDelete(cardId: string) {
-    deleteCard(cardId);
-    setModalCard(null);
-  }
-
   return (
     <div className={page}>
       <form className={inlineFormPanel} onSubmit={handleCreate}>
         <div className={formSides}>
           <div className={formSide}>
-            <div className={formSideRow}>
-              <span className={formLabel}>Card language</span>
-              <div className={segmented}>
-                {A_LANGS.map((l) => (
-                  <div key={l} className={segmentedItem}>
-                    <input
-                      type="radio"
-                      id={`new-aLang-${l}`}
-                      name="new-aLang"
-                      value={l}
-                      checked={newForm.aLang === l}
-                      onChange={() => setNew("aLang", l)}
-                    />
-                    <label htmlFor={`new-aLang-${l}`}>{l}</label>
-                  </div>
-                ))}
-              </div>
-            </div>
             <span className={formLabel}>Скрытая сторона</span>
             <input
               className={formInput}
@@ -747,24 +545,6 @@ export default function Cards() {
               onChange={(e) => setNew("aCard", e.target.value)}
               required
             />
-            <div className={formSideRow}>
-              <span className={formLabel}>Translation language</span>
-              <div className={segmented}>
-                {B_LANGS.map((l) => (
-                  <div key={l} className={segmentedItem}>
-                    <input
-                      type="radio"
-                      id={`new-bLang-${l}`}
-                      name="new-bLang"
-                      value={l}
-                      checked={newForm.bLang === l}
-                      onChange={() => setNew("bLang", l)}
-                    />
-                    <label htmlFor={`new-bLang-${l}`}>{l}</label>
-                  </div>
-                ))}
-              </div>
-            </div>
             <span className={formLabel}>Открытая сторона</span>
             <input
               className={formInput}
@@ -879,18 +659,13 @@ export default function Cards() {
 
           <div className={tableWrap}>
             {displayMembers.map((e) => {
-              const selected = e.id === selectedId;
               const pos = queuePos.get(e.id) ?? 0;
-              const st = statsById.get(e.id) ?? { seen: 0, recent: [] };
+              const graded = !!e.srs && e.srs.reps > 0;
               return (
                 <div
                   key={e.id}
-                  className={
-                    selected
-                      ? `${cols} ${row} ${rowSelected}`
-                      : `${cols} ${row}`
-                  }
-                  onClick={() => setSelectedId(selected ? null : e.id)}
+                  className={`${cols} ${row}`}
+                  onClick={() => setModalCard(e as Card)}
                 >
                   <span className={idx}>{pos + 1}</span>
                   <div className={aCell}>
@@ -898,82 +673,44 @@ export default function Cards() {
                     {e.audio && <PlayButton path={e.audio} small />}
                   </div>
                   <span className={`${cellText} ${bCell}`}>{e.bCard}</span>
+                  {/* `introduce` seeds an empty FSRS card, so a card taken
+                      into study but not yet answered has `srs` with a
+                      difficulty of 0 — which is not "the easiest card there
+                      is", it is "no answer to judge by". `reps` is what tells
+                      the two apart. */}
                   <span
-                    className={seenCell}
-                    title={`Seen ${st.seen} ${st.seen === 1 ? "time" : "times"}`}
+                    className={diffCell}
+                    title={
+                      graded
+                        ? `Difficulty ${e.srs!.difficulty.toFixed(1)} of 10`
+                        : "Not answered yet"
+                    }
                   >
-                    👁 {st.seen}
-                  </span>
-                  <span
-                    className={ratingCell}
-                    title="Last ratings (newest first)"
-                  >
-                    {st.recent.map((amount, j) => (
-                      <span
-                        key={j}
-                        className={
-                          j === 0 ? `${ratingPill} ${ratingLatest}` : ratingPill
-                        }
-                      >
-                        {amount}
-                      </span>
-                    ))}
+                    <span
+                      className={diffDot}
+                      style={
+                        graded
+                          ? { background: difficultyColor(e.srs!.difficulty) }
+                          : undefined
+                      }
+                    />
                   </span>
                   <div className={rowActions}>
-                    <button
-                      className={rowBtn}
-                      title="Move to the front of the queue"
-                      onClick={(ev) => {
-                        ev.stopPropagation();
-                        handleMoveToTop(e.id);
-                      }}
-                    >
-                      ⤒ Top
-                    </button>
-                  </div>
-
-                  {selected && (
-                    <div
-                      className={toolbar}
-                      onClick={(ev) => ev.stopPropagation()}
-                    >
-                      <div className={stepGroup}>
-                        {[...MOVE_STEPS].reverse().map((s) => (
-                          <button
-                            key={`up-${s}`}
-                            className={stepBtn}
-                            onClick={() => handleMove(e.id, -s)}
-                          >
-                            ↑{s}
-                          </button>
-                        ))}
-                      </div>
-                      <div className={stepGroup}>
-                        {MOVE_STEPS.map((s) => (
-                          <button
-                            key={`down-${s}`}
-                            className={stepBtn}
-                            onClick={() => handleMove(e.id, s)}
-                          >
-                            ↓{s}
-                          </button>
-                        ))}
-                      </div>
+                    {/* Only for a card already in study — an unstudied one has
+                        no schedule to knock down. */}
+                    {graded && (
                       <button
                         className={rowBtn}
-                        style={{ marginLeft: "auto" }}
-                        onClick={() => setModalCard(e as Card)}
+                        title="Встретил в жизни и не вспомнил: оценка Again, карточка вернётся через несколько минут"
+                        onClick={(ev) => {
+                          ev.stopPropagation();
+                          handleRateAgain(e as Card);
+                        }}
                       >
-                        Edit
+                        Забыл
                       </button>
-                      <button
-                        className={removeLink}
-                        onClick={() => handleRemove(e.id)}
-                      >
-                        Remove from line
-                      </button>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               );
             })}

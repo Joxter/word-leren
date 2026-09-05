@@ -11,8 +11,9 @@ import LineCheckboxes from "./LineCheckboxes";
 import MarkdocField from "./MarkdocField";
 import PlayButton from "./PlayButton";
 
-const A_LANGS = ["NL", "EN"] as const;
-const B_LANGS = ["EN", "RU"] as const;
+// The card's languages are no longer editable — the pair is NL → EN for every
+// card that matters, and the picker was left over from an older idea. `aLang`
+// and `bLang` still travel with the form, they just aren't asked about.
 
 const backdrop = css`
   position: fixed;
@@ -130,61 +131,6 @@ const dictBtn = css`
 const dictNote = css`
   font-size: 0.75rem;
   color: #999;
-`;
-
-const segmented = css`
-  display: inline-flex;
-  border: 1px solid #e8e8e8;
-  border-radius: 6px;
-  overflow: hidden;
-  width: 100%;
-`;
-
-const segmentedItem = css`
-  flex: 1;
-  position: relative;
-
-  input[type="radio"] {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  label {
-    display: block;
-    text-align: center;
-    padding: 0.35rem 0.5rem;
-    font-size: 0.8rem;
-    font-weight: 500;
-    cursor: pointer;
-    background: transparent;
-    color: #aaa;
-    border-right: 1px solid #e8e8e8;
-    transition:
-      background 0.1s,
-      color 0.1s;
-    user-select: none;
-  }
-
-  &:last-child label {
-    border-right: none;
-  }
-
-  input[type="radio"]:checked + label {
-    background: #ebebeb;
-    color: #333;
-  }
-
-  &:hover label {
-    background: #f5f5f5;
-    color: #888;
-  }
-
-  input[type="radio"]:checked + label:hover {
-    background: #ebebeb;
-    color: #333;
-  }
 `;
 
 const sideInput = css`
@@ -454,22 +400,6 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
           <div className={formBody}>
             <div className={sides}>
               <div className={side}>
-                <span className={label}>Language A</span>
-                <div className={segmented}>
-                  {A_LANGS.map((l) => (
-                    <div key={l} className={segmentedItem}>
-                      <input
-                        type="radio"
-                        id={`aLang-${l}`}
-                        name="aLang"
-                        value={l}
-                        checked={form.aLang === l}
-                        onChange={() => set("aLang", l)}
-                      />
-                      <label htmlFor={`aLang-${l}`}>{l}</label>
-                    </div>
-                  ))}
-                </div>
                 <span className={label}>Скрытая сторона</span>
                 <input
                   className={sideInput}
@@ -480,22 +410,6 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
               </div>
 
               <div className={side}>
-                <span className={label}>Language B</span>
-                <div className={segmented}>
-                  {B_LANGS.map((l) => (
-                    <div key={l} className={segmentedItem}>
-                      <input
-                        type="radio"
-                        id={`bLang-${l}`}
-                        name="bLang"
-                        value={l}
-                        checked={form.bLang === l}
-                        onChange={() => set("bLang", l)}
-                      />
-                      <label htmlFor={`bLang-${l}`}>{l}</label>
-                    </div>
-                  ))}
-                </div>
                 <span className={label}>Открытая сторона</span>
                 <input
                   className={sideInput}

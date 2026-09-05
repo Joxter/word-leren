@@ -15,7 +15,7 @@ import {
   deleteLine,
 } from "../lib/lines";
 import { isFresh, sortLine, dailyReviewStats } from "../lib/queue";
-import { dueForecast } from "../lib/srs";
+import { difficultyColor, dueForecast } from "../lib/srs";
 import { showCounter, setShowCounter } from "../lib/prefs";
 import type { CardLog, QueuedCard } from "../lib/queue";
 import type { SrsState } from "../lib/srs";
@@ -319,12 +319,6 @@ interface AccountCard extends QueuedCard {
   id: string;
   log?: CardLog;
   srs?: SrsState;
-}
-
-/** FSRS difficulty (1..10) as green→red. */
-function difficultyColor(d: number): string {
-  const t = Math.min(1, Math.max(0, (d - 1) / 9));
-  return `hsl(${150 - t * 150} 62% ${58 - t * 10}%)`;
 }
 
 // The chart is drawn to this width and stretched to the column, so a smaller

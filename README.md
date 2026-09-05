@@ -103,16 +103,14 @@ that no longer occurs at all is reported as broken. See `src/lib/examples.ts`.
 A deliberately simple, Anki-inspired review mode built around a single global queue — "the line". No timers, days, or sessions, just one dynamic ordered list.
 
 - **Learn** (`/learn`) — see the top card's side B as the prompt, with a hint of the answer's language (e.g. `EN → NL`). Reveal shows side A — its word, audio, and note — then press a **Depth** button to drop the card to the N-th place from the top (`5 / 10 / 50 / 100 / 500 / 1000`). The next card surfaces immediately. `Space`/`Enter` reveals; number keys `1`–`6` pick a depth.
-- **Cards** (`/`) — the create form, and below it the active line in order: nudge any card up or down by a number of steps, send one back to the top, or open any card in the editor via its **Edit** button. A Sort select picks between three views of the same cards — queue order, least seen first, and newest first — while the leading number always stays the card's place in the queue, so a move means the same thing in any of them. The page always shows whichever line is active on Learn; the lines themselves are created and deleted on the [personal cabinet](#personal-cabinet).
+- **Cards** (`/`) — the create form, and below it the active line in order. A click on any row opens that card in the editor; a coloured dot shows how hard the card is (the same green→red as the [personal cabinet](#personal-cabinet)'s chart), and an empty ring means it has never been studied. Each studied row carries a **Забыл** button — met the word in the wild and blanked on it, which grades it `Again` on the spot (recorded as `source: "field"`) so it comes back in a few minutes. A Sort select picks between three views of the same cards — queue order, least seen first, and newest first — while the leading number always stays the card's place in the queue. The page always shows whichever line is active on Learn; the lines themselves are created and deleted on the personal cabinet.
 
-Two toggles change what the prompt asks for. **Reverse** shows side A and asks for its
-meaning, the direction reading actually needs. **Examples** prompts with one of the card's
+One toggle changes what the prompt asks for. **Examples** prompts with one of the card's
 [example sentences](#examples) instead, with the fragments belonging to that card blanked
 out, and its translation underneath — Hint spells the gaps out letter by letter in place,
-Type checks the missing words, and Reveal fills them back in and names the card. A card
-with no usable example falls back to the plain prompt. The two can be on together: a
-sentence is always asked in its own direction, so **Reverse** then applies to exactly
-those cards that fall back. Whichever example came up is recorded on the review, so a card carrying
+Type checks the missing words (`✕` or `Escape` leaves the answer box again), and Reveal
+fills them back in and names the card. A card with no usable example falls back to the
+plain prompt. Whichever example came up is recorded on the review, so a card carrying
 several sentences cycles through them least-recently-seen first rather than drilling one.
 Revealing any card also lists its other examples underneath.
 

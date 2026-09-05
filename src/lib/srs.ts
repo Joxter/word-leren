@@ -10,7 +10,7 @@ import {
   type Grade,
 } from "ts-fsrs";
 import { db } from "../db";
-import { logEntry } from "./queue";
+import { logEntry, type CardLog } from "./queue";
 
 // Classic day-based spaced repetition on top of FSRS. A card carries the
 // library's own Card state in `card.srs` (dates as unix ms) and the queue is
@@ -52,7 +52,53 @@ export const RATINGS = [
   },
 ] as const;
 
+/** A grade's colour, red→blue in the order the buttons sit in. Used by the
+ *  review history on Learn; deliberately not the difficulty ramp, which asks a
+ *  different question (how hard the card is, not how one answer went). */
+export const GRADE_COLORS: Record<number, string> = {
+  [Rating.Again]: "#dc2626",
+  [Rating.Hard]: "#f59e0b",
+  [Rating.Good]: "#16a34a",
+  [Rating.Easy]: "#0ea5e9",
+};
+
+/** One past answer, as the history strip draws it. */
+export interface GradedReview {
+  at: number;
+  /** `ts-fsrs` Rating, 1..4. */
+  rating: number;
+  /** Days until the card was scheduled next, as that answer set it. */
+  dueIn?: number;
+}
+
+/**
+ * A card's answers, oldest first, at most `limit` of them (the most recent
+ * ones). `rate` is an answer from Learn, `known` the Easy that marking a card
+ * known on sight writes — both carry a real grade in `amount`. Nothing else
+ * does: the retired manual queue's `place` events carry a depth in that same
+ * field, and drawing 250 as a grade would paint a colour that never happened.
+ */
+export function gradeHistory(log?: CardLog, limit = 20): GradedReview[] {
+  return Object.values(log ?? {})
+    .filter((e) => e.kind === "rate" || e.kind === "known")
+    .sort((a, b) => a.at - b.at)
+    .slice(-limit)
+    .map((e) => ({
+      at: e.at,
+      rating: e.amount,
+      dueIn: typeof e.dueIn === "number" ? e.dueIn : undefined,
+    }));
+}
+
 /** The `ts-fsrs` Card as it is stored: dates flattened to unix ms. */
+/** FSRS difficulty (1..10) as green→red. Lives here rather than next to one of
+ *  its two callers: the Account chart and the card list have to agree on what
+ *  "hard" looks like, or the same card reads as two different cards. */
+export function difficultyColor(d: number): string {
+  const t = Math.min(1, Math.max(0, (d - 1) / 9));
+  return `hsl(${150 - t * 150} 62% ${58 - t * 10}%)`;
+}
+
 export interface SrsState {
   due: number;
   stability: number;
@@ -125,21 +171,30 @@ export function nextDueAt(cards: StudyCard[], lineId: string): number | null {
   return upcoming.length ? Math.min(...upcoming) : null;
 }
 
-/** Cards due within the next 24h that aren't due yet — "later today". */
+/** Cards that come back before midnight and aren't due yet — "later today".
+ *  The window used to be a flat 24 hours, which at 22:00 counted most of
+ *  tomorrow as today and had the Learn screen promise cards that weren't
+ *  coming. */
 export function dueSoon(
   cards: StudyCard[],
   lineId: string,
   now = Date.now(),
 ): number {
+  const endOfDay = new Date(now).setHours(23, 59, 59, 999);
   return cards.filter(
     (c) =>
-      inLine(c, lineId) && c.srs && c.srs.due > now && c.srs.due <= now + 864e5,
+      inLine(c, lineId) && c.srs && c.srs.due > now && c.srs.due <= endOfDay,
   ).length;
 }
 
 /**
  * Answer a card: advance its FSRS state and append a `rate` event recording
  * the transition, so the log alone can feed a parameter optimizer later.
+ *
+ * `source` says where the answer came from: "session" is the Learn queue,
+ * "field" is the word met in the wild and graded outside a session. FSRS
+ * itself makes no distinction — it is for later, when the log is read back to
+ * ask which reviews the schedule actually earned.
  */
 export async function rateCard(
   card: StudyCard,
@@ -147,6 +202,7 @@ export async function rateCard(
   rating: Grade,
   typed = "",
   linkId = "",
+  source: "session" | "field" = "session",
 ): Promise<void> {
   const now = Date.now();
   const before = card.srs;
@@ -165,7 +221,7 @@ export async function rateCard(
         sAfter: srs.stability,
         dAfter: srs.difficulty,
         dueIn: (srs.due - now) / 864e5,
-        source: "session",
+        source,
       }),
     }),
   );

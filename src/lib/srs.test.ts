@@ -5,6 +5,7 @@ import {
   newPool,
   dueSoon,
   formatGap,
+  gradeHistory,
   previewIntervals,
   Rating,
   type SrsState,
@@ -74,8 +75,48 @@ describe("newPool", () => {
 });
 
 describe("dueSoon", () => {
-  it("counts what comes back within a day, excluding what is due already", () => {
-    expect(dueSoon(all, "L", now)).toBe(1);
+  // A fixed local noon: "today" has to be a calendar day, so a fixture built
+  // off the wall clock would count differently depending on the hour it ran.
+  const noon = new Date(2026, 0, 15, 12, 0, 0).getTime();
+  const at = (t: number, id: string) => ({
+    id,
+    srs: state(t),
+    queues: { L: { rank: "a" } },
+  });
+
+  it("counts what still comes back today, excluding what is due already", () => {
+    const cards = [
+      at(noon - HOUR, "past"),
+      at(noon + 5 * HOUR, "evening"),
+      at(noon + 14 * HOUR, "tomorrow"),
+    ];
+    expect(dueSoon(cards, "L", noon)).toBe(1);
+  });
+});
+
+describe("gradeHistory", () => {
+  const log = {
+    a: { at: 300, lineId: "L", kind: "rate", amount: 3, dueIn: 15 },
+    b: { at: 100, lineId: "L", kind: "rate", amount: 1 },
+    c: { at: 200, lineId: "L", kind: "place", amount: 250 },
+    d: { at: 400, lineId: "", kind: "edit", amount: 1 },
+    e: { at: 50, lineId: "L", kind: "known", amount: 4, dueIn: 7 },
+  };
+
+  it("keeps answers — graded and marked known alike — oldest first", () => {
+    expect(gradeHistory(log)).toEqual([
+      { at: 50, rating: 4, dueIn: 7 },
+      { at: 100, rating: 1, dueIn: undefined },
+      { at: 300, rating: 3, dueIn: 15 },
+    ]);
+  });
+
+  it("keeps the most recent ones when there are more than the limit", () => {
+    expect(gradeHistory(log, 1)).toEqual([{ at: 300, rating: 3, dueIn: 15 }]);
+  });
+
+  it("is empty for a card that has never been answered", () => {
+    expect(gradeHistory(undefined)).toEqual([]);
   });
 });
 

@@ -77,6 +77,8 @@ export type LogEntry = {
   dBefore?: number | null;
   sAfter?: number;
   dAfter?: number;
+  /** Days until the card was scheduled next, as this answer set it. */
+  dueIn?: number;
   /** "session" = from the queue, "field" = met in the wild, "manual" = state edited by hand. */
   source?: "session" | "field" | "manual";
   /** Card text edit (kind "edit"): which of aCard/bCard/note changed... */
