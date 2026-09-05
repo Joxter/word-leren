@@ -119,7 +119,7 @@ function buildServer(): McpServer {
     {
       title: "Search cards",
       description:
-        "List or search the deck. Ranked by relevance when `query` is given, by due date otherwise (soonest first, unstudied last). " +
+        "List or search the deck, with each card's note. Ranked by relevance when `query` is given, by due date otherwise (soonest first, unstudied last). " +
         `The deck is split into lines, which are separate decks sharing one account: ${lineNames.join(", ")}. ` +
         "Most cards are Dutch; the English line is a small side deck and holds most of the half-finished rows.",
       inputSchema: {
@@ -183,7 +183,14 @@ function buildServer(): McpServer {
         counts,
         matched: q ? hits.length : matched,
         returned: rows.length,
-        cards: rows.map((c) => brief(c, lines)),
+        // Notes ride along: they are what says whether a card is finished, and
+        // the search only ever matched the sides, so nothing here got noisier.
+        // They are not free — a note is a screenful of dictionary markup, so a
+        // `limit` in the hundreds buys a list nobody wanted to read.
+        cards: rows.map((c) => ({
+          ...brief(c, lines),
+          note: c.note || undefined,
+        })),
       });
     },
   );

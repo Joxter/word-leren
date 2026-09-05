@@ -54,10 +54,10 @@ export interface Brief {
   difficulty?: number;
 }
 
-/** What a list returns: enough to decide on a card, not the whole row. Notes
- *  stay out: they hold a screenful of dictionary markup each, and 500 of them
- *  came to 215 KB — a list is for choosing which card to open, and `get_card`
- *  is what opens it. */
+/** What a list returns: enough to decide on a card, not the whole row. The note
+ *  stays out of *this* shape — it holds a screenful of dictionary markup, and
+ *  500 of them came to 215 KB. A caller that keeps its list short adds it back
+ *  on top (the MCP search does, at a default of 50). */
 export function brief(c: DeckCard, lines: Record<string, string> = {}): Brief {
   const inLines = Object.keys(c.queues ?? {}).map((id) => lines[id] ?? id);
   return {
