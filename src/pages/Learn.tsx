@@ -379,6 +379,17 @@ const guideKey = css`
   color: #444;
 `;
 
+// The same dot as the history strip, in front of the grade it explains — so
+// a colour in the history is read off this list instead of guessed.
+const guideDot = css`
+  display: inline-block;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  margin-right: 0.35rem;
+  vertical-align: middle;
+`;
+
 // The intervals, kept below the guide rather than on the buttons: they are the
 // scheduler's opinion about this card, and having them under the thumb is what
 // turned answering into picking a date. Outlives the training wheels above.
@@ -1110,6 +1121,10 @@ export default function Learn() {
           <div className={ratingGuide}>
             {RATINGS.map((r) => (
               <div key={r.rating}>
+                <span
+                  className={guideDot}
+                  style={{ background: GRADE_COLORS[r.rating] }}
+                />
                 <span className={guideKey}>{r.label}</span> — {r.hint}
               </div>
             ))}
