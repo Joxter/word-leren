@@ -15,6 +15,7 @@ import {
   gradeHistory,
   GRADE_COLORS,
   RATINGS,
+  type DueOrder,
   type SrsState,
 } from "../lib/srs";
 import { showCounter } from "../lib/prefs";
@@ -470,6 +471,27 @@ const topBarToggles = css`
   font-size: 0.85rem;
 `;
 
+// The order picker, parked at the very bottom: it is set once and then
+// forgotten, and it must not sit next to the rating buttons.
+const sortRow = css`
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  color: #999;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  select {
+    font-family: inherit;
+    font-size: 0.8rem;
+    color: #666;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    padding: 0.2rem 0.3rem;
+    background: #fff;
+  }
+`;
+
 const invisible = css`
   visibility: hidden;
 `;
@@ -538,6 +560,13 @@ interface LearnCard {
  * flag is simply no longer read.
  */
 const EXAMPLES_KEY = "word-leren:examples";
+const ORDER_KEY = "word-leren:order";
+
+const ORDERS: { value: DueOrder; label: string }[] = [
+  { value: "due", label: "по расписанию" },
+  { value: "hard", label: "сначала сложные" },
+  { value: "easy", label: "сначала лёгкие" },
+];
 // Superseded by the two keys above, which used to be one three-way choice.
 // Read once, so an existing preference survives the change.
 const LEGACY_MODE_KEY = "word-leren:mode";
@@ -574,6 +603,9 @@ export default function Learn() {
   const [, tick] = useState(0);
   const [examplesOn, setExamplesOn] = useState(() =>
     storedFlag(EXAMPLES_KEY, "examples"),
+  );
+  const [order, setOrder] = useState<DueOrder>(
+    () => (localStorage.getItem(ORDER_KEY) as DueOrder | null) ?? "due",
   );
   // Set on the Account page; read once per visit, which is when it can change.
   const [counterOn] = useState(showCounter);
@@ -612,7 +644,9 @@ export default function Learn() {
   });
 
   const cards = (data?.cards ?? []) as LearnCard[];
-  const members = activeLine ? dueCards(cards, activeLine) : [];
+  const members = activeLine
+    ? dueCards(cards, activeLine, Date.now(), order)
+    : [];
   const current = members[0];
   // What the empty state needs to say something useful instead of "nothing".
   const laterToday = activeLine ? dueSoon(cards, activeLine) : 0;
@@ -1160,6 +1194,26 @@ export default function Learn() {
           )}
         </>
       )}
+
+      <label className={sortRow}>
+        Порядок
+        <select
+          value={order}
+          onChange={(e) => {
+            const next = e.target.value as DueOrder;
+            localStorage.setItem(ORDER_KEY, next);
+            setOrder(next);
+            // The top card changes under the user otherwise.
+            resetCardState();
+          }}
+        >
+          {ORDERS.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
+      </label>
 
       {modalCard !== null && (
         <CardModal

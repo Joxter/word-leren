@@ -98,7 +98,9 @@ Span offsets index into `examples.aText` and go stale on any edit, so every read
 Classic day-based spaced repetition on FSRS (`ts-fsrs`), in `src/lib/srs.ts`. A card's
 scheduling state is the library's own `Card`, stored verbatim in `cards.srs` with dates
 as unix ms — one JSON blob rather than a column each, because the shape is the library's
-and the app loads every card into memory anyway. The queue is just `due <= now`.
+and the app loads every card into memory anyway. The queue is just `due <= now`,
+ordered by `due` unless the picker at the bottom of Learn says by FSRS difficulty
+(`DueOrder` in `srs.ts`, remembered per device in localStorage).
 
 - **New cards go straight into study.** Creating a card (the Cards form, the dictionary's
   "+ Add to cards") calls `introduce`, so it gets FSRS state and is asked at the next

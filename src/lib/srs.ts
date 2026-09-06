@@ -148,15 +148,25 @@ function toInput(card: StudyCard, now: number): CardInput {
   return { ...state, id: card.id } as unknown as CardInput;
 }
 
-/** The line's cards that are due now, soonest first. */
+/** How the due queue is ordered. Same cards either way — "due" is by
+ *  schedule, the other two by the FSRS difficulty the card has earned. */
+export type DueOrder = "due" | "hard" | "easy";
+
+/** The line's cards that are due now, soonest first by default. */
 export function dueCards<T extends StudyCard>(
   cards: T[],
   lineId: string,
   now = Date.now(),
+  order: DueOrder = "due",
 ): T[] {
+  const by: Record<DueOrder, (a: T, b: T) => number> = {
+    due: (a, b) => a.srs!.due - b.srs!.due,
+    hard: (a, b) => b.srs!.difficulty - a.srs!.difficulty,
+    easy: (a, b) => a.srs!.difficulty - b.srs!.difficulty,
+  };
   return cards
     .filter((c) => inLine(c, lineId) && c.srs && c.srs.due <= now)
-    .sort((a, b) => a.srs!.due - b.srs!.due);
+    .sort(by[order]);
 }
 
 /** The line's cards that have never been taken into study. */

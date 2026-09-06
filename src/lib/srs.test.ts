@@ -66,6 +66,20 @@ describe("dueCards", () => {
   it("leaves out cards that were never taken into study", () => {
     expect(dueCards(all, "L", now).some((c) => c.id === "fresh")).toBe(false);
   });
+
+  it("orders by difficulty when asked, either way round", () => {
+    const hard = { ...overdue, srs: { ...overdue.srs, difficulty: 9 } };
+    const easy = { ...dueNow, srs: { ...dueNow.srs, difficulty: 2 } };
+    const pool = [easy, hard];
+    expect(dueCards(pool, "L", now, "hard").map((c) => c.id)).toEqual([
+      "overdue",
+      "dueNow",
+    ]);
+    expect(dueCards(pool, "L", now, "easy").map((c) => c.id)).toEqual([
+      "dueNow",
+      "overdue",
+    ]);
+  });
 });
 
 describe("newPool", () => {
