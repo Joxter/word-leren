@@ -308,6 +308,35 @@ const newLineForm = css`
   border-top: 1px solid #f0f0f0;
 `;
 
+// Cards in no line. The list can be long, so it scrolls inside its card
+// rather than pushing the page down.
+const orphanList = css`
+  max-height: 16rem;
+  overflow-y: auto;
+`;
+
+const orphanRow = css`
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid #f4f4f4;
+  font-size: 0.9rem;
+
+  &:last-child {
+    border-bottom: none;
+  }
+`;
+
+const orphanB = css`
+  color: #888;
+  font-size: 0.85rem;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
 const empty = css`
   padding: 1.5rem 1rem;
   text-align: center;
@@ -317,6 +346,8 @@ const empty = css`
 
 interface AccountCard extends QueuedCard {
   id: string;
+  aCard: string;
+  bCard: string;
   log?: CardLog;
   srs?: SrsState;
 }
@@ -433,11 +464,15 @@ export default function Account() {
   const grammarCount = data?.lightCards?.length ?? 0;
   // Study activity across every line, the strip that used to sit on the Line page.
   const days = dailyReviewStats(cards, 14);
+  // Cards that belong to no line at all: invisible everywhere else, listed at
+  // the bottom of this page.
+  const inNoLine = (c: AccountCard) => Object.keys(c.queues ?? {}).length === 0;
+  const orphans = cards.filter(inNoLine);
   // And what is coming: how the scheduler spread the collection over the days
   // ahead, so a wall of repeats is visible before you walk into it. A card in
   // no line keeps its schedule but is never served, so it is not work ahead.
   const forecast = dueForecast(
-    cards.filter((c) => Object.keys(c.queues ?? {}).length > 0),
+    cards.filter((c) => !inNoLine(c)),
     14,
   );
 
@@ -690,6 +725,37 @@ export default function Account() {
               Create
             </button>
           </div>
+        </div>
+      </section>
+
+      {/* A card belongs to a line or to nothing: Learn, Cards and Backlog all
+          read one. These are the ones that fell out — a line deleted, or a
+          card taken out of every line — and nothing else in the app shows
+          them. Listed rather than fixed: the way lines work is due a rethink,
+          and this is here so the strays are at least countable meanwhile. */}
+      <section className={section}>
+        <div className={sectionHead}>
+          <h2 className={sectionTitle}>In no line</h2>
+          <span className={sectionNote}>
+            Not studied, not in any Backlog — open one on Cards to give it a
+            line.
+          </span>
+        </div>
+        <div className={card}>
+          {isLoading ? (
+            <div className={empty}>…</div>
+          ) : orphans.length === 0 ? (
+            <div className={empty}>None — every card is in a line.</div>
+          ) : (
+            <div className={orphanList}>
+              {orphans.map((c) => (
+                <div key={c.id} className={orphanRow}>
+                  <span>{c.aCard}</span>
+                  <span className={orphanB}>{c.bCard}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </div>

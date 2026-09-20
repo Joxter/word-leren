@@ -16,7 +16,7 @@ import type { LinkedCard } from "./examples";
 import { getDefaultLineId } from "./lines";
 import { enqueueTop, logEntry, type CardLog } from "./queue";
 import { ownedPath, ownerId } from "./session";
-import { introduce } from "./srs";
+import { introduce, type SrsState } from "./srs";
 import type { CardData } from "../pages/Cards";
 
 /**
@@ -24,7 +24,10 @@ import type { CardData } from "../pages/Cards";
  * batch can mix entities (a card update alongside a `$files` delete) — the
  * per-entity chunk types on their own don't unify.
  */
-type TxOp = Extract<Parameters<typeof db.transact>[0], unknown[]>[number];
+export type TxOp = Extract<
+  Parameters<typeof db.transact>[0],
+  unknown[]
+>[number];
 
 // `trimCardText` and the edit diff live in `lib/deck.ts`, the one module the
 // MCP server can import — everything here reaches `../db`, which connects on
@@ -91,6 +94,37 @@ export function deleteCard(cardId: string): Promise<unknown> {
     db.tx.cards[cardId].update({ deletedAt: Date.now() }),
     db.tx.cards[cardId].merge({ log: logEntry("", "delete", 0) }),
   ]);
+}
+
+/**
+ * Send a card back to the pool: drop its FSRS state, so it falls out of study
+ * and turns up on Backlog again. The state it was carrying rides along in the
+ * log event — the way back (Backlog → `introduce`) reseeds from scratch, so
+ * nothing reads it, but a card whose schedule vanished without trace is a
+ * history that can't be replayed later.
+ *
+ * A card in no line lands nowhere: Backlog lists a line's pool. The Account
+ * page has a section for those, and the line checkboxes are right here.
+ */
+export function unstudyCard(card: {
+  id: string;
+  srs?: SrsState;
+}): Promise<unknown> {
+  return db.transact([
+    db.tx.cards[card.id].update({ srs: null }),
+    db.tx.cards[card.id].merge({
+      log: logEntry("", "backlog", 0, { srs: card.srs ?? null }),
+    }),
+  ]);
+}
+
+/** The ★: mark a card mid-session to come back to it later, without breaking
+ *  off to do anything about it. No log event — the field is the whole state,
+ *  and a history of marks and unmarks answers no question. */
+export function flagCard(cardId: string, on: boolean): Promise<unknown> {
+  return db.transact(
+    db.tx.cards[cardId].update({ flaggedAt: on ? Date.now() : null }),
+  );
 }
 
 /** Undo a `deleteCard`. No screen calls this yet — it is for the console and

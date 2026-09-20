@@ -95,4 +95,10 @@ describe("isFresh", () => {
     expect(isFresh(log([1, "top"], [2, "introduce"], [3, "rate"]))).toBe(false);
     expect(isFresh(log([1, "rate"], [2, "top"]))).toBe(true);
   });
+
+  it("ignores edits and deletes — a typo fix is neither an add nor a review", () => {
+    expect(isFresh(log([1, "top"], [2, "edit"]))).toBe(true);
+    expect(isFresh(log([1, "top"], [2, "rate"], [3, "edit"]))).toBe(false);
+    expect(isFresh(log([1, "top"], [2, "delete"], [3, "restore"]))).toBe(true);
+  });
 });

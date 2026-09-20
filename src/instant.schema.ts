@@ -50,6 +50,10 @@ const _schema = i.schema({
       // (`myCards()` in lib/session.ts), so a delete is one field away from
       // being undone.
       deletedAt: i.number().optional().indexed(),
+      // Marked while studying, to come back to later (the ★ on Learn). A
+      // timestamp rather than a boolean: same size, and it puts the freshest
+      // marks first in a list of them. Null/absent = not marked.
+      flaggedAt: i.number().optional().indexed(),
       // Append-only history of place/move actions, keyed by event id so entries
       // can be merged in without clobbering each other.
       log: i

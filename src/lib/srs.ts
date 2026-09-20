@@ -159,10 +159,24 @@ export function dueCards<T extends StudyCard>(
   now = Date.now(),
   order: DueOrder = "due",
 ): T[] {
+  const byDue = (a: T, b: T) => a.srs!.due - b.srs!.due;
+  // A card taken into study but never answered carries difficulty 0, which is
+  // "no answer to judge by" and not "the easiest card there is" — `reps` is
+  // what tells the two apart. Sorting on the number alone put every new card at
+  // one end: all of them last under "сначала сложные", all of them first under
+  // "сначала лёгкие". So they sort last either way, by schedule among
+  // themselves.
+  const unjudged = (c: T) => (c.srs!.reps > 0 ? 0 : 1);
   const by: Record<DueOrder, (a: T, b: T) => number> = {
-    due: (a, b) => a.srs!.due - b.srs!.due,
-    hard: (a, b) => b.srs!.difficulty - a.srs!.difficulty,
-    easy: (a, b) => a.srs!.difficulty - b.srs!.difficulty,
+    due: byDue,
+    hard: (a, b) =>
+      unjudged(a) - unjudged(b) ||
+      b.srs!.difficulty - a.srs!.difficulty ||
+      byDue(a, b),
+    easy: (a, b) =>
+      unjudged(a) - unjudged(b) ||
+      a.srs!.difficulty - b.srs!.difficulty ||
+      byDue(a, b),
   };
   return cards
     .filter((c) => inLine(c, lineId) && c.srs && c.srs.due <= now)

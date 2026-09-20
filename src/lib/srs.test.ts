@@ -80,6 +80,29 @@ describe("dueCards", () => {
       "overdue",
     ]);
   });
+
+  it("keeps never-answered cards out of the difficulty sort, either way", () => {
+    // Introduced but not answered: difficulty 0, which is "nothing to judge by"
+    // and would otherwise sort as the easiest card in the deck.
+    const unanswered = {
+      id: "unanswered",
+      srs: { ...state(now - 2 * HOUR), difficulty: 0, reps: 0 },
+      queues: { L: { rank: "f" } },
+    };
+    const hard = { ...overdue, srs: { ...overdue.srs, difficulty: 9 } };
+    const easy = { ...dueNow, srs: { ...dueNow.srs, difficulty: 2 } };
+    const pool = [unanswered, easy, hard];
+    expect(dueCards(pool, "L", now, "hard").map((c) => c.id)).toEqual([
+      "overdue",
+      "dueNow",
+      "unanswered",
+    ]);
+    expect(dueCards(pool, "L", now, "easy").map((c) => c.id)).toEqual([
+      "dueNow",
+      "overdue",
+      "unanswered",
+    ]);
+  });
 });
 
 describe("newPool", () => {

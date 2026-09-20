@@ -6,6 +6,7 @@ import { useLines } from "../lib/lines";
 import { findEntry, loadDictionary } from "../lib/dictionary";
 import { buildDictBlock, withDictBlock } from "../lib/dictNote";
 import { enqueueTop, removeFromLine } from "../lib/queue";
+import { flagCard, unstudyCard } from "../lib/cards";
 import CardExamples from "./CardExamples";
 import LineCheckboxes from "./LineCheckboxes";
 import MarkdocField from "./MarkdocField";
@@ -230,6 +231,70 @@ const actions = css`
   margin-left: auto;
 `;
 
+// Lines and "to backlog" on one line: both answer "where does this card sit",
+// and the button is kept well away from Delete in the footer.
+const linesRow = css`
+  /* Overrides the column direction of fieldGroup, which this sits on top of. */
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 0.75rem;
+`;
+
+const backlogBtn = css`
+  margin-left: auto;
+  flex-shrink: 0;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  font-family: inherit;
+  color: #555;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #1a1a1a;
+    color: #111;
+  }
+`;
+
+const backlogDone = css`
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  color: #999;
+  padding: 0.3rem 0;
+`;
+
+// The ★, last thing in the form: a whole row rather than a bare icon, because
+// out here nothing else says what the star is for.
+const starRow = css`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  padding: 0.3rem 0;
+  font-size: 0.875rem;
+  font-family: inherit;
+  color: #666;
+  cursor: pointer;
+
+  &:hover {
+    color: #111;
+  }
+`;
+
+const star = css`
+  font-size: 1.15rem;
+  line-height: 1;
+  color: #ccc;
+`;
+
+const starOn = css`
+  color: #f0a500;
+`;
+
 const cancelBtn = css`
   background: none;
   border: 1px solid #e0e0e0;
@@ -300,6 +365,10 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
   const [imageRemoved, setImageRemoved] = useState(false);
   const [localPreview, setLocalPreview] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [flagged, setFlagged] = useState(!!card.flaggedAt);
+  // The card prop doesn't refresh under an open form, so the "to backlog"
+  // button tracks its own state rather than re-reading `card.srs`.
+  const [inStudy, setInStudy] = useState(!!card.srs);
 
   const { lines } = useLines();
   const originalLines = new Set(Object.keys(card.queues ?? {}));
@@ -465,12 +534,30 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
               }}
             />
 
-            <div className={fieldGroup}>
+            <div className={`${fieldGroup} ${linesRow}`}>
               <LineCheckboxes
                 lines={lines}
                 selected={lineIds}
                 onToggle={toggleLine}
               />
+              {/* Writes straight through and leaves the form open — it moves
+                  the card between queues, which is nothing the text fields
+                  below have an opinion about. */}
+              {inStudy ? (
+                <button
+                  type="button"
+                  className={backlogBtn}
+                  title="Убрать из изучения: карточка вернётся в Backlog своей линии"
+                  onClick={() => {
+                    setInStudy(false);
+                    unstudyCard(card);
+                  }}
+                >
+                  В беклог
+                </button>
+              ) : (
+                card.srs && <span className={backlogDone}>в беклоге</span>
+              )}
             </div>
 
             <div className={fieldGroup}>
@@ -521,6 +608,25 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
                 </label>
               )}
             </div>
+
+            {/* Also writes straight through: it is card state, not a form
+                field, and Cancel has no say over it. */}
+            <button
+              type="button"
+              className={starRow}
+              aria-pressed={flagged}
+              onClick={() => {
+                setFlagged(!flagged);
+                flagCard(card.id, !flagged);
+              }}
+            >
+              <span className={flagged ? `${star} ${starOn}` : star}>
+                {flagged ? "★" : "☆"}
+              </span>
+              {flagged
+                ? "Помечена — вернуться к ней позже"
+                : "Пометить, чтобы вернуться позже"}
+            </button>
           </div>
 
           <div className={footer}>

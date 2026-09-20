@@ -20,7 +20,7 @@ import {
 } from "../lib/srs";
 import { showCounter } from "../lib/prefs";
 import { diffTyped } from "../lib/diff";
-import { saveCard, deleteCard } from "../lib/cards";
+import { saveCard, deleteCard, flagCard } from "../lib/cards";
 import { useLines, useActiveLine } from "../lib/lines";
 import { myCards } from "../lib/session";
 import LineSelector from "../components/LineSelector";
@@ -518,6 +518,39 @@ const doneLine = css`
   color: #555;
 `;
 
+// The ★ and Edit, as one group at the right of the card's top row.
+const topRight = css`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+// Sits right of Edit, which is invisible until the card is revealed — so the
+// star keeps the row's right edge occupied either way. It shows face-down too:
+// it gives nothing away, and the whole point is to mark a card without
+// stopping to deal with it.
+const starBtn = css`
+  background: none;
+  border: none;
+  font-size: 1.15rem;
+  line-height: 1;
+  color: #ccc;
+  cursor: pointer;
+  padding: 0.2rem 0.25rem;
+
+  &:hover {
+    color: #999;
+  }
+`;
+
+const starOn = css`
+  color: #f0a500;
+
+  &:hover {
+    color: #d69200;
+  }
+`;
+
 const editBtn = css`
   background: #f4f4f4;
   border: 1px solid #e0e0e0;
@@ -547,6 +580,7 @@ interface LearnCard {
   queues?: { [lineId: string]: { rank: string } };
   log?: CardLog;
   exampleLinks?: ExampleLink[];
+  flaggedAt?: number | null;
 }
 
 /**
@@ -754,14 +788,13 @@ export default function Learn() {
     return () => window.removeEventListener("keydown", onKey);
   }, [revealed, current, busy, cloze?.link.id]);
 
-  // Hint boxes and the typed answer are per-card scratch state — clear them
-  // whenever the top card changes (depth placed, deleted, or swapped in).
+  // The whole per-card scratch state, cleared whenever the top card changes —
+  // answered, deleted, sent back to Backlog, or swapped in by a re-sort. The
+  // rating path also calls this synchronously, before its await, so the next
+  // card never renders face-up for a frame; this is the backstop for every
+  // other way the card underneath can change.
   useEffect(() => {
-    setHintOpen(false);
-    setHintLetters([]);
-    setTyping(false);
-    setTyped("");
-    setPeek(null);
+    resetCardState();
   }, [current?.id]);
 
   useEffect(() => {
@@ -904,16 +937,30 @@ export default function Learn() {
                 {cloze ? "fill the gaps" : `→ ${answerLang}`}
               </span>
             </div>
-            {/* Always in the flow, so revealing doesn't grow this row and
-                nudge the prompt down — just invisible until then. */}
-            <button
-              className={revealed ? editBtn : `${editBtn} ${invisible}`}
-              onClick={() => setModalCard(current as Card)}
-              tabIndex={revealed ? undefined : -1}
-              aria-hidden={!revealed}
-            >
-              Edit card
-            </button>
+            <div className={topRight}>
+              {/* Always in the flow, so revealing doesn't grow this row and
+                  nudge the prompt down — just invisible until then. */}
+              <button
+                className={revealed ? editBtn : `${editBtn} ${invisible}`}
+                onClick={() => setModalCard(current as Card)}
+                tabIndex={revealed ? undefined : -1}
+                aria-hidden={!revealed}
+              >
+                Edit card
+              </button>
+              <button
+                className={current.flaggedAt ? `${starBtn} ${starOn}` : starBtn}
+                onClick={() => flagCard(current.id, !current.flaggedAt)}
+                title={
+                  current.flaggedAt
+                    ? "Снять пометку"
+                    : "Пометить — вернуться к ней позже"
+                }
+                aria-pressed={!!current.flaggedAt}
+              >
+                {current.flaggedAt ? "★" : "☆"}
+              </button>
+            </div>
           </div>
           {cloze ? (
             <>

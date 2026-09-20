@@ -11,7 +11,7 @@ import { reviewStats, sortLine, enqueueTop } from "../lib/queue";
 import type { CardLog } from "../lib/queue";
 import { difficultyColor, introduce, rateCard, Rating } from "../lib/srs";
 import type { SrsState } from "../lib/srs";
-import { saveCard, deleteCard, trimCardText } from "../lib/cards";
+import { saveCard, deleteCard, trimCardText, type TxOp } from "../lib/cards";
 import { useLines, useActiveLine } from "../lib/lines";
 import { myCards, ownedPath, ownerId } from "../lib/session";
 import LineCheckboxes from "../components/LineCheckboxes";
@@ -33,6 +33,8 @@ export interface Card extends CardData {
   image?: { id: string; url: string; path: string };
   queues?: { [lineId: string]: { rank: string } };
   srs?: SrsState;
+  /** The ★ from Learn: marked to come back to. See `flagCard` in lib/cards. */
+  flaggedAt?: number | null;
 }
 
 // Every new card is NL → EN; the picker that used to ask was left over from an
@@ -481,36 +483,51 @@ export default function Cards() {
 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault();
+    // A card in no line is on no page — the list, the queue and the Backlog all
+    // read a line — so an every-box-unchecked form falls back to the shown one
+    // rather than writing a row nothing ever surfaces again. With no lines at
+    // all there is nowhere to put it and the button is disabled.
+    const lineIds = selectedNewLines.size
+      ? [...selectedNewLines]
+      : defaultLineId
+        ? [defaultLineId]
+        : [];
+    if (lineIds.length === 0) return;
     setNewSaving(true);
-    const cardId = id();
-    const ops: any[] = [
-      db.tx.cards[cardId]
-        .update(trimCardText(newForm))
-        .link({ owner: ownerId() }),
-    ];
-    if (newImageFile) {
-      const { data: fileData } = await db.storage.uploadFile(
-        ownedPath(`cards/${cardId}-${Date.now()}`),
-        newImageFile,
-      );
-      if (fileData) {
-        ops.push(db.tx.$files[fileData.id].link({ owner: ownerId() }));
-        ops.push(db.tx.cards[cardId].link({ image: fileData.id }));
+    try {
+      const cardId = id();
+      const ops: TxOp[] = [
+        db.tx.cards[cardId]
+          .update(trimCardText(newForm))
+          .link({ owner: ownerId() }),
+      ];
+      if (newImageFile) {
+        const { data: fileData } = await db.storage.uploadFile(
+          ownedPath(`cards/${cardId}-${Date.now()}`),
+          newImageFile,
+        );
+        if (fileData) {
+          ops.push(db.tx.$files[fileData.id].link({ owner: ownerId() }));
+          ops.push(db.tx.cards[cardId].link({ image: fileData.id }));
+        }
       }
+      await db.transact(ops);
+      // Add the new card to the top of each checked line.
+      for (const lineId of lineIds) {
+        await enqueueTop(lineId, cardId);
+      }
+      // Straight into study: a hand-entered card is one you just decided to
+      // learn, so it gets its FSRS state now rather than sitting in the Backlog.
+      await introduce([cardId], lineIds[0]);
+      // Keep the language pair — entering cards comes in runs of the same kind.
+      setNewForm(makeDefaultForm(newForm.aLang, newForm.bLang));
+      setNewImageFile(null);
+      setNewLines(null);
+    } finally {
+      // Without this a failed upload left the button stuck on "Saving…" and the
+      // form unusable until a reload.
+      setNewSaving(false);
     }
-    await db.transact(ops);
-    // Add the new card to the top of each checked line (default line by default).
-    for (const lineId of selectedNewLines) {
-      await enqueueTop(lineId, cardId);
-    }
-    // Straight into study: a hand-entered card is one you just decided to
-    // learn, so it gets its FSRS state now rather than sitting in the Backlog.
-    await introduce([cardId], [...selectedNewLines][0] ?? "");
-    // Keep the language pair — entering cards comes in runs of the same kind.
-    setNewForm(makeDefaultForm(newForm.aLang, newForm.bLang));
-    setNewImageFile(null);
-    setNewLines(null);
-    setNewSaving(false);
   }
 
   /** Met the word in the wild and blanked on it: grade it Again from the list,
@@ -624,7 +641,11 @@ export default function Cards() {
         </div>
 
         <div className={formFooter}>
-          <button type="submit" className={createBtn} disabled={newSaving}>
+          <button
+            type="submit"
+            className={createBtn}
+            disabled={newSaving || !defaultLineId}
+          >
             {newSaving ? "Saving…" : "Add card"}
           </button>
         </div>

@@ -54,6 +54,8 @@ export interface DeckCard {
   srs?: Srs;
   log?: Record<string, LogEvent>;
   queues?: Record<string, { rank: string }>;
+  /** When the ★ was put on the card in the app. See `flagCard`. */
+  flaggedAt?: number | null;
 }
 
 export interface Brief {
@@ -67,6 +69,9 @@ export interface Brief {
   lapses?: number;
   stability?: number;
   difficulty?: number;
+  /** Marked in the app to come back to. Absent rather than false, so an
+   *  unmarked card doesn't carry a field saying nothing. */
+  flagged?: true;
 }
 
 /** What a list returns: enough to decide on a card, not the whole row. The note
@@ -89,6 +94,7 @@ export function brief(c: DeckCard, lines: Record<string, string> = {}): Brief {
     lapses: c.srs?.lapses,
     stability: c.srs ? +c.srs.stability.toFixed(2) : undefined,
     difficulty: c.srs ? +c.srs.difficulty.toFixed(2) : undefined,
+    flagged: c.flaggedAt ? true : undefined,
   };
 }
 

@@ -133,11 +133,17 @@ function buildServer(): McpServer {
           .optional()
           .describe("`due` means due now, across every state. Default: all"),
         line: z.string().optional().describe("Restrict to one line, by name"),
+        flagged: z
+          .boolean()
+          .optional()
+          .describe(
+            "Only cards starred in the app while studying — 'come back to this'. Freshest mark first",
+          ),
         limit: z.number().int().min(1).max(500).optional(),
       },
       annotations: { readOnlyHint: true },
     },
-    async ({ query, state = "all", line, limit = 50 }) => {
+    async ({ query, state = "all", line, flagged, limit = 50 }) => {
       const now = Date.now();
       const [all, lines] = await Promise.all([fetchCards(), fetchLines()]);
       let cards = all;
@@ -152,6 +158,7 @@ function buildServer(): McpServer {
       // here so "how much is due" doesn't cost a query of its own.
       const counts = tally(cards, now);
 
+      if (flagged) cards = cards.filter((c) => c.flaggedAt);
       if (state === "unstudied") cards = cards.filter((c) => !c.srs);
       else if (state === "due")
         cards = cards.filter((c) => c.srs && c.srs.due <= now);
@@ -174,8 +181,12 @@ function buildServer(): McpServer {
             fields: (c) => [c.aCard, c.bCard],
             label: (c) => c.aCard,
           })
-        : cards.sort(
-            (a, b) => (a.srs?.due ?? Infinity) - (b.srs?.due ?? Infinity),
+        : // A starred list is a list of things to deal with, so the newest
+          // mark comes first — that is what the timestamp is for.
+          cards.sort(
+            flagged
+              ? (a, b) => (b.flaggedAt ?? 0) - (a.flaggedAt ?? 0)
+              : (a, b) => (a.srs?.due ?? Infinity) - (b.srs?.due ?? Infinity),
           );
       const rows = hits.slice(0, limit);
 

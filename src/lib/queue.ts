@@ -2,6 +2,8 @@ import { id } from "@instantdb/react";
 import { generateKeyBetween, generateNKeysBetween } from "fractional-indexing";
 import { db } from "../db";
 import { myCards } from "./session";
+// Type-only, so the srs.ts <-> queue.ts cycle stays a compile-time one.
+import type { SrsState } from "./srs";
 
 // A learning line is an ordered list of cards. Each card stores one fractional
 // `rank` string per line it belongs to, under `card.queues[lineId]`. Sorting
@@ -86,6 +88,11 @@ export type LogEntry = {
   /** ...and what the short ones used to say. The old note is not kept: it holds
    *  a whole dictionary entry, and every page loads every card's log. */
   prev?: { aCard?: string; bCard?: string };
+  /** Sent back to the pool (kind "backlog"): the FSRS state the card was
+   *  carrying when its schedule was dropped. Nothing reads it — the way back
+   *  through Backlog reseeds from scratch — but a grade history whose
+   *  schedule vanished without trace is a history that can't be replayed. */
+  srs?: SrsState | null;
 };
 
 export type CardLog = { [eventId: string]: LogEntry };
@@ -189,29 +196,30 @@ export interface QueuedCard {
 
 /**
  * A card is "fresh" if it hasn't been studied or manually nudged since it was
- * last added to a line or sent back to the top: its latest add event (`top`,
- * `create`, `introduce`, or a synthetic `place` with amount <= 1) is no older than its
- * latest review (`place` with amount > 1) or `move`. New cards with no history are fresh;
- * re-topping a studied card makes it fresh again until it's reviewed.
+ * last added to a line or sent back to the top. New cards with no history are
+ * fresh; re-topping a studied card makes it fresh again until it's reviewed.
  */
+// Adds: `top` from the app, `create` from the MCP server (which puts the card
+// in the line in the same write), `introduce` (it seeds the schedule, it is not
+// an answer — and every card now gets one right after its `top`), and the
+// synthetic `place` amount <= 1 that `enqueueBottom` writes.
+const ADDS = new Set(["top", "create", "introduce"]);
+// Studies: an answer, or a manual nudge down the line. A `place` with amount > 1
+// is the retired depth button, which was a review.
+const STUDIES = new Set(["rate", "known", "move"]);
+
 export function isFresh(log?: CardLog): boolean {
   let lastAdd = -Infinity;
   let lastStudy = -Infinity;
   for (const e of Object.values(log ?? {})) {
-    if (
-      e.kind === "top" ||
-      // The MCP server logs a `create` instead of a `top` — it puts the card in
-      // the line in the same write, and an add is an add. `introduce` is one
-      // too: it seeds the schedule, it is not an answer — and every card now
-      // gets one on creation, right after its `top`.
-      e.kind === "create" ||
-      e.kind === "introduce" ||
-      (e.kind === "place" && e.amount <= 1)
-    ) {
+    if (ADDS.has(e.kind) || (e.kind === "place" && e.amount <= 1)) {
       lastAdd = Math.max(lastAdd, e.at);
-    } else {
+    } else if (STUDIES.has(e.kind) || e.kind === "place") {
       lastStudy = Math.max(lastStudy, e.at);
     }
+    // Everything else — `edit`, `delete`, `restore` — is neither. Fixing a typo
+    // doesn't make a card studied, and it doesn't make it new again either;
+    // before this they all fell through to "studied".
   }
   return lastStudy <= lastAdd;
 }

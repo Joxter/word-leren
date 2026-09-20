@@ -40,6 +40,15 @@ Cards page; only the lines themselves are managed here.
 
 Bilingual flashcards for three language pairs: NL↔EN, NL↔RU, and EN↔RU. Cards support optional images (paste from clipboard or upload) and an optional side-A audio clip (a path under `public/`, e.g. a dictionary pronunciation); a play button appears wherever the side-A word is shown — the create/edit forms, the card list, the line, and during review. Text fields accept Markdoc (markdown) syntax. New cards are added to the top of every line checked in the create form.
 
+Two buttons in the card editor act on the card rather than on the form, and take
+effect immediately: **★** marks a card to come back to later — it is also on the
+Learn card, face-down or revealed, so a card can be flagged mid-session without
+breaking off — and **В беклог** drops the card's FSRS state, so it leaves the
+review queue and turns up in that line's Backlog again (the state it was
+carrying is kept in the card's history). Cards that ended up in no line at all
+are listed at the bottom of the [personal cabinet](#personal-cabinet): nothing
+else in the app shows them, because every list reads a line.
+
 Deleting a card is soft: the row is stamped `deletedAt` and disappears from every
 list, keeping its scheduling state, its history and its place in the lines, so
 bringing it back is one field away (`restoreCard` in `src/lib/cards.ts` — there is
