@@ -6,6 +6,9 @@ import {
   pickClozeLink,
   segmentText,
   spansAnswer,
+  spansFromTexts,
+  spansFromWords,
+  numberWords,
   toggleSpan,
   tokenize,
   type Example,
@@ -98,6 +101,42 @@ describe("anchorSpans", () => {
     const res = anchorSpans(edited, [at(SENTENCE, "sta"), at(SENTENCE, "op.")]);
     expect(res.spans.map((s) => s.text)).toEqual(["op."]);
     expect(res.broken.map((s) => s.text)).toEqual(["sta"]);
+  });
+});
+
+describe("spansFromTexts", () => {
+  it("anchors bare fragments and reports the ones that aren't there", () => {
+    const res = spansFromTexts(SENTENCE, [" op. ", "sta", "loopt", ""]);
+    expect(res.spans).toEqual([at(SENTENCE, "sta"), at(SENTENCE, "op.")]);
+    expect(res.broken.map((s) => s.text)).toEqual(["loopt"]);
+  });
+
+  it("takes the first occurrence of a repeated fragment", () => {
+    const text = "Ik sta op en ik sta weer op.";
+    expect(spansFromTexts(text, ["sta"])).toMatchObject({
+      spans: [at(text, "sta")],
+    });
+  });
+});
+
+describe("spansFromWords", () => {
+  it("blanks whole words by position, punctuation not counted", () => {
+    // "Ik sta elke dag om 7 uur op." — 1 is "sta", 7 is "op", and the full stop
+    // is nobody's word.
+    const res = spansFromWords(SENTENCE, [7, 1]);
+    expect(res.spans).toEqual([at(SENTENCE, "sta"), at(SENTENCE, "op")]);
+    expect(res.missing).toEqual([]);
+  });
+
+  it("reports a position past the end instead of ignoring it", () => {
+    expect(spansFromWords(SENTENCE, [0, 99]).missing).toEqual([99]);
+  });
+
+  it("numbers the same words it counts", () => {
+    expect(numberWords("Ik sta op.")).toBe("0:Ik 1:sta 2:op");
+    expect(spansFromWords("Ik sta op.", [2]).spans).toEqual([
+      at("Ik sta op.", "op"),
+    ]);
   });
 });
 
