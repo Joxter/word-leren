@@ -54,5 +54,8 @@
       "Bash(python3 /tmp/q.py)",
       "Bash(npx instant-cli@latest push schema)"
     ]
+  },
+  "skillOverrides": {
+    "instantdb": "off"
   }
 }

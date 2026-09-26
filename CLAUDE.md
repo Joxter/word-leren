@@ -6,10 +6,6 @@ covers build/config gotchas that aren't obvious.
 
 ## Commands
 
-- `npm run dev` — dev server
-- `npm run build` — `tsc -b && vite build`
-- `npm run format` — Prettier (there is no linter)
-- `npm test` — Vitest
 - `npm run build-dictionary` — regenerate `public/data/dictionary.json` + audio from `sources/`
 - `node scripts/fetch-kaikki.mjs` — refresh `sources/kaikki-nl.jsonl` from Wiktionary (rarely; needs network)
 - `npx instant-cli@latest push schema` / `push perms` — after editing `src/instant.schema.ts`
@@ -22,11 +18,9 @@ covers build/config gotchas that aren't obvious.
 
 - **No linter.** TypeScript strict is on, but `noUnusedLocals/Parameters` are off.
   Tests (`npm test`) cover `src/lib/` only.
-- **Prettier config:** printWidth 80, trailing commas, `arrowParens: always`, **double quotes**.
 - **Linaria CSS-in-JS:** `css` from `@linaria/core`, `styled` from `@linaria/react`; CSS is
   statically extracted at build. In `vite.config`, the wyw plugin must come **before** the react plugin.
 - **`tsconfig.node.json`** needs `"composite": true` (not `"noEmit": true`) for project references.
-- **InstantDB** is the backend (real-time data + file storage); app ID comes from `VITE_INSTANT_APP_ID`.
 
 ## Accounts and ownership
 
@@ -140,72 +134,18 @@ scheduler is a revert away. Don't delete `queue.ts` while that's still true.
 
 ## MCP-сервер
 
-`server/mcp.ts` — MCP поверх колоды, чтобы Клод дотягивался до неё с телефона.
-Читает всё, пишет четырьмя тулами: `edit_card` правит текст карточки (стороны и
-`note`), `create_card` заводит новую, `add_example` вешает на карточку пример,
-`edit_example` его правит. Не удаляет ничего.
-Запуск локально `npm run mcp`, деплой — `docs/deploy.md`.
+`server/mcp.ts` — MCP поверх колоды; подробности в `server/CLAUDE.md`.
+Здесь — только то, что ограничивает правки в `src/lib`.
 
 - Чистые вьюхи (`brief`, `events`, `byDay`) и обе текстовые функции
   (`trimCardText`, `editEvent`) лежат в `src/lib/deck.ts`, а не рядом с
   сервером: `src/lib` переживёт переезд с Instant, и тесты смотрят туда. Это
   **единственный** модуль в `lib/`, который серверу можно импортировать —
   остальные тянут `../db` и открывают сокет на импорте.
-- `create_card` кладёт карточку в начало линии (по умолчанию — самая старая,
-  как `getDefaultLineId` в приложении) и **сразу в оборот**: `freshSrs()` из
-  `lib/deck.ts` — то же состояние, что пишет `introduce` в приложении, так что
-  карточка спрашивается в ближайшей сессии. Отдельного события `introduce` нет,
-  `create` говорит и то и другое. Ранг считается тут же, простым
-  «в самый верх» — умный `topInsertRank` живёт в `lib/queue.ts`, а тот тянет
-  `../db`. Дубли по стороне A отбиваются: чат не видит колоду и заводит слово
-  повторно. Событие — `kind: "create"` (не `top`), и `isFresh` в `queue.ts`
-  теперь считает его добавлением: ручная очередь спит, но путь назад цел.
-- `edit_card` меняет только текст. Расписание, линии и примеры он не трогает:
-  правка опечатки не должна двигать `due`. Событие пишется в тот же `cards.log`
-  с `via: "mcp"` — иначе в истории не отличить правку из приложения от правки
-  из чата.
 - Сервер импортирует `src/lib/*.ts` **напрямую**, без сборки — Node 24 стрипает
   типы. Отсюда два правила для всего, до чего он дотягивается: относительные
   импорты с явным расширением `.ts`, а импорт только ради типа — `import type`.
   Ни tsc, ни `vite build` этого не ловят, падает только запуск.
-- Admin-токен ходит мимо permissions, поэтому каждый запрос сужается по
-  `owner.id` руками — `mine()` из `lib/session.ts` тут не работает.
-- Admin SDK отдаёт **любую** вложенную связь массивом, включая `has: one`:
-  `l.example` тут `[{…}]`, а в react-клиенте — объект. Читаешь как объект —
-  молча получаешь `undefined`, не ошибку.
-- `events()` выбрасывает `place`/`top`/`move` — события мёртвой ручной очереди.
-  Строки в базе остаются (путь назад цел), но в историю их пускать нечего:
-  их в 12 раз больше, чем настоящих ответов.
-- Поиск в MCP ищет только по сторонам карточки, без `note`: заметка — это
-  вставленная словарная статья, и короткое слово находилось в чужом примере.
-- `search_cards({ flagged: true })` — то, что помечено звездой в приложении,
-  свежее сверху. Это и есть смысл пометки: отметил в сессии, не прерываясь, а
-  разбираешь потом из чата.
-- Примеры: `search_examples` (всё предложение + список карточек, на которых оно
-  висит), `add_example`, `edit_example`. Удаления нет намеренно — у примера оно
-  настоящее, каскадом по привязкам, и из чата это не откатить.
-  - Пропуски задаются **позициями слов** — `blankWords: [2, 8]`, 0-based, знаки
-    препинания не в счёт. Это ровно те токены, по которым в приложении кликают
-    (`tokenize` + `SpanBoard`), и нумерацию печатает поле `words` у каждого
-    примера в выдаче. `blanks` (текстом) остались для куска меньше слова;
-    оба списка сливаются через `normalizeSpans`.
-  - Промах — позиция за краем или фрагмент, которого в предложении нет —
-    отбивает запись целиком и возвращает `words`, чтобы со второй попытки
-    указать пальцем, а не угадывать подстроку. Это единственная проверка
-    пропусков, какая тут возможна.
-  - `lib/spans.ts` — вся span-арифметика, выделена из `examples.ts` ради
-    сервера (`examples.ts` тянет `../db`). `examples.ts` её ре-экспортит
-    (`export * from "./spans"`), так что для приложения ничего не поменялось.
-  - Дублей два вида, и оба отбиваются: то же предложение второй строкой (ищи
-    `search_examples`, вешай по `exampleId`) и то же предложение второй
-    привязкой к той же карточке.
-  - Правка текста предложения не трогает `spans` других привязок — приложение
-    переанкоривает их на чтении. Фрагмент, вырезанный из предложения,
-    всё же теряется у той карточки.
-  - Лога у примеров нет (`log` только у карточек), так что правка примера нигде
-    не отмечается — в отличие от `edit_card` с его `via: "mcp"`.
-- Авторизация — секрет в пути. Потолок вырос вместе с `edit_card`: кто знает
-  URL, тот и правит карточки. Ротация — env на дроплете плюс коннектор.
-
-Pages: `src/pages/Learn.tsx` (study), `src/pages/Deck.tsx` (Backlog: the pre-`introduce`
-pool), `src/pages/Cards.tsx` (create form + the active line's list).
+- `lib/spans.ts` — вся span-арифметика, выделена из `examples.ts` ради
+  сервера (`examples.ts` тянет `../db`). `examples.ts` её ре-экспортит
+  (`export * from "./spans"`), так что для приложения ничего не поменялось.
