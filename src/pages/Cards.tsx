@@ -11,6 +11,7 @@ import { reviewStats, type CardLog } from "../lib/log";
 import { difficultyColor, introduce, rateCard, Rating } from "../lib/srs";
 import type { SrsState } from "../lib/srs";
 import { saveCard, deleteCard, trimCardText, type TxOp } from "../lib/cards";
+import { isNoteCard, sideBLabel } from "../lib/deck";
 import { useLines, useActiveLine, lineMembers, addToLine } from "../lib/lines";
 import { myCards, ownedPath, ownerId } from "../lib/session";
 import LineCheckboxes from "../components/LineCheckboxes";
@@ -174,10 +175,19 @@ const audioInput = css`
 
 const formFooter = css`
   display: flex;
+  align-items: center;
   justify-content: flex-end;
+  gap: 0.75rem;
   padding-top: 0.875rem;
   border-top: 1px solid #f0f0f0;
   margin-top: 0.25rem;
+`;
+
+// Why the form can't be sent yet — only ever the missing note of a card
+// without side B, the one rule a `required` attribute can't express.
+const formProblem = css`
+  font-size: 0.8125rem;
+  color: #999;
 `;
 
 const createBtn = css`
@@ -428,6 +438,13 @@ export default function Cards() {
   const selectedNewLines =
     newLines ?? new Set(defaultLineId ? [defaultLineId] : []);
 
+  // Side A has its own `required`; this is the note a card without side B
+  // needs. Silent until side A is typed, so a fresh form isn't scolding.
+  const newProblem =
+    newForm.aCard.trim() && isNoteCard(newForm) && !newForm.note.trim()
+      ? "Без открытой стороны нужна заметка"
+      : null;
+
   function toggleNewLine(lineId: string) {
     const next = new Set(selectedNewLines);
     next.has(lineId) ? next.delete(lineId) : next.add(lineId);
@@ -481,6 +498,7 @@ export default function Cards() {
 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault();
+    if (newProblem) return;
     // A card in no line is on no page — the list, the queue and the Backlog all
     // read a line — so an every-box-unchecked form falls back to the shown one
     // rather than writing a row nothing ever surfaces again. With no lines at
@@ -567,7 +585,7 @@ export default function Cards() {
               className={formInput}
               value={newForm.bCard}
               onChange={(e) => setNew("bCard", e.target.value)}
-              required
+              placeholder="пусто — карточка-заметка"
             />
           </div>
 
@@ -638,10 +656,11 @@ export default function Cards() {
         </div>
 
         <div className={formFooter}>
+          {newProblem && <span className={formProblem}>{newProblem}</span>}
           <button
             type="submit"
             className={createBtn}
-            disabled={newSaving || !defaultLineId}
+            disabled={newSaving || !defaultLineId || !!newProblem}
           >
             {newSaving ? "Saving…" : "Add card"}
           </button>
@@ -692,7 +711,9 @@ export default function Cards() {
                     <span className={cellText}>{e.aCard}</span>
                     {e.audio && <PlayButton path={e.audio} small />}
                   </div>
-                  <span className={`${cellText} ${bCell}`}>{e.bCard}</span>
+                  <span className={`${cellText} ${bCell}`}>
+                    {sideBLabel(e)}
+                  </span>
                   {/* `introduce` seeds an empty FSRS card, so a card taken
                       into study but not yet answered has `srs` with a
                       difficulty of 0 — which is not "the easiest card there

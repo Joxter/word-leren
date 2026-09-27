@@ -6,6 +6,7 @@ import { useLines, addToLine, removeFromLine } from "../lib/lines";
 import { findEntry, loadDictionary } from "../lib/dictionary";
 import { buildDictBlock, withDictBlock } from "../lib/dictNote";
 import { flagCard, unstudyCard } from "../lib/cards";
+import { isNoteCard } from "../lib/deck";
 import CardExamples from "./CardExamples";
 import LineCheckboxes from "./LineCheckboxes";
 import MarkdocField from "./MarkdocField";
@@ -213,6 +214,11 @@ const addImgLabel = css`
     border-color: #999;
     color: #333;
   }
+`;
+
+const formProblem = css`
+  font-size: 0.8125rem;
+  color: #999;
 `;
 
 const footer = css`
@@ -433,8 +439,16 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
     setImageRemoved(true);
   }
 
+  // Side A has its own `required`; this is the note a card without side B
+  // needs (see `cardTextProblem`).
+  const problem =
+    form.aCard.trim() && isNoteCard(form) && !form.note.trim()
+      ? "Без открытой стороны нужна заметка"
+      : null;
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (problem) return;
     setSaving(true);
     // if a new file is selected and card already has an image, remove the old one
     const removeImageId =
@@ -483,7 +497,6 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
                   className={sideInput}
                   value={form.bCard}
                   onChange={(e) => set("bCard", e.target.value)}
-                  required
                 />
               </div>
             </div>
@@ -637,10 +650,15 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
               Delete
             </button>
             <div className={actions}>
+              {problem && <span className={formProblem}>{problem}</span>}
               <button type="button" className={cancelBtn} onClick={onClose}>
                 Cancel
               </button>
-              <button type="submit" className={saveBtn} disabled={saving}>
+              <button
+                type="submit"
+                className={saveBtn}
+                disabled={saving || !!problem}
+              >
                 {saving ? "Saving…" : "Save"}
               </button>
             </div>

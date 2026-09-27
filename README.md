@@ -40,6 +40,12 @@ Cards page; only the lines themselves are managed here.
 
 Bilingual flashcards for three language pairs: NL↔EN, NL↔RU, and EN↔RU. Cards support optional images (paste from clipboard or upload) and an optional side-A audio clip (a path under `public/`, e.g. a dictionary pronunciation); a play button appears wherever the side-A word is shown — the create/edit forms, the card list, the line, and during review. Text fields accept Markdoc (markdown) syntax. New cards are added to every line checked in the create form.
 
+Side B is optional. A card without it is a **note card** — for a grammar rule or anything
+else with no single word to recall: side A is its title and the note is the answer, so the
+note is required then. Learn shows the title with a blank beige block where the note will be;
+clicking it (or `Space`) reveals the note, and the card is graded like any other. There is
+no Hint, Type or cloze for it. Lists show the note's first line in place of side B.
+
 Two buttons in the card editor act on the card rather than on the form, and take
 effect immediately: **★** marks a card to come back to later — it is also on the
 Learn card, face-down or revealed, so a card can be flagged mid-session without

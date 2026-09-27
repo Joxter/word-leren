@@ -11,9 +11,9 @@ describe("ExampleText blank", () => {
     // "gaat weg" as one span, the way a drag-select saves it.
     const sentence = "Hij gaat weg.";
     const spans = [{ start: 4, end: 12, text: "gaat weg" }];
-    expect(text(<ExampleText text={sentence} spans={spans} mode="blank" />)).toBe(
-      "Hij ____ ___.",
-    );
+    expect(
+      text(<ExampleText text={sentence} spans={spans} mode="blank" />),
+    ).toBe("Hij ____ ___.");
   });
 
   it("gives a one-letter word two underscores", () => {
