@@ -122,6 +122,51 @@ export function trimCardText<T extends CardText>(data: T): T {
 }
 
 /**
+ * A card with no side B is a note card: a title (side A) that prompts, and a
+ * note that answers — for a grammar rule, where there is no single word to
+ * recall. Learn shows the title and reveals the note; there is nothing to
+ * type or spell out, so Hint and Type are off, and no cloze is built.
+ */
+export function isNoteCard(card: { bCard?: string | null }): boolean {
+  return !card.bCard?.trim();
+}
+
+/**
+ * What a list row prints for side B: side B itself, or for a note card the
+ * first line of its note, stripped of the Markdoc that would show as noise
+ * (`**bold**`, list dashes, headings, tags like `{% dict %}`).
+ */
+export function sideBLabel(card: {
+  bCard?: string | null;
+  note?: string | null;
+}): string {
+  if (!isNoteCard(card)) return card.bCard!.trim();
+  const line = (card.note ?? "")
+    .split("\n")
+    .map((l) =>
+      l
+        .replace(/\{%.*?%\}/g, "")
+        .replace(/^\s*(?:#+|[-*+]|\d+\.|>)\s*/, "")
+        .replace(/[*_`~]/g, "")
+        .trim(),
+    )
+    .find((l) => l.length > 0);
+  return line ?? "";
+}
+
+/**
+ * Why a card's text can't be saved, or null if it can. Side A is always
+ * needed; side B may be left out, but only when a note is there to answer
+ * instead — a title alone would reveal nothing.
+ */
+export function cardTextProblem(text: CardText): string | null {
+  if (!text.aCard.trim()) return "side A is required";
+  if (isNoteCard(text) && !text.note.trim())
+    return "a card without side B needs a note";
+  return null;
+}
+
+/**
  * The `edit` event for a card's text change, or null when nothing changed (an
  * image-only save, or a Save on an untouched form — the modal has no dirty
  * tracking, so most saves come through unchanged).

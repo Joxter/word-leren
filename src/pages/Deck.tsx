@@ -3,6 +3,7 @@ import { css } from "@linaria/core";
 import { Link } from "wouter";
 import { db } from "../db";
 import { myCards } from "../lib/session";
+import { sideBLabel } from "../lib/deck";
 import { useLines, useActiveLine } from "../lib/lines";
 import { newPool, introduce, type SrsState } from "../lib/srs";
 import LineSelector from "../components/LineSelector";
@@ -165,6 +166,7 @@ interface DeckCard {
   id: string;
   aCard: string;
   bCard: string;
+  note?: string;
   srs?: SrsState;
   queues?: { [lineId: string]: { rank: string } };
 }
@@ -255,7 +257,7 @@ export default function Deck() {
                   />
                   <span className={texts}>
                     <span className={sideA}>{c.aCard}</span>
-                    <span className={sideB}>{c.bCard}</span>
+                    <span className={sideB}>{sideBLabel(c)}</span>
                   </span>
                 </label>
               );

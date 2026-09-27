@@ -32,6 +32,7 @@ import {
 import {
   brief,
   byDay,
+  cardTextProblem,
   editEvent,
   events,
   freshSrs,
@@ -385,6 +386,7 @@ function buildServer(): McpServer {
         "a note, read it with `get_card` and pass it back with the line in it. " +
         "A note often ends in a `{% dict %} … {% /dict %}` block: that is a dictionary entry the app pastes " +
         "in and refills, so keep it as it is and write above it. " +
+        'Passing side B as "" turns the card into a note card (title + note, see `create_card`); it then needs a note. ' +
         "The edit is logged and shows up in the card's history.",
       inputSchema: {
         id: z.string(),
@@ -406,15 +408,17 @@ function buildServer(): McpServer {
         bCard: bCard ?? card.bCard,
         note: note ?? card.note ?? "",
       });
-      // A card with a blank side is unanswerable, and the app's own form is
-      // what usually stops that — this connection goes around it. Only what the
-      // caller sent is judged: half-finished rows with an empty side already
-      // exist (most of the English line), and they must stay editable.
-      if (
-        (aCard !== undefined && !text.aCard) ||
-        (bCard !== undefined && !text.bCard)
-      )
-        return ok({ error: "a side you are editing can't be left empty" });
+      // The app's form holds the same rule (`cardTextProblem`): side A always,
+      // and a note whenever side B is empty — that is a note card. Only what
+      // the caller sent is judged, so an old half-finished row can still have
+      // its side A fixed without being made to grow a note first.
+      const problem =
+        aCard !== undefined && !text.aCard
+          ? "side A is required"
+          : bCard !== undefined || note !== undefined
+            ? cardTextProblem(text)
+            : null;
+      if (problem) return ok({ error: problem });
 
       const event = editEvent(card, text, "mcp");
       if (!event) return ok({ id, changed: [], note: "nothing to change" });
@@ -443,16 +447,23 @@ function buildServer(): McpServer {
         "Add a card to the deck. It goes straight into study: it is scheduled as a brand-new card and comes up " +
         "in the next session, learning steps and all — so adding cards does add to today's load. " +
         "Side A is the word being learned (Dutch, unless the line says otherwise), side B its translation. " +
+        "Leave side B empty for a note card — a grammar rule or the like: side A is then its title, shown as the prompt, " +
+        "and the note (required then) is what the app reveals; there is nothing to type, so write the note for reading. " +
         "A card whose side A already exists is refused — edit that one with `edit_card` instead of making a second. " +
         "The note is free text (Markdoc); the app's own `{% dict %}` dictionary block is filled in there, not here. " +
         "Examples, images and audio can't be attached from here.",
       inputSchema: {
         aCard: z.string().describe("Side A — the word being learned"),
-        bCard: z.string().describe("Side B — the translation"),
+        bCard: z
+          .string()
+          .optional()
+          .describe("Side B — the translation. Empty or left out: a note card"),
         note: z
           .string()
           .optional()
-          .describe("Free text under the card, Markdoc"),
+          .describe(
+            "Free text under the card, Markdoc. Required for a note card",
+          ),
         line: z
           .string()
           .optional()
@@ -465,12 +476,15 @@ function buildServer(): McpServer {
       annotations: { readOnlyHint: false, idempotentHint: false },
     },
     async ({ aCard, bCard, note, line, aLang = "NL", bLang = "EN" }) => {
-      const text = trimCardText({ aCard, bCard, note: note ?? "" });
-      // The app's form can't submit a blank side; this connection goes around
-      // it, and a card with one side is unanswerable. (`edit_card` is laxer on
-      // purpose — half-finished rows already exist and stay editable.)
-      if (!text.aCard || !text.bCard)
-        return ok({ error: "both sides are required" });
+      const text = trimCardText({
+        aCard,
+        bCard: bCard ?? "",
+        note: note ?? "",
+      });
+      // The same rule the app's form holds: side A, and a note when there is
+      // no side B.
+      const problem = cardTextProblem(text);
+      if (problem) return ok({ error: problem });
 
       const [cards, lines] = await Promise.all([fetchCards(), fetchLines()]);
       // Object key order is insertion order, and fetchLines asks for oldest

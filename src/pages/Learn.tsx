@@ -3,6 +3,7 @@ import { css } from "@linaria/core";
 import { Link } from "wouter";
 import { db } from "../db";
 import { dailyReviewStats } from "../lib/log";
+import { isNoteCard } from "../lib/deck";
 import type { CardLog } from "../lib/log";
 import {
   dueCards,
@@ -209,6 +210,58 @@ const cardImg = css`
   object-fit: contain;
   border-radius: 8px;
   align-self: flex-start;
+`;
+
+// A note card's face-down answer: a block of placeholder lines where the note
+// will be, standing in for Hint, Type and Reveal — for a grammar rule there is
+// nothing to type or spell out, only "do I remember what this says?".
+const noteSkeleton = css`
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  width: 100%;
+  min-height: 160px;
+  padding: 1.1rem 1rem;
+  background: #f7f2e8;
+  border: 1px dashed #e3d9c4;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+
+  &:hover {
+    background: #f2eadb;
+  }
+
+  i {
+    display: block;
+    height: 0.7rem;
+    border-radius: 4px;
+    background: #e9e0cd;
+  }
+  i:nth-child(1) {
+    width: 72%;
+  }
+  i:nth-child(2) {
+    width: 92%;
+  }
+  i:nth-child(3) {
+    width: 58%;
+  }
+  i:nth-child(4) {
+    width: 84%;
+  }
+
+  small {
+    margin-top: auto;
+    font-size: 0.8rem;
+    color: #a3947a;
+  }
+`;
+
+const noNote = css`
+  color: #999;
+  font-style: italic;
 `;
 
 const actionRow = css`
@@ -695,8 +748,9 @@ export default function Learn() {
   // are re-anchored against the sentence as it reads now, and a link whose
   // fragments have all gone missing falls back to the plain prompt rather than
   // showing a sentence with nothing blanked.
+  // A note card has no word to blank out, so it is never asked as a cloze.
   const clozeLink =
-    examplesOn && current
+    examplesOn && current && !isNoteCard(current)
       ? pickClozeLink(current.exampleLinks ?? [], current.log)
       : undefined;
   const clozeSpans = clozeLink?.example
@@ -768,10 +822,10 @@ export default function Learn() {
           if (current) setRevealed(true);
         } else if (e.key === "h" || e.key === "H") {
           e.preventDefault();
-          if (current) setHintOpen(true);
+          if (current && !isNoteCard(current)) setHintOpen(true);
         } else if (e.key === "t" || e.key === "T") {
           e.preventDefault();
-          if (current) setTyping(true);
+          if (current && !isNoteCard(current)) setTyping(true);
         } else if (e.key === "e" || e.key === "E") {
           e.preventDefault();
           if (current) nextExample();
@@ -883,9 +937,11 @@ export default function Learn() {
   const history = gradeHistory(c.log);
 
   // Which side is the prompt and which is the answer: side B asks, side A
-  // answers. Audio belongs to side A, so it only ever plays on reveal.
-  const promptText = c.bCard;
-  const promptLang = c.bLang;
+  // answers. Audio belongs to side A, so it only ever plays on reveal. A note
+  // card has no side B: its title (side A) asks and its note answers.
+  const noteCard = isNoteCard(c);
+  const promptText = noteCard ? c.aCard : c.bCard;
+  const promptLang = noteCard ? c.aLang : c.bLang;
   // In a cloze the answer is the blanked fragments, joined the way they read in
   // the sentence — that is what Type checks and what the hint boxes spell out.
   const answerText = cloze ? spansAnswer(cloze.spans) : c.aCard;
@@ -934,7 +990,11 @@ export default function Learn() {
             <div className={langRow}>
               <span className={langTag}>{cloze ? answerLang : promptLang}</span>
               <span className={langHint}>
-                {cloze ? "fill the gaps" : `→ ${answerLang}`}
+                {cloze
+                  ? "fill the gaps"
+                  : noteCard
+                    ? "заметка"
+                    : `→ ${answerLang}`}
               </span>
             </div>
             <div className={topRight}>
@@ -998,6 +1058,20 @@ export default function Learn() {
             </div>
           )}
         </div>
+
+        {noteCard && !revealed && (
+          <button
+            type="button"
+            className={noteSkeleton}
+            onClick={() => setRevealed(true)}
+          >
+            <i />
+            <i />
+            <i />
+            <i />
+            <small>Вспомни, что здесь написано, и открой</small>
+          </button>
+        )}
 
         {/* Context to place the word by, on demand — the card's own examples,
             one at a time. On reveal they are all listed below anyway. */}
@@ -1073,11 +1147,17 @@ export default function Learn() {
             )}
             {/* In a cloze the sentence above already spells the answer out in
                 place, so this line names the card itself instead. */}
-            <div className={frontRow}>
-              <div className={front}>{cloze ? c.aCard : answerText}</div>
-              {c.audio && <PlayButton path={c.audio} small />}
-              {cloze && <span className={cardMeaning}>{c.bCard}</span>}
-            </div>
+            {/* A note card's title is its prompt, still on screen above. */}
+            {!noteCard && (
+              <div className={frontRow}>
+                <div className={front}>{cloze ? c.aCard : answerText}</div>
+                {c.audio && <PlayButton path={c.audio} small />}
+                {cloze && <span className={cardMeaning}>{c.bCard}</span>}
+              </div>
+            )}
+            {noteCard && !c.note?.trim() && !c.image?.url && (
+              <div className={noNote}>Заметки нет — допиши её в редакторе.</div>
+            )}
             {cloze?.example.note?.trim() && (
               <MarkdocContent content={cloze.example.note} />
             )}
@@ -1103,7 +1183,7 @@ export default function Learn() {
         )}
       </div>
 
-      {!revealed ? (
+      {!revealed && !noteCard ? (
         <div className={actionRow}>
           {!hintOpen && (
             <button className={hintBtn} onClick={() => setHintOpen(true)}>

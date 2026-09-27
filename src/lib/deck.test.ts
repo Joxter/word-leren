@@ -1,5 +1,15 @@
 import { describe, it, expect } from "vitest";
-import { brief, byDay, editEvent, events, tally, type DeckCard } from "./deck";
+import {
+  brief,
+  byDay,
+  cardTextProblem,
+  editEvent,
+  events,
+  isNoteCard,
+  sideBLabel,
+  tally,
+  type DeckCard,
+} from "./deck";
 
 const card = (over: Partial<DeckCard> = {}): DeckCard => ({
   id: "c1",
@@ -178,5 +188,39 @@ describe("editEvent", () => {
     expect(out.kind).toBe("edit");
     expect(out.fields).toEqual(["note"]);
     expect(out.via).toBe("mcp");
+  });
+});
+
+// A card without side B is a note card: the title asks, the note answers.
+describe("note cards", () => {
+  it("is a note card when side B is empty or blank", () => {
+    expect(isNoteCard({ bCard: "" })).toBe(true);
+    expect(isNoteCard({ bCard: "  " })).toBe(true);
+    expect(isNoteCard({ bCard: "мазь" })).toBe(false);
+  });
+
+  it("needs side A, and a note when side B is left out", () => {
+    const ok = { aCard: "that vs which", bCard: "", note: "**that** …" };
+    expect(cardTextProblem(ok)).toBeNull();
+    expect(cardTextProblem({ ...ok, note: " " })).toMatch(/needs a note/);
+    expect(cardTextProblem({ ...ok, aCard: "" })).toMatch(/side A/);
+    expect(
+      cardTextProblem({ aCard: "de zalf", bCard: "мазь", note: "" }),
+    ).toBeNull();
+  });
+});
+
+describe("sideBLabel", () => {
+  it("is side B when there is one", () => {
+    expect(sideBLabel({ bCard: " мазь ", note: "x" })).toBe("мазь");
+  });
+
+  it("is the note's first real line for a note card, without markup", () => {
+    const note = "\n**which — известный набор**\n- **Which** page?";
+    expect(sideBLabel({ bCard: "", note })).toBe("which — известный набор");
+    expect(sideBLabel({ bCard: "", note: "{% dict %}\n- **noun**" })).toBe(
+      "noun",
+    );
+    expect(sideBLabel({ bCard: "" })).toBe("");
   });
 });
