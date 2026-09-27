@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { css } from "@linaria/core";
 import { db } from "../db";
-import { moveToTop, sortLine, type CardLog } from "../lib/queue";
-import { useLines } from "../lib/lines";
+import type { CardLog } from "../lib/log";
+import { useCardLines } from "../lib/lines";
 import {
   loadDictionary,
   searchDictionary,
@@ -20,6 +20,7 @@ import { rankMatches } from "../lib/search";
 import { liveLinks, type Example } from "../lib/examples";
 import CardModal from "../components/CardModal";
 import PlayButton from "../components/PlayButton";
+import LineTags from "../components/LineTags";
 import { createCardFromEntry, saveCard, deleteCard } from "../lib/cards";
 import { mine, myCards } from "../lib/session";
 import type { Card, CardData } from "./Cards";
@@ -449,7 +450,7 @@ const hitList = css`
 `;
 
 // One line on a desktop. On a phone it becomes a two-row grid — sides and
-// position badge across the top, buttons under them — because squeezing all
+// line badges across the top, buttons under them — because squeezing all
 // four onto one line left both sides of the card as ellipses.
 const hitRow = css`
   display: flex;
@@ -538,15 +539,10 @@ const hitB = css`
   }
 `;
 
-// Current 1-indexed position in the default line, or "not in line".
-const posTag = css`
+// The lines the card is in, or "not in line". Always rendered, even empty, so
+// the phone grid keeps the buttons on their own row.
+const tagsCell = css`
   flex-shrink: 0;
-  font-size: 0.6875rem;
-  color: #888;
-  background: #f4f4f4;
-  border-radius: 4px;
-  padding: 0.1rem 0.35rem;
-  white-space: nowrap;
 
   @media (max-width: 540px) {
     justify-self: end;
@@ -826,29 +822,16 @@ function EntryCard({
   );
 }
 
-/** One matching existing card, with shortcuts to edit it or re-top it. */
+/** One matching existing card, with a shortcut to edit it. */
 function CardHit({
   card,
-  position,
+  lines,
   onEdit,
-  onTop,
 }: {
   card: CardWithLog;
-  position: number | undefined;
+  lines: string[] | undefined;
   onEdit: () => void;
-  onTop: () => Promise<void>;
 }) {
-  const [topping, setTopping] = useState(false);
-
-  async function handleTop() {
-    setTopping(true);
-    try {
-      await onTop();
-    } finally {
-      setTopping(false);
-    }
-  }
-
   return (
     <div className={hitRow}>
       <div className={hitSides}>
@@ -858,20 +841,12 @@ function CardHit({
         </span>
         <span className={hitB}>{card.bCard}</span>
       </div>
-      <span className={posTag}>
-        {position ? `#${position}` : "not in line"}
+      <span className={tagsCell}>
+        <LineTags names={lines} />
       </span>
       <div className={hitActions}>
         <button className={hitBtn} onClick={onEdit}>
           Edit
-        </button>
-        <button
-          className={hitBtn}
-          onClick={handleTop}
-          disabled={topping}
-          title="Move to the top of the line"
-        >
-          {topping ? "…" : "↑ Top"}
         </button>
       </div>
     </div>
@@ -886,9 +861,6 @@ export default function Dictionary() {
   const [modalCard, setModalCard] = useState<CardWithLog | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const { lines } = useLines();
-  const lineId = lines[0]?.id ?? null;
-
   const { data: cardsData } = db.useQuery({
     cards: { image: {}, $: { where: myCards() } },
     examples: { links: { card: {} }, $: { where: mine(), limit: 2000 } },
@@ -902,16 +874,7 @@ export default function Dictionary() {
     [cardsData?.examples],
   );
 
-  // The default line, sorted top -> bottom: used both for the position badge
-  // and as the `members` argument `moveToTop` needs.
-  const lineMembers = useMemo(
-    () => (lineId ? sortLine(allCards, lineId) : []),
-    [allCards, lineId],
-  );
-  const positions = useMemo(
-    () => new Map(lineMembers.map((c, i) => [c.id, i + 1])),
-    [lineMembers],
-  );
+  const lineNames = useCardLines(allCards);
 
   // Side A of every card, prepared once, so each dictionary result can ask
   // whether it is already one of them.
@@ -1039,11 +1002,8 @@ export default function Dictionary() {
                     <CardHit
                       key={c.id}
                       card={c}
-                      position={positions.get(c.id)}
+                      lines={lineNames.get(c.id)}
                       onEdit={() => setModalCard(c)}
-                      onTop={async () => {
-                        if (lineId) await moveToTop(lineMembers, lineId, c.id);
-                      }}
                     />
                   ))}
                 </div>

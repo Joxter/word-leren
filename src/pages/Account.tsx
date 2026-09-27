@@ -13,11 +13,12 @@ import {
   createLine,
   renameLine,
   deleteLine,
+  lineMembers,
+  type LinedCard,
 } from "../lib/lines";
-import { isFresh, sortLine, dailyReviewStats } from "../lib/queue";
+import { dailyReviewStats, type CardLog } from "../lib/log";
 import { difficultyColor, dueForecast } from "../lib/srs";
 import { showCounter, setShowCounter } from "../lib/prefs";
-import type { CardLog, QueuedCard } from "../lib/queue";
 import type { SrsState } from "../lib/srs";
 
 const page = css`
@@ -344,7 +345,7 @@ const empty = css`
   font-size: 0.85rem;
 `;
 
-interface AccountCard extends QueuedCard {
+interface AccountCard extends LinedCard {
   id: string;
   aCard: string;
   bCard: string;
@@ -477,10 +478,11 @@ export default function Account() {
   );
 
   function lineStats(lineId: string) {
-    const members = sortLine(cards, lineId);
+    const members = lineMembers(cards, lineId);
     return {
       total: members.length,
-      fresh: members.filter((c) => isFresh(c.log)).length,
+      // Not yet in study: what that line's Backlog holds.
+      backlog: members.filter((c) => !c.srs).length,
     };
   }
 
@@ -642,7 +644,7 @@ export default function Account() {
             )
           )}
           {lines.map((l) => {
-            const { total, fresh } = lineStats(l.id);
+            const { total, backlog } = lineStats(l.id);
             const isActive = l.id === activeLine;
             if (editing === l.id) {
               return (
@@ -677,7 +679,7 @@ export default function Account() {
                   {isLoading
                     ? "…"
                     : `${total} ${total === 1 ? "card" : "cards"}${
-                        fresh > 0 ? ` · ${fresh} new` : ""
+                        backlog > 0 ? ` · ${backlog} in backlog` : ""
                       }`}
                 </span>
                 <span className={spacer} />

@@ -15,7 +15,7 @@ import {
   type ExampleLink,
   type Span,
 } from "./examples";
-import type { CardLog } from "./queue";
+import type { CardLog } from "./log";
 
 const SENTENCE = "Ik sta elke dag om 7 uur op.";
 

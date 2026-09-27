@@ -170,9 +170,10 @@ export interface HistoryEvent {
   via?: string;
 }
 
-/** Kinds written by the retired manual queue (`lib/queue.ts`). The rows stay —
- *  that scheduler is a revert away — but they outnumber the study history 12:1
- *  and say nothing about how a card is doing, so the read-only views drop them.
+/** Kinds written by the manual queue that ordered lines by hand before FSRS.
+ *  The code is gone but the rows stay, as history — they outnumber the study
+ *  history 12:1 and say nothing about how a card is doing, so the read-only
+ *  views drop them.
  *  Look in `cards.log` itself if the old placements are ever wanted. */
 const RETIRED = new Set(["place", "top", "move"]);
 

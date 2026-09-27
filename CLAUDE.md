@@ -128,9 +128,12 @@ ordered by `due` unless the picker at the bottom of Learn says by FSRS difficult
   stability every grade floors to one day, and the difference lives in S/D instead.
 - `scripts/reset-srs.mjs` wipes scheduling state without touching `queues` or `log`.
 
-The **manual queue is dormant, not deleted**: ranks (`fractional-indexing`, mutations in
-`src/lib/queue.ts`) and the whole `log` history survive untouched, so the old depth-button
-scheduler is a revert away. Don't delete `queue.ts` while that's still true.
+The manual queue that came before FSRS (hand-ordered lines, depth buttons) is gone.
+Two traces stay on purpose: its `place`/`top`/`move` events in `log`, which are history,
+and the `{ rank }` under each `cards.queues[lineId]`. A line's membership is just the key;
+the rank is never read, and new memberships write `rank: ""` (`addToLine` in
+`src/lib/lines.ts`) so old and new rows keep one shape without a migration.
+Log types and helpers live in `src/lib/log.ts`.
 
 ## MCP-сервер
 

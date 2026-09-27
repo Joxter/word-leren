@@ -12,7 +12,7 @@ import { id } from "@instantdb/react";
 import { db } from "../db";
 import { ownerId } from "./session";
 import { anchorSpans, type Span } from "./spans";
-import type { CardLog } from "./queue";
+import type { CardLog } from "./log";
 
 // Span arithmetic lives in `./spans` — no `../db` there, so the MCP server can
 // import it. Re-exported here because this is where the app has always found

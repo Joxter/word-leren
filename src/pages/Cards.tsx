@@ -7,12 +7,11 @@ import { db } from "../db";
 import CardModal from "../components/CardModal";
 import MarkdocField from "../components/MarkdocField";
 import PlayButton from "../components/PlayButton";
-import { reviewStats, sortLine, enqueueTop } from "../lib/queue";
-import type { CardLog } from "../lib/queue";
+import { reviewStats, type CardLog } from "../lib/log";
 import { difficultyColor, introduce, rateCard, Rating } from "../lib/srs";
 import type { SrsState } from "../lib/srs";
 import { saveCard, deleteCard, trimCardText, type TxOp } from "../lib/cards";
-import { useLines, useActiveLine } from "../lib/lines";
+import { useLines, useActiveLine, lineMembers, addToLine } from "../lib/lines";
 import { myCards, ownedPath, ownerId } from "../lib/session";
 import LineCheckboxes from "../components/LineCheckboxes";
 
@@ -379,15 +378,15 @@ const rowBtn = css`
   }
 `;
 
-// The orders the list can be shown in. "queue" is the line itself; the other
-// two are read-only views of the same cards.
-const SORTS = ["queue", "seen", "created"] as const;
+// The orders the list can be shown in. "due" is the order Learn will ask
+// them in: soonest first, cards not yet in study last.
+const SORTS = ["created", "due", "seen"] as const;
 type SortBy = (typeof SORTS)[number];
 
 const SORT_LABELS: Record<SortBy, string> = {
-  queue: "Queue order",
-  seen: "Least seen",
   created: "Newest first",
+  due: "Due soonest",
+  seen: "Least seen",
 };
 
 interface LineCard {
@@ -410,7 +409,7 @@ function makeDefaultForm(aLang: string, bLang: string): CardData {
 
 export default function Cards() {
   const [modalCard, setModalCard] = useState<Card | null>(null);
-  const [sortBy, setSortBy] = useState<SortBy>("queue");
+  const [sortBy, setSortBy] = useState<SortBy>("created");
   const [newForm, setNewForm] = useState<CardData>(
     makeDefaultForm(NEW_LANGS.a, NEW_LANGS.b),
   );
@@ -461,23 +460,22 @@ export default function Cards() {
   });
 
   const cards = (data?.cards ?? []) as LineCard[];
-  const ageRank = new Map(cards.map((c, i) => [c.id, i]));
-  // `members` is always in queue order — the move helpers below rely on it.
-  const members = activeLine ? sortLine(cards, activeLine) : [];
+  // Newest first, like `cards` itself.
+  const members = activeLine ? lineMembers(cards, activeLine) : [];
   const statsById = new Map(members.map((c) => [c.id, reviewStats(c.log)]));
-  const queuePos = new Map(members.map((c, i) => [c.id, i]));
-  // Display order can differ from queue order (e.g. sorted by review count),
-  // but moves still operate on the underlying queue via each card's id. Sorting
-  // by "seen" puts the least-reviewed cards first, to surface neglected words.
+  // Sorting by "seen" puts the least-reviewed cards first, to surface
+  // neglected words.
   const displayMembers =
     sortBy === "seen"
       ? [...members].sort(
           (a, b) =>
             (statsById.get(a.id)?.seen ?? 0) - (statsById.get(b.id)?.seen ?? 0),
         )
-      : sortBy === "created"
+      : sortBy === "due"
         ? [...members].sort(
-            (a, b) => (ageRank.get(a.id) ?? 0) - (ageRank.get(b.id) ?? 0),
+            (a, b) =>
+              (a.srs?.due ?? Number.MAX_SAFE_INTEGER) -
+              (b.srs?.due ?? Number.MAX_SAFE_INTEGER),
           )
         : members;
 
@@ -512,9 +510,8 @@ export default function Cards() {
         }
       }
       await db.transact(ops);
-      // Add the new card to the top of each checked line.
       for (const lineId of lineIds) {
-        await enqueueTop(lineId, cardId);
+        await addToLine(lineId, cardId);
       }
       // Straight into study: a hand-entered card is one you just decided to
       // learn, so it gets its FSRS state now rather than sitting in the Backlog.
@@ -682,8 +679,7 @@ export default function Cards() {
           </div>
 
           <div className={tableWrap}>
-            {displayMembers.map((e) => {
-              const pos = queuePos.get(e.id) ?? 0;
+            {displayMembers.map((e, pos) => {
               const graded = !!e.srs && e.srs.reps > 0;
               return (
                 <div

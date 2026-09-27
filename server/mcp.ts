@@ -21,7 +21,6 @@ import { timingSafeEqual } from "node:crypto";
 import { id as newId, init } from "@instantdb/admin";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
-import { generateKeyBetween } from "fractional-indexing";
 import { z } from "zod";
 import { rankMatches } from "../src/lib/search.ts";
 import {
@@ -493,16 +492,6 @@ function buildServer(): McpServer {
           card: brief(dup, lines),
         });
 
-      // Straight to the top of the line. The app's `enqueueTop` instead slots
-      // new cards between non-fresh ones, but that lives in lib/queue.ts, which
-      // opens a socket on import — and rank barely decides anything now that
-      // FSRS does the scheduling and the card enters study on creation.
-      // ponytail: plain top; port `topInsertRank` here if the pool ever clumps.
-      const ranks = cards
-        .map((c) => c.queues?.[lineId]?.rank)
-        .filter((r): r is string => !!r);
-      const top = ranks.length ? ranks.reduce((a, b) => (a < b ? a : b)) : null;
-
       const cardId = newId();
       await db.transact(
         db.tx.cards[cardId]
@@ -510,7 +499,9 @@ function buildServer(): McpServer {
             aLang,
             bLang,
             ...text,
-            queues: { [lineId]: { rank: generateKeyBetween(null, top) } },
+            // Membership only: the rank is a leftover of the manual queue that
+            // nothing reads, kept empty so the shape matches older rows.
+            queues: { [lineId]: { rank: "" } },
             // Same state the app's `introduce` writes: a new card, due now.
             srs: freshSrs(),
             log: {

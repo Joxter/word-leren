@@ -11,7 +11,7 @@ import {
 } from "ts-fsrs";
 import { db } from "../db";
 import { freshSrs } from "./deck";
-import { logEntry, type CardLog } from "./queue";
+import { logEntry, type CardLog } from "./log";
 
 // Classic day-based spaced repetition on top of FSRS. A card carries the
 // library's own Card state in `card.srs` (dates as unix ms) and the queue is
@@ -135,8 +135,7 @@ function store(card: FsrsCard): SrsState {
   };
 }
 
-const inLine = (c: StudyCard, lineId: string) =>
-  c.queues?.[lineId]?.rank !== undefined;
+const inLine = (c: StudyCard, lineId: string) => !!c.queues?.[lineId];
 
 /**
  * The card as `ts-fsrs` wants it, carrying its own id so the fuzz seed varies

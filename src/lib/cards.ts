@@ -13,8 +13,8 @@ import {
 } from "./dictionary";
 import { editEvent, trimCardText, type CardText } from "./deck";
 import type { LinkedCard } from "./examples";
-import { getDefaultLineId } from "./lines";
-import { enqueueTop, logEntry, type CardLog } from "./queue";
+import { addToLine, getDefaultLineId } from "./lines";
+import { logEntry, type CardLog } from "./log";
 import { ownedPath, ownerId } from "./session";
 import { introduce, type SrsState } from "./srs";
 import type { CardData } from "../pages/Cards";
@@ -83,7 +83,7 @@ export async function saveCard(
 
 /**
  * Throw a card away: stamp `deletedAt` and log it. The row stays whole — its
- * srs state, its log, its line ranks — so `restoreCard` is the only thing
+ * srs state, its log, its lines — so `restoreCard` is the only thing
  * needed to bring it back. Reads keep deleted cards out by filtering on
  * `deletedAt` (`myCards()` in lib/session.ts).
  */
@@ -181,7 +181,7 @@ export async function createCardFromEntry(
       .link({ owner: ownerId() }),
   );
   const lineId = await getDefaultLineId();
-  await enqueueTop(lineId, cardId);
+  await addToLine(lineId, cardId);
   await introduce([cardId], lineId);
   return {
     id: cardId,
