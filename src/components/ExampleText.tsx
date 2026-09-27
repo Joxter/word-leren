@@ -32,6 +32,21 @@ interface Props {
 }
 
 /**
+ * One run of underscores per word of a blanked fragment, with the whitespace
+ * between them kept: a fragment picked by dragging across "gaat weg" is one
+ * span, but it has to read as two gaps, not as one long word.
+ */
+function underscore(fragment: string): string {
+  return fragment
+    .split(/(\s+)/)
+    .filter((part) => part.length > 0)
+    .map((part) =>
+      /^\s+$/.test(part) ? part : "_".repeat(Math.max(2, [...part].length)),
+    )
+    .join("");
+}
+
+/**
  * An example sentence with its linked fragments marked. Spans are re-anchored
  * on the way in (without persisting), so a sentence edited after the link was
  * saved still renders correctly — see `anchorSpans`.
@@ -52,7 +67,7 @@ export default function ExampleText({
         if (mode === "blank") {
           return (
             <span key={i} className={blank}>
-              {"_".repeat(Math.max(2, [...seg.text].length))}
+              {underscore(seg.text)}
             </span>
           );
         }
