@@ -12,10 +12,9 @@ import {
   type DictEntry,
 } from "../lib/dictionary";
 import type { LinkedCard } from "../lib/examples";
-import { useLinePositions } from "../lib/lines";
-import type { CardQueues } from "../lib/queue";
+import { useCardLines, type CardQueues } from "../lib/lines";
 import { myCards } from "../lib/session";
-import LinePos from "./LinePos";
+import LineTags from "./LineTags";
 import SearchPicker, { pickerNote, pickerRow } from "./SearchPicker";
 
 /** A card as the picker searches it — the note is matched, but never shown. */
@@ -97,7 +96,7 @@ export default function CardPicker({ exclude, cards, onPick }: Props) {
     () => cards ?? ((data?.cards ?? []) as SearchableCard[]),
     [cards, data?.cards],
   );
-  const positions = useLinePositions(all);
+  const lineNames = useCardLines(all);
 
   return (
     <SearchPicker
@@ -113,7 +112,7 @@ export default function CardPicker({ exclude, cards, onPick }: Props) {
             {c.aCard}
             <small>{c.bCard}</small>
           </span>
-          <LinePos positions={positions.get(c.id)} className={posEnd} />
+          <LineTags names={lineNames.get(c.id)} className={posEnd} />
         </span>
       )}
       placeholder="+ Attach a card — search cards or the dictionary…"

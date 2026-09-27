@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import { useImagePaste } from "../hooks/useImagePaste";
 import { css } from "@linaria/core";
 import type { Card, CardData } from "../pages/Cards";
-import { useLines } from "../lib/lines";
+import { useLines, addToLine, removeFromLine } from "../lib/lines";
 import { findEntry, loadDictionary } from "../lib/dictionary";
 import { buildDictBlock, withDictBlock } from "../lib/dictNote";
-import { enqueueTop, removeFromLine } from "../lib/queue";
 import { flagCard, unstudyCard } from "../lib/cards";
 import CardExamples from "./CardExamples";
 import LineCheckboxes from "./LineCheckboxes";
@@ -441,10 +440,10 @@ export default function CardModal({ card, onSave, onDelete, onClose }: Props) {
     const removeImageId =
       imageRemoved || imageFile !== null ? (card?.image?.id ?? null) : null;
     try {
-      // Apply line-membership changes: add to newly-checked lines (top), remove
-      // from unchecked ones.
+      // Apply line-membership changes: add to newly-checked lines, remove from
+      // unchecked ones.
       for (const lineId of lineIds) {
-        if (!originalLines.has(lineId)) await enqueueTop(lineId, card.id);
+        if (!originalLines.has(lineId)) await addToLine(lineId, card.id);
       }
       for (const lineId of originalLines) {
         if (!lineIds.has(lineId)) await removeFromLine(lineId, card.id);

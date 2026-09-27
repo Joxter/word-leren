@@ -17,13 +17,13 @@ import {
   type ExampleLink,
 } from "../lib/examples";
 import { deleteCard, saveCard } from "../lib/cards";
-import { useActiveLine, useLinePositions, useLines } from "../lib/lines";
-import { moveToTop, sortLine, type CardLog } from "../lib/queue";
+import { useCardLines } from "../lib/lines";
+import type { CardLog } from "../lib/log";
 import { myCards } from "../lib/session";
 import type { Card, CardData } from "../pages/Cards";
 import CardModal from "./CardModal";
 import CardPicker from "./CardPicker";
-import LinePos from "./LinePos";
+import LineTags from "./LineTags";
 import MarkdocField from "./MarkdocField";
 import SpanBoard from "./SpanBoard";
 import { Textarea } from "./Textarea";
@@ -297,10 +297,8 @@ export default function ExampleEditor({ example, onDeleted }: Props) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [hovered, setHovered] = useState<string[]>([]);
   const [modalCard, setModalCard] = useState<Card | null>(null);
-  const [topping, setTopping] = useState<string | null>(null);
-
-  // The whole card table: the picker searches it, the rows read their place in
-  // the line off it, and Edit opens the card itself — one subscription for all
+  // The whole card table: the picker searches it, the rows read their lines
+  // off it, and Edit opens the card itself — one subscription for all
   // three rather than one each.
   const { data } = db.useQuery({
     cards: { image: {}, $: { where: myCards(), limit: 5000 } },
@@ -309,16 +307,7 @@ export default function ExampleEditor({ example, onDeleted }: Props) {
     () => (data?.cards ?? []) as (Card & { log?: CardLog })[],
     [data?.cards],
   );
-  const positions = useLinePositions(cards);
-
-  // "Top" acts on the line being studied, the one Learn and Line are pointed
-  // at — the same button, the same queue.
-  const { lines } = useLines();
-  const [activeLine] = useActiveLine(lines);
-  const members = useMemo(
-    () => (activeLine ? sortLine(cards, activeLine) : []),
-    [cards, activeLine],
-  );
+  const lineNames = useCardLines(cards);
 
   const links = liveLinks(example).filter(
     (l): l is ExampleLink & { card: NonNullable<ExampleLink["card"]> } =>
@@ -366,24 +355,6 @@ export default function ExampleEditor({ example, onDeleted }: Props) {
    */
   function handleHover(ids: string[]) {
     setHovered((prev) => (prev.join() === ids.join() ? prev : ids));
-  }
-
-  /**
-   * Send a card back to the top of the line: as high as it goes without landing
-   * next to another fresh card, and a second press (the smart slot being no
-   * better than where it sits) takes it to the very top — the Line page's
-   * button. A card that is in no line joins it, the way the Dictionary page's
-   * "↑ Top" adds one; a card already at the top has nowhere to go.
-   */
-  async function handleTop(cardId: string) {
-    if (!activeLine) return;
-    if (members[0]?.id === cardId) return;
-    setTopping(cardId);
-    try {
-      await moveToTop(members, activeLine, cardId);
-    } finally {
-      setTopping(null);
-    }
   }
 
   async function handleUpdate(
@@ -518,19 +489,7 @@ export default function ExampleEditor({ example, onDeleted }: Props) {
                 <span className={spans.length ? cardSpans : cardSpansEmpty}>
                   {spans.length ? spansAnswer(spans) : "no words picked"}
                 </span>
-                <LinePos positions={positions.get(link.card.id)} />
-                <button
-                  type="button"
-                  className={rowBtn}
-                  title="Move this card to the top of the line"
-                  disabled={!activeLine || topping !== null}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleTop(link.card.id);
-                  }}
-                >
-                  {topping === link.card.id ? "…" : "↑ Top"}
-                </button>
+                <LineTags names={lineNames.get(link.card.id)} />
                 <button
                   type="button"
                   className={rowBtn}

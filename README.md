@@ -38,7 +38,7 @@ Cards page; only the lines themselves are managed here.
 
 ### Vocabulary Cards
 
-Bilingual flashcards for three language pairs: NL↔EN, NL↔RU, and EN↔RU. Cards support optional images (paste from clipboard or upload) and an optional side-A audio clip (a path under `public/`, e.g. a dictionary pronunciation); a play button appears wherever the side-A word is shown — the create/edit forms, the card list, the line, and during review. Text fields accept Markdoc (markdown) syntax. New cards are added to the top of every line checked in the create form.
+Bilingual flashcards for three language pairs: NL↔EN, NL↔RU, and EN↔RU. Cards support optional images (paste from clipboard or upload) and an optional side-A audio clip (a path under `public/`, e.g. a dictionary pronunciation); a play button appears wherever the side-A word is shown — the create/edit forms, the card list, the line, and during review. Text fields accept Markdoc (markdown) syntax. New cards are added to every line checked in the create form.
 
 Two buttons in the card editor act on the card rather than on the form, and take
 effect immediately: **★** marks a card to come back to later — it is also on the
@@ -92,10 +92,10 @@ the learning line.
   immediately, independently of the card form's Save.
 - **Attaching a word** — the attach box searches your cards first and the
   [dictionary](#dictionary) underneath: picking a dictionary entry makes the card for it
-  (the same one "Add to cards" makes, top of the line) and attaches it in one go. Words you
+  (the same one "Add to cards" makes) and attaches it in one go. Words you
   already have a card for are left out of the dictionary half — that card is in the matches
-  above. Each attached card shows where it stands in the line ("#12"), can be sent back to
-  the top of it, and opens in the full card editor from the row.
+  above. Each attached card shows which lines it is in (or that it is in none) and opens in
+  the full card editor from the row.
 - **Picking fragments** — click the words the card covers; for a partial word or a phrase,
   select the text and press "Blank selection". The sentence is shown once, not once per
   card: clicks assign to the card selected in the list above it, other cards' fragments
@@ -109,10 +109,10 @@ that no longer occurs at all is reported as broken. See `src/lib/examples.ts`.
 
 ### Learning
 
-A deliberately simple, Anki-inspired review mode built around a single global queue — "the line". No timers, days, or sessions, just one dynamic ordered list.
+Day-based spaced repetition on [FSRS](https://github.com/open-spaced-repetition/ts-fsrs). Cards live in lines — separate decks under one account — and each line's session asks whatever is due.
 
-- **Learn** (`/learn`) — see the top card's side B as the prompt, with a hint of the answer's language (e.g. `EN → NL`). Reveal shows side A — its word, audio, and note — then press a **Depth** button to drop the card to the N-th place from the top (`5 / 10 / 50 / 100 / 500 / 1000`). The next card surfaces immediately. `Space`/`Enter` reveals; number keys `1`–`6` pick a depth.
-- **Cards** (`/`) — the create form, and below it the active line in order. A click on any row opens that card in the editor; a coloured dot shows how hard the card is (the same green→red as the [personal cabinet](#personal-cabinet)'s chart), and an empty ring means it has never been studied. Each studied row carries a **Забыл** button — met the word in the wild and blanked on it, which grades it `Again` on the spot (recorded as `source: "field"`) so it comes back in a few minutes. A Sort select picks between three views of the same cards — queue order, least seen first, and newest first — while the leading number always stays the card's place in the queue. The page always shows whichever line is active on Learn; the lines themselves are created and deleted on the personal cabinet.
+- **Learn** (`/learn`) — see the next due card's side B as the prompt, with a hint of the answer's language (e.g. `EN → NL`). Reveal shows side A — its word, audio, and note — then grade it `Again / Hard / Good / Easy`; each button shows when the card would come back. `Space`/`Enter` reveals; number keys `1`–`4` pick a grade.
+- **Cards** (`/`) — the create form, and below it the active line in order. A click on any row opens that card in the editor; a coloured dot shows how hard the card is (the same green→red as the [personal cabinet](#personal-cabinet)'s chart), and an empty ring means it has never been studied. Each studied row carries a **Забыл** button — met the word in the wild and blanked on it, which grades it `Again` on the spot (recorded as `source: "field"`) so it comes back in a few minutes. A Sort select picks between newest first, due soonest (the order Learn will ask them in), and least seen first. The page always shows whichever line is active on Learn; the lines themselves are created and deleted on the personal cabinet.
 
 One toggle changes what the prompt asks for. **Examples** prompts with one of the card's
 [example sentences](#examples) instead, with the fragments belonging to that card blanked
@@ -123,7 +123,7 @@ plain prompt. Whichever example came up is recorded on the review, so a card car
 several sentences cycles through them least-recently-seen first rather than drilling one.
 Revealing any card also lists its other examples underneath.
 
-Positions use fractional-index ranks, so reordering is a single write — no renumbering. Every action (a `place` from Learn or a `move` from Cards) is logged to a history of card events.
+Every answer, edit and delete is logged to the card's own history of events. Before FSRS a line was a hand-ordered queue; its `place`/`top`/`move` events are still in that history, though the code that wrote them is gone.
 
 ### Grammar
 
@@ -133,7 +133,7 @@ Rich-text notes for grammar rules and examples. Displays as a grid list with a d
 
 A searchable offline Dutch dictionary merged from six imported sources (an Anki frequency dictionary, three vocabulary/grammar decks, and a CSV). Each headword gathers everything available for that word into a single entry: the `de`/`het` article, part of speech, irregular verb forms, and a per-source list of translations, example sentences, and audio clips (native recordings plus TTS). It is built ahead of time into a static JSON file with extracted audio and served directly from the site — no backend, works offline. See [Dictionary data](#dictionary-data) for the build.
 
-Each entry has an **Add to cards** button that creates an NL→EN flashcard from it: the Dutch headword on side A (with its pronunciation audio), the entry's translations on side B, any example sentences in the note. The new card lands at the top of the line.
+Each entry has an **Add to cards** button that creates an NL→EN flashcard from it: the Dutch headword on side A (with its pronunciation audio), the entry's translations on side B, any example sentences in the note. The new card joins the default line and goes straight into study.
 
 ### Quizzes
 
@@ -152,7 +152,7 @@ Quiz progress is saved in `localStorage`.
 - [InstantDB](https://www.instantdb.com/) for real-time data and file storage
 - [Markdoc](https://markdoc.dev/) for rich text rendering
 - [Wouter](https://github.com/molefrog/wouter) for routing
-- [fractional-indexing](https://github.com/rocicorp/fractional-indexing) for ordering the learning line
+- [ts-fsrs](https://github.com/open-spaced-repetition/ts-fsrs) for scheduling
 
 ## Development
 

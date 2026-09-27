@@ -2,16 +2,51 @@ import { useEffect, useMemo, useState } from "react";
 import { id } from "@instantdb/react";
 import { db } from "../db";
 import { mine, ownerId } from "./session";
-import {
-  linePositions,
-  sortLine,
-  type LinePosition,
-  type QueuedCard,
-} from "./queue";
 
-// A "line" is a named learning queue. Membership + per-line rank live on the
-// cards (see queue.ts); this module just manages the line records themselves
-// plus the currently-selected line in the UI.
+// A "line" is a named deck: its own Learn session, its own Backlog. Which lines
+// a card is in lives on the card itself, as the keys of `cards.queues`; the
+// line rows only carry a name.
+//
+// Each key holds `{ rank }`, a leftover of the manual queue that ordered a
+// line by hand before FSRS. Nothing reads the rank any more — the order is the
+// schedule's — but the shape is kept so old and new rows look alike, and new
+// memberships write an empty one.
+
+export type CardQueues = { [lineId: string]: { rank: string } };
+
+/** Minimal shape the membership helpers need from a card. */
+export interface LinedCard {
+  id: string;
+  queues?: CardQueues;
+}
+
+export function inLine(card: LinedCard, lineId: string): boolean {
+  return !!card.queues?.[lineId];
+}
+
+/** The cards that belong to `lineId`, in the order they were given. */
+export function lineMembers<T extends LinedCard>(
+  cards: T[],
+  lineId: string,
+): T[] {
+  return cards.filter((c) => inLine(c, lineId));
+}
+
+/** Put a card in a line. Nothing is logged: joining a line is not history. */
+export async function addToLine(lineId: string, cardId: string): Promise<void> {
+  await db.transact(
+    db.tx.cards[cardId].merge({ queues: { [lineId]: { rank: "" } } }),
+  );
+}
+
+/** Take a card out of a line (keeps the card and its schedule). */
+export async function removeFromLine(
+  lineId: string,
+  cardId: string,
+): Promise<void> {
+  // merge treats a null value as "delete this key".
+  await db.transact(db.tx.cards[cardId].merge({ queues: { [lineId]: null } }));
+}
 
 export interface Line {
   id: string;
@@ -47,7 +82,7 @@ export async function renameLine(lineId: string, name: string): Promise<void> {
  */
 export async function deleteLine(lineId: string): Promise<void> {
   const res = await db.queryOnce({ cards: { $: { where: mine() } } });
-  const members = sortLine((res.data?.cards ?? []) as QueuedCard[], lineId);
+  const members = lineMembers((res.data?.cards ?? []) as LinedCard[], lineId);
   await db.transact([
     ...members.map((c) =>
       db.tx.cards[c.id].merge({ queues: { [lineId]: null } }),
@@ -102,13 +137,29 @@ export function useActiveLine(
 }
 
 /**
- * `linePositions` over every line there is — what the "#12" badges next to a
- * card are made of. The caller brings the cards it is already showing; only
- * the lines are fetched here.
+ * The names of the lines each card is in, keyed by card id — what the line
+ * badges next to a card print. Cards in no line are absent. With a single
+ * line every card would print the same word, so members map to no names at
+ * all and only the cards outside it stand out. The caller brings the cards
+ * it is already showing; only the lines are fetched here.
  */
-export function useLinePositions(
-  cards: QueuedCard[],
-): Map<string, LinePosition[]> {
+export function useCardLines(cards: LinedCard[]): Map<string, string[]> {
   const { lines } = useLines();
-  return useMemo(() => linePositions(cards, lines), [cards, lines]);
+  return useMemo(() => {
+    const out = cardLines(cards, lines);
+    if (lines.length < 2) for (const k of out.keys()) out.set(k, []);
+    return out;
+  }, [cards, lines]);
+}
+
+export function cardLines(
+  cards: LinedCard[],
+  lines: { id: string; name: string }[],
+): Map<string, string[]> {
+  const out = new Map<string, string[]>();
+  for (const card of cards) {
+    const names = lines.filter((l) => inLine(card, l.id)).map((l) => l.name);
+    if (names.length) out.set(card.id, names);
+  }
+  return out;
 }

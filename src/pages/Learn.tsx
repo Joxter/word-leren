@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { css } from "@linaria/core";
 import { Link } from "wouter";
 import { db } from "../db";
-import { dailyReviewStats } from "../lib/queue";
-import type { CardLog } from "../lib/queue";
+import { dailyReviewStats } from "../lib/log";
+import type { CardLog } from "../lib/log";
 import {
   dueCards,
   dueSoon,
@@ -755,7 +755,7 @@ export default function Learn() {
   }
 
   // Keyboard: space/enter reveals, "h" opens the hint, "t" opens the answer
-  // input; number keys pick a depth button once revealed.
+  // input; number keys pick a rating once revealed.
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.target instanceof HTMLElement) {
