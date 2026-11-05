@@ -13,6 +13,7 @@ covers build/config gotchas that aren't obvious.
   backend doesn't have yet locks everyone out of that namespace.
 - `node scripts/migrate-owner.mjs <email>` — give ownerless rows an owner (one-off; see below)
 - `npm run backup` — dump every table + every uploaded image to a local folder
+- `npm run deploy` — ssh to the droplet and run `update.sh` (ships `origin/master` once CI is green)
 
 ## Gotchas
 

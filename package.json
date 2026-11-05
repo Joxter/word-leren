@@ -11,6 +11,7 @@
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "test": "vitest run",
     "mcp": "node --env-file-if-exists=.env.local server/mcp.ts",
+    "deploy": "ssh root@134.209.227.168 /sites/word-leren/update.sh",
     "backup": "node scripts/backup.mjs",
     "generate": "node scripts/generate.mjs",
     "build-dictionary": "node scripts/build-dictionary.mjs"

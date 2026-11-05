@@ -76,6 +76,10 @@ certbot --nginx -d word.joxter.me
 
 ## Обновление
 
+С ноутбука — `npm run deploy` (ssh на дроплет и `update.sh`, ниже то же руками).
+Пушить в master и ждать зелёный CI всё равно надо: скрипт выкатывает
+`origin/master`, а не рабочую копию.
+
 ```bash
 cd /sites/word-leren && ./update.sh
 ```
