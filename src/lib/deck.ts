@@ -51,6 +51,8 @@ export interface DeckCard {
   aCard: string;
   bCard: string;
   note?: string;
+  /** Path from public/ to a side-A clip, "audio/dict/hond.mp3". */
+  audio?: string;
   srs?: Srs;
   log?: Record<string, LogEvent>;
   queues?: Record<string, { rank: string }>;

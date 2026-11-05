@@ -89,6 +89,21 @@ const dictionary: DictEntry[] = JSON.parse(
     "utf8",
   ),
 );
+/** An entry's clips with the deck each came from — `common` is LearnDutch.org's
+ *  "1000 Most Common Words", `frequency` "A Frequency Dictionary of Dutch". The
+ *  one "+ Add to cards" picks (`entryAudio`) goes first, so taking the first is
+ *  doing what the app does. */
+function clips(e: DictEntry): { path: string; source: string }[] {
+  const first = entryAudio(e);
+  const bySource = new Map<string, string>();
+  for (const i of e.info)
+    if (i.audio && !bySource.has(`audio/${i.audio}`))
+      bySource.set(`audio/${i.audio}`, i.source);
+  return [...bySource]
+    .map(([path, source]) => ({ path, source }))
+    .sort((a, b) => Number(b.path === first) - Number(a.path === first));
+}
+
 /** Every clip the dictionary knows, as `cards.audio` stores it. The clips are
  *  served by the app, not here, so this is the only check an `audio` path gets:
  *  a typo would save a card that plays nothing. */
@@ -219,7 +234,7 @@ function buildServer(): McpServer {
     {
       instructions:
         "A personal Dutch flashcard deck (side A is Dutch) and its review history. Reading is free; " +
-        "the writes are `edit_card`, which fixes a card's text and nothing else, and `create_card`, which adds one — " +
+        "the writes are `edit_card`, which fixes a card's text and audio and nothing else, and `create_card`, which adds one — " +
         "look the word up with `search_dictionary` first, it has the translations and the pronunciation clip. " +
         "The deck is split into lines — separate decks under one account, listed in `search_cards`. " +
         "Example sentences are their own thing, shared by cards: `search_examples` finds them and says which cards each is on, " +
@@ -406,14 +421,15 @@ function buildServer(): McpServer {
     {
       title: "Edit card",
       description:
-        "Fix a card's text: side A, side B, the note, or any combination. Only the fields you pass change. " +
+        "Fix a card's text — side A, side B, the note — or its audio, in any combination. Only the fields you pass change. " +
         "Scheduling is not touched — an edit never moves a card's due date, and a card whose word changes " +
         "completely is a new card, not an edit. Each field replaces the old value whole, so to add a line to " +
         "a note, read it with `get_card` and pass it back with the line in it. " +
         "A note often ends in a `{% dict %} … {% /dict %}` block: that is a dictionary entry the app pastes " +
         "in and refills, so keep it as it is and write above it. " +
         'Passing side B as "" turns the card into a note card (title + note, see `create_card`); it then needs a note. ' +
-        "The edit is logged and shows up in the card's history.",
+        'Audio takes a clip from `search_dictionary`; "" removes it. ' +
+        "A text edit is logged and shows up in the card's history; an audio change is not, the same as in the app.",
       inputSchema: {
         id: z.string(),
         aCard: z.string().optional().describe("Side A — the Dutch word"),
@@ -422,12 +438,24 @@ function buildServer(): McpServer {
           .string()
           .optional()
           .describe("Free text under the card, Markdoc. Replaces the old note"),
+        audio: z
+          .string()
+          .optional()
+          .describe(
+            'A clip path exactly as `search_dictionary` returns it; "" removes the audio',
+          ),
       },
       annotations: { readOnlyHint: false, idempotentHint: true },
     },
-    async ({ id, aCard, bCard, note }) => {
+    async ({ id, aCard, bCard, note, audio }) => {
       const card: DeckCard | undefined = await fetchCard(id);
       if (!card) return ok({ error: "no such card" });
+
+      audio = audio?.trim();
+      if (audio && !knownAudio.has(audio))
+        return ok({
+          error: "no such clip — take `audio` from search_dictionary",
+        });
 
       const text = trimCardText({
         aCard: aCard ?? card.aCard,
@@ -447,21 +475,35 @@ function buildServer(): McpServer {
       if (problem) return ok({ error: problem });
 
       const event = editEvent(card, text, "mcp");
-      if (!event) return ok({ id, changed: [], note: "nothing to change" });
       // Only the changed fields are written. Sending all three would have this
       // edit overwrite whatever a Save in the open app wrote a second ago —
       // with the text this request read *before* that save.
-      const changes = Object.fromEntries(event.fields.map((f) => [f, text[f]]));
+      const changes: Record<string, string> = Object.fromEntries(
+        (event?.fields ?? []).map((f) => [f, text[f]]),
+      );
+      // Not in the log: the app's own Save doesn't log audio either, and
+      // `editEvent` only knows the text fields. "" clears it, as the form does.
+      if (audio !== undefined && audio !== (card.audio ?? ""))
+        changes.audio = audio;
+      if (!Object.keys(changes).length)
+        return ok({ id, changed: [], note: "nothing to change" });
       await db.transact([
         db.tx.cards[id].update(changes),
         // `merge`, not `update` — the log is one JSON blob and an update would
         // replace the whole history with this single event.
-        db.tx.cards[id].merge({ log: { [newId()]: event } }),
+        ...(event
+          ? [db.tx.cards[id].merge({ log: { [newId()]: event } })]
+          : []),
       ]);
 
       // `text` is the stored row plus exactly `changes`, so it is the card as
       // it now stands.
-      return ok({ id, changed: event.fields, card: text });
+      return ok({
+        id,
+        changed: Object.keys(changes),
+        card: text,
+        audio: changes.audio ?? card.audio,
+      });
     },
   );
 
@@ -472,7 +514,9 @@ function buildServer(): McpServer {
       description:
         "The app's Dutch dictionary — the same search as its Dictionary page: headword (with or without de/het), " +
         'verb forms ("gelopen" finds lopen), then translations. Each hit gives `aCard` and `bCard` as the app\'s ' +
-        '"+ Add to cards" would write them and, when the dictionary has a recording, `audio` — pass all three to ' +
+        '"+ Add to cards" would write them and, when the dictionary has recordings, `audio`: each clip\'s `path` and the deck it comes from ' +
+        "(`common` — LearnDutch.org's 1000 Most Common Words, `frequency` — A Frequency Dictionary of Dutch), " +
+        "the app's own pick first. Pass the side A, side B and a clip's path to " +
         "`create_card` (fixing side B as you see fit) to give the new card its pronunciation.",
       inputSchema: {
         query: z
@@ -497,7 +541,7 @@ function buildServer(): McpServer {
           bCard: entryCardBack(e),
           pos: e.pos,
           verb: e.verb,
-          audio: entryAudio(e),
+          audio: clips(e),
         })),
       ),
   );
@@ -514,7 +558,7 @@ function buildServer(): McpServer {
         "and the note (required then) is what the app reveals; there is nothing to type, so write the note for reading. " +
         "A card whose side A already exists is refused — edit that one with `edit_card` instead of making a second. " +
         "The note is free text (Markdoc); the app's own `{% dict %}` dictionary block is filled in there, not here. " +
-        "To give it a pronunciation, look the word up with `search_dictionary` and pass its `audio`. " +
+        "To give it a pronunciation, look the word up with `search_dictionary` and pass one of its clips' `path` as `audio`. " +
         "Examples go on afterwards with `add_example`; images can't be attached from here.",
       inputSchema: {
         aCard: z.string().describe("Side A — the word being learned"),
@@ -538,7 +582,7 @@ function buildServer(): McpServer {
           .string()
           .optional()
           .describe(
-            "A clip path exactly as `search_dictionary` returns it, e.g. audio/dict/hond.mp3",
+            "A clip `path` exactly as `search_dictionary` returns it, e.g. audio/dict/hond.mp3",
           ),
         aLang: z.enum(["NL", "EN"]).optional().describe("Default NL"),
         bLang: z.enum(["EN", "RU"]).optional().describe("Default EN"),
