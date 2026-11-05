@@ -471,7 +471,7 @@ function buildServer(): McpServer {
       title: "Search dictionary",
       description:
         "The app's Dutch dictionary — the same search as its Dictionary page: headword (with or without de/het), " +
-        'verb forms ("gelopen" finds lopen), then translations. Each hit gives `aCard` and `bCard` as the app's ' +
+        'verb forms ("gelopen" finds lopen), then translations. Each hit gives `aCard` and `bCard` as the app\'s ' +
         '"+ Add to cards" would write them and, when the dictionary has a recording, `audio` — pass all three to ' +
         "`create_card` (fixing side B as you see fit) to give the new card its pronunciation.",
       inputSchema: {

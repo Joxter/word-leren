@@ -29,7 +29,10 @@ jobs:
       # `tsconfig.json` покрывает только src, поэтому про server/ не знает
       # ни tsc, ни vite — синтаксическая ошибка там доезжала до ghcr, а
       # update.sh подменял контейнер за 15 строк до проверки health.
-      - run: node --check server/mcp.ts
+      # Не `node --check`: на .ts он выходит с 0 и с битым файлом (так
+      # доехал непарный апостроф в c39a2d4). `stripTypeScriptTypes` — тот же
+      # разбор, которым Node грузит сервер.
+      - run: node -e 'const fs = require("fs"); for (const f of fs.readdirSync("server").filter((f) => f.endsWith(".ts"))) require("node:module").stripTypeScriptTypes(fs.readFileSync("server/" + f, "utf8"))'
       # Node стрипает типы без анализа: импорт, использованный только как тип,
       # остаётся настоящим импортом и падает в рантайме. Ни tsc, ни --check
       # этого не видят — ловится только настоящей загрузкой модулей, которые
