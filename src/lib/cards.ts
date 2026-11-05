@@ -7,6 +7,7 @@ import { db } from "../db";
 import { buildDictBlock, withDictBlock } from "./dictNote";
 import {
   deckInfo,
+  entryAudio,
   entryCardBack,
   entryCardFront,
   type DictEntry,
@@ -158,13 +159,7 @@ export async function createCardFromEntry(
       .join("\n\n"),
     buildDictBlock(entry),
   );
-  // entry.info[].audio is stored as "dict/<file>.mp3"; the card keeps the full
-  // path from public/ so it can be played directly. Prefer a clip from the
-  // "common" source, falling back to the first info that has any audio.
-  const rawAudio = (
-    entry.info.find((i) => i.audio && i.source === "common") ??
-    entry.info.find((i) => i.audio)
-  )?.audio;
+  const audio = entryAudio(entry);
 
   const card = {
     aLang: "NL",
@@ -177,7 +172,7 @@ export async function createCardFromEntry(
   };
   await db.transact(
     db.tx.cards[cardId]
-      .update({ ...card, ...(rawAudio ? { audio: `audio/${rawAudio}` } : {}) })
+      .update({ ...card, ...(audio ? { audio } : {}) })
       .link({ owner: ownerId() }),
   );
   const lineId = await getDefaultLineId();

@@ -1,7 +1,9 @@
-# The build context is only package files, server/ and src/lib — everything else
-# is either huge (audio, dictionaries, exam dumps) or secret.
+# The build context is only package files, server/, src/lib and the dictionary
+# JSON that `search_dictionary` reads — everything else is either huge (audio,
+# source dictionaries, exam dumps) or secret.
 *
 !package.json
 !package-lock.json
 !server
 !src/lib
+!public/data/dictionary.json

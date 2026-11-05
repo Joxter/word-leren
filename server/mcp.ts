@@ -18,11 +18,19 @@ import {
   type ServerResponse,
 } from "node:http";
 import { timingSafeEqual } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { id as newId, init } from "@instantdb/admin";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { z } from "zod";
 import { rankMatches } from "../src/lib/search.ts";
+import {
+  entryAudio,
+  entryCardBack,
+  entryCardFront,
+  searchDictionary,
+  type DictEntry,
+} from "../src/lib/dictionary.ts";
 import {
   normalizeSpans,
   numberWords,
@@ -72,6 +80,23 @@ if (SECRET!.length < 24) {
 const db = init({ appId: APP_ID!, adminToken: ADMIN_TOKEN! });
 
 // ── data ─────────────────────────────────────────────────────────────────────
+
+/** The app's dictionary, the same file the Dictionary page fetches — shipped
+ *  in the image (see Dockerfile). ~3.5 MB, read once. */
+const dictionary: DictEntry[] = JSON.parse(
+  readFileSync(
+    new URL("../public/data/dictionary.json", import.meta.url),
+    "utf8",
+  ),
+);
+/** Every clip the dictionary knows, as `cards.audio` stores it. The clips are
+ *  served by the app, not here, so this is the only check an `audio` path gets:
+ *  a typo would save a card that plays nothing. */
+const knownAudio = new Set(
+  dictionary.flatMap((e) =>
+    e.info.flatMap((i) => (i.audio ? [`audio/${i.audio}`] : [])),
+  ),
+);
 
 let ownerId = "";
 
@@ -194,7 +219,8 @@ function buildServer(): McpServer {
     {
       instructions:
         "A personal Dutch flashcard deck (side A is Dutch) and its review history. Reading is free; " +
-        "the writes are `edit_card`, which fixes a card's text and nothing else, and `create_card`, which adds one. " +
+        "the writes are `edit_card`, which fixes a card's text and nothing else, and `create_card`, which adds one — " +
+        "look the word up with `search_dictionary` first, it has the translations and the pronunciation clip. " +
         "The deck is split into lines — separate decks under one account, listed in `search_cards`. " +
         "Example sentences are their own thing, shared by cards: `search_examples` finds them and says which cards each is on, " +
         "`add_example` puts one on a card, `edit_example` changes one. Nothing here deletes anything.",
@@ -440,6 +466,43 @@ function buildServer(): McpServer {
   );
 
   server.registerTool(
+    "search_dictionary",
+    {
+      title: "Search dictionary",
+      description:
+        "The app's Dutch dictionary — the same search as its Dictionary page: headword (with or without de/het), " +
+        'verb forms ("gelopen" finds lopen), then translations. Each hit gives `aCard` and `bCard` as the app's ' +
+        '"+ Add to cards" would write them and, when the dictionary has a recording, `audio` — pass all three to ' +
+        "`create_card` (fixing side B as you see fit) to give the new card its pronunciation.",
+      inputSchema: {
+        query: z
+          .string()
+          .describe("A Dutch word or form, or an English translation"),
+        limit: z
+          .number()
+          .int()
+          .min(1)
+          .max(60)
+          .optional()
+          .describe("Default 10"),
+      },
+      annotations: { readOnlyHint: true },
+    },
+    async ({ query, limit = 10 }) =>
+      ok(
+        searchDictionary(dictionary, query, limit).map((e) => ({
+          // Ready to pass to `create_card` as they stand: the same side A and
+          // side B the app's "+ Add to cards" writes for this entry.
+          aCard: entryCardFront(e),
+          bCard: entryCardBack(e),
+          pos: e.pos,
+          verb: e.verb,
+          audio: entryAudio(e),
+        })),
+      ),
+  );
+
+  server.registerTool(
     "create_card",
     {
       title: "Create card",
@@ -451,7 +514,8 @@ function buildServer(): McpServer {
         "and the note (required then) is what the app reveals; there is nothing to type, so write the note for reading. " +
         "A card whose side A already exists is refused — edit that one with `edit_card` instead of making a second. " +
         "The note is free text (Markdoc); the app's own `{% dict %}` dictionary block is filled in there, not here. " +
-        "Examples, images and audio can't be attached from here.",
+        "To give it a pronunciation, look the word up with `search_dictionary` and pass its `audio`. " +
+        "Examples go on afterwards with `add_example`; images can't be attached from here.",
       inputSchema: {
         aCard: z.string().describe("Side A — the word being learned"),
         bCard: z
@@ -470,12 +534,23 @@ function buildServer(): McpServer {
           .describe(
             `Which line to add it to, by name. Default: ${lineNames[0] ?? "the oldest line"}`,
           ),
+        audio: z
+          .string()
+          .optional()
+          .describe(
+            "A clip path exactly as `search_dictionary` returns it, e.g. audio/dict/hond.mp3",
+          ),
         aLang: z.enum(["NL", "EN"]).optional().describe("Default NL"),
         bLang: z.enum(["EN", "RU"]).optional().describe("Default EN"),
       },
       annotations: { readOnlyHint: false, idempotentHint: false },
     },
-    async ({ aCard, bCard, note, line, aLang = "NL", bLang = "EN" }) => {
+    async ({ aCard, bCard, note, line, audio, aLang = "NL", bLang = "EN" }) => {
+      audio = audio?.trim() || undefined;
+      if (audio && !knownAudio.has(audio))
+        return ok({
+          error: "no such clip — take `audio` from search_dictionary",
+        });
       const text = trimCardText({
         aCard,
         bCard: bCard ?? "",
@@ -513,6 +588,7 @@ function buildServer(): McpServer {
             aLang,
             bLang,
             ...text,
+            ...(audio ? { audio } : {}),
             // Membership only: the rank is a leftover of the manual queue that
             // nothing reads, kept empty so the shape matches older rows.
             queues: { [lineId]: { rank: "" } },
@@ -535,7 +611,7 @@ function buildServer(): McpServer {
           .link({ owner: ownerId }),
       );
 
-      return ok({ id: cardId, line: lines[lineId], card: text });
+      return ok({ id: cardId, line: lines[lineId], card: text, audio });
     },
   );
 

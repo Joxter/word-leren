@@ -1,6 +1,6 @@
 # The MCP server, and nothing else from this repo. There is no build step: Node
 # 24 strips the types out of `.ts` as it loads them, so the image is the runtime
-# deps plus two source directories. See docs/deploy.md.
+# deps, two source directories and the dictionary JSON. See docs/deploy.md.
 FROM node:24-slim
 
 WORKDIR /app
@@ -14,6 +14,9 @@ COPY server ./server
 # `server/mcp.ts` imports `src/lib` directly — same trick, no bundler. Only the
 # pure modules are reachable from it; anything touching the DOM is not here.
 COPY src/lib ./src/lib
+# `search_dictionary` and the audio check in `create_card` read it. The clips
+# themselves stay out: the app serves them, the card only stores the path.
+COPY public/data/dictionary.json ./public/data/dictionary.json
 
 # Loopback would make the published port unreachable from outside the container.
 # Compose is what keeps this off the public interface, by publishing to the

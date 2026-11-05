@@ -34,7 +34,7 @@ jobs:
       # остаётся настоящим импортом и падает в рантайме. Ни tsc, ни --check
       # этого не видят — ловится только настоящей загрузкой модулей, которые
       # сервер тянет из src/.
-      - run: node --input-type=module -e 'await import("./src/lib/deck.ts"); await import("./src/lib/search.ts")'
+      - run: node --input-type=module -e 'await import("./src/lib/deck.ts"); await import("./src/lib/search.ts"); await import("./src/lib/spans.ts"); await import("./src/lib/dictionary.ts")'
 
   publish:
     # Publishing an image that fails its own tests just moves the breakage to

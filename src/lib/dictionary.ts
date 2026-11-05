@@ -1,8 +1,8 @@
 // Loads and searches the merged Dutch dictionary built by
 // scripts/build-dictionary.mjs (served from public/data/dictionary.json).
 
-import { matchTier, type Tiers } from "./search";
-import { mergeContained, type Translation } from "./translations";
+import { matchTier, type Tiers } from "./search.ts";
+import { mergeContained, type Translation } from "./translations.ts";
 
 export type DictInfo = {
   source: string;
@@ -174,6 +174,19 @@ export function searchDictionary(
       a.entry.word.localeCompare(b.entry.word, "nl"),
   );
   return scored.slice(0, limit).map((s) => s.entry);
+}
+
+/**
+ * The one clip a card made from this entry gets, as a path from public/
+ * ("audio/dict/hond.mp3") — what `cards.audio` stores. Prefers the "common"
+ * source, then the first info with any audio.
+ */
+export function entryAudio(entry: DictEntry): string | undefined {
+  const raw = (
+    entry.info.find((i) => i.audio && i.source === "common") ??
+    entry.info.find((i) => i.audio)
+  )?.audio;
+  return raw && `audio/${raw}`;
 }
 
 // Unique audio clips for an entry (one per source/recording), in info order.

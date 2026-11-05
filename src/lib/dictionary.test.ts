@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   cardRuns,
   deckInfo,
+  entryAudio,
   entryCardBack,
   entryCardFront,
   findOwnCard,
@@ -152,5 +153,22 @@ describe("findOwnCard", () => {
 
   it("is null when no card has the word", () => {
     expect(findOwnCard(runs, "kat")).toBeNull();
+  });
+});
+
+describe("entryAudio", () => {
+  it("prefers the common source and stores the path from public/", () => {
+    const entry: DictEntry = {
+      word: "hond",
+      info: [
+        { source: "deck", translation: "dog", audio: "dict/a.mp3" },
+        { source: "common", translation: "dog", audio: "dict/b.mp3" },
+      ],
+    };
+    expect(entryAudio(entry)).toBe("audio/dict/b.mp3");
+    expect(entryAudio({ ...entry, info: [entry.info[0]] })).toBe(
+      "audio/dict/a.mp3",
+    );
+    expect(entryAudio({ word: "x", info: [] })).toBeUndefined();
   });
 });
